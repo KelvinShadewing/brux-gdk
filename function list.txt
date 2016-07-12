@@ -1,0 +1,60 @@
+====MAIN====
+
+xyUpdate();
+//Updates screen and input.
+
+xyFileExists( file );
+//Checks if a file exists. Returns a bool.
+
+xyGetOS();
+//Checks what OS the game is running on. Returns a string.
+
+
+
+====GRAPHICS====
+
+xyWait( ticks );
+//Waits for <ticks> number of ticks/miliseconds.
+
+xyClearScreen();
+//Fills the screen with the background color.
+
+xySetDrawTarget( surface );
+//Uses the word "surface" figuratively; everything's a texture. When set to 0, it draws directly to the screen.
+
+xyDrawImage( image, x, y );
+//Draws an entire image.
+
+xySetDrawColor( color );
+//Sets the draw color for vector and text operations.
+
+xyUpdateScreen();
+//Updates the screen without updating input.
+
+xyDrawRec( x, y, width, height );
+//Draws a rectangle using the color selected by xySetDrawColor().
+
+xySetBackgroundColor( color );
+//Sets the background color.
+
+xyLoadImage( file );
+//Loads an image from a file and returns an integer, which is the index of the image.
+
+xyLoadImageKeyed( file, color );
+//Same as above, but uses a color key for non-transparent sprites.
+
+xySetScalingFilter( bool );
+//Sets whether or not to use blurring when scaling the screen. If set to true, multiframe sprites should have a 1px padding to prevent color bleeding.
+
+
+====SPRITES====
+
+xyNewSprite( image, width, height, margin, padding, pivotX, pivotY, frames );
+//Loads a new sprite using the index of an existing image. If the image has not yet been loaded, xyLoadImage() can be passed as an argument instead.
+//Margin is the distance from the top and left edges, and padding is the distance between frames after that.
+//The pivot coordinates are the position in pixels on the sprite that it rotates around. Margin and padding are not taken into account with this.
+//Frames is how many frames are used on the grid. This should be set if the sprite does not fill every cell on the grid, so that if told to draw past the last frame, it will wrap to the first instead of drawing empty space.
+
+xyDrawSprite( sprite, frame, x, y );
+//Draws a sprite to the selected draw target.
+//If a frame above the maximum value or below zero is given, it wraps around.

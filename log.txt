@@ -1,0 +1,38 @@
+>:: Initializing program...
+
+
+
+>:: Input initialized.
+
+>:: SDL initialized successfully!
+
+>:: Embedding main...
+
+>:: Embedding graphics...
+
+>:: Embedding sprites...
+
+>:: Embedding input...
+
+>:: Embedding maths...
+
+>:: Squirrel initialized successfully!
+
+>:: Loading images.
+
+>:: Beginning loop.
+
+>:: User pressed escape.
+
+>:: Ending program.
+
+>:: Cleaning up all resources...
+
+>:: Closing Squirrel...
+
+>:: Collected 0 junk obects.
+
+>:: Closing SDL...
+
+>:: System closed successfully!
+
