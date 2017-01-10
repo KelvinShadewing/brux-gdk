@@ -6,10 +6,10 @@
 #define _MAIN_H_
 
 //Operating System Flags
-#define _OS_WINDOWS_
+//#define _OS_WINDOWS_
 //#define _OS_MAC_
 //#define _OS_LINUX_
-//#define _OS_PANDORA_
+#define _OS_PANDORA_
 //#define _OS_GCWZ_
 //#define _OS_ANDROID_
 //#define _OS_IOS_
@@ -36,12 +36,14 @@
 #include "squirrel.h"
 #include "sqstdio.h"
 #include "sqstdaux.h"
+#include "sqstdmath.h"
 #else
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include "Squirrel/squirrel.h"
 #include "Squirrel/sqstdio.h"
 #include "Squirrel/sqstdaux.h"
+#include "Squirrel/sqstdmath.h"
 #endif
 
 using namespace std;
@@ -62,7 +64,6 @@ void xyPrint(HSQUIRRELVM v, const SQChar *s, ...);
 void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key);
 void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nParams, const SQChar* sParams);
 void xyBindAllFunctions(HSQUIRRELVM v);
-void xyUpdateTime();
 int xyGetOS();
 void xyError(HSQUIRRELVM v, const SQChar *s, ...);
 

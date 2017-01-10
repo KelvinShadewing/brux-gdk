@@ -10,17 +10,22 @@
 #include "sprite.h"
 #include "maths.h"
 
-xySprite::xySprite(Uint32 image, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames){
+xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames){
 	//Set variables
 	w = width;
 	h = height;
 	mar = margin;
 	pad = padding;
-	tex = image;
 	piv.x = pivotX;
 	piv.y = pivotY;
 	numero = 0;
 	frames = _frames;
+	tex = xyLoadImage(filename);
+
+	//Extract short file name
+	name = filename;
+	string::size_type slashnum = name.find_last_of("/");
+	if(slashnum != string::npos) name = name.substr(slashnum, name.length() - 1);
 
 	if(vcSprites.size() == 0){
 		vcSprites.push_back(this);

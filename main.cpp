@@ -1,18 +1,18 @@
-/*=============================================*\
-|	PROJECT:	XYG Studio Runtime Environment	|
-|	AUTHOR:		Nick Kovacs						|
-|	DATE:		8-15-15							|
-|	DESCRIPTION:Runtime environment used for	|
-|		games and applications created using	|
-|		the XYG Studio framework.				|
-|	LICENSE:	You are free to use, modify, and|
-|		redistribute this source code, in part,	|
-|		or in full, provided proper attribution	|
-|		is included and this information is not	|
-|		modified or removed. Please include a	|
-|		link to WWW.XYGSTUDIO.ORG in all		|
-|		projects that use this source code.		|
-\*=============================================*/
+/*==========================================*\
+| PROJECT:	XYG Studio Runtime Environment   |
+| AUTHOR:		Nick Kovacs                      |
+|	DATE:		8-15-15                            |
+|	DESCRIPTION:Runtime environment used for   |
+|	  games and applications created using     |
+|	  the XYG Studio framework.                |
+|	LICENSE:	You are free to use, modify, and |
+|	  redistribute this source code, in part,  |
+|	  or in full, provided proper attribution  |
+|	  is included and this information is not  |
+|	  modified or removed. Please include a    |
+|	  link to WWW.XYGSTUDIO.ORG in all         |
+|	  projects that use this source code.      |
+\*==========================================*/
 
 /*===========*\
 | MAIN SOURCE |
@@ -42,10 +42,10 @@ int main(int argc, char* args[]){
 	};
 
 	//Load library
-	sqstd_dofile(gvSquirrel, "libxyg.nut", 0, 0);
+	sqstd_dofile(gvSquirrel, "xylib/core.nut", 0, 1);
 
 	//Run test app (until a better format is made)
-	sqstd_dofile(gvSquirrel, "test.nut", 0, 0);
+	sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
 
 	//End game
 	xyEnd();
@@ -67,6 +67,9 @@ int xyInit(){
 	//Initiate log file
 	remove("log.txt");
 	gvLog = fopen("log.txt", "w");
+
+	//Print opening message
+	xyPrint(0, "\n/========================\\\n| XYG STUDIO RUNTIME LOG |\n\\========================/\n\n");
 	xyPrint(0, "Initializing program...\n\n");
 
 	//Initiate SDL
@@ -115,6 +118,7 @@ int xyInit(){
 	//Initiate Squirrel
 	gvSquirrel = sq_open(1024);
 
+	sqstd_register_mathlib(gvSquirrel);
 	sq_setprintfunc(gvSquirrel, xyPrint, xyError);
 	sq_pushroottable(gvSquirrel);
 
@@ -189,33 +193,6 @@ void xyPrint(HSQUIRRELVM v, const SQChar *s, ...){
 	va_end(args);
 };
 
-void xyUpdateTime(){
-	//Variables
-	static Uint32 lastTicks = 0;
-	Uint32 newTicks = SDL_GetTicks();
-
-	//Set ticks
-	if(newTicks >= lastTicks){
-		gvTicks += newTicks - lastTicks;
-	} else {
-		lastTicks = newTicks;
-	};
-
-	//Update timers
-	if(gvTicks >= 1000){
-		gvSeconds += (gvTicks - gvTicks % 1000) / 1000;
-		gvTicks -= gvTicks - gvTicks % 1000;
-	};
-	if(gvSeconds >= 60){
-		gvMinutes += (gvSeconds - gvSeconds % 60) / 60;
-		gvSeconds -= gvSeconds - gvSeconds % 60;
-	};
-	if(gvMinutes >= 60){
-		gvHours += (gvMinutes - gvMinutes % 60) / 60;
-		gvMinutes -= gvMinutes - gvMinutes % 60;
-	};
-};
-
 void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key){
 	sq_pushroottable(v);
 	sq_pushstring(v, key, -1);
@@ -236,47 +213,51 @@ void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nPa
 void xyBindAllFunctions(HSQUIRRELVM v){
 	//Main
 	xyPrint(0, "Embedding main...");
-	xyBindFunc(v, sqUpdate, "xyUpdate");
-	xyBindFunc(v, sqGetOS, "xyOS");
+	xyBindFunc(v, sqUpdate, "update");
+	xyBindFunc(v, sqGetOS, "getOS");
+	xyBindFunc(v, sqGetTicks, "getTicks");
+	xyBindFunc(v, sqImport, "import", 2, ".s");
 
 	//Graphics
 	xyPrint(0, "Embedding graphics...");
-	xyBindFunc(v, sqWait, "xyWait", 2, ".n");
-	xyBindFunc(v, sqSetDrawTarget, "xySetDrawTarget", 2, ".n");
-	xyBindFunc(v, sqClearScreen, "xyClearScreen");
-	xyBindFunc(v, sqResetDrawTarget, "xyResetDrawTarget");
-	xyBindFunc(v, sqDrawImage, "xyDrawImage", 4, ".nnn");
-	xyBindFunc(v, sqSetDrawColor, "xySetDrawColor", 5, ".nnnn");
-	xyBindFunc(v, sqUpdateScreen, "xyUpdateScreen");
-	xyBindFunc(v, sqDrawRec, "xyDrawRec", 7, ".nnnnnn|b");
-	xyBindFunc(v, sqLoadImage, "xyLoadImage", 2, ".s");
-	xyBindFunc(v, sqLoadImageKeyed, "xyLoadImageKey", 3, ".sn");
-	xyBindFunc(v, sqDrawImage, "xyDrawImage", 4, ".inn");
-	xyBindFunc(v, sqSetBackgroundColor, "xySetBackgroundColor", 2, ".n");
-	xyBindFunc(v, sqSetScalingFilter, "xySetScalingFilter", 2, ".i");
+	xyBindFunc(v, sqWait, "wait", 2, ".n");
+	xyBindFunc(v, sqSetDrawTarget, "setDrawTarget", 2, ".n");
+	xyBindFunc(v, sqClearScreen, "clearScreen");
+	xyBindFunc(v, sqResetDrawTarget, "resetDrawTarget");
+	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".nnn");
+	xyBindFunc(v, sqSetDrawColor, "setDrawColor", 2, ".n");
+	xyBindFunc(v, sqUpdateScreen, "updateScreen");
+	xyBindFunc(v, sqLoadImage, "loadImage", 2, ".s");
+	xyBindFunc(v, sqLoadImageKeyed, "loadImageKey", 3, ".sn");
+	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".inn");
+	xyBindFunc(v, sqSetBackgroundColor, "setBackgroundColor", 2, ".n");
+	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".i");
 
 	//Sprites
 	xyPrint(0, "Embedding sprites...");
-	xyBindFunc(v, sqNewSprite, "xyNewSprite", 9, ".iiiiiiii");
-	xyBindFunc(v, sqDrawSprite, "xyDrawSprite", 5, ".innn");
-	xyBindFunc(v, sqDrawSpriteEx, "xyDrawSpriteEx", 9, ".innnninn");
+	xyBindFunc(v, sqNewSprite, "newSprite", 9, ".siiiiiii");
+	xyBindFunc(v, sqDrawSprite, "drawSprite", 5, ".innn");
+	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 9, ".innnninn");
 
 	//Input
 	xyPrint(0, "Embedding input...");
-	xyBindFunc(v, sqUpdateInput, "xyUpdateInput");
-	xyBindFunc(v, sqKeyPress, "xyKeyPress", 2, ".n");
-	xyBindFunc(v, sqKeyRelease, "xyKeyRelease", 2, ".n");
-	xyBindFunc(v, sqKeyDown, "xyKeyDown", 2, ".n");
-	xyBindFunc(v, sqMouseX, "xyMouseX", 1, ".");
-	xyBindFunc(v, sqMouseY, "xyMouseY", 1, ".");
+	xyBindFunc(v, sqUpdateInput, "updateInput");
+	xyBindFunc(v, sqKeyPress, "keyPress", 2, ".n");
+	xyBindFunc(v, sqKeyRelease, "keyRelease", 2, ".n");
+	xyBindFunc(v, sqKeyDown, "keyDown", 2, ".n");
+	xyBindFunc(v, sqMouseX, "mouseX", 1, ".");
+	xyBindFunc(v, sqMouseY, "mouseY", 1, ".");
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
-	xyBindFunc(v, sqRandomFloat, "xyRandFloat", 2, ".n");
-	xyBindFunc(v, sqRandomInt, "xyRandInt", 2, ".n");
+	xyBindFunc(v, sqRandomFloat, "randFloat", 2, ".n");
+	xyBindFunc(v, sqRandomInt, "randInt", 2, ".n");
+	xyBindFunc(v, sqDistance2, "distance2", 5, ".nnnn");
+	xyBindFunc(v, sqWrap, "wrap", 4, ".nnn");
+	xyBindFunc(v, sqFloor, "floor", 2, ".n");
 
 	//File IOxyPrint(0, "Embedding file I/O...");
-	xyBindFunc(v, sqFileExists, "xyFileExists", 2, ".s");
+	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s");
 };
 
 int xyGetOS(){

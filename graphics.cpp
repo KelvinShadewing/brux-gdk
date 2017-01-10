@@ -22,6 +22,7 @@ void xyUpdateScreen(){
 	SDL_RenderPresent(gvRender);
 	xySetDrawColor(gvBackColor);
 	SDL_RenderClear(gvRender);
+	xySetDrawColor(gvDrawColor);
 };
 
 
@@ -63,6 +64,7 @@ void xySetDrawColor(Uint32 color){
 
 	//Set the color
 	SDL_SetRenderDrawColor(gvRender, r, g, b, a);
+	gvDrawColor = color;
 };
 
 
@@ -234,21 +236,8 @@ void xyDeleteImage(Uint32 tex){
 	else vcSprites.pop_back(); //If it's the last one, then remove it to save memory
 };
 
-
-
-///////////
-//VECTORS//
-///////////
-
-void xyDrawRec(float x, float y, float w, float h, Uint32 color, bool outline){
-	SDL_Rect clip;
-
-	clip.x = x;
-	clip.y = y;
-	clip.w = w;
-	clip.h = h;
-
-	xySetDrawColor(color);
-	if(outline) SDL_RenderDrawRect(gvRender, &clip);
-	else SDL_RenderFillRect(gvRender, &clip);
+Uint32 xyGetFPS(){
+	Uint32 delay = SDL_GetTicks() - gvTicks;
+	if(delay <= 0) return 1000;
+	else return 1000 / delay;
 };

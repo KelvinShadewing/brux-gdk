@@ -90,14 +90,11 @@ int sqDrawImage(HSQUIRRELVM v){
 };
 
 int sqSetDrawColor(HSQUIRRELVM v){
-	Uint8 r, g, b, a;
+	Uint32 c;
 
-	sq_getinteger(v, 2, (int*)&r);
-	sq_getinteger(v, 3, (int*)&g);
-	sq_getinteger(v, 4, (int*)&b);
-	sq_getinteger(v, 5, (int*)&a);
+	sq_getinteger(v, 2, (int*)&c);
 
-	xySetDrawColor(r, g, b, a);
+	xySetDrawColor(c);
 
 	return 0;
 };
@@ -127,26 +124,9 @@ int sqUpdateScreen(HSQUIRRELVM v){
 };
 
 int sqUpdate(HSQUIRRELVM v){
+	gvTicks = SDL_GetTicks();
 	xyUpdateScreen();
 	xyUpdateInput();
-
-	return 0;
-};
-
-int sqDrawRec(HSQUIRRELVM v){
-	float x, y, w, h;
-	Uint32 c;
-	int o;
-
-	sq_getfloat(v, 2, &x);
-	sq_getfloat(v, 3, &y);
-	sq_getfloat(v, 4, &w);
-	sq_getfloat(v, 5, &h);
-	sq_getinteger(v, 6, (int*)&c);
-	if(sq_gettype(v, 7) == OT_INTEGER) sq_getinteger(v, 7, &o);
-	else sq_getbool(v, 7, (unsigned int*)&o);
-
-	xyDrawRec(x, y, w, h, c, o);
 
 	return 0;
 };
@@ -240,9 +220,10 @@ int sqSetScalingFilter(HSQUIRRELVM v){
 };
 
 int sqNewSprite(HSQUIRRELVM v){
-	int i, w, h, m, p, px, py, f;
+	int w, h, m, p, px, py, f;
+	const char* i;
 
-	sq_getinteger(v, 2, &i);
+	sq_getstring(v, 2, &i);
 	sq_getinteger(v, 3, &w);
 	sq_getinteger(v, 4, &h);
 	sq_getinteger(v, 5, &m);
@@ -298,4 +279,58 @@ int sqMouseY(HSQUIRRELVM v){
 	sq_pushinteger(v, gvMouseY);
 
 	return 1;
+};
+
+int sqDistance2(HSQUIRRELVM v){
+	int x1, y1, x2, y2;
+
+	sq_getinteger(v, 2, &x1);
+	sq_getinteger(v, 3, &y1);
+	sq_getinteger(v, 4, &x2);
+	sq_getinteger(v, 5, &y2);
+
+	sq_pushinteger(v, xyDistance(x1, y1, x2, y2));
+
+	return 1;
+};
+
+int sqWrap(HSQUIRRELVM v){
+	int x, mx, mn;
+
+	sq_getinteger(v, 2, &x);
+	sq_getinteger(v, 3, &mx);
+	sq_getinteger(v, 4, &mn);
+
+	sq_pushinteger(v, xyWrap(x, mn, mx));
+
+	return 1;
+};
+
+int sqGetTicks(HSQUIRRELVM v){
+	sq_pushinteger(v, SDL_GetTicks());
+
+	return 1;
+};
+
+int sqFloor(HSQUIRRELVM v){
+	float f;
+	
+	sq_getfloat(v, 2, &f);
+	sq_pushinteger(v, floor(f));
+
+	return 1;
+};
+
+int sqImport(HSQUIRRELVM v){
+	const char* a;
+
+	sq_getstring(v, 2, &a);
+
+	string b = "xylib/";
+	b += a;
+	b += ".nut";
+
+	sqstd_dofile(gvSquirrel, b.c_str(), 0, 1);
+
+	return 0;
 };

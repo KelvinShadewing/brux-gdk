@@ -195,18 +195,6 @@
 				RelativePath=".\sprite.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\structs.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\xyDot.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\xyShape.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -242,15 +230,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\shapes.h"
-				>
-			</File>
-			<File
 				RelativePath=".\sprite.h"
-				>
-			</File>
-			<File
-				RelativePath=".\structs.h"
 				>
 			</File>
 		</Filter>

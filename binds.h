@@ -9,6 +9,8 @@
 int sqUpdate(HSQUIRRELVM v);
 int sqFileExists(HSQUIRRELVM v);
 int sqGetOS(HSQUIRRELVM v);
+int sqGetTicks(HSQUIRRELVM v);
+int sqImport(HSQUIRRELVM v);
 
 //Graphics
 int sqWait(HSQUIRRELVM v);
@@ -17,7 +19,6 @@ int sqSetDrawTarget(HSQUIRRELVM v);
 int sqDrawImage(HSQUIRRELVM v);
 int sqSetDrawColor(HSQUIRRELVM v);
 int sqUpdateScreen(HSQUIRRELVM v);
-int sqDrawRec(HSQUIRRELVM v);
 int sqSetBackgroundColor(HSQUIRRELVM v);
 int sqLoadImage(HSQUIRRELVM v);
 int sqLoadImageKeyed(HSQUIRRELVM v);
@@ -42,5 +43,8 @@ int sqMouseY(HSQUIRRELVM v);
 //Maths
 int sqRandomFloat(HSQUIRRELVM v);
 int sqRandomInt(HSQUIRRELVM v);
+int sqDistance2(HSQUIRRELVM v);
+int sqWrap(HSQUIRRELVM v);
+int sqFloor(HSQUIRRELVM v);
 
 #endif

@@ -1,6 +1,6 @@
-/*===========*\
-| MATH SOURCE |
-\*===========*/
+/*============*\
+| MATHS SOURCE |
+\*============*/
 
 #include "maths.h"
 
@@ -12,21 +12,16 @@ float xyDistance(float x1, float y1, float x2, float y2){
 	return sqrt((xd * xd) + (yd * yd));
 };
 
-float xyDistance(xyCir *c1, xyCir *c2){
-	//Distance between two circles from the edge. May produce negative results.
-	return (xyDistance(c1->x, c1->y, c2->x, c2->y) - c1->r) - c2->r;
-};
-
-int xyRandomInt(int max){
+int xyRandomInt(int mx){
 	int numb = rand();
-	numb %= max;
+	numb %= mx;
 
 	return numb;
 };
 
-float xyRandomFloat(float max){
+float xyRandomFloat(float mx){
 	float numb = rand();
-	while(numb > max) numb -= max;
+	while(numb > mx) numb -= mx;
 
 	return numb;
 };

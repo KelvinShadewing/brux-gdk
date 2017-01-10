@@ -17,7 +17,6 @@ void xyUpdateScreen();
 Uint32 xyLoadImage(const char* path, Uint32 key);
 void xySetDrawColor(int r, int g, int b, int a);
 void xySetDrawColor(Uint32 color);
-void xyDrawRec(float x, float y, float w, float h, Uint32 color, bool outline);
 Uint32 xyLoadImage(const char* path);
 Uint32 xyLoadImageKeyed(const char* path, Uint32 key);
 void xySetBackgroundColor(Uint32 color);
