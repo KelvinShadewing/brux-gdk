@@ -6,10 +6,10 @@
 #define _MAIN_H_
 
 //Operating System Flags
-//#define _OS_WINDOWS_
+#define _OS_WINDOWS_
 //#define _OS_MAC_
 //#define _OS_LINUX_
-#define _OS_PANDORA_
+//#define _OS_PANDORA_
 //#define _OS_GCWZ_
 //#define _OS_ANDROID_
 //#define _OS_IOS_
@@ -33,6 +33,8 @@
 #ifdef _MSC_VER
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
+#include "SDL_mixer.h"
 #include "squirrel.h"
 #include "sqstdio.h"
 #include "sqstdaux.h"
@@ -40,6 +42,8 @@
 #else
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include "SDL/SDL_ttf.h"
+#include "SDL/SDL_mixer.h"
 #include "Squirrel/squirrel.h"
 #include "Squirrel/sqstdio.h"
 #include "Squirrel/sqstdaux.h"

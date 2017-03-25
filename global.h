@@ -5,7 +5,6 @@
 #ifndef _GLOBALS_H_
 #define _GLOBALS_H_
 
-#include "main.h"
 #include "sprite.h"
 
 extern bool gvQuit;					//Let's the game know when to quit
@@ -28,5 +27,6 @@ extern bool gvDebug;				//Controls whether or not debug output is printed
 extern vector<xySprite*> vcSprites;	//Vector containing all sprite pointers
 extern Uint32 gvBackColor;			//Background color
 extern Uint32 gvDrawColor;			//Renderer color
+extern vector<TTF_Font*> vcFonts;	//Container for fonts
 
 #endif

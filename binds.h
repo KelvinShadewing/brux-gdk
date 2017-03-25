@@ -46,5 +46,11 @@ int sqRandomInt(HSQUIRRELVM v);
 int sqDistance2(HSQUIRRELVM v);
 int sqWrap(HSQUIRRELVM v);
 int sqFloor(HSQUIRRELVM v);
+int sqPointAngle(HSQUIRRELVM v);
+
+//Text
+int sqDrawText(HSQUIRRELVM v);
+int sqOpenFont(HSQUIRRELVM v);
+int sqCloseFont(HSQUIRRELVM v);
 
 #endif

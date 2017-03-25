@@ -57,7 +57,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sdl2.lib sdl2main.lib sdl2_image.lib squirrel.lib sqstdlib.lib"
+				AdditionalDependencies="sdl2.lib sdl2main.lib sdl2_image.lib sdl2_ttf.lib sdl2_mixer.lib squirrel.lib sqstdlib.lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -164,6 +164,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\audio.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\binds.cpp"
 				>
 			</File>
@@ -195,12 +199,20 @@
 				RelativePath=".\sprite.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\text.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\audio.h"
+				>
+			</File>
 			<File
 				RelativePath=".\binds.h"
 				>
@@ -231,6 +243,10 @@
 			</File>
 			<File
 				RelativePath=".\sprite.h"
+				>
+			</File>
+			<File
+				RelativePath=".\text.h"
 				>
 			</File>
 		</Filter>

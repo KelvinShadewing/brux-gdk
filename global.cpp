@@ -2,6 +2,8 @@
 | GLOBAL SOURCE |
 \*=============*/
 
+#include "main.h"
+#include "sprite.h"
 #include "global.h"
 
 bool gvQuit = 0;
@@ -16,11 +18,13 @@ SDL_Texture *gvScreen;
 int gvError;
 Uint32 gvTicks = 0;
 char *gvVNo = "v.1.0.1";
-const float pi = 3.14159;
+const float pi = 3.14159265;
 bool gvClearScreen = 1;
 SDL_Event Event;
 vector<SDL_Texture*> vcTextures;
 bool gvDebug = 1;
 vector<xySprite*> vcSprites;
+vector<TTF_Font*> vcFonts;
 Uint32 gvBackColor;
 Uint32 gvDrawColor;
+vector<Mix_Chunk*> vcSounds;

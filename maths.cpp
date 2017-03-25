@@ -2,6 +2,9 @@
 | MATHS SOURCE |
 \*============*/
 
+
+#include "main.h"
+#include "global.h"
 #include "maths.h"
 
 float xyDistance(float x1, float y1, float x2, float y2){
@@ -29,3 +32,7 @@ float xyRandomFloat(float mx){
 int xyWrap(int N, int L, int H){
   H=H-L+1; return (N-L+(N<L)*H)%H+L;
 }
+
+float xyPointAngle(float x1, float y1, float x2, float y2){
+	return atan2(y2 - y1, x2 - x1) * (180 / pi);
+};

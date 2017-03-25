@@ -236,6 +236,7 @@ void xyDeleteImage(Uint32 tex){
 	else vcSprites.pop_back(); //If it's the last one, then remove it to save memory
 };
 
+//Get FPS
 Uint32 xyGetFPS(){
 	Uint32 delay = SDL_GetTicks() - gvTicks;
 	if(delay <= 0) return 1000;

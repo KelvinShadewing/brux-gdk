@@ -8,6 +8,7 @@
 #include "input.h"
 #include "maths.h"
 #include "fileio.h"
+#include "text.h"
 #include "binds.h"
 
 
@@ -333,4 +334,59 @@ int sqImport(HSQUIRRELVM v){
 	sqstd_dofile(gvSquirrel, b.c_str(), 0, 1);
 
 	return 0;
+};
+
+int sqDrawText(HSQUIRRELVM v){
+	float x, y;
+	const char* t;
+	int f, c, ha, va;
+
+	sq_getfloat(v, 2, &x);
+	sq_getfloat(v, 3, &y);
+	sq_getstring(v, 4, &t);
+	sq_getinteger(v, 5, &f);
+	sq_getinteger(v, 6, &c);
+	sq_getinteger(v, 7, &ha);
+	sq_getinteger(v, 8, &va);
+
+	xyDrawText(x, y, t, f, c, ha, va);
+
+	return 0;
+};
+
+int sqOpenFont(HSQUIRRELVM v){
+	const char* f;
+	int s;
+
+	sq_getstring(v, 2, &f);
+	sq_getinteger(v, 3, &s);
+
+	if(s < 1) s = 1;
+
+	sq_pushinteger(v, xyOpenFont(f, s));
+
+	return 1;
+};
+
+int sqCloseFont(HSQUIRRELVM v){
+	int f;
+
+	sq_getinteger(v, 2, &f);
+	
+	xyCloseFont(f);
+
+	return 0;
+};
+
+int sqPointAngle(HSQUIRRELVM v){
+	float x1, y1, x2, y2;
+
+	sq_getfloat(v, 2, &x1);
+	sq_getfloat(v, 3, &y1);
+	sq_getfloat(v, 4, &x2);
+	sq_getfloat(v, 5, &y2);
+
+	sq_pushfloat(v, xyPointAngle(x1, y1, x2, y2));
+
+	return 1;
 };

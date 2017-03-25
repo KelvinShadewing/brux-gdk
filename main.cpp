@@ -1,18 +1,18 @@
-/*==========================================*\
-| PROJECT:	XYG Studio Runtime Environment   |
+/*==============================================*\
+| PROJECT:	XYG Studio Runtime Environment       |
 | AUTHOR:		Nick Kovacs                      |
-|	DATE:		8-15-15                            |
-|	DESCRIPTION:Runtime environment used for   |
-|	  games and applications created using     |
-|	  the XYG Studio framework.                |
+|	DATE:		8-15-15                          |
+|	DESCRIPTION:Runtime environment used for     |
+|	  games and applications created using       |
+|	  the XYG Studio framework.                  |
 |	LICENSE:	You are free to use, modify, and |
-|	  redistribute this source code, in part,  |
-|	  or in full, provided proper attribution  |
-|	  is included and this information is not  |
-|	  modified or removed. Please include a    |
-|	  link to WWW.XYGSTUDIO.ORG in all         |
-|	  projects that use this source code.      |
-\*==========================================*/
+|	  redistribute this source code, in part,    |
+|	  or in full, provided proper attribution    |
+|	  is included and this information is not    |
+|	  modified or removed. Please include a      |
+|	  link to WWW.XYGSTUDIO.ORG in all           |
+|	  projects that use this source code.        |
+\*==============================================*/
 
 /*===========*\
 | MAIN SOURCE |
@@ -27,6 +27,8 @@
 #include "maths.h"
 #include "fileio.h"
 #include "binds.h"
+#include "text.h"
+#include "audio.h"
 
 
 /////////////////
@@ -111,6 +113,18 @@ int xyInit(){
 		};
 	};
 
+	//Initialize TTF
+	if(TTF_Init() < 0){
+		xyError(0, "SDL_ttf could not initialize! SDL_ttf error: %s\n", TTF_GetError());
+		return 0;
+	};
+
+	//Initialize audio
+	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
+		xyError(0, "SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
+		return 0;
+	};
+
 	xyInitInput();
 
 	xyPrint(0, "SDL initialized successfully!");
@@ -174,6 +188,8 @@ void xyEnd(){
 	SDL_DestroyRenderer(gvRender);
 	SDL_DestroyWindow(gvWindow);
 	IMG_Quit();
+	TTF_Quit();
+	Mix_Quit();
 	SDL_Quit();
 
 	//Close log file
@@ -231,13 +247,13 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqLoadImageKeyed, "loadImageKey", 3, ".sn");
 	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".inn");
 	xyBindFunc(v, sqSetBackgroundColor, "setBackgroundColor", 2, ".n");
-	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".i");
+	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".n|b");
 
 	//Sprites
 	xyPrint(0, "Embedding sprites...");
 	xyBindFunc(v, sqNewSprite, "newSprite", 9, ".siiiiiii");
 	xyBindFunc(v, sqDrawSprite, "drawSprite", 5, ".innn");
-	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 9, ".innnninn");
+	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".innnninnn");
 
 	//Input
 	xyPrint(0, "Embedding input...");
@@ -255,6 +271,12 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqDistance2, "distance2", 5, ".nnnn");
 	xyBindFunc(v, sqWrap, "wrap", 4, ".nnn");
 	xyBindFunc(v, sqFloor, "floor", 2, ".n");
+	xyBindFunc(v, sqPointAngle, "pointAngle", 5, ".nnnn");
+
+	//Text
+	xyBindFunc(v, sqDrawText, "drawText", 8, ".nnsnnnn");
+	xyBindFunc(v, sqOpenFont, "openFont", 3, ".sn");
+	xyBindFunc(v, sqCloseFont, "closeFont", 2, ".n");
 
 	//File IOxyPrint(0, "Embedding file I/O...");
 	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s");
