@@ -43,11 +43,42 @@ int main(int argc, char* args[]){
 		return 1;
 	};
 
-	//Load library
-	sqstd_dofile(gvSquirrel, "xylib/core.nut", 0, 1);
+	//Process arguments
+	string xygapp = "test.nut";
+	string curarg = "";
+	for(int i = 0; i < argc; i++){
+		//Print each argument and process them
+		curarg = args[i];
+		xyPrint(0, curarg.c_str());
+		if(i == 0){
+			gvAppDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
+			xyPrint(0, "This is the app directory: %s", gvAppDir.c_str());
+		};
 
-	//Run test app (until a better format is made)
-	sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
+		//Input file
+		//If the file is long enough
+		if(curarg.length() > 4){
+			//If the file ends in '.xyg'
+			if(curarg.substr(curarg.find_last_of(".")) == ".xyg" || curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut"){
+				//Check that the file really exists
+				if(xyFileExists(curarg.c_str())){
+					//All checks pass, assign the file
+					xygapp = curarg.c_str();
+					gvWorkDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
+					xyPrint(0, "This is the working directory: %s", gvWorkDir.c_str());
+				};
+			};
+		};
+
+		//Other arguments
+	};
+
+	
+	//Run app
+	string strCoreLib = gvAppDir;
+	strCoreLib += "xylib/core.nut";
+	sqstd_dofile(gvSquirrel, strCoreLib.c_str(), 0, 1);
+	sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
 
 	//End game
 	xyEnd();
@@ -148,6 +179,11 @@ int xyInit(){
 	//Initiate other
 	vcTextures.push_back(0);
 	vcSprites.push_back(0);
+	vcSounds.push_back(0);
+	vcMusic.push_back(0);
+
+	fprintf(gvLog, "================\n\n");
+	printf("================\n\n");
 
 	//Return success
 	return 1;
@@ -166,6 +202,10 @@ void xyError(HSQUIRRELVM v, const SQChar *s, ...){
 };
 
 void xyEnd(){
+
+	fprintf(gvLog, "================\n\n");
+	printf("================\n\n");
+
 	//Cleanup all resources
 	xyPrint(0, "Cleaning up all resources...");
 	for(int i = 0; i < vcTextures.size(); i++){

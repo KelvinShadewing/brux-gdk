@@ -360,4 +360,4 @@ const bm_mult = 3;
 // XYG MODULE NAMESPACE //
 //////////////////////////
 
-xyg <- {};
+print("Imported core lib.");

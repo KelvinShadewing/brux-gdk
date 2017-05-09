@@ -28,5 +28,9 @@ extern vector<xySprite*> vcSprites;	//Vector containing all sprite pointers
 extern Uint32 gvBackColor;			//Background color
 extern Uint32 gvDrawColor;			//Renderer color
 extern vector<TTF_Font*> vcFonts;	//Container for fonts
+extern vector<Mix_Chunk*> vcSounds;	//Container for sounds
+extern vector<Mix_Music*> vcMusic;	//Container for music
+extern string gvAppDir;				//Directory the XYRE is running from
+extern string gvWorkDir;				//Working directory, default is the game directory
 
 #endif

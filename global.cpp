@@ -9,7 +9,7 @@
 bool gvQuit = 0;
 int gvMouseX = 0, gvMouseY = 0;
 Uint32 gvScrW = 400, gvScrH = 240;
-Uint32 gvWinW = 320, gvWinH = 240;
+Uint32 gvWinW = 640, gvWinH = 360;
 HSQUIRRELVM gvSquirrel;
 FILE *gvLog;
 SDL_Window *gvWindow;
@@ -28,3 +28,6 @@ vector<TTF_Font*> vcFonts;
 Uint32 gvBackColor;
 Uint32 gvDrawColor;
 vector<Mix_Chunk*> vcSounds;
+vector<Mix_Music*> vcMusic;
+string gvAppDir;
+string gvWorkDir;

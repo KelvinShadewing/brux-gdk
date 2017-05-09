@@ -327,7 +327,8 @@ int sqImport(HSQUIRRELVM v){
 
 	sq_getstring(v, 2, &a);
 
-	string b = "xylib/";
+	string b = gvAppDir;
+	b += "xylib/";
 	b += a;
 	b += ".nut";
 
