@@ -30,12 +30,32 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="C:/dev/include" />
 		</Compiler>
 		<Linker>
-			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lSDL2_net -lsquirrel -lsqstd" />
-			<Add directory="C:/dev/lib" />
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lSDL2_net" />
+			<Add library="C:/dev/lib/libSquirrel.a" />
+			<Add library="C:/dev/lib/libSQstd.a" />
 		</Linker>
+		<Unit filename="audio.cpp" />
+		<Unit filename="audio.h" />
+		<Unit filename="binds.cpp" />
+		<Unit filename="binds.h" />
+		<Unit filename="fileio.cpp" />
+		<Unit filename="fileio.h" />
+		<Unit filename="global.cpp" />
+		<Unit filename="global.h" />
+		<Unit filename="graphics.cpp" />
+		<Unit filename="graphics.h" />
+		<Unit filename="input.cpp" />
+		<Unit filename="input.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="main.h" />
+		<Unit filename="maths.cpp" />
+		<Unit filename="maths.h" />
+		<Unit filename="sprite.cpp" />
+		<Unit filename="sprite.h" />
+		<Unit filename="text.cpp" />
+		<Unit filename="text.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

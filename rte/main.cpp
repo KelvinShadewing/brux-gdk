@@ -23,7 +23,6 @@
 #include "global.h"
 #include "input.h"
 #include "graphics.h"
-#include "shapes.h"
 #include "maths.h"
 #include "fileio.h"
 #include "binds.h"
@@ -73,7 +72,7 @@ int main(int argc, char* args[]){
 		//Other arguments
 	};
 
-	
+
 	//Run app
 	string strCoreLib = gvAppDir;
 	strCoreLib += "xylib/core.nut";
