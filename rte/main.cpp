@@ -23,6 +23,7 @@
 #include "global.h"
 #include "input.h"
 #include "graphics.h"
+#include "shapes.h"
 #include "maths.h"
 #include "fileio.h"
 #include "binds.h"
@@ -58,7 +59,7 @@ int main(int argc, char* args[]){
 		//If the file is long enough
 		if(curarg.length() > 4){
 			//If the file ends in '.xyg'
-			if(curarg.substr(curarg.find_last_of(".")) == ".xyg" || curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut"){
+			if(curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut"){
 				//Check that the file really exists
 				if(xyFileExists(curarg.c_str())){
 					//All checks pass, assign the file
@@ -155,6 +156,7 @@ int xyInit(){
 		return 0;
 	};
 
+	//Initialize input
 	xyInitInput();
 
 	xyPrint(0, "SDL initialized successfully!");
@@ -213,6 +215,14 @@ void xyEnd(){
 
 	for(int i = 0; i < vcSprites.size(); i++){
 		delete vcSprites[i];
+	};
+
+	for(int i = 0; i < vcSounds.size(); i++){
+		xyDeleteSound(i);
+	};
+
+	for(int i = 0; i < vcMusic.size(); i++){
+		xyDeleteMusic(i);
 	};
 
 	//Close Squirrel
@@ -313,12 +323,23 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqPointAngle, "pointAngle", 5, ".nnnn");
 
 	//Text
+	xyPrint(0, "Embedding text...");
 	xyBindFunc(v, sqDrawText, "drawText", 8, ".nnsnnnn");
 	xyBindFunc(v, sqOpenFont, "openFont", 3, ".sn");
 	xyBindFunc(v, sqCloseFont, "closeFont", 2, ".n");
 
-	//File IOxyPrint(0, "Embedding file I/O...");
+	//File IO
+	xyPrint(0, "Embedding file I/O...");
 	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s");
+
+	//Audio
+	xyPrint(0, "Embedding audio...");
+	xyBindFunc(v, sqLoadMusic, "loadMusic", 2, ".s");
+	xyBindFunc(v, sqLoadSound, "loadSound", 2, ".s");
+	xyBindFunc(v, sqPlaySound, "playSound", 3, ".nn");
+	xyBindFunc(v, sqPlayMusic, "playMusic", 3, ".nn");
+	xyBindFunc(v, sqDeleteSound, "deleteSound", 2, ".n");
+	xyBindFunc(v, sqDeleteMusic, "deleteMusic", 2, ".n");
 };
 
 int xyGetOS(){

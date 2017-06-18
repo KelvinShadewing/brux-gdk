@@ -53,4 +53,12 @@ int sqDrawText(HSQUIRRELVM v);
 int sqOpenFont(HSQUIRRELVM v);
 int sqCloseFont(HSQUIRRELVM v);
 
+//Audio
+int sqLoadSound(HSQUIRRELVM v);
+int sqLoadMusic(HSQUIRRELVM v);
+int sqPlaySound(HSQUIRRELVM v);
+int sqPlayMusic(HSQUIRRELVM v);
+int sqDeleteSound(HSQUIRRELVM v);
+int sqDeleteMusic(HSQUIRRELVM v);
+
 #endif

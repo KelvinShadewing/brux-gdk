@@ -10,8 +10,11 @@
 #include "fileio.h"
 #include "text.h"
 #include "binds.h"
+#include "audio.h"
 
-
+//////////
+// MAIN //
+//////////
 
 int sqWait(HSQUIRRELVM v){
 	SQInteger a;
@@ -23,38 +26,77 @@ int sqWait(HSQUIRRELVM v){
 	return 0;
 };
 
-int sqUpdateInput(HSQUIRRELVM v){
+int sqUpdate(HSQUIRRELVM v){
+	gvTicks = SDL_GetTicks();
+	xyUpdateScreen();
 	xyUpdateInput();
 
 	return 0;
 };
 
-int sqKeyPress(HSQUIRRELVM v){
-	SQInteger a;
+int sqFileExists(HSQUIRRELVM v){
+	const char* file;
 
-	sq_getinteger(v, 2, &a);
-	sq_pushinteger(v, xyKeyPress(a));
+	sq_getstring(v, 2, &file);
 
-	return 1;
-};
-
-int sqKeyDown(HSQUIRRELVM v){
-	SQInteger a;
-
-	sq_getinteger(v, 2, &a);
-	sq_pushbool(v, xyKeyDown(a));
+	sq_pushbool(v, xyFileExists(file));
 
 	return 1;
 };
 
-int sqKeyRelease(HSQUIRRELVM v){
-	SQInteger a;
-
-	sq_getinteger(v, 2, &a);
-	sq_pushbool(v, xyKeyRelease(a));
+int sqGetOS(HSQUIRRELVM v){
+	switch(xyGetOS()){
+		case 0:
+			sq_pushstring(v, "windows", 7);
+			break;
+		case 1:
+			sq_pushstring(v, "mac", 3);
+			break;
+		case 2:
+			sq_pushstring(v, "linux", 5);
+			break;
+		case 3:
+			sq_pushstring(v, "gcwz", 4);
+			break;
+		case 4:
+			sq_pushstring(v, "pandora", 7);
+			break;
+		case 5:
+			sq_pushstring(v, "android", 7);
+			break;
+		case 6:
+			sq_pushstring(v, "ios", 7);
+			break;
+	};
 
 	return 1;
 };
+
+int sqGetTicks(HSQUIRRELVM v){
+	sq_pushinteger(v, SDL_GetTicks());
+
+	return 1;
+};
+
+
+int sqImport(HSQUIRRELVM v){
+	const char* a;
+
+	sq_getstring(v, 2, &a);
+
+	string b = gvAppDir;
+	b += "xylib/";
+	b += a;
+	b += ".nut";
+
+	sqstd_dofile(gvSquirrel, b.c_str(), 0, 1);
+
+	return 0;
+};
+
+//////////////
+// GRAPHICS //
+//////////////
 
 int sqClearScreen(HSQUIRRELVM v){
 	SDL_RenderClear(gvRender);
@@ -100,34 +142,8 @@ int sqSetDrawColor(HSQUIRRELVM v){
 	return 0;
 };
 
-int sqRandomFloat(HSQUIRRELVM v){
-	float a;
-
-	sq_getfloat(v, 2, &a);
-	sq_pushinteger(v, xyRandomFloat(a));
-
-	return 1;
-};
-
-int sqRandomInt(HSQUIRRELVM v){
-	int a;
-
-	sq_getinteger(v, 2, &a);
-	sq_pushinteger(v, xyRandomInt(a));
-
-	return 1;
-};
-
 int sqUpdateScreen(HSQUIRRELVM v){
 	xyUpdateScreen();
-
-	return 0;
-};
-
-int sqUpdate(HSQUIRRELVM v){
-	gvTicks = SDL_GetTicks();
-	xyUpdateScreen();
-	xyUpdateInput();
 
 	return 0;
 };
@@ -141,7 +157,6 @@ int sqLoadImage(HSQUIRRELVM v){
 
 	return 1;
 };
-
 
 int sqLoadImageKeyed(HSQUIRRELVM v){
 	const char* file;
@@ -165,44 +180,6 @@ int sqSetBackgroundColor(HSQUIRRELVM v){
 	return 0;
 };
 
-int sqFileExists(HSQUIRRELVM v){
-	const char* file;
-
-	sq_getstring(v, 2, &file);
-
-	sq_pushbool(v, xyFileExists(file));
-
-	return 1;
-};
-
-int sqGetOS(HSQUIRRELVM v){
-	switch(xyGetOS()){
-		case 0:
-			sq_pushstring(v, "windows", 7);
-			break;
-		case 1:
-			sq_pushstring(v, "mac", 3);
-			break;
-		case 2:
-			sq_pushstring(v, "linux", 5);
-			break;
-		case 3:
-			sq_pushstring(v, "gcwz", 4);
-			break;
-		case 4:
-			sq_pushstring(v, "pandora", 7);
-			break;
-		case 5:
-			sq_pushstring(v, "android", 7);
-			break;
-		case 6:
-			sq_pushstring(v, "ios", 7);
-			break;
-	};
-
-	return 1;
-};
-
 int sqSetScalingFilter(HSQUIRRELVM v){
 	int hint;
 
@@ -219,6 +196,10 @@ int sqSetScalingFilter(HSQUIRRELVM v){
 
 	return 0;
 };
+
+/////////////
+// SPRITES //
+/////////////
 
 int sqNewSprite(HSQUIRRELVM v){
 	int w, h, m, p, px, py, f;
@@ -269,6 +250,42 @@ int sqDrawSpriteEx(HSQUIRRELVM v){
 	return 0;
 };
 
+///////////
+// INPUT //
+///////////
+
+int sqUpdateInput(HSQUIRRELVM v){
+	xyUpdateInput();
+
+	return 0;
+};
+
+int sqKeyPress(HSQUIRRELVM v){
+	SQInteger a;
+
+	sq_getinteger(v, 2, &a);
+	sq_pushinteger(v, xyKeyPress(a));
+
+	return 1;
+};
+
+int sqKeyDown(HSQUIRRELVM v){
+	SQInteger a;
+
+	sq_getinteger(v, 2, &a);
+	sq_pushbool(v, xyKeyDown(a));
+
+	return 1;
+};
+
+int sqKeyRelease(HSQUIRRELVM v){
+	SQInteger a;
+
+	sq_getinteger(v, 2, &a);
+	sq_pushbool(v, xyKeyRelease(a));
+
+	return 1;
+};
 
 int sqMouseX(HSQUIRRELVM v){
 	sq_pushinteger(v, gvMouseX);
@@ -278,6 +295,28 @@ int sqMouseX(HSQUIRRELVM v){
 
 int sqMouseY(HSQUIRRELVM v){
 	sq_pushinteger(v, gvMouseY);
+
+	return 1;
+};
+
+///////////
+// MATHS //
+///////////
+
+int sqRandomFloat(HSQUIRRELVM v){
+	float a;
+
+	sq_getfloat(v, 2, &a);
+	sq_pushinteger(v, xyRandomFloat(a));
+
+	return 1;
+};
+
+int sqRandomInt(HSQUIRRELVM v){
+	int a;
+
+	sq_getinteger(v, 2, &a);
+	sq_pushinteger(v, xyRandomInt(a));
 
 	return 1;
 };
@@ -307,35 +346,31 @@ int sqWrap(HSQUIRRELVM v){
 	return 1;
 };
 
-int sqGetTicks(HSQUIRRELVM v){
-	sq_pushinteger(v, SDL_GetTicks());
-
-	return 1;
-};
-
 int sqFloor(HSQUIRRELVM v){
 	float f;
-	
+
 	sq_getfloat(v, 2, &f);
 	sq_pushinteger(v, floor(f));
 
 	return 1;
 };
 
-int sqImport(HSQUIRRELVM v){
-	const char* a;
+int sqPointAngle(HSQUIRRELVM v){
+	float x1, y1, x2, y2;
 
-	sq_getstring(v, 2, &a);
+	sq_getfloat(v, 2, &x1);
+	sq_getfloat(v, 3, &y1);
+	sq_getfloat(v, 4, &x2);
+	sq_getfloat(v, 5, &y2);
 
-	string b = gvAppDir;
-	b += "xylib/";
-	b += a;
-	b += ".nut";
+	sq_pushfloat(v, xyPointAngle(x1, y1, x2, y2));
 
-	sqstd_dofile(gvSquirrel, b.c_str(), 0, 1);
-
-	return 0;
+	return 1;
 };
+
+//////////
+// TEXT //
+//////////
 
 int sqDrawText(HSQUIRRELVM v){
 	float x, y;
@@ -373,21 +408,74 @@ int sqCloseFont(HSQUIRRELVM v){
 	int f;
 
 	sq_getinteger(v, 2, &f);
-	
+
 	xyCloseFont(f);
 
 	return 0;
 };
 
-int sqPointAngle(HSQUIRRELVM v){
-	float x1, y1, x2, y2;
+///////////
+// AUDIO //
+///////////
 
-	sq_getfloat(v, 2, &x1);
-	sq_getfloat(v, 3, &y1);
-	sq_getfloat(v, 4, &x2);
-	sq_getfloat(v, 5, &y2);
+int sqLoadSound(HSQUIRRELVM v){
+	const char* s;
 
-	sq_pushfloat(v, xyPointAngle(x1, y1, x2, y2));
+	sq_getstring(v, 2, &s);
+
+	sq_pushinteger(v, xyLoadSound(s));
 
 	return 1;
+};
+
+int sqLoadMusic(HSQUIRRELVM v){
+	const char* m;
+
+	sq_getstring(v, 2, &m);
+
+	sq_pushinteger(v, xyLoadMusic(m));
+
+	return 1;
+};
+
+int sqPlaySound(HSQUIRRELVM v){
+	int s, l;
+
+	sq_getinteger(v, 2, &s);
+	sq_getinteger(v, 3, &l);
+
+	sq_pushinteger(v, xyPlaySound(s, l));
+
+	return 1;
+};
+
+int sqPlayMusic(HSQUIRRELVM v){
+	int m, l;
+
+	sq_getinteger(v, 2, &m);
+	sq_getinteger(v, 3, &l);
+
+	xyPlayMusic(m, l);
+
+	return 0;
+};
+
+int sqDeleteSound(HSQUIRRELVM v){
+	int i;
+
+	sq_getinteger(v, 2, &i);
+
+	xyDeleteSound(i);
+
+	return 0;
+};
+
+int sqDeleteMusic(HSQUIRRELVM v){
+	int i;
+
+	sq_getinteger(v, 2, &i);
+
+	xyDeleteMusic(i);
+
+	return 0;
 };
