@@ -1,9 +1,0 @@
-[IMEDIATE ATTENTION NEEDED]
-*Add sprite scaling.
-*Finish mouse input.
-*Import shape math from old XYG project.
-*Add gamepad support.
-
-[DISTANT FEATURES]
-*Add TMX/JSON map support.
-*Add full audio support.
