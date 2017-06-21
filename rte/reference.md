@@ -144,7 +144,7 @@
 
   Draws a sprite that is also transformed and blended with the given `alpha` value.
 
-* >><a name="deleteSprite"></a>**`deleteSprite( sprite );`**
+* <a name="deleteSprite"></a>**`deleteSprite( sprite );`**
 
   Deletes a sprite from memory. If a new sprite is made afterwards, the index of a deleted sprite will be recycled to save memory. Be careful when creating new sprites, as any pointers to the deleted sprite will now point to that one.
 
@@ -178,15 +178,15 @@
 
   Returns the Y coordinate of the mouse.
 
-* >><a name="mouseDown"></a>**`mouseDown( button );`**
+* <a name="mouseDown"></a>**`mouseDown( button );`**
 
   Returns whether a given mouse button is currently held. Unlike with key input, mouse input does not use constants because he mouse has only a few buttons.
 
-* >><a name="mousePress"></a>**`mousePress( button );`**
+* <a name="mousePress"></a>**`mousePress( button );`**
 
   Returns whether a given mouse button was just pressed.
 
-* >><a name="mouseRelease"></a>**`mouseRelease( button );`**
+* <a name="mouseRelease"></a>**`mouseRelease( button );`**
 
   Returns whether a given mouse button was just released.
 
