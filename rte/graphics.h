@@ -13,7 +13,6 @@ void xyWait(int ticks);
 void xySetDrawTarget(Uint32 tex);
 void xyResetDrawTarget();
 void xyDrawImage(Uint32 tex, float x, float y);
-void xyUpdateScreen();
 Uint32 xyLoadImage(const char* path, Uint32 key);
 void xySetDrawColor(int r, int g, int b, int a);
 void xySetDrawColor(Uint32 color);

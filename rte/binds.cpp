@@ -27,9 +27,7 @@ int sqWait(HSQUIRRELVM v){
 };
 
 int sqUpdate(HSQUIRRELVM v){
-	gvTicks = SDL_GetTicks();
-	xyUpdateScreen();
-	xyUpdateInput();
+	xyUpdate();
 
 	return 0;
 };
@@ -142,12 +140,6 @@ int sqSetDrawColor(HSQUIRRELVM v){
 	return 0;
 };
 
-int sqUpdateScreen(HSQUIRRELVM v){
-	xyUpdateScreen();
-
-	return 0;
-};
-
 int sqLoadImage(HSQUIRRELVM v){
 	const char* file;
 
@@ -228,6 +220,9 @@ int sqDrawSprite(HSQUIRRELVM v){
 	sq_getinteger(v, 4, &x);
 	sq_getinteger(v, 5, &y);
 
+	if(vcSprites.size() <= i) return 0;
+	if(vcSprites[i] == 0) return 0;
+
 	vcSprites[i]->draw(f, x, y);
 
 	return 0;
@@ -245,7 +240,21 @@ int sqDrawSpriteEx(HSQUIRRELVM v){
 	sq_getinteger(v, 8, &sx);
 	sq_getinteger(v, 9, &sy);
 
+	if(vcSprites.size() <= i) return 0;
+	if(vcSprites[i] == 0) return 0;
+
 	vcSprites[i]->drawex(f, x, y, a, static_cast<SDL_RendererFlip>(l), sx, sy);
+
+	return 0;
+};
+
+int sqDeleteSprite(HSQUIRRELVM v){
+	int i;
+
+	sq_getinteger(v, 2, &i);
+
+	if(i >= vcSprites.size()) return 0;
+	if(vcSprites[i] != 0) delete vcSprites[i];
 
 	return 0;
 };
@@ -253,12 +262,6 @@ int sqDrawSpriteEx(HSQUIRRELVM v){
 ///////////
 // INPUT //
 ///////////
-
-int sqUpdateInput(HSQUIRRELVM v){
-	xyUpdateInput();
-
-	return 0;
-};
 
 int sqKeyPress(HSQUIRRELVM v){
 	SQInteger a;
@@ -295,6 +298,36 @@ int sqMouseX(HSQUIRRELVM v){
 
 int sqMouseY(HSQUIRRELVM v){
 	sq_pushinteger(v, gvMouseY);
+
+	return 1;
+};
+
+int sqMouseDown(HSQUIRRELVM v){
+	int i;
+
+	sq_getinteger(v, 2, &i);
+
+	sq_pushinteger(v, xyMouseButton(i));
+
+	return 1;
+};
+
+int sqMousePress(HSQUIRRELVM v){
+	int i;
+
+	sq_getinteger(v, 2, &i);
+
+	sq_pushinteger(v, xyMousePress(i));
+
+	return 1;
+};
+
+int sqMouseRelease(HSQUIRRELVM v){
+	int i;
+
+	sq_getinteger(v, 2, &i);
+
+	sq_pushinteger(v, xyMouseRelease(i));
 
 	return 1;
 };

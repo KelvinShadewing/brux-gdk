@@ -31,6 +31,12 @@ extern vector<TTF_Font*> vcFonts;	//Container for fonts
 extern vector<Mix_Chunk*> vcSounds;	//Container for sounds
 extern vector<Mix_Music*> vcMusic;	//Container for music
 extern string gvAppDir;				//Directory the XYRE is running from
-extern string gvWorkDir;				//Working directory, default is the game directory
+extern string gvWorkDir;			//Working directory, default is the game directory
+extern const Uint8 *sdlKeys;
+extern vector<Uint8> keystate;
+extern vector<Uint8> keylast;
+extern Uint32 buttonstate[5];
+extern Uint32 buttonlast[5];
+
 
 #endif

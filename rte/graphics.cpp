@@ -17,14 +17,6 @@ void xyClearScreen(){
 	SDL_RenderClear(gvRender);
 };
 
-//Clear the screen and render everything
-void xyUpdateScreen(){
-	SDL_RenderPresent(gvRender);
-	xySetDrawColor(gvBackColor);
-	SDL_RenderClear(gvRender);
-	xySetDrawColor(gvDrawColor);
-};
-
 
 //Set draw color based on RGBA data
 void xySetDrawColor(int r, int g, int b, int a){

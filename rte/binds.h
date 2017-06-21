@@ -18,7 +18,6 @@ int sqClearScreen(HSQUIRRELVM v);
 int sqSetDrawTarget(HSQUIRRELVM v);
 int sqDrawImage(HSQUIRRELVM v);
 int sqSetDrawColor(HSQUIRRELVM v);
-int sqUpdateScreen(HSQUIRRELVM v);
 int sqSetBackgroundColor(HSQUIRRELVM v);
 int sqLoadImage(HSQUIRRELVM v);
 int sqLoadImageKeyed(HSQUIRRELVM v);
@@ -28,9 +27,9 @@ int sqSetScalingFilter(HSQUIRRELVM v);
 int sqNewSprite(HSQUIRRELVM v);
 int sqDrawSprite(HSQUIRRELVM v);
 int sqDrawSpriteEx(HSQUIRRELVM v);
+int sqDeleteSprite(HSQUIRRELVM v);
 
 //Input
-int sqUpdateInput(HSQUIRRELVM v);
 int sqKeyPress(HSQUIRRELVM v);
 int sqKeyRelease(HSQUIRRELVM v);
 int sqKeyDown(HSQUIRRELVM v);
@@ -39,6 +38,9 @@ int sqLoadImage(HSQUIRRELVM v);
 int sqDrawImage(HSQUIRRELVM v);
 int sqMouseX(HSQUIRRELVM v);
 int sqMouseY(HSQUIRRELVM v);
+int sqMouseDown(HSQUIRRELVM v);
+int sqMousePress(HSQUIRRELVM v);
+int sqMouseRelease(HSQUIRRELVM v);
 
 //Maths
 int sqRandomFloat(HSQUIRRELVM v);

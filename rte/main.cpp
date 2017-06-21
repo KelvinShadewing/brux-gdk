@@ -52,7 +52,7 @@ int main(int argc, char* args[]){
 		xyPrint(0, curarg.c_str());
 		if(i == 0){
 			gvAppDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
-			xyPrint(0, "This is the app directory: %s", gvAppDir.c_str());
+			xyPrint(0, "App directory: %s", gvAppDir.c_str());
 		};
 
 		//Input file
@@ -291,7 +291,6 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqResetDrawTarget, "resetDrawTarget");
 	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".nnn");
 	xyBindFunc(v, sqSetDrawColor, "setDrawColor", 2, ".n");
-	xyBindFunc(v, sqUpdateScreen, "updateScreen");
 	xyBindFunc(v, sqLoadImage, "loadImage", 2, ".s");
 	xyBindFunc(v, sqLoadImageKeyed, "loadImageKey", 3, ".sn");
 	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".inn");
@@ -303,15 +302,18 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqNewSprite, "newSprite", 9, ".siiiiiii");
 	xyBindFunc(v, sqDrawSprite, "drawSprite", 5, ".innn");
 	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".innnninnn");
+	xyBindFunc(v, sqDeleteSprite, "deleteSprite", 2, ".i");
 
 	//Input
 	xyPrint(0, "Embedding input...");
-	xyBindFunc(v, sqUpdateInput, "updateInput");
 	xyBindFunc(v, sqKeyPress, "keyPress", 2, ".n");
 	xyBindFunc(v, sqKeyRelease, "keyRelease", 2, ".n");
 	xyBindFunc(v, sqKeyDown, "keyDown", 2, ".n");
-	xyBindFunc(v, sqMouseX, "mouseX", 1, ".");
-	xyBindFunc(v, sqMouseY, "mouseY", 1, ".");
+	xyBindFunc(v, sqMouseX, "mouseX");
+	xyBindFunc(v, sqMouseY, "mouseY");
+	xyBindFunc(v, sqMouseDown, "mouseDown", 2, ".i");
+	xyBindFunc(v, sqMousePress, "mousePress", 2, ".i");
+	xyBindFunc(v, sqMouseRelease, "mouseRelease", 2, ".i");
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
@@ -340,6 +342,67 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqPlayMusic, "playMusic", 3, ".nn");
 	xyBindFunc(v, sqDeleteSound, "deleteSound", 2, ".n");
 	xyBindFunc(v, sqDeleteMusic, "deleteMusic", 2, ".n");
+};
+
+void xyUpdate(){
+	gvTicks = SDL_GetTicks();
+
+	//Update last button state
+	for(int i = 0; i < 5; i++){
+		buttonlast[i] = buttonstate[i];
+	};
+
+	//Reset event-related globals
+	gvQuit = 0;
+
+
+	//Poll events
+	while(SDL_PollEvent(&Event)){
+		//Quit
+		if(Event.type == SDL_QUIT) gvQuit = 1;
+
+		//Mouse button
+		if(Event.type == SDL_MOUSEBUTTONDOWN){
+			if(Event.button.button == SDL_BUTTON_LEFT) buttonstate[0] = 1;
+			if(Event.button.button == SDL_BUTTON_MIDDLE) buttonstate[1] = 1;
+			if(Event.button.button == SDL_BUTTON_RIGHT) buttonstate[2] = 1;
+			if(Event.button.button == SDL_BUTTON_X1) buttonstate[3] = 1;
+			if(Event.button.button == SDL_BUTTON_X2) buttonstate[4] = 1;
+		};
+
+		if(Event.type == SDL_MOUSEBUTTONUP){
+			if(Event.button.button == SDL_BUTTON_LEFT) buttonstate[0] = 0;
+			if(Event.button.button == SDL_BUTTON_MIDDLE) buttonstate[1] = 0;
+			if(Event.button.button == SDL_BUTTON_RIGHT) buttonstate[2] = 0;
+			if(Event.button.button == SDL_BUTTON_X1) buttonstate[3] = 0;
+			if(Event.button.button == SDL_BUTTON_X2) buttonstate[4] = 0;
+		};
+	};
+
+	//Update screen
+	SDL_RenderPresent(gvRender);
+	xySetDrawColor(gvBackColor);
+	SDL_RenderClear(gvRender);
+	xySetDrawColor(gvDrawColor);
+
+	//Update input
+	keylast = keystate;
+	SDL_PumpEvents();
+	for(int i = 0; i < 322; i++){
+		keystate[i] = sdlKeys[i];
+	};
+
+	SDL_GetMouseState(&gvMouseX, &gvMouseY);
+
+	//Divide by scale
+	float sx, sy;
+	SDL_RenderGetScale(gvRender, &sx, &sy);
+
+	if(sx == 0) sx = 1;
+	if(sy == 0) sy = 1;
+
+	gvMouseX /= sx;
+	gvMouseY /= sy;
 };
 
 int xyGetOS(){

@@ -31,3 +31,8 @@ vector<Mix_Chunk*> vcSounds;
 vector<Mix_Music*> vcMusic;
 string gvAppDir;
 string gvWorkDir;
+const Uint8 *sdlKeys;
+vector<Uint8> keystate(322);
+vector<Uint8> keylast(322);
+Uint32 buttonstate[5];
+Uint32 buttonlast[5];
