@@ -413,8 +413,8 @@ void xyUpdate(){
 	gvMouseY /= sy;
 
 	//Wait for FPS limit
-	if(gvMaxFPS == 0) return;
-	else while(fLength < 1000 / gvMaxFPS){
+	if(gvMaxFPS != 0) while(fLength < 1000 / gvMaxFPS){
+		SDL_Delay(1);
 		gvTicks = SDL_GetTicks();
 		fLength = gvTicks - gvTickLast;
 	};
