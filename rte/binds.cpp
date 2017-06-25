@@ -32,16 +32,6 @@ int sqUpdate(HSQUIRRELVM v){
 	return 0;
 };
 
-int sqFileExists(HSQUIRRELVM v){
-	const char* file;
-
-	sq_getstring(v, 2, &file);
-
-	sq_pushbool(v, xyFileExists(file));
-
-	return 1;
-};
-
 int sqGetOS(HSQUIRRELVM v){
 	switch(xyGetOS()){
 		case 0:
@@ -76,6 +66,28 @@ int sqGetTicks(HSQUIRRELVM v){
 	return 1;
 };
 
+int sqGetFPS(HSQUIRRELVM v){
+	sq_pushinteger(v, gvFPS);
+
+	return 1;
+};
+
+int sqSetFPS(HSQUIRRELVM v){
+    int iMax;
+
+    sq_getinteger(v, 2, &iMax);
+
+    if(iMax < 0){
+    	xyError(0, "Maximum FPS cannot be negative.");
+		return 0;
+    } else gvMaxFPS = iMax;
+
+	return 0;
+};
+
+/////////////
+// FILE IO //
+/////////////
 
 int sqImport(HSQUIRRELVM v){
 	const char* a;
@@ -89,6 +101,24 @@ int sqImport(HSQUIRRELVM v){
 
 	sqstd_dofile(gvSquirrel, b.c_str(), 0, 1);
 
+	return 0;
+};
+
+int sqFileExists(HSQUIRRELVM v){
+	const char* file;
+
+	sq_getstring(v, 2, &file);
+
+	sq_pushbool(v, xyFileExists(file));
+
+	return 1;
+};
+
+int sqGetDir(HSQUIRRELVM v){
+	return 1;
+};
+
+int sqSetDir(HSQUIRRELVM v){
 	return 0;
 };
 
@@ -229,7 +259,8 @@ int sqDrawSprite(HSQUIRRELVM v){
 };
 
 int sqDrawSpriteEx(HSQUIRRELVM v){
-	int i, f, x, y, a, l, sx, sy;
+	int i, f, x, y, a, l;
+	float sx, sy;
 
 	sq_getinteger(v, 2, &i);
 	sq_getinteger(v, 3, &f);
@@ -237,8 +268,8 @@ int sqDrawSpriteEx(HSQUIRRELVM v){
 	sq_getinteger(v, 5, &y);
 	sq_getinteger(v, 6, &a);
 	sq_getinteger(v, 7, &l);
-	sq_getinteger(v, 8, &sx);
-	sq_getinteger(v, 9, &sy);
+	sq_getfloat(v, 8, &sx);
+	sq_getfloat(v, 9, &sy);
 
 	if(vcSprites.size() <= i) return 0;
 	if(vcSprites[i] == 0) return 0;
@@ -511,4 +542,19 @@ int sqDeleteMusic(HSQUIRRELVM v){
 	xyDeleteMusic(i);
 
 	return 0;
+};
+
+
+//////////
+// MISC //
+//////////
+
+int sqEmbedTest(HSQUIRRELVM v){
+	sq_pushinteger(v, 1);
+	sq_pushinteger(v, 2);
+	sq_pushinteger(v, 3);
+	sq_pushinteger(v, 4);
+	sq_pushinteger(v, 5);
+
+	return 1;
 };

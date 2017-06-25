@@ -7,10 +7,16 @@
 
 //Main
 int sqUpdate(HSQUIRRELVM v);
-int sqFileExists(HSQUIRRELVM v);
 int sqGetOS(HSQUIRRELVM v);
 int sqGetTicks(HSQUIRRELVM v);
+int sqGetFPS(HSQUIRRELVM v);
+int sqSetFPS(HSQUIRRELVM v);
+
+//File IO
 int sqImport(HSQUIRRELVM v);
+int sqFileExists(HSQUIRRELVM v);
+int sqGetDir(HSQUIRRELVM v);	//Needs def
+int sqSetDir(HSQUIRRELVM v);	//Needs def
 
 //Graphics
 int sqWait(HSQUIRRELVM v);
@@ -62,5 +68,8 @@ int sqPlaySound(HSQUIRRELVM v);
 int sqPlayMusic(HSQUIRRELVM v);
 int sqDeleteSound(HSQUIRRELVM v);
 int sqDeleteMusic(HSQUIRRELVM v);
+
+//Misc
+int sqEmbedTest(HSQUIRRELVM v);
 
 #endif

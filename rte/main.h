@@ -17,18 +17,11 @@
 #include <sys/stat.h>
 #include <iostream>
 #include <limits>
-
-
-#ifdef _MSC_VER
-#include "SDL.h"
-#include "SDL_image.h"
-#include "SDL_ttf.h"
-#include "SDL_mixer.h"
-#include "squirrel.h"
-#include "sqstdio.h"
-#include "sqstdaux.h"
-#include "sqstdmath.h"
+#ifdef _WIN32
+	#include <direct.h>
 #else
+	#include <unistd.h>
+#endif // _WIN32
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_ttf.h"
@@ -37,7 +30,6 @@
 #include "Squirrel/sqstdio.h"
 #include "Squirrel/sqstdaux.h"
 #include "Squirrel/sqstdmath.h"
-#endif
 
 using namespace std;
 

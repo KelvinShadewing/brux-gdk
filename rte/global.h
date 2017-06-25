@@ -17,7 +17,10 @@ extern SDL_Window *gvWindow;		//Main window
 extern SDL_Renderer *gvRender;		//Main renderer
 extern SDL_Texture *gvScreen;		//Main screen texture
 extern int gvError;					//Error code
-extern Uint32 gvTicks;				//How long the app has run
+extern float gvFPS;
+extern Uint32 gvMaxFPS;
+extern Uint32 gvTicks;
+extern Uint32 gvTickLast;
 extern char *gvVNo;					//XYRE version number
 extern const float pi;				//Pi
 extern bool gvClearScreen;			//Whether to clear the screen on update

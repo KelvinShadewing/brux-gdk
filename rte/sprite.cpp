@@ -96,10 +96,10 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
     SDL_Rect rec;
     SDL_Rect des;
 
-    des.x = x - piv.x;
-    des.y = y - piv.y;
-    des.w = w;
-    des.h = h;
+    des.x = x - (piv.x * xscale);
+    des.y = y - (piv.y * yscale);
+    des.w = w * xscale;
+    des.h = h * yscale;
 
     int fx = fd % col;
     int fy = (fd - fx) / col;

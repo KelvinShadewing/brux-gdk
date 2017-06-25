@@ -17,6 +17,8 @@
 * [Maths](#maths)
 * [Geometry](#geometry)
 * [Audio](#audio)
+* [Text](#text)
+* [Constants](#constants)
 
   >>*Notice:* Any function with a double bar in front of its name, like this box, has not yet been implemented/completed, and cannot be used in scripts.
 
@@ -262,6 +264,30 @@
 * <a name="deletemusic"></a>**`deleteMusic( music );`**
 
   Unloads the specified music track.
+  
+
+
+&nbsp;
+
+
+
+----
+
+## <a name="text"></a><center>**==== Text ====**</center>
+
+----
+
+* <a name="drawtext"></a>**`drawText( x, y, text, font, color, halign, valign );`**
+
+  Draws a string to the current render target using a loaded font. `halign` can be set with `ha_left`, `ha_center`, or `ha_right`, and `valign` can be set with `va_top`, `va_middle`, or `va_bottom`.
+
+* <a name="openfont"></a>**`openFont( file, size );`**
+
+  Loads a font from a `.ttf` file. `size` is in points.
+
+* <a name="closefont"></a>**`closeFont( font );`**
+
+  Removes `font` from memory.
 
 
 &nbsp;

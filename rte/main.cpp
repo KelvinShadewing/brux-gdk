@@ -23,7 +23,6 @@
 #include "global.h"
 #include "input.h"
 #include "graphics.h"
-#include "shapes.h"
 #include "maths.h"
 #include "fileio.h"
 #include "binds.h"
@@ -66,6 +65,7 @@ int main(int argc, char* args[]){
 					xygapp = curarg.c_str();
 					gvWorkDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
 					xyPrint(0, "This is the working directory: %s", gvWorkDir.c_str());
+					chdir(gvWorkDir.c_str());
 				};
 			};
 		};
@@ -282,6 +282,8 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqGetOS, "getOS");
 	xyBindFunc(v, sqGetTicks, "getTicks");
 	xyBindFunc(v, sqImport, "import", 2, ".s");
+	xyBindFunc(v, sqGetFPS, "getFPS");
+	xyBindFunc(v, sqSetFPS, "setFPS", 2, ".n");
 
 	//Graphics
 	xyPrint(0, "Embedding graphics...");
@@ -342,10 +344,16 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqPlayMusic, "playMusic", 3, ".nn");
 	xyBindFunc(v, sqDeleteSound, "deleteSound", 2, ".n");
 	xyBindFunc(v, sqDeleteMusic, "deleteMusic", 2, ".n");
+
+	//Misc
+	xyBindFunc(v, sqEmbedTest, "xygTest");
 };
 
 void xyUpdate(){
+	//Update ticks counter for FPS
+	gvTickLast = gvTicks;
 	gvTicks = SDL_GetTicks();
+	float fLength = gvTicks - gvTickLast;
 
 	//Update last button state
 	for(int i = 0; i < 5; i++){
@@ -403,6 +411,14 @@ void xyUpdate(){
 
 	gvMouseX /= sx;
 	gvMouseY /= sy;
+
+	//Wait for FPS limit
+	if(gvMaxFPS == 0) return;
+	else while(fLength < 1000 / gvMaxFPS){
+		gvTicks = SDL_GetTicks();
+		fLength = gvTicks - gvTickLast;
+	};
+	gvFPS = 1000 / fLength;
 };
 
 int xyGetOS(){
