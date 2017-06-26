@@ -28,6 +28,7 @@ Developers using XYG may freely make games without any need for paid license or 
 
 * **1.0.0.2**
   * Finished framerate cap (framerates between 30 and 300 are distinctly different!)
+  * Fixed audio bug where loadMusic() would return a sound index instead of music
 
 * **1.0.0.1**
   * Added change log
