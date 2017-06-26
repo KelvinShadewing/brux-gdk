@@ -10,7 +10,7 @@ Uint32 xyLoadSound(const char* filename){
 	//Load the sound file
 	Mix_Chunk* newSnd = Mix_LoadWAV(filename);
 	if(newSnd == 0){
-		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename, Mix_GetError());
+		xyError(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename, Mix_GetError());
 	};
 
 	//Add the file to the list
@@ -57,7 +57,7 @@ Uint32 xyLoadMusic(const char* filename){
 
 	//If an open space wasn't found
 	vcMusic.push_back(newMsc);
-	return vcSounds.size() - 1;
+	return vcMusic.size() - 1;
 };
 
 void xyDeleteSound(Uint32 sound){
