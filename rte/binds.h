@@ -11,6 +11,7 @@ int sqGetOS(HSQUIRRELVM v);
 int sqGetTicks(HSQUIRRELVM v);
 int sqGetFPS(HSQUIRRELVM v);
 int sqSetFPS(HSQUIRRELVM v);
+int sqSetWindowTitle(HSQUIRRELVM v);
 
 //File IO
 int sqImport(HSQUIRRELVM v);
@@ -28,6 +29,7 @@ int sqSetBackgroundColor(HSQUIRRELVM v);
 int sqLoadImage(HSQUIRRELVM v);
 int sqLoadImageKeyed(HSQUIRRELVM v);
 int sqSetScalingFilter(HSQUIRRELVM v);
+int sqSetResolution(HSQUIRRELVM v);
 
 //Sprites
 int sqNewSprite(HSQUIRRELVM v);
@@ -47,6 +49,7 @@ int sqMouseY(HSQUIRRELVM v);
 int sqMouseDown(HSQUIRRELVM v);
 int sqMousePress(HSQUIRRELVM v);
 int sqMouseRelease(HSQUIRRELVM v);
+int sqGetQuit(HSQUIRRELVM v);
 
 //Maths
 int sqRandomFloat(HSQUIRRELVM v);

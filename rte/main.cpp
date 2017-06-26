@@ -64,8 +64,8 @@ int main(int argc, char* args[]){
 					//All checks pass, assign the file
 					xygapp = curarg.c_str();
 					gvWorkDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
-					xyPrint(0, "This is the working directory: %s", gvWorkDir.c_str());
 					chdir(gvWorkDir.c_str());
+					xyPrint(0, "This is the working directory: %s", getcwd(0,0));
 				};
 			};
 		};
@@ -284,6 +284,7 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqImport, "import", 2, ".s");
 	xyBindFunc(v, sqGetFPS, "getFPS");
 	xyBindFunc(v, sqSetFPS, "setFPS", 2, ".n");
+	xyBindFunc(v, sqSetWindowTitle, "setWindowTitle", 2, ".s");
 
 	//Graphics
 	xyPrint(0, "Embedding graphics...");
@@ -298,6 +299,7 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".inn");
 	xyBindFunc(v, sqSetBackgroundColor, "setBackgroundColor", 2, ".n");
 	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".n|b");
+	xyBindFunc(v, sqSetResolution, "setResolution", 3, ".nn");
 
 	//Sprites
 	xyPrint(0, "Embedding sprites...");
@@ -316,6 +318,7 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqMouseDown, "mouseDown", 2, ".i");
 	xyBindFunc(v, sqMousePress, "mousePress", 2, ".i");
 	xyBindFunc(v, sqMouseRelease, "mouseRelease", 2, ".i");
+	xyBindFunc(v, sqGetQuit, "getQuit");
 
 	//Maths
 	xyPrint(0, "Embedding maths...");

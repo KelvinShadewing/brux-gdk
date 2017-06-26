@@ -85,6 +85,15 @@ int sqSetFPS(HSQUIRRELVM v){
 	return 0;
 };
 
+int sqSetWindowTitle(HSQUIRRELVM v){
+	const char* t;
+
+	sq_getstring(v, 2, &t);
+	SDL_SetWindowTitle(gvWindow, t);
+
+	return 0;
+};
+
 /////////////
 // FILE IO //
 /////////////
@@ -215,6 +224,29 @@ int sqSetScalingFilter(HSQUIRRELVM v){
 	strHint += "\"";
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, strHint.c_str());
+
+	return 0;
+};
+
+int sqSetResolution(HSQUIRRELVM v){
+	int w, h;
+
+	sq_getinteger(v, 2, &w);
+	sq_getinteger(v, 3, &h);
+
+	if(w < 1 || h < 1){
+		xyError(0, "Window dimensions cannot be 0.");
+		return 0;
+	};
+
+	SDL_Rect screensize;
+	screensize.x = 0;
+	screensize.y = 0;
+	screensize.w = w;
+	screensize.h = h;
+	SDL_RenderSetViewport(gvRender, &screensize);
+	SDL_RenderSetLogicalSize(gvRender, w, h);
+	SDL_SetWindowSize(gvWindow, w, h);
 
 	return 0;
 };
@@ -359,6 +391,12 @@ int sqMouseRelease(HSQUIRRELVM v){
 	sq_getinteger(v, 2, &i);
 
 	sq_pushinteger(v, xyMouseRelease(i));
+
+	return 1;
+};
+
+int sqGetQuit(HSQUIRRELVM v){
+	sq_pushbool(v, gvQuit);
 
 	return 1;
 };
