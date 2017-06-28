@@ -415,12 +415,13 @@ void xyUpdate(){
 	gvMouseX /= sx;
 	gvMouseY /= sy;
 
+	gvFPS = 1000 / fLength;
 	//Wait for FPS limit
-	if(gvMaxFPS != 0) while(fLength < 1000 / gvMaxFPS){
-		SDL_Delay(1);
+	if(gvMaxFPS != 0) SDL_Delay((1000 / gvMaxFPS) - (fLength / gvMaxFPS));
+	/*while(fLength < 1000 / gvMaxFPS){
 		gvTicks = SDL_GetTicks();
 		fLength = gvTicks - gvTickLast;
-	};
+	};*/
 	gvFPS = 1000 / fLength;
 };
 
