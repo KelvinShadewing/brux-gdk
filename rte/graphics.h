@@ -23,5 +23,6 @@ void xyDeleteImage(Uint32 img);
 Uint8 xyGetRed(Uint32 color);
 Uint8 xyGetGreen(Uint32 color);
 Uint8 xyGetBlue(Uint32 color);
+Uint8 xyGetAlpha(Uint32 color);
 
 #endif

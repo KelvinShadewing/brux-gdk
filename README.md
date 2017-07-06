@@ -1,4 +1,4 @@
-# **XYG STUDIO**
+![XYG Studio](http://xygstudio.org/img/logo.png)
 ## **eXperience Your Game**
 
 &nbsp;
@@ -15,10 +15,13 @@ Developers using XYG may freely make games without any need for paid license or 
 
 ### To Do (Runtime)
 
-* FPS Management
+* FPS management
 * Gamepad
-* TMX Maps
-* Collision Geometry
+* TMX maps
+* Collision geometry
+* Replace SDL2_ttf with bitmap fonts
+* Fixes needed:
+  * Sprites do not pivot correctly when scaled and rotated at the same time
 
 ### To Do (Editor)
 

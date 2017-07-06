@@ -37,22 +37,17 @@ void xySetDrawColor(int r, int g, int b, int a){
 void xySetDrawColor(Uint32 color){
 	//If the value of color is too big for a 24-bit integer, then treat it as 32-bit
 	Uint8 r;
-	if(color > 0xFFFFFF) r = (color >> 24) & 255;
-	else r = (color >> 16) & 255;
+	r = (color & 0xFF000000) >> 24;
 
 	//Do the same for each color value
 	Uint8 g;
-	if(color > 0xFFFFFF) g = (color >> 16) & 255;
-	else g = (color >> 8) & 255;
+	g = (color & 0x00FF0000) >> 16;
 
 	Uint8 b;
-	if(color > 0xFFFFFF) b = (color >> 8) & 255;
-	else b = color & 255;
+	b = (color & 0x0000FF00) >> 8;
 
-	//If it's not big enough for 32-bit, then use full alpha
 	Uint8 a;
-	if(color > 0xFFFFFF) a = color & 255;
-	else a = 255;
+	a = color & 0x000000FF;
 
 	//Set the color
 	SDL_SetRenderDrawColor(gvRender, r, g, b, a);
@@ -63,26 +58,28 @@ void xySetDrawColor(Uint32 color){
 //Extract color value from a single integer
 Uint8 xyGetRed(Uint32 color){
 	Uint8 r;
-	if(color > 0xFFFFFF) r = (color >> 24) & 255;
-	else r = (color >> 16) & 255;
+	r = (color & 0xFF000000) >> 24;
 
 	return r;
 };
 
 Uint8 xyGetGreen(Uint32 color){
 	Uint8 g;
-	if(color > 0xFFFFFF) g = (color >> 16) & 255;
-	else g = (color >> 8) & 255;
+	g = (color & 0x00FF0000) >> 16;
 
 	return g;
 };
 
 Uint8 xyGetBlue(Uint32 color){
 	Uint8 b;
-	if(color > 0xFFFFFF) b = (color >> 8) & 255;
-	else b = color & 255;
+	b = (color & 0x0000FF00) >> 8;
 
 	return b;
+};
+
+Uint8 xyGetAlpha(Uint32 color){
+	Uint8 a;
+	a = color & 0x000000FF;
 };
 
 void xySetBackgroundColor(Uint32 color){

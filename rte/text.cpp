@@ -13,7 +13,7 @@
 //Draw text
 void xyDrawText(float x, float y, const char* text, Uint32 font, Uint32 color, int halign, int valign){
 	//Get the draw color
-	SDL_Color dCol = {xyGetRed(color), xyGetGreen(color), xyGetBlue(color)};
+	SDL_Color dCol = {xyGetRed(color), xyGetGreen(color), xyGetBlue(color), xyGetAlpha(color)};
 
 	//Create surface for rendering
 	SDL_Surface* textSurface = TTF_RenderText_Solid(vcFonts[font], text, dCol);
