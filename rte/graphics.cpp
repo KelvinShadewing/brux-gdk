@@ -223,7 +223,7 @@ void xyDeleteImage(Uint32 tex){
 
 	SDL_DestroyTexture(vcTextures[tex]);
 
-	if(tex == vcSprites.size() - 1) vcSprites[tex] == 0; //Set the texture address to zero instead of removing it so other textures are not shifted over
+	if(tex == vcSprites.size() - 1) vcSprites[tex] = 0; //Set the texture address to zero instead of removing it so other textures are not shifted over
 	else vcSprites.pop_back(); //If it's the last one, then remove it to save memory
 };
 
