@@ -80,6 +80,8 @@ Uint8 xyGetBlue(Uint32 color){
 Uint8 xyGetAlpha(Uint32 color){
 	Uint8 a;
 	a = color & 0x000000FF;
+
+	return a;
 };
 
 void xySetBackgroundColor(Uint32 color){
