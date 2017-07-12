@@ -31,7 +31,7 @@ void xyDrawText(float x, float y, const char* text, Uint32 font, Uint32 color, i
 	int mW = textSurface->w;
 	int mH = textSurface->h;
 	SDL_Rect srcR = {0, 0, mW, mH};
-	SDL_Rect desR = {x - ((mW / 2) * halign), y - ((mH / 2) * valign), mW, mH};
+	SDL_Rect desR = {static_cast<int>(x) - ((mW / 2) * halign), static_cast<int>(y) - ((mH / 2) * valign), mW, mH};
 	SDL_FreeSurface(textSurface); //We're done with the surface now
 
 	//Render the texture
