@@ -22,14 +22,14 @@
 #else
 	#include <unistd.h>
 #endif // _WIN32
-#include "SDL/SDL.h"
-#include "SDL/SDL_image.h"
-#include "SDL/SDL_ttf.h"
-#include "SDL/SDL_mixer.h"
-#include "Squirrel/squirrel.h"
-#include "Squirrel/sqstdio.h"
-#include "Squirrel/sqstdaux.h"
-#include "Squirrel/sqstdmath.h"
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
+#include <squirrel.h>
+#include <sqstdio.h>
+#include <sqstdaux.h>
+#include <sqstdmath.h>
 
 using namespace std;
 
