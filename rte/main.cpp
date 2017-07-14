@@ -48,24 +48,38 @@ int main(int argc, char* args[]){
 	for(int i = 0; i < argc; i++){
 		//Print each argument and process them
 		curarg = args[i];
-		xyPrint(0, curarg.c_str());
 		if(i == 0){
+			//-- Get Full Path
+			char xyg_app_real_path[PATH_MAX];
+			realpath(curarg.c_str(), xyg_app_real_path);
+			curarg = xyg_app_real_path;
+			//-- Get path from executable
 			gvAppDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
+
 			xyPrint(0, "App directory: %s", gvAppDir.c_str());
 		};
 
 		//Input file
 		//If the file is long enough
-		if(curarg.length() > 4){
+		if(curarg.length() > 4 && curarg.find(".") !=std::string::npos){
 			//If the file ends in '.xyg'
-			if(curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut"){
+			size_t ext_pos = curarg.find_last_of(".");
+			bool is_sq = curarg.substr(ext_pos) == ".sq";
+			bool is_nut = curarg.substr(ext_pos) == ".nut";
+			if(is_sq || is_nut){
+				//-- Get Full Path
+				char xyg_working_real_path[PATH_MAX];
+				realpath(curarg.c_str(), xyg_working_real_path);
+
 				//Check that the file really exists
-				if(xyFileExists(curarg.c_str())){
+				if(xyFileExists(xyg_working_real_path)){
 					//All checks pass, assign the file
-					xygapp = curarg.c_str();
-					gvWorkDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
+					xygapp = xyg_working_real_path;
+
+					gvWorkDir = xygapp.substr(0, xygapp.find_last_of("/\\") + 1);
 					chdir(gvWorkDir.c_str());
-					xyPrint(0, "This is the working directory: %s", getcwd(0,0));
+					char *cwd = getcwd(0, 0);
+					xyPrint(0, "This is the working directory: %s", cwd);
 				};
 			};
 		};

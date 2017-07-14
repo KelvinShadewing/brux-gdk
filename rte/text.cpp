@@ -52,15 +52,19 @@ Uint32 xyOpenFont(const char* filename, Uint32 size){
 	if(vcFonts.size() == 0){ //Add to end
 		vcFonts.push_back(newfont);
 		return vcFonts.size() - 1;
-	} else for(int i = 0; i <= vcFonts.size(); i++){
-		if(i == vcFonts.size()){ //Add to end
-			vcFonts.push_back(newfont);
-			return vcFonts.size() - 1;
-		}else if(vcFonts[i] == 0){ //Add to middle
-			vcFonts[i] = newfont;
-			return i;
-		};
-	};
+	} else {
+		for(int i = 0; i <= vcFonts.size(); i++){
+			if(i == vcFonts.size()){ //Add to end
+				vcFonts.push_back(newfont);
+				return vcFonts.size() - 1;
+			}else if(vcFonts[i] == 0){ //Add to middle
+				vcFonts[i] = newfont;
+				return i;
+			};
+		}
+		xyError(0, "BEEP BOOP, you should not have gotten this far\n");
+		return 0;
+	}
 };
 
 //Delete font
