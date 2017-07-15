@@ -431,7 +431,12 @@ void xyUpdate(){
 
 	gvFPS = 1000 / fLength;
 	//Wait for FPS limit
-	if(gvMaxFPS != 0) SDL_Delay((1000 / gvMaxFPS) - (fLength / gvMaxFPS));
+	//		delay	4294967290	unsigned int
+	Uint32 current_time = (static_cast<Uint32>(fLength) / gvMaxFPS);
+	Uint32 max_delay = (1000 / gvMaxFPS);
+	if (current_time < max_delay) {
+		if (gvMaxFPS != 0) SDL_Delay(max_delay - current_time);
+	}
 	/*while(fLength < 1000 / gvMaxFPS){
 		gvTicks = SDL_GetTicks();
 		fLength = gvTicks - gvTickLast;
