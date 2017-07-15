@@ -2,6 +2,17 @@
 
 This guide is to help programmers get on boarded with various IDEs and compilers to work on the game engine.
 
+## CLion - MacOS
+
+If you are using brew you can simply run the following:
+
+    brew install sdl2 sdl2_image sdl2_mixer sdl2_ttf squirrel
+
+Then in Clion just open `{project_path}/rte` and you are set! A tip for running Squirrels from the IDE is to edit the `rte` configuration set:
+
+ - **Program arguments**: your .nut or .sq file here
+ - **Working directory**: the directory where you want to reference your files, its not really needed as RTE will switch the directory based on the nut file, but this lets you not have to enter in the full path to your nut file.
+
 ## Visual Studio 2017 - CMake
 
 ### Required Libraries

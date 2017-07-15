@@ -41,6 +41,10 @@ set(SOURCE_FILES
         text.cpp
         text.h)
 
+configure_file(${CMAKE_SOURCE_DIR}/bin/xylib/core.nut ${CMAKE_BINARY_DIR}/bin/xylib/core.nut COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/bin/xylib/shapes.nut ${CMAKE_BINARY_DIR}/bin/xylib/shapes.nut COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/bin/xylib/tmx.nut ${CMAKE_BINARY_DIR}/bin/xylib/tmx.nut COPYONLY)
+
 add_executable(rte ${SOURCE_FILES})
 
 target_link_libraries(rte ${SDL2_LIBRARY}
