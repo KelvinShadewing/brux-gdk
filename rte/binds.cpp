@@ -202,9 +202,9 @@ SQInteger sqLoadImageKeyed(HSQUIRRELVM v){
 };
 
 SQInteger sqSetBackgroundColor(HSQUIRRELVM v){
-	Uint32 color;
+	SQInteger color;
 
-	sq_getinteger(v, 2, (SQInteger*)&color);
+	sq_getinteger(v, 2, &color);
 
 	xySetBackgroundColor(color);
 
