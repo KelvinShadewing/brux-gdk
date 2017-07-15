@@ -6,73 +6,73 @@
 #define _BINDINGS_H_
 
 //Main
-int sqUpdate(HSQUIRRELVM v);
-int sqGetOS(HSQUIRRELVM v);
-int sqGetTicks(HSQUIRRELVM v);
-int sqGetFPS(HSQUIRRELVM v);
-int sqSetFPS(HSQUIRRELVM v);
-int sqSetWindowTitle(HSQUIRRELVM v);
+SQInteger sqUpdate(HSQUIRRELVM v);
+SQInteger sqGetOS(HSQUIRRELVM v);
+SQInteger sqGetTicks(HSQUIRRELVM v);
+SQInteger sqGetFPS(HSQUIRRELVM v);
+SQInteger sqSetFPS(HSQUIRRELVM v);
+SQInteger sqSetWindowTitle(HSQUIRRELVM v);
 
 //File IO
-int sqImport(HSQUIRRELVM v);
-int sqFileExists(HSQUIRRELVM v);
-int sqGetDir(HSQUIRRELVM v);	//Needs def
-int sqSetDir(HSQUIRRELVM v);	//Needs def
+SQInteger sqImport(HSQUIRRELVM v);
+SQInteger sqFileExists(HSQUIRRELVM v);
+SQInteger sqGetDir(HSQUIRRELVM v);	//Needs def
+SQInteger sqSetDir(HSQUIRRELVM v);	//Needs def
 
 //Graphics
-int sqWait(HSQUIRRELVM v);
-int sqClearScreen(HSQUIRRELVM v);
-int sqSetDrawTarget(HSQUIRRELVM v);
-int sqDrawImage(HSQUIRRELVM v);
-int sqSetDrawColor(HSQUIRRELVM v);
-int sqSetBackgroundColor(HSQUIRRELVM v);
-int sqLoadImage(HSQUIRRELVM v);
-int sqLoadImageKeyed(HSQUIRRELVM v);
-int sqSetScalingFilter(HSQUIRRELVM v);
-int sqSetResolution(HSQUIRRELVM v);
+SQInteger sqWait(HSQUIRRELVM v);
+SQInteger sqClearScreen(HSQUIRRELVM v);
+SQInteger sqSetDrawTarget(HSQUIRRELVM v);
+SQInteger sqDrawImage(HSQUIRRELVM v);
+SQInteger sqSetDrawColor(HSQUIRRELVM v);
+SQInteger sqSetBackgroundColor(HSQUIRRELVM v);
+SQInteger sqLoadImage(HSQUIRRELVM v);
+SQInteger sqLoadImageKeyed(HSQUIRRELVM v);
+SQInteger sqSetScalingFilter(HSQUIRRELVM v);
+SQInteger sqSetResolution(HSQUIRRELVM v);
 
 //Sprites
-int sqNewSprite(HSQUIRRELVM v);
-int sqDrawSprite(HSQUIRRELVM v);
-int sqDrawSpriteEx(HSQUIRRELVM v);
-int sqDeleteSprite(HSQUIRRELVM v);
+SQInteger sqNewSprite(HSQUIRRELVM v);
+SQInteger sqDrawSprite(HSQUIRRELVM v);
+SQInteger sqDrawSpriteEx(HSQUIRRELVM v);
+SQInteger sqDeleteSprite(HSQUIRRELVM v);
 
 //Input
-int sqKeyPress(HSQUIRRELVM v);
-int sqKeyRelease(HSQUIRRELVM v);
-int sqKeyDown(HSQUIRRELVM v);
-int sqResetDrawTarget(HSQUIRRELVM v);
-int sqLoadImage(HSQUIRRELVM v);
-int sqDrawImage(HSQUIRRELVM v);
-int sqMouseX(HSQUIRRELVM v);
-int sqMouseY(HSQUIRRELVM v);
-int sqMouseDown(HSQUIRRELVM v);
-int sqMousePress(HSQUIRRELVM v);
-int sqMouseRelease(HSQUIRRELVM v);
-int sqGetQuit(HSQUIRRELVM v);
+SQInteger sqKeyPress(HSQUIRRELVM v);
+SQInteger sqKeyRelease(HSQUIRRELVM v);
+SQInteger sqKeyDown(HSQUIRRELVM v);
+SQInteger sqResetDrawTarget(HSQUIRRELVM v);
+SQInteger sqLoadImage(HSQUIRRELVM v);
+SQInteger sqDrawImage(HSQUIRRELVM v);
+SQInteger sqMouseX(HSQUIRRELVM v);
+SQInteger sqMouseY(HSQUIRRELVM v);
+SQInteger sqMouseDown(HSQUIRRELVM v);
+SQInteger sqMousePress(HSQUIRRELVM v);
+SQInteger sqMouseRelease(HSQUIRRELVM v);
+SQInteger sqGetQuit(HSQUIRRELVM v);
 
 //Maths
-int sqRandomFloat(HSQUIRRELVM v);
-int sqRandomInt(HSQUIRRELVM v);
-int sqDistance2(HSQUIRRELVM v);
-int sqWrap(HSQUIRRELVM v);
-int sqFloor(HSQUIRRELVM v);
-int sqPointAngle(HSQUIRRELVM v);
+SQInteger sqRandomFloat(HSQUIRRELVM v);
+SQInteger sqRandomInt(HSQUIRRELVM v);
+SQInteger sqDistance2(HSQUIRRELVM v);
+SQInteger sqWrap(HSQUIRRELVM v);
+SQInteger sqFloor(HSQUIRRELVM v);
+SQInteger sqPointAngle(HSQUIRRELVM v);
 
 //Text
-int sqDrawText(HSQUIRRELVM v);
-int sqOpenFont(HSQUIRRELVM v);
-int sqCloseFont(HSQUIRRELVM v);
+SQInteger sqDrawText(HSQUIRRELVM v);
+SQInteger sqOpenFont(HSQUIRRELVM v);
+SQInteger sqCloseFont(HSQUIRRELVM v);
 
 //Audio
-int sqLoadSound(HSQUIRRELVM v);
-int sqLoadMusic(HSQUIRRELVM v);
-int sqPlaySound(HSQUIRRELVM v);
-int sqPlayMusic(HSQUIRRELVM v);
-int sqDeleteSound(HSQUIRRELVM v);
-int sqDeleteMusic(HSQUIRRELVM v);
+SQInteger sqLoadSound(HSQUIRRELVM v);
+SQInteger sqLoadMusic(HSQUIRRELVM v);
+SQInteger sqPlaySound(HSQUIRRELVM v);
+SQInteger sqPlayMusic(HSQUIRRELVM v);
+SQInteger sqDeleteSound(HSQUIRRELVM v);
+SQInteger sqDeleteMusic(HSQUIRRELVM v);
 
 //Misc
-int sqEmbedTest(HSQUIRRELVM v);
+SQInteger sqEmbedTest(HSQUIRRELVM v);
 
 #endif

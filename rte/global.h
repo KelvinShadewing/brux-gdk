@@ -21,7 +21,7 @@ extern float gvFPS;
 extern Uint32 gvMaxFPS;
 extern Uint32 gvTicks;
 extern Uint32 gvTickLast;
-extern char *gvVNo;					//XYRE version number
+extern const char *gvVNo;					//XYRE version number
 extern const float pi;				//Pi
 extern bool gvClearScreen;			//Whether to clear the screen on update
 extern SDL_Event Event;				//Used for event handling
