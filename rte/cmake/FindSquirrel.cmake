@@ -7,9 +7,23 @@
 #  Squirrel_STD_LIBRARY - The Squirrel std library
 
 
-FIND_PATH(Squirrel_INCLUDE_DIR squirrel.h PATH_SUFFIXES squirrel)
-FIND_LIBRARY(Squirrel_LIBRARY NAMES squirrel PATH_SUFFIXES squirrel)
-FIND_LIBRARY(Squirrel_STD_LIBRARY NAMES sqstdlib PATH_SUFFIXES squirrel)
+FIND_PATH(Squirrel_INCLUDE_DIR squirrel.h 
+        HINTS
+        PATH_SUFFIXES squirrel
+		PATHS ${Squirrel_DIR}
+		)
+
+FIND_LIBRARY(Squirrel_LIBRARY 
+		NAMES squirrel
+		PATH_SUFFIXES squirrel
+		PATHS ${Squirrel_DIR}
+		)
+
+FIND_LIBRARY(Squirrel_STD_LIBRARY
+		NAMES sqstdlib
+		PATH_SUFFIXES squirrel
+		PATHS ${Squirrel_DIR}
+		)
 
 MARK_AS_ADVANCED(Squirrel_INCLUDE_DIR Squirrel_LIBRARY)
 

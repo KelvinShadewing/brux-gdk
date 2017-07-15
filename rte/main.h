@@ -17,6 +17,14 @@
 #include <sys/stat.h>
 #include <iostream>
 #include <limits>
+
+#ifdef _MSC_VER
+#ifndef PATH_MAX
+#define PATH_MAX _MAX_PATH
+#endif
+#define realpath(N,R) _fullpath((R),(N),_MAX_PATH)
+#endif
+
 #ifdef _WIN32
 	#include <direct.h>
 #else

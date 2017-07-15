@@ -67,10 +67,6 @@
 #
 #=============================================================================
 
-if(NOT SDL2_MIXER_INCLUDE_DIR AND SDL2MIXER_INCLUDE_DIR)
-    set(SDL2_MIXER_INCLUDE_DIR ${SDL2MIXER_INCLUDE_DIR} CACHE PATH "directory cache
-entry initialized from old variable name")
-endif()
 find_path(SDL2_MIXER_INCLUDE_DIR SDL_mixer.h
         HINTS
         ENV SDL2MIXERDIR
@@ -78,6 +74,7 @@ find_path(SDL2_MIXER_INCLUDE_DIR SDL_mixer.h
         PATH_SUFFIXES SDL2
         # path suffixes to search inside ENV{SDL2DIR}
         include/SDL2
+		PATHS ${SDL2_MIXER_PATH}
         )
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -86,16 +83,13 @@ else()
     set(VC_LIB_PATH_SUFFIX lib/x86)
 endif()
 
-if(NOT SDL2_MIXER_LIBRARY AND SDL2MIXER_LIBRARY)
-    set(SDL2_MIXER_LIBRARY ${SDL2MIXER_LIBRARY} CACHE FILEPATH "file cache entry
-initialized from old variable name")
-endif()
 find_library(SDL2_MIXER_LIBRARY
         NAMES SDL2_mixer
         HINTS
         ENV SDL2MIXERDIR
         ENV SDL2DIR
         PATH_SUFFIXES lib ${VC_LIB_PATH_SUFFIX}
+		PATHS ${SDL2_MIXER_PATH}
         )
 
 if(SDL2_MIXER_INCLUDE_DIR AND EXISTS "${SDL2_MIXER_INCLUDE_DIR}/SDL_mixer.h")
