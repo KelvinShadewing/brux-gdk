@@ -12,7 +12,7 @@ extern int gvMouseX, gvMouseY;		//Mouse coordinates
 extern Uint32 gvScrW, gvScrH;		//Screen resolution
 extern Uint32 gvWinW, gvWinH;		//Window resolution
 extern HSQUIRRELVM gvSquirrel;		//Squirrel VM
-extern FILE *gvLog;					//Output log
+extern ofstream gvLog;				//Output log
 extern SDL_Window *gvWindow;		//Main window
 extern SDL_Renderer *gvRender;		//Main renderer
 extern SDL_Texture *gvScreen;		//Main screen texture
