@@ -78,8 +78,12 @@ int main(int argc, char* args[]){
 
 					gvWorkDir = xygapp.substr(0, xygapp.find_last_of("/\\") + 1);
 					chdir(gvWorkDir.c_str());
-					char *cwd = getcwd(0, 0);
-					xyPrint(0, "This is the working directory: %s", cwd);
+					gvWorkDir = getcwd(0, 0);
+					/*
+						gvWorkDir must equal the current working directory here.
+						When changed later by the user, it must be able to be reset after use to keep the VM from breaking
+					*/
+					xyPrint(0, "This is the working directory: %s", gvWorkDir.c_str());
 				};
 			};
 		};
@@ -156,12 +160,6 @@ int xyInit(){
 			SDL_RenderSetLogicalSize(gvRender, gvScrW, gvScrH);
 
 		};
-	};
-
-	//Initialize TTF
-	if(TTF_Init() < 0){
-		xyError(0, "SDL_ttf could not initialize! SDL_ttf error: %s\n", TTF_GetError());
-		return 0;
 	};
 
 	//Initialize audio
@@ -345,9 +343,6 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 
 	//Text
 	xyPrint(0, "Embedding text...");
-	xyBindFunc(v, sqDrawText, "drawText", 8, ".nnsnnnn");
-	xyBindFunc(v, sqOpenFont, "openFont", 3, ".sn");
-	xyBindFunc(v, sqCloseFont, "closeFont", 2, ".n");
 
 	//File IO
 	xyPrint(0, "Embedding file I/O...");

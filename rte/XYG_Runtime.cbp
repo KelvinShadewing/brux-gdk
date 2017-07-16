@@ -35,7 +35,7 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Linker>
-			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lSDL2_net" />
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_net" />
 			<Add library="C:/dev/lib/libSquirrel.a" />
 			<Add library="C:/dev/lib/libSQstd.a" />
 		</Linker>

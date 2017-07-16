@@ -24,6 +24,9 @@
 #endif
 #define realpath(N,R) _fullpath((R),(N),_MAX_PATH)
 #endif
+/*
+	This requires MSVC? There needs to be a cross-platform alternative, otherwise it can't build.
+*/
 
 #ifdef _WIN32
 	#include <direct.h>
@@ -32,7 +35,8 @@
 #endif // _WIN32
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
+#include <SDL_mixer.h>
+#include <SDL_net.h>
 #include <SDL_mixer.h>
 #include <squirrel.h>
 #include <sqstdio.h>

@@ -474,47 +474,7 @@ SQInteger sqPointAngle(HSQUIRRELVM v){
 // TEXT //
 //////////
 
-SQInteger sqDrawText(HSQUIRRELVM v){
-	float x, y;
-	const char* t;
-	SQInteger f, c, ha, va;
 
-	sq_getfloat(v, 2, &x);
-	sq_getfloat(v, 3, &y);
-	sq_getstring(v, 4, &t);
-	sq_getinteger(v, 5, &f);
-	sq_getinteger(v, 6, &c);
-	sq_getinteger(v, 7, &ha);
-	sq_getinteger(v, 8, &va);
-
-	xyDrawText(x, y, t, f, c, ha, va);
-
-	return 0;
-};
-
-SQInteger sqOpenFont(HSQUIRRELVM v){
-	const char* f;
-	SQInteger s;
-
-	sq_getstring(v, 2, &f);
-	sq_getinteger(v, 3, &s);
-
-	if(s < 1) s = 1;
-
-	sq_pushinteger(v, xyOpenFont(f, s));
-
-	return 1;
-};
-
-SQInteger sqCloseFont(HSQUIRRELVM v){
-	SQInteger f;
-
-	sq_getinteger(v, 2, &f);
-
-	xyCloseFont(f);
-
-	return 0;
-};
 
 ///////////
 // AUDIO //

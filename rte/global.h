@@ -6,6 +6,7 @@
 #define _GLOBALS_H_
 
 #include "sprite.h"
+#include "text.h"
 
 extern bool gvQuit;					//Let's the game know when to quit
 extern int gvMouseX, gvMouseY;		//Mouse coordinates
@@ -30,7 +31,7 @@ extern bool gvDebug;				//Controls whether or not debug output is printed
 extern vector<xySprite*> vcSprites;	//Vector containing all sprite pointers
 extern Uint32 gvBackColor;			//Background color
 extern Uint32 gvDrawColor;			//Renderer color
-extern vector<TTF_Font*> vcFonts;	//Container for fonts
+extern vector<xyFont*> vcFonts;	//Container for fonts
 extern vector<Mix_Chunk*> vcSounds;	//Container for sounds
 extern vector<Mix_Music*> vcMusic;	//Container for music
 extern string gvAppDir;				//Directory the XYRE is running from

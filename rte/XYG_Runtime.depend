@@ -463,3 +463,75 @@
 	"graphics.h"
 	"text.h"
 
+1498439620 source:f:\c++\xyg\xyg_runtime\audio.cpp
+	"main.h"
+	"global.h"
+	"audio.h"
+
+1500165132 f:\c++\xyg\xyg_runtime\main.h
+	<stdio.h>
+	<sstream>
+	<string>
+	<stdarg.h>
+	<cmath>
+	<vector>
+	<fstream>
+	<algorithm>
+	<sys/stat.h>
+	<iostream>
+	<limits>
+	<direct.h>
+	<unistd.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_net.h>
+	<SDL_mixer.h>
+	<squirrel.h>
+	<sqstdio.h>
+	<sqstdaux.h>
+	<sqstdmath.h>
+
+1500164314 f:\c++\xyg\xyg_runtime\global.h
+	"sprite.h"
+	"text.h"
+
+1472694750 f:\c++\xyg\xyg_runtime\sprite.h
+
+1500164528 f:\c++\xyg\xyg_runtime\text.h
+
+1497755578 f:\c++\xyg\xyg_runtime\audio.h
+
+1468305346 source:f:\c++\xyg\xyg_runtime\fileio.cpp
+	"main.h"
+	"global.h"
+	"fileio.h"
+
+1460745978 f:\c++\xyg\xyg_runtime\fileio.h
+
+1498051258 source:f:\c++\xyg\xyg_runtime\input.cpp
+	"input.h"
+
+1498049964 f:\c++\xyg\xyg_runtime\input.h
+	"main.h"
+	"global.h"
+
+1489528692 source:f:\c++\xyg\xyg_runtime\maths.cpp
+	"main.h"
+	"global.h"
+	"maths.h"
+
+1489029962 f:\c++\xyg\xyg_runtime\maths.h
+
+1498356924 source:f:\c++\xyg\xyg_runtime\sprite.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"sprite.h"
+	"maths.h"
+
+1498965726 f:\c++\xyg\xyg_runtime\graphics.h
+	"main.h"
+
+1497565972 source:f:\c++\xyg\xyg_runtime\xyg.rc
+
