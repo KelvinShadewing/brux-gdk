@@ -12,7 +12,7 @@ int gvMouseX = 0, gvMouseY = 0;
 Uint32 gvScrW = 320, gvScrH = 240;
 Uint32 gvWinW = 320, gvWinH = 240;
 HSQUIRRELVM gvSquirrel;
-FILE *gvLog;
+ofstream gvLog;
 SDL_Window *gvWindow;
 SDL_Renderer *gvRender;
 SDL_Texture *gvScreen;

@@ -13,7 +13,7 @@ extern int gvMouseX, gvMouseY;		//Mouse coordinates
 extern Uint32 gvScrW, gvScrH;		//Screen resolution
 extern Uint32 gvWinW, gvWinH;		//Window resolution
 extern HSQUIRRELVM gvSquirrel;		//Squirrel VM
-extern FILE *gvLog;					//Output log
+extern ofstream gvLog;				//Output log
 extern SDL_Window *gvWindow;		//Main window
 extern SDL_Renderer *gvRender;		//Main renderer
 extern SDL_Texture *gvScreen;		//Main screen texture
@@ -22,7 +22,7 @@ extern float gvFPS;
 extern Uint32 gvMaxFPS;
 extern Uint32 gvTicks;
 extern Uint32 gvTickLast;
-extern const char *gvVNo;					//XYRE version number
+extern const char *gvVNo;			//XYRE version number
 extern const float pi;				//Pi
 extern bool gvClearScreen;			//Whether to clear the screen on update
 extern SDL_Event Event;				//Used for event handling

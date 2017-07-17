@@ -117,7 +117,7 @@ int main(int argc, char* args[]){
 int xyInit(){
 	//Initiate log file
 	remove("log.txt");
-	gvLog = fopen("log.txt", "w");
+	gvLog.open("log.txt", "w");
 
 	//Print opening message
 	xyPrint(0, "\n/========================\\\n| XYG STUDIO RUNTIME LOG |\n\\========================/\n\n");
@@ -177,6 +177,7 @@ int xyInit(){
 	gvSquirrel = sq_open(1024);
 
 	sqstd_register_mathlib(gvSquirrel);
+	sqstd_register_iolib(gvSquirrel);
 	sq_setprintfunc(gvSquirrel, xyPrint, xyError);
 	sq_pushroottable(gvSquirrel);
 
@@ -195,8 +196,8 @@ int xyInit(){
 	vcSounds.push_back(0);
 	vcMusic.push_back(0);
 
-	fprintf(gvLog, "================\n\n");
-	printf("================\n\n");
+	gvLog << "================\n\n";
+	cout << "================\n\n";
 
 	//Return success
 	return 1;
@@ -205,18 +206,16 @@ int xyInit(){
 void xyError(HSQUIRRELVM v, const SQChar *s, ...){
 	va_list args;
 	va_start(args, s);
-	fprintf(gvLog, "!ERROR! >:: ");
-	vfprintf(gvLog, s, args);
-	printf("!ERROR! >:: ");
-	vprintf(s, args);
-	printf("\n\n");
-	fprintf(gvLog, "\n\n");
+	SQChar buffer[1024] = _SC("");
+	vsnprintf(buffer, sizeof(buffer), s, args);
 	va_end(args);
+	cout << "!ERROR! >:: " << buffer << endl << endl;
+	gvLog << "!ERROR! >:: " << buffer << endl << endl;
 };
 
 void xyEnd(){
 
-	fprintf(gvLog, "================\n\n");
+	gvLog << "================\n\n";
 	printf("================\n\n");
 
 	//Cleanup all resources
@@ -239,7 +238,7 @@ void xyEnd(){
 
 	//Close Squirrel
 	xyPrint(0, "Closing Squirrel...");
-	int garbage = sq_collectgarbage(gvSquirrel);
+	SQInteger garbage = sq_collectgarbage(gvSquirrel);
 	xyPrint(0, "Collected %i junk obects.", garbage);
 	sq_pop(gvSquirrel, 1);
 	sq_close(gvSquirrel);
@@ -255,19 +254,17 @@ void xyEnd(){
 
 	//Close log file
 	xyPrint(0, "System closed successfully!");
-	fclose(gvLog);
+	gvLog.close();
 };
 
 void xyPrint(HSQUIRRELVM v, const SQChar *s, ...){
 	va_list args;
 	va_start(args, s);
-	fprintf(gvLog, ">:: ");
-	vfprintf(gvLog, s, args);
-	printf(">:: ");
-	vprintf(s, args);
-	printf("\n\n");
-	fprintf(gvLog, "\n\n");
+	SQChar buffer[1024] = _SC("");
+	vsnprintf(buffer, sizeof(buffer), s, args);
 	va_end(args);
+	cout << ">:: " << buffer << endl << endl;
+	gvLog << ">:: " << buffer << endl << endl;
 };
 
 void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key){

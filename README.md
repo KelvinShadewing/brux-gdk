@@ -5,7 +5,7 @@
 
 ### **License**
 
-All code is available under the GNU General Public License
+All code is available under the Zlib License
 
 ### **Introduction**
 
