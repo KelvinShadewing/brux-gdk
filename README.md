@@ -1,4 +1,4 @@
-![XYG Studio](http://xygstudio.org/img/logo.png)
+![XYG Studio](http://xygstudio.org/img/title.png)
 ## **eXperience Your Game**
 
 &nbsp;
