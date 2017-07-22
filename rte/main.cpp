@@ -117,7 +117,7 @@ int main(int argc, char* args[]){
 int xyInit(){
 	//Initiate log file
 	remove("log.txt");
-	gvLog.open("log.txt", "w");
+	gvLog.open("log.txt", ios_base::out);
 
 	//Print opening message
 	xyPrint(0, "\n/========================\\\n| XYG STUDIO RUNTIME LOG |\n\\========================/\n\n");
