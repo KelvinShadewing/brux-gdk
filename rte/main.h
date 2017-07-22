@@ -7,6 +7,7 @@
 
 //Headers
 #include <stdio.h>
+#include <stdlib.h>
 #include <sstream>
 #include <string>
 #include <stdarg.h>
@@ -18,7 +19,7 @@
 #include <iostream>
 #include <limits>
 
-#ifdef _MSC_VER
+#if defined( _MSC_VER ) || defined( __MINGW32__ )
 #ifndef PATH_MAX
 #define PATH_MAX _MAX_PATH
 #endif
