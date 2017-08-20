@@ -535,3 +535,231 @@
 
 1497565972 source:f:\c++\xyg\xyg_runtime\xyg.rc
 
+1501362546 source:/media/kelvin/LEAF/C++/XYG/rte/audio.cpp
+	"main.h"
+	"global.h"
+	"audio.h"
+
+1503181841 /media/kelvin/LEAF/C++/XYG/rte/main.h
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+	<string>
+	<stdarg.h>
+	<cmath>
+	<vector>
+	<fstream>
+	<algorithm>
+	<sys/stat.h>
+	<iostream>
+	<limits>
+	<direct.h>
+	<unistd.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_mixer.h>
+	<SDL2/SDL_net.h>
+	<SDL2/SDL_mixer.h>
+	<Squirrel/squirrel.h>
+	<Squirrel/sqstdio.h>
+	<Squirrel/sqstdaux.h>
+	<Squirrel/sqstdmath.h>
+
+1500239882 /media/kelvin/LEAF/C++/XYG/rte/global.h
+	"sprite.h"
+	"text.h"
+
+1500888534 /media/kelvin/LEAF/C++/XYG/rte/sprite.h
+
+1500885682 /media/kelvin/LEAF/C++/XYG/rte/text.h
+
+1497737578 /media/kelvin/LEAF/C++/XYG/rte/audio.h
+
+1501880312 source:/media/kelvin/LEAF/C++/XYG/rte/binds.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"input.h"
+	"maths.h"
+	"fileio.h"
+	"text.h"
+	"binds.h"
+	"audio.h"
+
+1498947726 /media/kelvin/LEAF/C++/XYG/rte/graphics.h
+	"main.h"
+
+1498031964 /media/kelvin/LEAF/C++/XYG/rte/input.h
+	"main.h"
+	"global.h"
+
+1489011962 /media/kelvin/LEAF/C++/XYG/rte/maths.h
+
+1460727978 /media/kelvin/LEAF/C++/XYG/rte/fileio.h
+
+1501360588 /media/kelvin/LEAF/C++/XYG/rte/binds.h
+
+1468287346 source:/media/kelvin/LEAF/C++/XYG/rte/fileio.cpp
+	"main.h"
+	"global.h"
+	"fileio.h"
+
+1500889712 source:/media/kelvin/LEAF/C++/XYG/rte/global.cpp
+	"main.h"
+	"sprite.h"
+	"global.h"
+	"text.h"
+
+1500060244 source:/media/kelvin/LEAF/C++/XYG/rte/graphics.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"fileio.h"
+
+1498033258 source:/media/kelvin/LEAF/C++/XYG/rte/input.cpp
+	"input.h"
+
+1501362492 source:/media/kelvin/LEAF/C++/XYG/rte/main.cpp
+	"main.h"
+	"global.h"
+	"input.h"
+	"graphics.h"
+	"maths.h"
+	"fileio.h"
+	"binds.h"
+	"text.h"
+	"audio.h"
+
+1489510692 source:/media/kelvin/LEAF/C++/XYG/rte/maths.cpp
+	"main.h"
+	"global.h"
+	"maths.h"
+
+1500889756 source:/media/kelvin/LEAF/C++/XYG/rte/sprite.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"sprite.h"
+	"maths.h"
+
+1501362546 source:/media/kelvin/LEAF/C++/XYG/rte/text.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"sprite.h"
+	"text.h"
+
+1501362546 source:/home/kelvin/Code/XYG/rte/audio.cpp
+	"main.h"
+	"global.h"
+	"audio.h"
+
+1503181841 /home/kelvin/Code/XYG/rte/main.h
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+	<string>
+	<stdarg.h>
+	<cmath>
+	<vector>
+	<fstream>
+	<algorithm>
+	<sys/stat.h>
+	<iostream>
+	<limits>
+	<direct.h>
+	<unistd.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_mixer.h>
+	<SDL2/SDL_net.h>
+	<SDL2/SDL_mixer.h>
+	<Squirrel/squirrel.h>
+	<Squirrel/sqstdio.h>
+	<Squirrel/sqstdaux.h>
+	<Squirrel/sqstdmath.h>
+
+1500239882 /home/kelvin/Code/XYG/rte/global.h
+	"sprite.h"
+	"text.h"
+
+1500888534 /home/kelvin/Code/XYG/rte/sprite.h
+
+1500885682 /home/kelvin/Code/XYG/rte/text.h
+
+1497737578 /home/kelvin/Code/XYG/rte/audio.h
+
+1501880312 source:/home/kelvin/Code/XYG/rte/binds.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"input.h"
+	"maths.h"
+	"fileio.h"
+	"text.h"
+	"binds.h"
+	"audio.h"
+
+1498947726 /home/kelvin/Code/XYG/rte/graphics.h
+	"main.h"
+
+1498031964 /home/kelvin/Code/XYG/rte/input.h
+	"main.h"
+	"global.h"
+
+1489011962 /home/kelvin/Code/XYG/rte/maths.h
+
+1460727978 /home/kelvin/Code/XYG/rte/fileio.h
+
+1501360588 /home/kelvin/Code/XYG/rte/binds.h
+
+1468287346 source:/home/kelvin/Code/XYG/rte/fileio.cpp
+	"main.h"
+	"global.h"
+	"fileio.h"
+
+1500889712 source:/home/kelvin/Code/XYG/rte/global.cpp
+	"main.h"
+	"sprite.h"
+	"global.h"
+	"text.h"
+
+1500060244 source:/home/kelvin/Code/XYG/rte/graphics.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"fileio.h"
+
+1498033258 source:/home/kelvin/Code/XYG/rte/input.cpp
+	"input.h"
+
+1501362492 source:/home/kelvin/Code/XYG/rte/main.cpp
+	"main.h"
+	"global.h"
+	"input.h"
+	"graphics.h"
+	"maths.h"
+	"fileio.h"
+	"binds.h"
+	"text.h"
+	"audio.h"
+
+1489510692 source:/home/kelvin/Code/XYG/rte/maths.cpp
+	"main.h"
+	"global.h"
+	"maths.h"
+
+1500889756 source:/home/kelvin/Code/XYG/rte/sprite.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"sprite.h"
+	"maths.h"
+
+1501362546 source:/home/kelvin/Code/XYG/rte/text.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"sprite.h"
+	"text.h"
+

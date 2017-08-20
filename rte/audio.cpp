@@ -10,7 +10,7 @@ Uint32 xyLoadSound(const char* filename){
 	//Load the sound file
 	Mix_Chunk* newSnd = Mix_LoadWAV(filename);
 	if(newSnd == 0){
-		xyError(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename, Mix_GetError());
+		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename, Mix_GetError());
 	};
 
 	//Add the file to the list
@@ -37,7 +37,7 @@ Uint32 xyLoadMusic(const char* filename){
 	//Load the music file
 	Mix_Music* newMsc = Mix_LoadMUS(filename);
 	if(newMsc == 0){
-		xyError(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename, Mix_GetError());
+		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename, Mix_GetError());
 	};
 
 	//Add the file to the list
@@ -74,12 +74,12 @@ void xyDeleteMusic(Uint32 music){
 
 int xyPlaySound(Uint32 sound, Uint32 loops){
 	int i = Mix_PlayChannel(-1, vcSounds[sound], loops);
-	if(i == -1) xyError(0, "Error playing sound! SDL_Mixer Error: %s\n", Mix_GetError());
+	if(i == -1) xyPrint(0, "Error playing sound! SDL_Mixer Error: %s\n", Mix_GetError());
 	return i;
 };
 
 int xyPlayMusic(Uint32 music, Uint32 loops){
 	int i = Mix_PlayMusic(vcMusic[music], loops);
-	if(i == -1) xyError(0, "Error playing music! SDL_Mixer Error: %s\n", Mix_GetError());
+	if(i == -1) xyPrint(0, "Error playing music! SDL_Mixer Error: %s\n", Mix_GetError());
 	return i;
 };

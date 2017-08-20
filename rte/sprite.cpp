@@ -16,8 +16,8 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	h = height;
 	mar = margin;
 	pad = padding;
-	piv.x = pivotX;
-	piv.y = pivotY;
+	pvX = pivotX;
+	pvY = pivotY;
 	numero = 0;
 	frames = _frames;
 	tex = xyLoadImage(filename);
@@ -71,8 +71,8 @@ void xySprite::draw(int f, int x, int y){
     SDL_Rect rec;
     SDL_Rect des;
 
-    des.x = x - piv.x;
-    des.y = y - piv.y;
+    des.x = x - pvX;
+    des.y = y - pvY;
     des.w = w;
     des.h = h;
 
@@ -96,8 +96,8 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
     SDL_Rect rec;
     SDL_Rect des;
 
-    des.x = x - (piv.x * xscale);
-    des.y = y - (piv.y * yscale);
+    des.x = x - (pvX * xscale);
+    des.y = y - (pvY * yscale);
     des.w = w * xscale;
     des.h = h * yscale;
 
@@ -109,9 +109,17 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
     rec.w = w;
     rec.h = h;
 
-    SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, &piv, flip);
+    SDL_Point *piv = new SDL_Point;
+    piv->x = pvX * xscale;
+    piv->y = pvY * yscale;
+
+    SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
 };
 
 Uint32 xySprite::getnum(){
 	return numero;
+};
+
+Uint32 xySprite::gettex(){
+	return tex;
 };

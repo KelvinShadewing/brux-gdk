@@ -78,7 +78,7 @@ SQInteger sqSetFPS(HSQUIRRELVM v){
     sq_getinteger(v, 2, &iMax);
 
     if(iMax < 0){
-    	xyError(0, "Maximum FPS cannot be negative.");
+    	xyPrint(0, "Maximum FPS cannot be negative.");
 		return 0;
     } else gvMaxFPS = iMax;
 
@@ -108,6 +108,24 @@ SQInteger sqImport(HSQUIRRELVM v){
 	b += a;
 	b += ".nut";
 
+	sqstd_dofile(gvSquirrel, b.c_str(), 0, 1);
+
+	return 0;
+};
+
+SQInteger sqDoNut(HSQUIRRELVM v){
+	const char* a;
+
+	sq_getstring(v, 2, &a);
+
+	string b = "";
+	char c[256];
+	if(getcwd(c, sizeof(c)) == 0) return 0;
+	b += c;
+	b += "/";
+	b += a;
+
+	xyPrint(0, "Running %s...", b.c_str());
 	sqstd_dofile(gvSquirrel, b.c_str(), 0, 1);
 
 	return 0;
@@ -235,7 +253,7 @@ SQInteger sqSetResolution(HSQUIRRELVM v){
 	sq_getinteger(v, 3, &h);
 
 	if(w < 1 || h < 1){
-		xyError(0, "Window dimensions cannot be 0.");
+		xyPrint(0, "Window dimensions cannot be 0.");
 		return 0;
 	};
 
@@ -543,16 +561,7 @@ SQInteger sqDeleteMusic(HSQUIRRELVM v){
 };
 
 
-//////////
-// MISC //
-//////////
 
-SQInteger sqEmbedTest(HSQUIRRELVM v){
-	sq_pushinteger(v, 1);
-	sq_pushinteger(v, 2);
-	sq_pushinteger(v, 3);
-	sq_pushinteger(v, 4);
-	sq_pushinteger(v, 5);
-
-	return 1;
-};
+/////////////
+// SDL_GFX //
+/////////////

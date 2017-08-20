@@ -48,42 +48,24 @@ int main(int argc, char* args[]){
 	for(int i = 0; i < argc; i++){
 		//Print each argument and process them
 		curarg = args[i];
+		xyPrint(0, curarg.c_str());
 		if(i == 0){
-			//-- Get Full Path
-			char xyg_app_real_path[PATH_MAX];
-			realpath(curarg.c_str(), xyg_app_real_path);
-			curarg = xyg_app_real_path;
-			//-- Get path from executable
 			gvAppDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
-
 			xyPrint(0, "App directory: %s", gvAppDir.c_str());
 		};
 
 		//Input file
 		//If the file is long enough
-		if(curarg.length() > 4 && curarg.find(".") !=std::string::npos){
+		if(curarg.length() > 4){
 			//If the file ends in '.xyg'
-			size_t ext_pos = curarg.find_last_of(".");
-			bool is_sq = curarg.substr(ext_pos) == ".sq";
-			bool is_nut = curarg.substr(ext_pos) == ".nut";
-			if(is_sq || is_nut){
-				//-- Get Full Path
-				char xyg_working_real_path[PATH_MAX];
-				realpath(curarg.c_str(), xyg_working_real_path);
-
+			if(curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut"){
 				//Check that the file really exists
-				if(xyFileExists(xyg_working_real_path)){
+				if(xyFileExists(curarg.c_str())){
 					//All checks pass, assign the file
-					xygapp = xyg_working_real_path;
-
-					gvWorkDir = xygapp.substr(0, xygapp.find_last_of("/\\") + 1);
+					xygapp = curarg.c_str();
+					gvWorkDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
 					chdir(gvWorkDir.c_str());
-					gvWorkDir = getcwd(0, 0);
-					/*
-						gvWorkDir must equal the current working directory here.
-						When changed later by the user, it must be able to be reset after use to keep the VM from breaking
-					*/
-					xyPrint(0, "This is the working directory: %s", gvWorkDir.c_str());
+					xyPrint(0, "This is the working directory: %s", getcwd(0,0));
 				};
 			};
 		};
@@ -117,7 +99,7 @@ int main(int argc, char* args[]){
 int xyInit(){
 	//Initiate log file
 	remove("log.txt");
-	gvLog.open("log.txt", "w");
+	gvLog.open("log.txt", ios_base::out);
 
 	//Print opening message
 	xyPrint(0, "\n/========================\\\n| XYG STUDIO RUNTIME LOG |\n\\========================/\n\n");
@@ -164,7 +146,7 @@ int xyInit(){
 
 	//Initialize audio
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
-		xyError(0, "SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
+		xyPrint(0, "SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
 		return 0;
 	};
 
@@ -178,7 +160,7 @@ int xyInit(){
 
 	sqstd_register_mathlib(gvSquirrel);
 	sqstd_register_iolib(gvSquirrel);
-	sq_setprintfunc(gvSquirrel, xyPrint, xyError);
+	sq_setprintfunc(gvSquirrel, xyPrint, xyPrint);
 	sq_pushroottable(gvSquirrel);
 
 	xyBindAllFunctions(gvSquirrel);
@@ -196,27 +178,15 @@ int xyInit(){
 	vcSounds.push_back(0);
 	vcMusic.push_back(0);
 
-	gvLog << "================\n\n";
-	cout << "================\n\n";
+	xyPrint(0, "\n================\n\n");
 
 	//Return success
 	return 1;
 };
 
-void xyError(HSQUIRRELVM v, const SQChar *s, ...){
-	va_list args;
-	va_start(args, s);
-	SQChar buffer[1024] = _SC("");
-	vsnprintf(buffer, sizeof(buffer), s, args);
-	va_end(args);
-	cout << "!ERROR! >:: " << buffer << endl << endl;
-	gvLog << "!ERROR! >:: " << buffer << endl << endl;
-};
-
 void xyEnd(){
 
-	gvLog << "================\n\n";
-	printf("================\n\n");
+	xyPrint(0, "\n================\n\n");
 
 	//Cleanup all resources
 	xyPrint(0, "Cleaning up all resources...");
@@ -248,7 +218,6 @@ void xyEnd(){
 	SDL_DestroyRenderer(gvRender);
 	SDL_DestroyWindow(gvWindow);
 	IMG_Quit();
-	TTF_Quit();
 	Mix_Quit();
 	SDL_Quit();
 
@@ -263,8 +232,8 @@ void xyPrint(HSQUIRRELVM v, const SQChar *s, ...){
 	SQChar buffer[1024] = _SC("");
 	vsnprintf(buffer, sizeof(buffer), s, args);
 	va_end(args);
-	cout << ">:: " << buffer << endl << endl;
-	gvLog << ">:: " << buffer << endl << endl;
+	cout << buffer << endl;
+	gvLog << buffer << endl;
 };
 
 void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key){
@@ -290,7 +259,6 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqUpdate, "update");
 	xyBindFunc(v, sqGetOS, "getOS");
 	xyBindFunc(v, sqGetTicks, "getTicks");
-	xyBindFunc(v, sqImport, "import", 2, ".s");
 	xyBindFunc(v, sqGetFPS, "getFPS");
 	xyBindFunc(v, sqSetFPS, "setFPS", 2, ".n");
 	xyBindFunc(v, sqSetWindowTitle, "setWindowTitle", 2, ".s");
@@ -344,6 +312,8 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	//File IO
 	xyPrint(0, "Embedding file I/O...");
 	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s");
+	xyBindFunc(v, sqImport, "import", 2, ".s");
+	xyBindFunc(v, sqDoNut, "donut", 2, ".s");
 
 	//Audio
 	xyPrint(0, "Embedding audio...");
@@ -353,9 +323,6 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqPlayMusic, "playMusic", 3, ".nn");
 	xyBindFunc(v, sqDeleteSound, "deleteSound", 2, ".n");
 	xyBindFunc(v, sqDeleteMusic, "deleteMusic", 2, ".n");
-
-	//Misc
-	xyBindFunc(v, sqEmbedTest, "xygTest");
 };
 
 void xyUpdate(){

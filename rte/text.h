@@ -8,7 +8,7 @@
 class xyFont{
 private:
 	xySprite* source;
-	vector<int> x0, x1;
+	vector<int[2]> x;
 	char start;
 	Uint32 numero;
 

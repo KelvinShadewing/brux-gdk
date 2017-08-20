@@ -21,7 +21,7 @@ Uint32 gvTicks = 0;
 Uint32 gvTickLast = 0;
 float gvFPS = 0;
 Uint32 gvMaxFPS = 60;
-const char *gvVNo = "v.1.0.2";
+const char *gvVNo = "v.1.0.3";
 const float pi = 3.14159265;
 bool gvClearScreen = 1;
 SDL_Event Event;

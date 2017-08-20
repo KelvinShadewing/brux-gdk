@@ -15,6 +15,7 @@ SQInteger sqSetWindowTitle(HSQUIRRELVM v);
 
 //File IO
 SQInteger sqImport(HSQUIRRELVM v);
+SQInteger sqDoNut(HSQUIRRELVM v);
 SQInteger sqFileExists(HSQUIRRELVM v);
 SQInteger sqGetDir(HSQUIRRELVM v);	//Needs def
 SQInteger sqSetDir(HSQUIRRELVM v);	//Needs def
@@ -69,7 +70,6 @@ SQInteger sqPlayMusic(HSQUIRRELVM v);
 SQInteger sqDeleteSound(HSQUIRRELVM v);
 SQInteger sqDeleteMusic(HSQUIRRELVM v);
 
-//Misc
-SQInteger sqEmbedTest(HSQUIRRELVM v);
+//SDL_gfx
 
 #endif
