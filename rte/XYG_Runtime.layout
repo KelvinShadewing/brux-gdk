@@ -21,14 +21,14 @@
 			<Cursor1 position="1111" topLine="30" />
 		</Cursor>
 	</File>
-	<File name="global.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="397" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="895" topLine="60" />
+		</Cursor>
+	</File>
+	<File name="global.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="397" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

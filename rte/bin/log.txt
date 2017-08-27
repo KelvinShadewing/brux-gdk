@@ -22,5 +22,16 @@ Squirrel initialized successfully!
 ================
 
 
-/home/kelvin/Code/XYG/rte/bin/XYG_Runtime
-App directory: /home/kelvin/Code/XYG/rte/bin/
+./xyg
+App directory: ./
+Imported core lib.
+Test Nut
+
+================
+
+
+Cleaning up all resources...
+Closing Squirrel...
+Collected 0 junk obects.
+Closing SDL...
+System closed successfully!
