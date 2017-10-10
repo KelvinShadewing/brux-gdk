@@ -22,9 +22,12 @@
 
 #ifdef _WIN32
 	#include <direct.h>
+	#define getCD _getcwd
 #else
 	#include <unistd.h>
+	#define getCD getcwd
 #endif // _WIN32
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>

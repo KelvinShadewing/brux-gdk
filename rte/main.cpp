@@ -50,27 +50,29 @@ int main(int argc, char* args[]){
 		curarg = args[i];
 		xyPrint(0, curarg.c_str());
 		if(i == 0){
+            //Get app install directory
 			gvAppDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
 			xyPrint(0, "App directory: %s", gvAppDir.c_str());
-		};
-
-		//Input file
-		//If the file is long enough
-		if(curarg.length() > 4){
-			//If the file ends in '.xyg'
-			if(curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut"){
-				//Check that the file really exists
-				if(xyFileExists(curarg.c_str())){
-					//All checks pass, assign the file
-					xygapp = curarg.c_str();
-					gvWorkDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
-					chdir(gvWorkDir.c_str());
-					xyPrint(0, "This is the working directory: %s", getcwd(0,0));
+		} else {
+			//Input file
+			//If the file is long enough
+			if(curarg.length() > 4){
+				//If the file ends in '.xyg'
+				if(curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut"){
+					//Check that the file really exists
+					if(xyFileExists(curarg.c_str())){
+						//All checks pass, assign the file
+						char tmpstr[64];
+						xygapp = curarg.c_str();
+						getCD(tmpstr, 64);
+						gvWorkDir = tmpstr;
+						chdir(gvWorkDir.c_str());
+						xyPrint(0, "This is the working directory: %s", getcwd(0,0));
+					};
 				};
 			};
-		};
-
 		//Other arguments
+		};
 	};
 
 
