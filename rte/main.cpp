@@ -20,6 +20,7 @@
 
 //Main header
 #include "main.h"
+#include "core.h"
 #include "global.h"
 #include "input.h"
 #include "graphics.h"
@@ -77,9 +78,7 @@ int main(int argc, char* args[]){
 
 
 	//Run app
-	string strCoreLib = gvAppDir;
-	strCoreLib += "xylib/core.nut";
-	sqstd_dofile(gvSquirrel, strCoreLib.c_str(), 0, 1);
+	xyLoadCore();
 	sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
 
 	//End game

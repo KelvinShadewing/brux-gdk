@@ -41,6 +41,8 @@
 		<Unit filename="audio.h" />
 		<Unit filename="binds.cpp" />
 		<Unit filename="binds.h" />
+		<Unit filename="core.cpp" />
+		<Unit filename="core.h" />
 		<Unit filename="fileio.cpp" />
 		<Unit filename="fileio.h" />
 		<Unit filename="global.cpp" />

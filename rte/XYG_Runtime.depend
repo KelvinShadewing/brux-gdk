@@ -733,8 +733,9 @@
 1498033258 source:/home/kelvin/Code/XYG/rte/input.cpp
 	"input.h"
 
-1501362492 source:/home/kelvin/Code/XYG/rte/main.cpp
+1508363706 source:/home/kelvin/Code/XYG/rte/main.cpp
 	"main.h"
+	"core.h"
 	"global.h"
 	"input.h"
 	"graphics.h"
@@ -762,4 +763,11 @@
 	"graphics.h"
 	"sprite.h"
 	"text.h"
+
+1508363690 source:/home/kelvin/Code/XYG/rte/core.cpp
+	"main.h"
+	"global.h"
+	"core.h"
+
+1508363605 /home/kelvin/Code/XYG/rte/core.h
 
