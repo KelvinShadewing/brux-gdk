@@ -371,18 +371,6 @@ SQInteger sqKeyRelease(HSQUIRRELVM v){
 	return 1;
 };
 
-SQInteger sqMouseX(HSQUIRRELVM v){
-	sq_pushinteger(v, gvMouseX);
-
-	return 1;
-};
-
-SQInteger sqMouseY(HSQUIRRELVM v){
-	sq_pushinteger(v, gvMouseY);
-
-	return 1;
-};
-
 SQInteger sqMouseDown(HSQUIRRELVM v){
 	SQInteger i;
 
@@ -410,6 +398,16 @@ SQInteger sqMouseRelease(HSQUIRRELVM v){
 
 	sq_pushinteger(v, xyMouseRelease(i));
 
+	return 1;
+};
+
+SQInteger sqMouseX(HSQUIRRELVM v){
+	sq_pushinteger(v, gvMouseX);
+	return 1;
+};
+
+SQInteger sqMouseY(HSQUIRRELVM v){
+	sq_pushinteger(v, gvMouseY);
 	return 1;
 };
 

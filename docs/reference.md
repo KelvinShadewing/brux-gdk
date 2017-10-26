@@ -118,6 +118,14 @@
 
   Returns the FPS determined by the time it took between the most recent update and the one before it. This is the absolute FPS value, and drawing it on screen will probably look very jittery depending on your game, so it's advisable to make a function that tracks the average or can transition smoothly.
 
+* <a name="setWindowTitle"></a>**`setWindowTitle( title );`**
+
+  Changes the title of the window.
+
+* <a name="setResolution"></a>**`setResolution( width, height );`**
+
+  Changes the base resolution of the window. In full screen, this may produce a letterbox if the aspect ratio does not match that of the monitor.
+
 
 
 &nbsp;

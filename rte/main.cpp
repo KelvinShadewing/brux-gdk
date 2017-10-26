@@ -291,11 +291,11 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqKeyPress, "keyPress", 2, ".n");
 	xyBindFunc(v, sqKeyRelease, "keyRelease", 2, ".n");
 	xyBindFunc(v, sqKeyDown, "keyDown", 2, ".n");
-	xyBindFunc(v, sqMouseX, "mouseX");
-	xyBindFunc(v, sqMouseY, "mouseY");
 	xyBindFunc(v, sqMouseDown, "mouseDown", 2, ".i");
 	xyBindFunc(v, sqMousePress, "mousePress", 2, ".i");
 	xyBindFunc(v, sqMouseRelease, "mouseRelease", 2, ".i");
+	xyBindFunc(v, sqMouseX, "mouseX");
+	xyBindFunc(v, sqMouseY, "mouseY");
 	xyBindFunc(v, sqGetQuit, "getQuit");
 
 	//Maths
@@ -417,4 +417,14 @@ int xyGetOS(){
 #ifdef __APPLE__
 	return 3;
 #endif
+};
+
+int xyRun(char* cmd){
+	int result = 0;
+	SQInteger oldtop = sq_gettop(gvSquirrel);
+	sq_compilebuffer(gvSquirrel, cmd, (int)strlen(cmd) * sizeof(SQChar), "run", 1);
+	sq_pushroottable(gvSquirrel);
+	result = sq_call(gvSquirrel, 1, SQFalse, SQTrue);
+	sq_settop(gvSquirrel, oldtop);
+	return result;
 };

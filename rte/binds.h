@@ -45,12 +45,12 @@ SQInteger sqKeyDown(HSQUIRRELVM v);
 SQInteger sqResetDrawTarget(HSQUIRRELVM v);
 SQInteger sqLoadImage(HSQUIRRELVM v);
 SQInteger sqDrawImage(HSQUIRRELVM v);
-SQInteger sqMouseX(HSQUIRRELVM v);
-SQInteger sqMouseY(HSQUIRRELVM v);
 SQInteger sqMouseDown(HSQUIRRELVM v);
 SQInteger sqMousePress(HSQUIRRELVM v);
 SQInteger sqMouseRelease(HSQUIRRELVM v);
 SQInteger sqGetQuit(HSQUIRRELVM v);
+SQInteger sqMouseX(HSQUIRRELVM v);
+SQInteger sqMouseY(HSQUIRRELVM v);
 
 //Maths
 SQInteger sqRandomFloat(HSQUIRRELVM v);
