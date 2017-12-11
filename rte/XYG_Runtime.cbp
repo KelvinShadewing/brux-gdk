@@ -55,6 +55,8 @@
 		<Unit filename="main.h" />
 		<Unit filename="maths.cpp" />
 		<Unit filename="maths.h" />
+		<Unit filename="shapes.cpp" />
+		<Unit filename="shapes.h" />
 		<Unit filename="sprite.cpp" />
 		<Unit filename="sprite.h" />
 		<Unit filename="text.cpp" />

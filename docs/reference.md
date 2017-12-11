@@ -32,10 +32,6 @@
 
 ----
 
-* <a name="include"></a>**`include( lib );`**
-
-  Includes a standard XYG library. Note that `"core"` is not needed to be imported, as it is called automatically when XYG starts.
-
 * <a name="update"></a>**`update();`**
 
   Updates screen and input.
@@ -52,7 +48,7 @@
 
   Waits for `ticks` number of ticks/miliseconds.
 
-* >><a name="donut"></a>**`donut( file );`**
+* <a name="donut"></a>**`donut( file );`**
 
   Loads and runs a script file local to the current game. If ".nut" is not included in the file name given, it will add it automatically.
 
@@ -110,11 +106,11 @@
 
   Changes how images are blended when drawing. The default is `bm_norm`, which draws things normally. `bm_add` will add an images pixel color values to where it is drawn, and `bm_sub` will do the opposite. `bm_mult` will multiply the value of a color, with 128 causing no change, 255 bringing any value to full brightness, and 0 bringing any value to black.
 
-* >><a name="setFPS"></a>**`setFPS( max, skip, strict );`**
+* <a name="setFPS"></a>**`setFPS( max, skip, strict );`**
 
   Sets a range for frames per second. `max` is the highest FPS allowed. XYG will wait if the time between frames is too short to keep the game at a reasonable pace. `skip` is the time between frames allowed before the next one is not drawn. During a skipped frame, no drawing functions aimed at te screen (draw target 0) will be run, and the screen will not be updated. If `strict` is set to true, then *all* drawing functions will be ignored until the speed picks back up. Be careful, as some games may need other surfaces to be updated constantly, such as when lighting up the explored portions of a map.
 
-* >><a name="getFPS"></a>**`getFPS();`**
+* <a name="getFPS"></a>**`getFPS();`**
 
   Returns the FPS determined by the time it took between the most recent update and the one before it. This is the absolute FPS value, and drawing it on screen will probably look very jittery depending on your game, so it's advisable to make a function that tracks the average or can transition smoothly.
 
