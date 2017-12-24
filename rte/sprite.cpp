@@ -21,6 +21,7 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	numero = 0;
 	frames = _frames;
 	tex = xyLoadImage(filename);
+	name = filename;
 
 	//Extract short file name
 	name = filename;

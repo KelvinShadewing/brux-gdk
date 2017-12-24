@@ -679,7 +679,7 @@
 	<Squirrel/sqstdaux.h>
 	<Squirrel/sqstdmath.h>
 
-1500239882 /home/kelvin/Code/XYG/rte/global.h
+1512953625 /home/kelvin/Code/XYG/rte/global.h
 	"sprite.h"
 	"text.h"
 
@@ -689,7 +689,7 @@
 
 1497737578 /home/kelvin/Code/XYG/rte/audio.h
 
-1508603623 source:/home/kelvin/Code/XYG/rte/binds.cpp
+1509058091 source:/home/kelvin/Code/XYG/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -711,14 +711,14 @@
 
 1460727978 /home/kelvin/Code/XYG/rte/fileio.h
 
-1508603623 /home/kelvin/Code/XYG/rte/binds.h
+1509058036 /home/kelvin/Code/XYG/rte/binds.h
 
 1468287346 source:/home/kelvin/Code/XYG/rte/fileio.cpp
 	"main.h"
 	"global.h"
 	"fileio.h"
 
-1500889712 source:/home/kelvin/Code/XYG/rte/global.cpp
+1512953649 source:/home/kelvin/Code/XYG/rte/global.cpp
 	"main.h"
 	"sprite.h"
 	"global.h"
@@ -733,7 +733,7 @@
 1498033258 source:/home/kelvin/Code/XYG/rte/input.cpp
 	"input.h"
 
-1508603865 source:/home/kelvin/Code/XYG/rte/main.cpp
+1514073412 source:/home/kelvin/Code/XYG/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -744,6 +744,7 @@
 	"binds.h"
 	"text.h"
 	"audio.h"
+	"tinyxml2.h"
 
 1489510692 source:/home/kelvin/Code/XYG/rte/maths.cpp
 	"main.h"
@@ -770,4 +771,20 @@
 	"core.h"
 
 1508363605 /home/kelvin/Code/XYG/rte/core.h
+
+1512965130 /home/kelvin/Code/XYG/rte/tinyxml2.h
+	<ctype.h>
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stddef.h>
+	<cctype>
+	<climits>
+	<cstdio>
+	<cstdlib>
+	<cstring>
+	<stdint.h>
+	<android/log.h>
+	<assert.h>
 

@@ -61,6 +61,8 @@
 		<Unit filename="sprite.h" />
 		<Unit filename="text.cpp" />
 		<Unit filename="text.h" />
+		<Unit filename="tile.cpp" />
+		<Unit filename="tile.h" />
 		<Unit filename="xyg.ico" />
 		<Unit filename="xyg.rc">
 			<Option compilerVar="WINDRES" />

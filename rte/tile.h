@@ -1,3 +1,7 @@
 /*==============*\
 | TILEMAP HEADER |
 \*==============*/
+
+class xyTileMap {
+
+};
