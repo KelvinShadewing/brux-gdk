@@ -63,6 +63,8 @@
 		<Unit filename="text.h" />
 		<Unit filename="tile.cpp" />
 		<Unit filename="tile.h" />
+		<Unit filename="tinyxml2.cpp" />
+		<Unit filename="tinyxml2.h" />
 		<Unit filename="xyg.ico" />
 		<Unit filename="xyg.rc">
 			<Option compilerVar="WINDRES" />

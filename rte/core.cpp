@@ -52,6 +52,7 @@ void xyLoadCore(){
 	const k_0 = 39; \
 	 \
 	const k_return = 40; \
+	const k_enter = 40; \
 	const k_escape = 41; \
 	const k_backspace = 42; \
 	const k_tab = 43; \
@@ -89,7 +90,9 @@ void xyLoadCore(){
 	const k_f12 = 69; \
 	 \
 	const k_printscreen = 70; \
+	const k_print = 70; \
 	const k_scrolllock = 71; \
+	const k_scroll = 71; \
 	const k_pause = 72; \
 	const k_insert = 73; \
 	 \
@@ -254,6 +257,7 @@ void xyLoadCore(){
 	const k_numoctal = 219; \
 	const k_numdecimal = 220; \
 	const k_numhexadecimal = 221; \
+	const k_numhex = 221; \
 	 \
 	const k_lctrl = 224; \
 	const k_lcontrol = 224; \

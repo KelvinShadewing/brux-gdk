@@ -16,13 +16,14 @@ const int _PLY = 7;
 const int _PRM = 8;
 const int _BDY = 9;
 
-class Shape{
+class xyShape{
 public:
 	float x, y, w, h, a;
 	float px[16], py[16];
-	const static int type = _SHP;
+	int type;
 
-	Shape(float _x, float _y, float _w, float _h, float _a){
+	xyShape(int _t, float _x, float _y, float _w, float _h, float _a){
+		type = _t;
 		x = _x;
 		y = _y;
 		w = _w;
@@ -30,32 +31,5 @@ public:
 		a = _a;
 	};
 };
-
-//////////
-// LINE //
-//////////
-
-////////////
-// CIRCLE //
-////////////
-
-class Circle : public Shape{
-public:
-	const static int type = _CIR;
-
-	Circle(float _x, float _y, float _w){
-		x = _x;
-		y = _y;
-		w = _w;
-		h = 0;
-		a = 0;
-	};
-};
-
-bool xyHitTest(Circle *a, Circle *b);
-
-///////////////
-// RECTANGLE //
-///////////////
 
 #endif

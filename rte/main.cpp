@@ -30,6 +30,7 @@
 #include "text.h"
 #include "audio.h"
 #include "tinyxml2.h"
+using namespace tinyxml2;
 
 
 /////////////////
