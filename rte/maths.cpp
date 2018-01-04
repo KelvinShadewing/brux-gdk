@@ -36,3 +36,14 @@ int xyWrap(int N, int L, int H){
 float xyPointAngle(float x1, float y1, float x2, float y2){
 	return atan2(y2 - y1, x2 - x1) * (180 / pi);
 };
+
+bool xyPointInBox(float x1, float y1, float x2, float y2, float px, float py){
+	//Get min/max of box in case box is flipped
+	float t, b, l, r;
+	l = min(x1, x2);
+	r = max(x1, x2);
+	t = min(y1, y2);
+	b = max(y1, y2);
+
+	return px < r && px > l && py < b && py > t;
+};
