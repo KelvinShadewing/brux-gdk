@@ -683,9 +683,9 @@
 	"sprite.h"
 	"text.h"
 
-1500888534 /home/kelvin/Code/XYG/rte/sprite.h
+1517084015 /home/kelvin/Code/XYG/rte/sprite.h
 
-1500885682 /home/kelvin/Code/XYG/rte/text.h
+1526519382 /home/kelvin/Code/XYG/rte/text.h
 
 1497737578 /home/kelvin/Code/XYG/rte/audio.h
 
@@ -746,19 +746,19 @@
 	"audio.h"
 	"tinyxml2.h"
 
-1489510692 source:/home/kelvin/Code/XYG/rte/maths.cpp
+1514674601 source:/home/kelvin/Code/XYG/rte/maths.cpp
 	"main.h"
 	"global.h"
 	"maths.h"
 
-1513728102 source:/home/kelvin/Code/XYG/rte/sprite.cpp
+1517084014 source:/home/kelvin/Code/XYG/rte/sprite.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"sprite.h"
 	"maths.h"
 
-1501362546 source:/home/kelvin/Code/XYG/rte/text.cpp
+1517084015 source:/home/kelvin/Code/XYG/rte/text.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -804,4 +804,12 @@
 	<stdarg.h>
 	<cstddef>
 	<cstdarg>
+
+1514680794 source:/home/kelvin/Code/XYG/rte/shapes.cpp
+	"main.h"
+	"global.h"
+	"maths.h"
+	"shapes.h"
+
+1516285919 /home/kelvin/Code/XYG/rte/shapes.h
 

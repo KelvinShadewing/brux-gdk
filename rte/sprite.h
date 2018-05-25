@@ -12,6 +12,7 @@ private:
 	int osX, osY;
 	float pvX, pvY;
 	string name;
+	Uint32 *format;
 public:
 	xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames);
 	~xySprite();

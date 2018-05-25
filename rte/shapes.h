@@ -23,6 +23,9 @@ call an update function that moves and rotates
 them as needed while also reassigning vertex
 positions.
 
+It will probably be easier to update them using
+separate position and rotation functions.
+
 I'm not sure how to do primitives just yet.
 */
 

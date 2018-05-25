@@ -26,12 +26,12 @@ with alpha values above the threshold.
 
 xyFont::xyFont(Uint32 index, char firstchar, Uint8 threshold){
 	//If there is no sprite that can be used, then cancel
-    if(vcFonts.size() <= index){
+    if(vcSprites.size() <= index){
 			xyPrint(0, "The sprite does not exist!");
 			delete this;
 			return;
 		};
-    if(vcFonts[index] == 0){
+    if(vcSprites[index] == 0){
     	xyPrint(0, "The sprite does not exist!");
 			delete this;
 			return;

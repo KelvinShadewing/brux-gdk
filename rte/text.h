@@ -11,6 +11,7 @@ private:
 	vector<int[2]> x;
 	char start;
 	Uint32 numero;
+	bool monospace;
 
 public:
 	xyFont(Uint32 index, char firstchar, Uint8 threshold);

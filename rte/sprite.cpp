@@ -22,6 +22,7 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	frames = _frames;
 	tex = xyLoadImage(filename);
 	name = filename;
+	SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0);
 
 	//Extract short file name
 	name = filename;
