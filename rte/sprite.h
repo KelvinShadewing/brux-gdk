@@ -20,6 +20,9 @@ public:
 	void drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale);
 	Uint32 getnum();
 	Uint32 gettex();
+	Uint32 getframes();
+	Uint32 getw();
+	Uint32 geth();
 };
 
 #endif

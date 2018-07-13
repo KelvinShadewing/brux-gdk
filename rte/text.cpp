@@ -24,7 +24,7 @@ maximum X coordinates containing pixels
 with alpha values above the threshold.
 */
 
-xyFont::xyFont(Uint32 index, char firstchar, Uint8 threshold){
+xyFont::xyFont(Uint32 index, char firstchar, Uint8 threshold, bool monospace){
 	//If there is no sprite that can be used, then cancel
     if(vcSprites.size() <= index){
 			xyPrint(0, "The sprite does not exist!");
@@ -61,6 +61,19 @@ xyFont::xyFont(Uint32 index, char firstchar, Uint8 threshold){
 	//Get the sprite
 	source = vcSprites[index];
 
-	//Scan the sprite
+	//Get frame number and x/width
+	cx.resize(source->getframes());
+	cw.resize(source->getframes());
+	if(true){//Monospace
+        for(int i = 0; i < cx.size(); i++){
+            cx.push_back(0);
+            cw.push_back(source->getw());
+        };
+	} else {//Dynamic (ignored until character scanning is done)
+        //TODO: Get individual character width
+	};
+};
+
+void draw(int x, int y, string text){
 
 };

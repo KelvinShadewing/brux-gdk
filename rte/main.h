@@ -33,6 +33,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_net.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include <Squirrel/squirrel.h>
 #include <Squirrel/sqstdio.h>
 #include <Squirrel/sqstdaux.h>

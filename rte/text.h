@@ -8,13 +8,15 @@
 class xyFont{
 private:
 	xySprite* source;
-	vector<int[2]> x;
+	vector<int> cx;
+	vector<int> cw;
 	char start;
 	Uint32 numero;
-	bool monospace;
+	bool mono;
 
 public:
-	xyFont(Uint32 index, char firstchar, Uint8 threshold);
+	xyFont(Uint32 index, char firstchar, Uint8 threshold, bool monospace);
+	void draw(int x, int y, string text);
 };
 
 #endif

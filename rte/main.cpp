@@ -75,6 +75,8 @@ int main(int argc, char* args[]){
 				};
 			};
 		//Other arguments
+
+		if(curarg == "-f") SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		};
 	};
 
