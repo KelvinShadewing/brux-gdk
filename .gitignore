@@ -1,2 +1,3 @@
-./rte/obj/* 
+./rte/obj/*
 *.o
+./rte/bin/xyg
