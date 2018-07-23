@@ -11,10 +11,10 @@ private:
 	vector<int[2]> x;
 	char start;
 	Uint32 numero;
-	bool monospace;
+	bool mono;
 
 public:
-	xyFont(Uint32 index, char firstchar, Uint8 threshold);
+	xyFont(Uint32 index, char firstchar, Uint8 threshold, bool monospace);
 };
 
 #endif

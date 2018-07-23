@@ -24,7 +24,7 @@ maximum X coordinates containing pixels
 with alpha values above the threshold.
 */
 
-xyFont::xyFont(Uint32 index, char firstchar, Uint8 threshold){
+xyFont::xyFont(Uint32 index, char firstchar, Uint8 threshold, bool monospace){
 	//If there is no sprite that can be used, then cancel
     if(vcSprites.size() <= index){
 			xyPrint(0, "The sprite does not exist!");
