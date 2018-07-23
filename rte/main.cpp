@@ -75,6 +75,8 @@ int main(int argc, char* args[]){
 				};
 			};
 		//Other arguments
+
+		if(curarg == "-f") SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		};
 	};
 
@@ -181,7 +183,7 @@ int xyInit(){
 	vcSounds.push_back(0);
 	vcMusic.push_back(0);
 
-	xyPrint(0, "\n================\n\n");
+	xyPrint(0, "\n================\n");
 
 	//Return success
 	return 1;
@@ -189,7 +191,7 @@ int xyInit(){
 
 void xyEnd(){
 
-	xyPrint(0, "\n================\n\n");
+	xyPrint(0, "\n\n================\n");
 
 	//Cleanup all resources
 	xyPrint(0, "Cleaning up all resources...");

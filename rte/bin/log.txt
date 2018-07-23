@@ -21,14 +21,13 @@ Squirrel initialized successfully!
 
 ================
 
-
-/home/kelvin/Code/XYG/rte/bin/xyg
-App directory: /home/kelvin/Code/XYG/rte/bin/
+./xyg
+App directory: ./
 Imported core lib.
 Test Nut
 
-================
 
+================
 
 Cleaning up all resources...
 Closing Squirrel...

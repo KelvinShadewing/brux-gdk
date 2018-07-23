@@ -61,6 +61,19 @@ xyFont::xyFont(Uint32 index, char firstchar, Uint8 threshold, bool monospace){
 	//Get the sprite
 	source = vcSprites[index];
 
-	//Scan the sprite
+	//Get frame number and x/width
+	cx.resize(source->getframes());
+	cw.resize(source->getframes());
+	if(true){//Monospace
+        for(int i = 0; i < cx.size(); i++){
+            cx.push_back(0);
+            cw.push_back(source->getw());
+        };
+	} else {//Dynamic (ignored until character scanning is done)
+        //TODO: Get individual character width
+	};
+};
+
+void draw(int x, int y, string text){
 
 };

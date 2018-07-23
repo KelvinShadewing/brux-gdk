@@ -654,7 +654,7 @@
 	"global.h"
 	"audio.h"
 
-1508603142 /home/kelvin/Code/XYG/rte/main.h
+1531285278 /home/kelvin/Code/XYG/rte/main.h
 	<stdio.h>
 	<stdlib.h>
 	<sstream>
@@ -674,6 +674,7 @@
 	<SDL2/SDL_mixer.h>
 	<SDL2/SDL_net.h>
 	<SDL2/SDL_mixer.h>
+	<SDL2/SDL2_gfxPrimitives.h>
 	<Squirrel/squirrel.h>
 	<Squirrel/sqstdio.h>
 	<Squirrel/sqstdaux.h>
@@ -683,9 +684,9 @@
 	"sprite.h"
 	"text.h"
 
-1517084015 /home/kelvin/Code/XYG/rte/sprite.h
+1531179117 /home/kelvin/Code/XYG/rte/sprite.h
 
-1526519382 /home/kelvin/Code/XYG/rte/text.h
+1531189837 /home/kelvin/Code/XYG/rte/text.h
 
 1497737578 /home/kelvin/Code/XYG/rte/audio.h
 
@@ -700,7 +701,7 @@
 	"binds.h"
 	"audio.h"
 
-1498947726 /home/kelvin/Code/XYG/rte/graphics.h
+1531285238 /home/kelvin/Code/XYG/rte/graphics.h
 	"main.h"
 
 1498031964 /home/kelvin/Code/XYG/rte/input.h
@@ -724,7 +725,7 @@
 	"global.h"
 	"text.h"
 
-1500060244 source:/home/kelvin/Code/XYG/rte/graphics.cpp
+1531285238 source:/home/kelvin/Code/XYG/rte/graphics.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -733,7 +734,7 @@
 1498033258 source:/home/kelvin/Code/XYG/rte/input.cpp
 	"input.h"
 
-1514079594 source:/home/kelvin/Code/XYG/rte/main.cpp
+1532380562 source:/home/kelvin/Code/XYG/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -751,14 +752,14 @@
 	"global.h"
 	"maths.h"
 
-1517084014 source:/home/kelvin/Code/XYG/rte/sprite.cpp
+1531178281 source:/home/kelvin/Code/XYG/rte/sprite.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"sprite.h"
 	"maths.h"
 
-1517084015 source:/home/kelvin/Code/XYG/rte/text.cpp
+1531189856 source:/home/kelvin/Code/XYG/rte/text.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"

@@ -125,3 +125,10 @@ Uint32 xySprite::getnum(){
 Uint32 xySprite::gettex(){
 	return tex;
 };
+
+Uint32 xySprite::getframes(){
+    return frames;
+};
+
+Uint32 xySprite::getw(){ return w; };
+Uint32 xySprite::geth(){ return h; };
