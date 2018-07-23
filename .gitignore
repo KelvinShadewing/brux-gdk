@@ -2,3 +2,4 @@ rte/obj/*
 *.o
 rte/bin/xyg
 rte/bin/log.txt
+rte/XYG_Runtime.layout
