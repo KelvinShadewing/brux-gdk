@@ -182,6 +182,7 @@ int xyInit(){
 	vcSprites.push_back(0);
 	vcSounds.push_back(0);
 	vcMusic.push_back(0);
+	vcFonts.push_back(0);
 
 	xyPrint(0, "\n================\n");
 
@@ -313,6 +314,8 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 
 	//Text
 	xyPrint(0, "Embedding text...");
+	xyBindFunc(v, sqNewFont, "newFont", 5, ".nnnn");
+	xyBindFunc(v, sqDrawText, "drawText", 5, ".nnns");
 
 	//File IO
 	xyPrint(0, "Embedding file I/O...");

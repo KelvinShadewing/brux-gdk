@@ -21,16 +21,9 @@ Squirrel initialized successfully!
 
 ================
 
-./xyg
-App directory: ./
+/home/kelvin/Code/XYG/rte/bin/xyg
+App directory: /home/kelvin/Code/XYG/rte/bin/
 Imported core lib.
 Test Nut
-
-
-================
-
-Cleaning up all resources...
-Closing Squirrel...
-Collected 0 junk obects.
-Closing SDL...
-System closed successfully!
+Loaded font sprite.
+Created font.

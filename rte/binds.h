@@ -61,6 +61,8 @@ SQInteger sqFloor(HSQUIRRELVM v);
 SQInteger sqPointAngle(HSQUIRRELVM v);
 
 //Text
+SQInteger sqNewFont(HSQUIRRELVM v);
+SQInteger sqDrawText(HSQUIRRELVM v);
 
 //Audio
 SQInteger sqLoadSound(HSQUIRRELVM v);

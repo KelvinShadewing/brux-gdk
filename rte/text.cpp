@@ -10,35 +10,37 @@
 #include "sprite.h"
 #include "text.h"
 
+//New bitmap font format to replace SDL_ttf.
+//
+//When created, it takes an existing sprite
+//to use as a bitmap font.
+//
+//Each frame of the sprite is scanned,
+//checking each pixel column for transparency
+//to find the minimum and maximum X
+//coordinates containing pixels with alpha
+//values above the threshold.
+//
+//Might be a good idea to bring back SDL_ttf
+//to create bitmap fonts but use the same
+//system either way to render.
 
-/*
-New bitmap font format to replace SDL_ttf.
-
-When created, it takes an existing sprite
-to use as a bitmap font.
-
-Each frame of the sprite is scanned,
-checking each pixel column for
-transparency to find the minimum and
-maximum X coordinates containing pixels
-with alpha values above the threshold.
-*/
-
-xyFont::xyFont(Uint32 index, char firstchar, Uint8 threshold, bool monospace){
+xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace){
 	//If there is no sprite that can be used, then cancel
     if(vcSprites.size() <= index){
-			xyPrint(0, "The sprite does not exist!");
-			delete this;
-			return;
-		};
+		xyPrint(0, "The sprite does not exist!");
+		delete this;
+		return;
+	};
     if(vcSprites[index] == 0){
     	xyPrint(0, "The sprite does not exist!");
-			delete this;
-			return;
+		delete this;
+		return;
     };
 
     //Add to the list
-		if(vcFonts.size() == 0){
+	numero = -1;
+	if(vcFonts.size() == 0){
 		vcFonts.push_back(this);
 		numero = 0;
 	} else {
@@ -52,7 +54,7 @@ xyFont::xyFont(Uint32 index, char firstchar, Uint8 threshold, bool monospace){
 		};
 
 		//If an open space wasn't found
-		if(numero == 0){
+		if(numero == -1){
 			vcFonts.push_back(this);
 			numero = vcFonts.size() - 1;
 		};
@@ -62,18 +64,44 @@ xyFont::xyFont(Uint32 index, char firstchar, Uint8 threshold, bool monospace){
 	source = vcSprites[index];
 
 	//Get frame number and x/width
-	cx.resize(source->getframes());
-	cw.resize(source->getframes());
+	cx.resize(0);
+	cw.resize(0);
 	if(true){//Monospace
-        for(int i = 0; i < cx.size(); i++){
-            cx.push_back(0);
-            cw.push_back(source->getw());
+		if(cx.size() > 0){
+			for(int i = 0; i < source->getframes(); i++){
+				cx.push_back(0);
+				cw.push_back(source->getw());
+			};
         };
 	} else {//Dynamic (ignored until character scanning is done)
         //TODO: Get individual character width
 	};
+
+	start = firstchar;
 };
 
-void draw(int x, int y, string text){
+void xyFont::draw(int x, int y, string text){
+	int dx = x, dy = y; //Set cursor start position
+	int c; //Current character
 
+	//Loop to end of string
+	for(int i = 0; i < text.length(); i++){
+		c = (int)text[i]; //Get current character
+
+		//Emergency skip
+		if(c - start < 0) continue;
+
+        //Draw current character
+        if(c == (int)'\n'){
+			dy += source->geth();
+			dx = x;
+        } else {
+			source->draw(c - start, dx, dy);
+			dx += cw[c - start];
+        };
+	};
+};
+
+Uint32 xyFont::getnum(){
+	return numero;
 };

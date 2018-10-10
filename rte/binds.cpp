@@ -14,7 +14,7 @@
 
 //////////
 // MAIN //
-//////////
+/////////{
 
 SQInteger sqWait(HSQUIRRELVM v){
 	SQInteger a;
@@ -94,9 +94,11 @@ SQInteger sqSetWindowTitle(HSQUIRRELVM v){
 	return 0;
 };
 
+//}
+
 /////////////
 // FILE IO //
-/////////////
+////////////{
 
 SQInteger sqImport(HSQUIRRELVM v){
 	const char* a;
@@ -149,9 +151,11 @@ SQInteger sqSetDir(HSQUIRRELVM v){
 	return 0;
 };
 
+//}
+
 //////////////
 // GRAPHICS //
-//////////////
+/////////////{
 
 SQInteger sqClearScreen(HSQUIRRELVM v){
 	SDL_RenderClear(gvRender);
@@ -269,9 +273,11 @@ SQInteger sqSetResolution(HSQUIRRELVM v){
 	return 0;
 };
 
+//}
+
 /////////////
 // SPRITES //
-/////////////
+////////////{
 
 SQInteger sqNewSprite(HSQUIRRELVM v){
 	SQInteger w, h, m, p, px, py, f;
@@ -340,9 +346,11 @@ SQInteger sqDeleteSprite(HSQUIRRELVM v){
 	return 0;
 };
 
+//}
+
 ///////////
 // INPUT //
-///////////
+//////////{
 
 SQInteger sqKeyPress(HSQUIRRELVM v){
 	SQInteger a;
@@ -417,9 +425,11 @@ SQInteger sqGetQuit(HSQUIRRELVM v){
 	return 1;
 };
 
+//}
+
 ///////////
 // MATHS //
-///////////
+//////////{
 
 SQInteger sqRandomFloat(HSQUIRRELVM v){
 	float a;
@@ -486,15 +496,55 @@ SQInteger sqPointAngle(HSQUIRRELVM v){
 	return 1;
 };
 
+//}
+
 //////////
 // TEXT //
-//////////
+/////////{
 
+SQInteger sqNewFont(HSQUIRRELVM v){
+	SQInteger i, c, t;
+	SQBool m;
 
+	sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 3, &c);
+	sq_getinteger(v, 4, &t);
+	sq_getbool(v, 5, &m);
+
+	//Sanitize inputs
+	if(i < 0) i = 0;
+	if(t > 255) t = 255;
+	if(c > 255) c = 255;
+
+	xyFont* newfont = new xyFont(i, (char)c, t, m);
+
+	sq_pushinteger(v, newfont->getnum());
+
+	return 1;
+};
+
+SQInteger sqDrawText(HSQUIRRELVM v){
+	SQInteger f, x, y;
+	const char* s;
+
+	sq_getinteger(v, 2, &f);
+	sq_getinteger(v, 3, &x);
+	sq_getinteger(v, 4, &y);
+	sq_getstring(v, 5, &s);
+
+	if(f >= vcFonts.size()) return 0;
+	if(vcFonts[f] == 0) return 0;
+
+	vcFonts[f]->draw(x, y, s);
+
+	return 0;
+};
+
+//}
 
 ///////////
 // AUDIO //
-///////////
+//////////{
 
 SQInteger sqLoadSound(HSQUIRRELVM v){
 	const char* s;
@@ -558,8 +608,10 @@ SQInteger sqDeleteMusic(HSQUIRRELVM v){
 	return 0;
 };
 
-
+//}
 
 /////////////
 // SDL_GFX //
-/////////////
+////////////{
+
+//}
