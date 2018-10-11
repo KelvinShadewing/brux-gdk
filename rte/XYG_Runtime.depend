@@ -690,7 +690,7 @@
 
 1497737578 /home/kelvin/Code/XYG/rte/audio.h
 
-1539142662 source:/home/kelvin/Code/XYG/rte/binds.cpp
+1539146526 source:/home/kelvin/Code/XYG/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -759,7 +759,7 @@
 	"sprite.h"
 	"maths.h"
 
-1539146282 source:/home/kelvin/Code/XYG/rte/text.cpp
+1539231026 source:/home/kelvin/Code/XYG/rte/text.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"

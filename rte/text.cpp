@@ -64,13 +64,13 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace){
 	source = vcSprites[index];
 
 	//Get frame number and x/width
-	cx.resize(0);
-	cw.resize(0);
+	cx.resize(source->getframes());
+	cw.resize(source->getframes());
 	if(true){//Monospace
 		if(cx.size() > 0){
 			for(int i = 0; i < source->getframes(); i++){
-				cx.push_back(0);
-				cw.push_back(source->getw());
+				cx[i] = 0;
+				cw[i] = source->getw();
 			};
         };
 	} else {//Dynamic (ignored until character scanning is done)
@@ -97,6 +97,7 @@ void xyFont::draw(int x, int y, string text){
 			dx = x;
         } else {
 			source->draw(c - start, dx, dy);
+			int csize = cw.size();
 			dx += cw[c - start];
         };
 	};
