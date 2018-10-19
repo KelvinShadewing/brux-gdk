@@ -9,7 +9,7 @@
 
 ///////////
 // POINT //
-///////////
+//////////}
 
 //Constructors
 xyPnt::xyPnt(){
@@ -148,9 +148,12 @@ float xyPnt::getArea(){
 	return 0;
 };
 
+//}
+
 ////////////
 // CIRCLE //
-////////////
+///////////{
+
 xyCir::xyCir(float _x, float _y, float _r){
 	x = _x;
 	y = _y;
@@ -164,9 +167,12 @@ void xyCir::update(float _x, float _y, float _r){
     r = _r;
 };
 
+//}
+
 //////////
 // LINE //
-//////////
+/////////}
+
 xyLin::xyLin(float _x0, float _y0, float _x1, float _y1){
 	//Make points
 	xyPnt* _p = new xyPnt(_x0, _y0);
@@ -184,3 +190,4 @@ xyLin::xyLin(float _x0, float _y0, float _x1, float _y1){
     type = _LIN;
 };
 
+//}
