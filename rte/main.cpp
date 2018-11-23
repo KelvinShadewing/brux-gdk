@@ -1,24 +1,24 @@
-/*==============================================*\
-| PROJECT:	XYG Studio Runtime Environment       |
-| AUTHOR:		Nick Kovacs                      |
-|	DATE:		8-15-15                          |
+/*============================================*\
+| PROJECT:	XYG Studio Runtime Environment     |
+| AUTHOR:		Nick Kovacs                        |
+|	DATE:		8-15-15                              |
 |	DESCRIPTION:Runtime environment used for     |
 |	  games and applications created using       |
 |	  the XYG Studio framework.                  |
-|	LICENSE:	You are free to use, modify, and |
+|	LICENSE:	You are free to use, modify, and   |
 |	  redistribute this source code, in part,    |
 |	  or in full, provided proper attribution    |
 |	  is included and this information is not    |
 |	  modified or removed. Please include a      |
 |	  link to WWW.XYGSTUDIO.ORG in all           |
 |	  projects that use this source code.        |
-\*==============================================*/
+\*============================================*/
 
 /*===========*\
 | MAIN SOURCE |
 \*===========*/
 
-//Main header
+//Main headers
 #include "main.h"
 #include "core.h"
 #include "global.h"
@@ -52,11 +52,11 @@ int main(int argc, char* args[]){
 		//Print each argument and process them
 		curarg = args[i];
 		xyPrint(0, curarg.c_str());
-		if(i == 0){
-            //Get app install directory
-			gvAppDir = curarg.substr(0, curarg.find_last_of("/\\") + 1);
-			xyPrint(0, "App directory: %s", gvAppDir.c_str());
-		} else {
+
+    //The first argument is just the
+    //command to invoke the runtime,
+    //so skip it.
+		if(i != 0){
 			//Input file
 			//If the file is long enough
 			if(curarg.length() > 4){
@@ -82,7 +82,7 @@ int main(int argc, char* args[]){
 
 
 	//Run app
-	xyLoadCore();
+	xyLoadCore(); //Squirrel-side definitions
 	sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
 
 	//End game
@@ -91,16 +91,11 @@ int main(int argc, char* args[]){
 	return 0;
 };
 
-//////////////
-//EXCEPTIONS//
-//////////////
-
-
-
 ///////////////////
 //OTHER FUNCTIONS//
 ///////////////////
 
+//Handles initialization of SDL2 and Squirrel
 int xyInit(){
 	//Initiate log file
 	remove("log.txt");
@@ -251,6 +246,8 @@ void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key){
 };
 
 void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nParams, const SQChar* sParams){
+  //Binds a function from C++ to a word in
+  //Squirrel to be called from scripts.
 	sq_pushroottable(v);
 	sq_pushstring(v, key, -1);
 	sq_newclosure(v, func, 0);
@@ -260,6 +257,14 @@ void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nPa
 };
 
 void xyBindAllFunctions(HSQUIRRELVM v){
+  //Binds all functions needed by the game.
+  //Calling this function again will fix any
+  //overwritten embedded functions, but the
+  //user can still redefine the function to
+  //call this anyway, so no safety net is
+  //even attempted. If they screw it up, they
+  //will jusy have to learn.
+
 	//Main
 	xyPrint(0, "Embedding main...");
 	xyBindFunc(v, sqUpdate, "update");

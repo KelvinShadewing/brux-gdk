@@ -20,6 +20,8 @@
 #include <limits>
 
 
+//If running on Windows, use Windows
+//working directory functions.
 #ifdef _WIN32
 	#include <direct.h>
 	#define getCD _getcwd
