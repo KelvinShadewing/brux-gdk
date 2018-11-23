@@ -5,6 +5,10 @@
 #ifndef _BINDINGS_H_
 #define _BINDINGS_H_
 
+//These functions are wrappers used to interact
+//with Squirrel so that the main versions can
+//still be used internally by the RTE.
+
 //Main
 SQInteger sqUpdate(HSQUIRRELVM v);
 SQInteger sqGetOS(HSQUIRRELVM v);
