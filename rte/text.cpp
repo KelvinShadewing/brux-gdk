@@ -88,17 +88,19 @@ void xyFont::draw(int x, int y, string text){
 	for(int i = 0; i < text.length(); i++){
 		c = (int)text[i]; //Get current character
 
-    //Draw current character
-    if(c < start || c > cx.size()){
-      dx += source->getw(); //If the character is out of bounds, skip it
-    } else if(c == (int)'\n'){
+		//Emergency skip
+		if(c - start < 0) continue;
+		if(c - start > cx.size()) continue;
+
+		//Draw current character
+		if(c == (int)'\n'){
 			dy += source->geth();
 			dx = x;
-    } else {
-	    source->draw(c - start, dx, dy);
+		} else {
+			source->draw(c - start, dx, dy);
 			dx += cw[c - start];
     };
-	};
+};
 };
 
 Uint32 xyFont::getnum(){
