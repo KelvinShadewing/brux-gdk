@@ -752,14 +752,14 @@
 	"global.h"
 	"maths.h"
 
-1543039830 source:/home/kelvin/Code/XYG/rte/sprite.cpp
+1543042517 source:/home/kelvin/Code/XYG/rte/sprite.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"sprite.h"
 	"maths.h"
 
-1543040095 source:/home/kelvin/Code/XYG/rte/text.cpp
+1543040868 source:/home/kelvin/Code/XYG/rte/text.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
