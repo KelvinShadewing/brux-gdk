@@ -649,12 +649,12 @@
 	"sprite.h"
 	"text.h"
 
-1501362546 source:/home/kelvin/Code/XYG/rte/audio.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/audio.cpp
 	"main.h"
 	"global.h"
 	"audio.h"
 
-1531285278 /home/kelvin/Code/XYG/rte/main.h
+1543039688 /home/kelvin/Code/XYG/rte/main.h
 	<stdio.h>
 	<stdlib.h>
 	<sstream>
@@ -680,17 +680,17 @@
 	<Squirrel/sqstdaux.h>
 	<Squirrel/sqstdmath.h>
 
-1512953625 /home/kelvin/Code/XYG/rte/global.h
+1543039688 /home/kelvin/Code/XYG/rte/global.h
 	"sprite.h"
 	"text.h"
 
-1531179117 /home/kelvin/Code/XYG/rte/sprite.h
+1543039688 /home/kelvin/Code/XYG/rte/sprite.h
 
-1539137715 /home/kelvin/Code/XYG/rte/text.h
+1543039688 /home/kelvin/Code/XYG/rte/text.h
 
-1497737578 /home/kelvin/Code/XYG/rte/audio.h
+1543039688 /home/kelvin/Code/XYG/rte/audio.h
 
-1539146526 source:/home/kelvin/Code/XYG/rte/binds.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -701,40 +701,40 @@
 	"binds.h"
 	"audio.h"
 
-1531285238 /home/kelvin/Code/XYG/rte/graphics.h
+1543039688 /home/kelvin/Code/XYG/rte/graphics.h
 	"main.h"
 
-1498031964 /home/kelvin/Code/XYG/rte/input.h
+1543039688 /home/kelvin/Code/XYG/rte/input.h
 	"main.h"
 	"global.h"
 
 1514674430 /home/kelvin/Code/XYG/rte/maths.h
 
-1460727978 /home/kelvin/Code/XYG/rte/fileio.h
+1543039688 /home/kelvin/Code/XYG/rte/fileio.h
 
-1539142662 /home/kelvin/Code/XYG/rte/binds.h
+1543039688 /home/kelvin/Code/XYG/rte/binds.h
 
-1468287346 source:/home/kelvin/Code/XYG/rte/fileio.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/fileio.cpp
 	"main.h"
 	"global.h"
 	"fileio.h"
 
-1512953649 source:/home/kelvin/Code/XYG/rte/global.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/global.cpp
 	"main.h"
 	"sprite.h"
 	"global.h"
 	"text.h"
 
-1531285238 source:/home/kelvin/Code/XYG/rte/graphics.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/graphics.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"fileio.h"
 
-1498033258 source:/home/kelvin/Code/XYG/rte/input.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/input.cpp
 	"input.h"
 
-1539146449 source:/home/kelvin/Code/XYG/rte/main.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -752,28 +752,28 @@
 	"global.h"
 	"maths.h"
 
-1531178281 source:/home/kelvin/Code/XYG/rte/sprite.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/sprite.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"sprite.h"
 	"maths.h"
 
-1539231026 source:/home/kelvin/Code/XYG/rte/text.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/text.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"sprite.h"
 	"text.h"
 
-1514090363 source:/home/kelvin/Code/XYG/rte/core.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/core.cpp
 	"main.h"
 	"global.h"
 	"core.h"
 
-1508363605 /home/kelvin/Code/XYG/rte/core.h
+1543039688 /home/kelvin/Code/XYG/rte/core.h
 
-1512965130 /home/kelvin/Code/XYG/rte/tinyxml2.h
+1543039688 /home/kelvin/Code/XYG/rte/tinyxml2.h
 	<ctype.h>
 	<limits.h>
 	<stdio.h>
@@ -798,7 +798,7 @@
 
 1514073509 /home/kelvin/Code/XYG/rte/tile.h
 
-1512965130 source:/home/kelvin/Code/XYG/rte/tinyxml2.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/tinyxml2.cpp
 	"tinyxml2.h"
 	<new>
 	<stddef.h>
@@ -806,11 +806,11 @@
 	<cstddef>
 	<cstdarg>
 
-1514680794 source:/home/kelvin/Code/XYG/rte/shapes.cpp
+1543039688 source:/home/kelvin/Code/XYG/rte/shapes.cpp
 	"main.h"
 	"global.h"
 	"maths.h"
 	"shapes.h"
 
-1516285919 /home/kelvin/Code/XYG/rte/shapes.h
+1543039688 /home/kelvin/Code/XYG/rte/shapes.h
 

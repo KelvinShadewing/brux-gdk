@@ -27,3 +27,12 @@ Imported core lib.
 Test Nut
 Loaded font sprite.
 Created font.
+
+
+================
+
+Cleaning up all resources...
+Closing Squirrel...
+Collected 0 junk obects.
+Closing SDL...
+System closed successfully!

@@ -90,16 +90,16 @@ void xyFont::draw(int x, int y, string text){
 
 		//Emergency skip
 		if(c - start < 0) continue;
-    if(c - start > cx.size()) continue;
+		if(c - start > cx.size()) continue;
 
-    //Draw current character
-    if(c == (int)'\n'){
+		//Draw current character
+		if(c == (int)'\n'){
 			dy += source->geth();
 			dx = x;
-    } else {
-	    source->draw(c - start, dx, dy);
+		} else {
+			source->draw(c - start, dx, dy);
 			dx += cw[c - start];
-    };
+		};
 	};
 };
 
