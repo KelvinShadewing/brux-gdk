@@ -241,9 +241,17 @@ SQInteger sqSetScalingFilter(HSQUIRRELVM v){
 	if(hint < 0) hint = 0;
 
 	string strHint;
-	strHint += "\"";
-	strHint += hint;
-	strHint += "\"";
+	switch(hint){
+		case 0:
+			strHint = "0";
+			break;
+		case 1:
+			strHint = "1";
+			break;
+		case 2:
+			strHint = "2";
+			break;
+	};
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, strHint.c_str());
 

@@ -15,6 +15,9 @@ print("Loaded font sprite.");
 print("Created font.");
 local x = 0;
 
+//Non-zero-starting font
+::sprFont2 <- newSprite("sprFont.png", 12, 14, 0, 0, 0, 0, 0);
+::fntKL <- newFont(sprFont2, 33, 0, 1);
 
 
 ///////////////////
@@ -32,6 +35,6 @@ while(!quit){
 	for(local i = 0; i < 48; i++){
 		drawSprite(sprFont, x + i, 9 * i, 0);
 	};
-	drawText(fntTerm, 0, 16, "This is a test.");
+	drawText(fntKL, 0, 16, "This is a test.\nHere's something else.");
 	update();
 };

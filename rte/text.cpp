@@ -82,23 +82,23 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace){
 
 void xyFont::draw(int x, int y, string text){
 	int dx = x, dy = y; //Set cursor start position
-	int c; //Current character
+	int c; //Current character by font index
 
 	//Loop to end of string
 	for(int i = 0; i < text.length(); i++){
-		c = (int)text[i]; //Get current character
-
-        //Draw current character
-        if(c < 0 || c < start || c > cw.size()){
-			dx += source->getw();
-        } else if(c == (int)'\n'){
+		if (text[i] == '\n'){
 			dy += source->geth();
 			dx = x;
-        } else {
-			source->draw(c - start, dx, dy);
-			int csize = cw.size();
-			dx += cw[c - start];
-        };
+		} else {
+			c = (int)text[i] - start; //Get current character and apply font offset
+			if (c >= 0 && c < cw.size()){ //Is this character defined in the font?
+				source->draw(c, dx, dy);
+				dx += cw[c];
+			} else {
+				// undefined characters should be blank
+				dx += source->getw();
+			};
+		};
 	};
 };
 
