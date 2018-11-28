@@ -75,6 +75,19 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace){
         };
 	} else {//Dynamic (ignored until character scanning is done)
         //TODO: Get individual character width
+
+        //Get and store current render target
+        //Make temporary texture
+        //Set render target to temp
+        //For each frame in the source sprite
+          //Render current frame
+          //For each column in source width
+            //If pixel alpha is above threshold, set cx here, then break
+          //For each column in source width
+            //If pixel alpha is above threshold, update cw to this coord minus cx, then break
+          //Clear texture
+        //Delete temp texture
+        //Reset render target to stored texture
 	};
 
 	start = firstchar;
