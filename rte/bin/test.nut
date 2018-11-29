@@ -24,7 +24,7 @@ local x = 0;
 // MAIN FUNCTION //
 ///////////////////
 
-setScalingFilter(1);
+setScalingFilter(0);
 setResolution(400, 240);
 setBackgroundColor(0);
 setFPS(30);
