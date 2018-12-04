@@ -511,20 +511,21 @@ SQInteger sqPointAngle(HSQUIRRELVM v){
 /////////{
 
 SQInteger sqNewFont(HSQUIRRELVM v){
-	SQInteger i, c, t;
+	SQInteger i, c, t, k;
 	SQBool m;
 
 	sq_getinteger(v, 2, &i);
 	sq_getinteger(v, 3, &c);
 	sq_getinteger(v, 4, &t);
 	sq_getbool(v, 5, &m);
+	sq_getinteger(v, 6, &k);
 
 	//Sanitize inputs
 	if(i < 0) i = 0;
 	if(t > 255) t = 255;
 	if(c > 255) c = 255;
 
-	xyFont* newfont = new xyFont(i, (char)c, t, m);
+	xyFont* newfont = new xyFont(i, (char)c, t, m, k);
 
 	sq_pushinteger(v, newfont->getnum());
 

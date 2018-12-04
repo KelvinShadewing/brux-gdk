@@ -25,7 +25,7 @@
 //to create bitmap fonts but use the same
 //system either way to render.
 
-xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace){
+xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, int _kern){
 	//If there is no sprite that can be used, then cancel
     if(vcSprites.size() <= index){
 		xyPrint(0, "The sprite does not exist!");
@@ -91,6 +91,7 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace){
 	};
 
 	start = firstchar;
+	kern = _kern;
 };
 
 void xyFont::draw(int x, int y, string text){
@@ -106,10 +107,10 @@ void xyFont::draw(int x, int y, string text){
 			c = (int)text[i] - start; //Get current character and apply font offset
 			if (c >= 0 && c < cw.size()){ //Is this character defined in the font?
 				source->draw(c, dx, dy);
-				dx += cw[c];
+				dx += cw[c] + kern;
 			} else {
 				// undefined characters should be blank
-				dx += source->getw();
+				dx += source->getw() + kern;
 			};
 		};
 	};
