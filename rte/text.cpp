@@ -77,15 +77,40 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
         //TODO: Get individual character width
 
         //Get and store current render target
+        SDL_Texture* ttex;
+        ttex = SDL_GetRenderTarget(gvRender);
+
         //Make temporary texture
+        SDL_Texture* worktex = SDL_CreateTexture(gvRender, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, source->getw(), source->geth());
+
         //Set render target to temp
+        SDL_SetRenderTarget(gvRender, worktex);
+
         //For each frame in the source sprite
-          //Render current frame
-          //For each column in source width
-            //If pixel alpha is above threshold, set cx here, then break
-          //For each column in source width
-            //If pixel alpha is above threshold, update cw to this coord minus cx, then break
-          //Clear texture
+        for(int i = 0; i < source->getframes(); i++){
+			//Render current frame
+			source->draw(i, 0, 0);
+
+			//For each column in source width
+			for(int j = 0; j < source->getw(); j++){
+				bool found = 0;
+
+				//For each pixel in the column
+				for(int k = 0; k < source->geth(); k++){
+					//If pixel alpha is above threshold, set cx here, then break
+				};
+			};
+			//For each column in source width
+			for(int j = 0; j < source->getw(); j++){
+				bool found = 0;
+
+				//For each pixel in the column
+				for(int k = 0; k < source->geth(); k++){
+					//If pixel alpha is above threshold, update cw to this coord minus cx, then break
+				};
+			};
+			//Clear texture
+		};
         //Delete temp texture
         //Reset render target to stored texture
 	};
