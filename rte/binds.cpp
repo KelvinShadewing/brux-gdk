@@ -491,6 +491,24 @@ SQInteger sqFloor(HSQUIRRELVM v){
 	return 1;
 };
 
+SQInteger sqCeil(HSQUIRRELVM v){
+	float f;
+
+	sq_getfloat(v, 2, &f);
+	sq_pushinteger(v, ceil(f));
+
+	return 1;
+};
+
+SQInteger sqRound(HSQUIRRELVM v){
+	float f;
+
+	sq_getfloat(v, 2, &f);
+	sq_pushinteger(v, round(f));
+
+	return 1;
+};
+
 SQInteger sqPointAngle(HSQUIRRELVM v){
 	float x1, y1, x2, y2;
 

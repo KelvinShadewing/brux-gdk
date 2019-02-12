@@ -257,13 +257,13 @@ void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nPa
 };
 
 void xyBindAllFunctions(HSQUIRRELVM v){
-  //Binds all functions needed by the game.
-  //Calling this function again will fix any
-  //overwritten embedded functions, but the
-  //user can still redefine the function to
-  //call this anyway, so no safety net is
-  //even attempted. If they screw it up, they
-  //will jusy have to learn.
+	//Binds all functions needed by the game.
+	//Calling this function again will fix any
+	//overwritten embedded functions, but the
+	//user can still redefine the function to
+	//call this anyway, so no safety net is
+	//even attempted. If they screw it up, they
+	//will jusy have to learn.
 
 	//Main
 	xyPrint(0, "Embedding main...");
@@ -314,6 +314,8 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqRandomInt, "randInt", 2, ".n");
 	xyBindFunc(v, sqDistance2, "distance2", 5, ".nnnn");
 	xyBindFunc(v, sqWrap, "wrap", 4, ".nnn");
+	xyBindFunc(v, sqRound, "round", 2, ".n");
+	xyBindFunc(v, sqCeil, "ceil", 2, ".n");
 	xyBindFunc(v, sqFloor, "floor", 2, ".n");
 	xyBindFunc(v, sqPointAngle, "pointAngle", 5, ".nnnn");
 

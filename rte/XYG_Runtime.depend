@@ -690,7 +690,7 @@
 
 1543127229 /home/kelvin/Code/XYG/rte/audio.h
 
-1543961548 source:/home/kelvin/Code/XYG/rte/binds.cpp
+1546901890 source:/home/kelvin/Code/XYG/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -712,7 +712,7 @@
 
 1543127229 /home/kelvin/Code/XYG/rte/fileio.h
 
-1543127229 /home/kelvin/Code/XYG/rte/binds.h
+1546901916 /home/kelvin/Code/XYG/rte/binds.h
 
 1543127229 source:/home/kelvin/Code/XYG/rte/fileio.cpp
 	"main.h"
@@ -734,7 +734,7 @@
 1543127229 source:/home/kelvin/Code/XYG/rte/input.cpp
 	"input.h"
 
-1544578398 source:/home/kelvin/Code/XYG/rte/main.cpp
+1546901967 source:/home/kelvin/Code/XYG/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -759,7 +759,7 @@
 	"sprite.h"
 	"maths.h"
 
-1543963973 source:/home/kelvin/Code/XYG/rte/text.cpp
+1544740333 source:/home/kelvin/Code/XYG/rte/text.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"

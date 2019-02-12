@@ -61,6 +61,8 @@ SQInteger sqRandomFloat(HSQUIRRELVM v);
 SQInteger sqRandomInt(HSQUIRRELVM v);
 SQInteger sqDistance2(HSQUIRRELVM v);
 SQInteger sqWrap(HSQUIRRELVM v);
+SQInteger sqRound(HSQUIRRELVM v);
+SQInteger sqCeil(HSQUIRRELVM v);
 SQInteger sqFloor(HSQUIRRELVM v);
 SQInteger sqPointAngle(HSQUIRRELVM v);
 
