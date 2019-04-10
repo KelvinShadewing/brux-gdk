@@ -5,18 +5,18 @@
 #ifndef _SHAPES_H_
 #define _SHAPES_H_
 
-const int _SHP = 0;
-const int _LIN = 1;
-const int _CIR = 2;
-const int _REC = 3;
-const int _TRI = 4;
-const int _DIA = 5;
-const int _OVL = 6;
-const int _PLY = 7;
-const int _PRM = 8;
-const int _BDY = 9;
+const int _SHP = 0; //Formless shape
+const int _LIN = 1; //Line
+const int _CIR = 2; //Circle
+const int _REC = 3; //Rectangle
+const int _TRI = 4; //Triangle
+const int _DIA = 5; //Diamond
+const int _OVL = 6; //Oval
+const int _PLY = 7; //N-polygon
+const int _PRM = 8; //Primitive
+const int _BDY = 9; //Body (compound shape)
 
-/*
+/**
 All shapes use a similar system during runtime.
 When their positions need to be changed, they
 call an update function that moves and rotates
@@ -25,8 +25,6 @@ positions.
 
 It will probably be easier to update them using
 separate position and rotation functions.
-
-I'm not sure how to do primitives just yet.
 */
 
 class xyPnt{//Used to store coordinates of each
@@ -68,23 +66,26 @@ public:
 class xyShp{
 public:
 	int type;
-	vector<xyPnt*> p;
+	float x, y, a, xmin, xmax, ymin, ymax;
+	/**
+	Angle is reused as the radius for circles. It will remain
+	unchanged when the position is modified. Min and max points
+	are updated when the shape changes position so that they do
+	not have to be recalculated every time a hit test is run.
+	*/
+
+	vector<xyPnt*> pnt, pbase;
+	/**
+	pbase is used to store the positions of the vertices as they
+	are first created, basically a copy of the shape were it kept
+	at point (0,0). pnt is the current position of the points,
+	used for detecting collisions.
+	*/
+	void setpos(float _x, float _y, float _a); //Set position based on absolute coordinates
+	void modpos(float _X, float _y, float _a); //Set position based on relative coordinates
 };
 
-class xyCir : public xyShp{
-private:
-	float x, y, r;
-public:
-	xyCir(float _x, float _y, float _r);
-	void update(float _x, float _y, float _r);
-};
-
-class xyLin : public xyShp{
-private:
-	float x, y, l, a;
-public:
-	xyLin(float _x0, float _y0, float _x1, float _y1);
-	void update(float _x, float _y, float _l, float _a);
-};
+bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d);
+bool xyHitTest(xyShp* a, xyShp* b);
 
 #endif

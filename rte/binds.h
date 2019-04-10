@@ -37,6 +37,7 @@ SQInteger sqSetScalingFilter(HSQUIRRELVM v);
 SQInteger sqSetResolution(HSQUIRRELVM v);
 
 //Sprites
+SQInteger sqSpriteName(HSQUIRRELVM v);
 SQInteger sqNewSprite(HSQUIRRELVM v);
 SQInteger sqDrawSprite(HSQUIRRELVM v);
 SQInteger sqDrawSpriteEx(HSQUIRRELVM v);

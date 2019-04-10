@@ -29,6 +29,8 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	string::size_type slashnum = name.find_last_of("/");
 	if(slashnum != string::npos) name = name.substr(slashnum, name.length() - 1);
 
+	//Add sprite to list
+
 	if(vcSprites.size() == 0){
 		vcSprites.push_back(this);
 		numero = 0;
@@ -48,6 +50,41 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 			numero = vcSprites.size() - 1;
 		};
 	};
+
+	//Parse the image for rows and colums
+	int origW, origH;
+	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
+	origW -= mar;
+	origH -= mar;
+	col = floor((float)(origW / (w + pad)));
+	row = floor((float)(origH / (h + pad)));
+	if(col < 1) col = 1;
+	if(row < 1) row = 1;
+	if(frames == 0) frames = col * row;
+};
+
+void xySprite::replaceSprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames){
+	//Set variables
+	w = width;
+	h = height;
+	mar = margin;
+	pad = padding;
+	pvX = pivotX;
+	pvY = pivotY;
+	numero = 0;
+	frames = _frames;
+	Uint32 newtex = xyLoadImage(filename);
+	name = filename;
+	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
+
+	//Delete old texture
+	xyDeleteImage(tex);
+	tex = newtex;
+
+	//Extract short file name
+	name = filename;
+	string::size_type slashnum = name.find_last_of("/");
+	if(slashnum != string::npos) name = name.substr(slashnum, name.length() - 1);
 
 	//Parse the image for rows and colums
 	int origW, origH;

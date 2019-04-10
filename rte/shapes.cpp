@@ -9,7 +9,7 @@
 
 ///////////
 // POINT //
-//////////}
+//////////{
 
 //Constructors
 xyPnt::xyPnt(){
@@ -150,44 +150,336 @@ float xyPnt::getArea(){
 
 //}
 
-////////////
-// CIRCLE //
-///////////{
+///////////
+// SHAPE //
+//////////{
 
-xyCir::xyCir(float _x, float _y, float _r){
-	x = _x;
-	y = _y;
-	r = _r;
-	type = _CIR;
+bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d){
+	float denom = ((b->x - a->x) * (d->y - c->y)) - ((b->y - a->y) * (d->x - c->x));
+	float nume0 = ((a->y - c->y) * (d->x - c->x)) - ((a->x - c->x) * (d->y - c->y));
+	float nume1 = ((a->y - c->y) * (b->x - a->x)) - ((a->x - c->x) * (b->y - a->y));
+
+	if(denom == 0) return nume0 == 0 && nume1 == 0;
+
+	float r = nume0 / denom;
+	float s = nume1 / denom;
+
+	return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
 };
 
-void xyCir::update(float _x, float _y, float _r){
-    x = _x;
-    y = _y;
-    r = _r;
-};
-
-//}
-
-//////////
-// LINE //
-/////////}
-
-xyLin::xyLin(float _x0, float _y0, float _x1, float _y1){
-	//Make points
-	xyPnt* _p = new xyPnt(_x0, _y0);
-	p.push_back(_p);
-	_p = new xyPnt(_x1, _y1);
-	p.push_back(_p);
-
-	//Assign core members from points
-	x = (p[0]->x + p[1]->x) / 2;
-	y = (p[0]->y + p[1]->y) / 2;
-	l = xyDistance(p[0]->x, p[0]->y, p[1]->x, p[1]->y);
-	a = xyPointAngle(p[0]->x, p[0]->y, p[1]->x, p[1]->y);
-
-	//Set type
-    type = _LIN;
+bool xyHitTest(xyShp* a, xyShp* b){
+	//Get type of A
+	switch(a->type){
+		case _LIN:
+			switch(b->type){
+				case _LIN:
+					return xyLineLine(a->pnt[0], a->pnt[1], b->pnt[0], b->pnt[1]);
+					break;
+				case _CIR:
+					return 0;
+					break;
+				case _REC:
+					return 0;
+					break;
+				case _TRI:
+					return 0;
+					break;
+				case _DIA:
+					return 0;
+					break;
+				case _OVL:
+					return 0;
+					break;
+				case _PLY:
+					return 0;
+					break;
+				case _PRM:
+					return 0;
+					break;
+				case _BDY:
+					return 0;
+					break;
+				default:
+					return 0;
+					break;
+			};
+			break;
+		case _CIR:
+			switch(b->type){
+				case _LIN:
+					return 0;
+					break;
+				case _CIR:
+					return (xyDistance(a->x, a->y, b->x, b->y) <= a->a + b->a);
+					break;
+				case _REC:
+					return 0;
+					break;
+				case _TRI:
+					return 0;
+					break;
+				case _DIA:
+					return 0;
+					break;
+				case _OVL:
+					return 0;
+					break;
+				case _PLY:
+					return 0;
+					break;
+				case _PRM:
+					return 0;
+					break;
+				case _BDY:
+					return 0;
+					break;
+				default:
+					return 0;
+					break;
+			};
+			break;
+		case _REC:
+			switch(b->type){
+				case _LIN:
+					return 0;
+					break;
+				case _CIR:
+					return 0;
+					break;
+				case _REC:
+					return 0;
+					break;
+				case _TRI:
+					return 0;
+					break;
+				case _DIA:
+					return 0;
+					break;
+				case _OVL:
+					return 0;
+					break;
+				case _PLY:
+					return 0;
+					break;
+				case _PRM:
+					return 0;
+					break;
+				case _BDY:
+					return 0;
+					break;
+				default:
+					return 0;
+					break;
+			};
+			break;
+		case _TRI:
+			switch(b->type){
+				case _LIN:
+					return 0;
+					break;
+				case _CIR:
+					return 0;
+					break;
+				case _REC:
+					return 0;
+					break;
+				case _TRI:
+					return 0;
+					break;
+				case _DIA:
+					return 0;
+					break;
+				case _OVL:
+					return 0;
+					break;
+				case _PLY:
+					return 0;
+					break;
+				case _PRM:
+					return 0;
+					break;
+				case _BDY:
+					return 0;
+					break;
+				default:
+					return 0;
+					break;
+			};
+			break;
+		case _DIA:
+			switch(b->type){
+				case _LIN:
+					return 0;
+					break;
+				case _CIR:
+					return 0;
+					break;
+				case _REC:
+					return 0;
+					break;
+				case _TRI:
+					return 0;
+					break;
+				case _DIA:
+					return 0;
+					break;
+				case _OVL:
+					return 0;
+					break;
+				case _PLY:
+					return 0;
+					break;
+				case _PRM:
+					return 0;
+					break;
+				case _BDY:
+					return 0;
+					break;
+				default:
+					return 0;
+					break;
+			};
+			break;
+		case _OVL:
+			switch(b->type){
+				case _LIN:
+					return 0;
+					break;
+				case _CIR:
+					return 0;
+					break;
+				case _REC:
+					return 0;
+					break;
+				case _TRI:
+					return 0;
+					break;
+				case _DIA:
+					return 0;
+					break;
+				case _OVL:
+					return 0;
+					break;
+				case _PLY:
+					return 0;
+					break;
+				case _PRM:
+					return 0;
+					break;
+				case _BDY:
+					return 0;
+					break;
+				default:
+					return 0;
+					break;
+			};
+			break;
+		case _PLY:
+			switch(b->type){
+				case _LIN:
+					return 0;
+					break;
+				case _CIR:
+					return 0;
+					break;
+				case _REC:
+					return 0;
+					break;
+				case _TRI:
+					return 0;
+					break;
+				case _DIA:
+					return 0;
+					break;
+				case _OVL:
+					return 0;
+					break;
+				case _PLY:
+					return 0;
+					break;
+				case _PRM:
+					return 0;
+					break;
+				case _BDY:
+					return 0;
+					break;
+				default:
+					return 0;
+					break;
+			};
+			break;
+		case _PRM:
+			switch(b->type){
+				case _LIN:
+					return 0;
+					break;
+				case _CIR:
+					return 0;
+					break;
+				case _REC:
+					return 0;
+					break;
+				case _TRI:
+					return 0;
+					break;
+				case _DIA:
+					return 0;
+					break;
+				case _OVL:
+					return 0;
+					break;
+				case _PLY:
+					return 0;
+					break;
+				case _PRM:
+					return 0;
+					break;
+				case _BDY:
+					return 0;
+					break;
+				default:
+					return 0;
+					break;
+			};
+			break;
+		case _BDY:
+			switch(b->type){
+				case _LIN:
+					return 0;
+					break;
+				case _CIR:
+					return 0;
+					break;
+				case _REC:
+					return 0;
+					break;
+				case _TRI:
+					return 0;
+					break;
+				case _DIA:
+					return 0;
+					break;
+				case _OVL:
+					return 0;
+					break;
+				case _PLY:
+					return 0;
+					break;
+				case _PRM:
+					return 0;
+					break;
+				case _BDY:
+					return 0;
+					break;
+				default:
+					return 0;
+					break;
+			};
+			break;
+		default:
+			return 0;
+			break;
+	};
 };
 
 //}

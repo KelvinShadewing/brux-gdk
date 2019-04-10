@@ -11,6 +11,7 @@
 #include "text.h"
 #include "binds.h"
 #include "audio.h"
+#include "sprite.h"
 
 //////////
 // MAIN //
@@ -286,6 +287,18 @@ SQInteger sqSetResolution(HSQUIRRELVM v){
 /////////////
 // SPRITES //
 ////////////{
+
+SQInteger sqSpriteName(HSQUIRRELVM v){
+	SQInteger s;
+
+	sq_getinteger(v, 2, &s);
+
+	if(vcSprites.size() <= s || s < 0) sq_pushstring(v, "N/A", 3);
+	else if(vcSprites[s] == 0) sq_pushstring(v, "N/A", 3);
+	else sq_pushstring(v, vcSprites[s]->name.c_str(), vcSprites[s]->name.length());
+
+	return 1;
+};
 
 SQInteger sqNewSprite(HSQUIRRELVM v){
 	SQInteger w, h, m, p, px, py, f;

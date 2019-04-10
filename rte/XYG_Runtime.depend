@@ -684,13 +684,13 @@
 	"sprite.h"
 	"text.h"
 
-1543127229 /home/kelvin/Code/XYG/rte/sprite.h
+1553978409 /home/kelvin/Code/XYG/rte/sprite.h
 
 1543955550 /home/kelvin/Code/XYG/rte/text.h
 
 1543127229 /home/kelvin/Code/XYG/rte/audio.h
 
-1546901890 source:/home/kelvin/Code/XYG/rte/binds.cpp
+1553046348 source:/home/kelvin/Code/XYG/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -700,6 +700,7 @@
 	"text.h"
 	"binds.h"
 	"audio.h"
+	"sprite.h"
 
 1543127229 /home/kelvin/Code/XYG/rte/graphics.h
 	"main.h"
@@ -712,7 +713,7 @@
 
 1543127229 /home/kelvin/Code/XYG/rte/fileio.h
 
-1546901916 /home/kelvin/Code/XYG/rte/binds.h
+1553046360 /home/kelvin/Code/XYG/rte/binds.h
 
 1543127229 source:/home/kelvin/Code/XYG/rte/fileio.cpp
 	"main.h"
@@ -734,7 +735,7 @@
 1543127229 source:/home/kelvin/Code/XYG/rte/input.cpp
 	"input.h"
 
-1546901967 source:/home/kelvin/Code/XYG/rte/main.cpp
+1553046353 source:/home/kelvin/Code/XYG/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -752,7 +753,7 @@
 	"global.h"
 	"maths.h"
 
-1543127229 source:/home/kelvin/Code/XYG/rte/sprite.cpp
+1553978383 source:/home/kelvin/Code/XYG/rte/sprite.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -789,14 +790,16 @@
 	<android/log.h>
 	<assert.h>
 
-1514079594 source:/home/kelvin/Code/XYG/rte/tile.cpp
+1550528108 source:/home/kelvin/Code/XYG/rte/tile.cpp
 	"main.h"
 	"graphics.h"
 	"sprite.h"
-	"tinyxml2.h"
 	"tile.h"
+	"fileio.h"
 
-1514073509 /home/kelvin/Code/XYG/rte/tile.h
+1550528118 /home/kelvin/Code/XYG/rte/tile.h
+	"main.h"
+	"tinyxml2.h"
 
 1543127229 source:/home/kelvin/Code/XYG/rte/tinyxml2.cpp
 	"tinyxml2.h"
@@ -806,11 +809,11 @@
 	<cstddef>
 	<cstdarg>
 
-1543127229 source:/home/kelvin/Code/XYG/rte/shapes.cpp
+1550528613 source:/home/kelvin/Code/XYG/rte/shapes.cpp
 	"main.h"
 	"global.h"
 	"maths.h"
 	"shapes.h"
 
-1543127229 /home/kelvin/Code/XYG/rte/shapes.h
+1550528613 /home/kelvin/Code/XYG/rte/shapes.h
 

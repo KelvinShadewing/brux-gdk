@@ -291,6 +291,7 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 
 	//Sprites
 	xyPrint(0, "Embedding sprites...");
+	xyBindFunc(v, sqSpriteName, "spriteName", 2, ".n");
 	xyBindFunc(v, sqNewSprite, "newSprite", 9, ".siiiiiii");
 	xyBindFunc(v, sqDrawSprite, "drawSprite", 5, ".innn");
 	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".innnninnn");

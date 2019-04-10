@@ -35,6 +35,6 @@ while(!quit){
 	for(local i = 0; i < 48; i++){
 		drawSprite(sprFont, x + i, 9 * i, 0);
 	};
-	drawText(fntKL, 0, 16, "This is a test.\nHere's something else.");
+	drawText(fntKL, 0, 16, "This is a test.\nHere's something else.\n" + spriteName(fntKL));
 	update();
 };
