@@ -61,7 +61,9 @@ void xyLoadCore(){
 	const k_minus = 45; \
 	const k_equals = 46; \
 	const k_lbracket = 47; \
+	const k_lbrace = 47; \
 	const k_rbracket = 48; \
+	const k_rbrace = 48; \
 	const k_backslash = 49; \
 	const k_nonuslash = 50; \
 	const k_semicolon = 51; \
@@ -100,6 +102,7 @@ void xyLoadCore(){
 	const k_pageup = 75; \
 	const k_pgup = 75; \
 	const k_delete = 76; \
+	const k_del = 76; \
 	const k_end = 77; \
 	const k_pagedown = 78; \
 	const k_pgdn = 78; \
@@ -111,8 +114,11 @@ void xyLoadCore(){
 	const k_numlock = 83; \
 	 \
 	const k_numdivide = 84; \
+	const k_numdiv = 84;\
 	const k_nummultiply = 85; \
+	const k_nummul = 85; \
 	const k_numminus = 86; \
+	const k_numsub = 86; \
 	const k_numplus = 87; \
 	const k_numadd = 87; \
 	const k_numenter = 88; \
@@ -128,6 +134,8 @@ void xyLoadCore(){
 	const k_num0 = 98; \
 	const k_numperiod = 99; \
 	const k_numfullstop = 99; \
+	const k_numdelete = 99; \
+	const k_numdel = 99; \
 	 \
 	const k_nonusbackslash = 100; \
 	const k_application = 101; \
@@ -263,12 +271,12 @@ void xyLoadCore(){
 	const k_lcontrol = 224; \
 	const k_lshift = 225; \
 	const k_lalt = 226; \
-	const k_lgui = 227; \
+	const k_lsup = 227; \
 	const k_rctrl = 228; \
 	const k_rcontrol = 228; \
 	const k_rshift = 229; \
 	const k_ralt = 230; \
-	const k_rgui = 231; \
+	const k_rsup = 231; \
 	 \
 	const k_mode = 257; \
 	 \
