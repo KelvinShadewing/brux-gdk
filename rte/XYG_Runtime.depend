@@ -817,3 +817,186 @@
 
 1550528613 /home/kelvin/Code/XYG/rte/shapes.h
 
+1562651233 source:/home/kelvin/Code/xyg/rte/audio.cpp
+	"main.h"
+	"global.h"
+	"audio.h"
+
+1563235142 /home/kelvin/Code/xyg/rte/main.h
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+	<string>
+	<stdarg.h>
+	<cmath>
+	<vector>
+	<fstream>
+	<algorithm>
+	<sys/stat.h>
+	<iostream>
+	<limits>
+	<direct.h>
+	<unistd.h>
+	"cJSON.h"
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_mixer.h>
+	<SDL2/SDL_net.h>
+	<SDL2/SDL_mixer.h>
+	<SDL2/SDL2_gfxPrimitives.h>
+	<Squirrel/squirrel.h>
+	<Squirrel/sqstdio.h>
+	<Squirrel/sqstdaux.h>
+	<Squirrel/sqstdmath.h>
+	<Squirrel/sqstdstring.h>
+	<Squirrel/sqstdsystem.h>
+
+1562651233 /home/kelvin/Code/xyg/rte/global.h
+	"sprite.h"
+	"text.h"
+
+1562651233 /home/kelvin/Code/xyg/rte/sprite.h
+
+1562651233 /home/kelvin/Code/xyg/rte/text.h
+
+1562651233 /home/kelvin/Code/xyg/rte/audio.h
+
+1562651233 source:/home/kelvin/Code/xyg/rte/binds.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"input.h"
+	"maths.h"
+	"fileio.h"
+	"text.h"
+	"binds.h"
+	"audio.h"
+	"sprite.h"
+
+1562651233 /home/kelvin/Code/xyg/rte/graphics.h
+	"main.h"
+
+1562651233 /home/kelvin/Code/xyg/rte/input.h
+	"main.h"
+	"global.h"
+
+1562651233 /home/kelvin/Code/xyg/rte/maths.h
+
+1563205542 /home/kelvin/Code/xyg/rte/fileio.h
+
+1562651233 /home/kelvin/Code/xyg/rte/binds.h
+
+1563235376 source:/home/kelvin/Code/xyg/rte/core.cpp
+	"main.h"
+	"global.h"
+	"core.h"
+
+1562651233 /home/kelvin/Code/xyg/rte/core.h
+
+1563055869 source:/home/kelvin/Code/xyg/rte/fileio.cpp
+	"main.h"
+	"global.h"
+	"fileio.h"
+
+1562651233 source:/home/kelvin/Code/xyg/rte/global.cpp
+	"main.h"
+	"sprite.h"
+	"global.h"
+	"text.h"
+
+1562651233 source:/home/kelvin/Code/xyg/rte/graphics.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"fileio.h"
+
+1562651233 source:/home/kelvin/Code/xyg/rte/input.cpp
+	"input.h"
+
+1563227199 source:/home/kelvin/Code/xyg/rte/main.cpp
+	"main.h"
+	"core.h"
+	"global.h"
+	"input.h"
+	"graphics.h"
+	"maths.h"
+	"fileio.h"
+	"binds.h"
+	"text.h"
+	"audio.h"
+	"tinyxml2.h"
+
+1562651233 /home/kelvin/Code/xyg/rte/tinyxml2.h
+	<ctype.h>
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stddef.h>
+	<cctype>
+	<climits>
+	<cstdio>
+	<cstdlib>
+	<cstring>
+	<stdint.h>
+	<android/log.h>
+	<assert.h>
+
+1562651233 source:/home/kelvin/Code/xyg/rte/maths.cpp
+	"main.h"
+	"global.h"
+	"maths.h"
+
+1562651233 source:/home/kelvin/Code/xyg/rte/shapes.cpp
+	"main.h"
+	"global.h"
+	"maths.h"
+	"shapes.h"
+
+1562651233 /home/kelvin/Code/xyg/rte/shapes.h
+
+1562651233 source:/home/kelvin/Code/xyg/rte/sprite.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"sprite.h"
+	"maths.h"
+
+1562651233 source:/home/kelvin/Code/xyg/rte/text.cpp
+	"main.h"
+	"global.h"
+	"graphics.h"
+	"sprite.h"
+	"text.h"
+
+1562651233 source:/home/kelvin/Code/xyg/rte/tile.cpp
+	"main.h"
+	"graphics.h"
+	"sprite.h"
+	"tile.h"
+	"fileio.h"
+
+1562651233 /home/kelvin/Code/xyg/rte/tile.h
+	"main.h"
+	"tinyxml2.h"
+
+1562651233 source:/home/kelvin/Code/xyg/rte/tinyxml2.cpp
+	"tinyxml2.h"
+	<new>
+	<stddef.h>
+	<stdarg.h>
+	<cstddef>
+	<cstdarg>
+
+1537763463 /home/kelvin/Code/xyg/rte/cJSON.h
+
+1537763463 source:/home/kelvin/Code/xyg/rte/cJSON.c
+	<string.h>
+	<stdio.h>
+	<math.h>
+	<stdlib.h>
+	<float.h>
+	<limits.h>
+	<ctype.h>
+	"cJSON.h"
+

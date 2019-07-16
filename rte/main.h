@@ -30,6 +30,7 @@
 	#define getCD getcwd
 #endif // _WIN32
 
+#include "cJSON.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
@@ -40,6 +41,8 @@
 #include <Squirrel/sqstdio.h>
 #include <Squirrel/sqstdaux.h>
 #include <Squirrel/sqstdmath.h>
+#include <Squirrel/sqstdstring.h>
+#include <Squirrel/sqstdsystem.h>
 
 using namespace std;
 

@@ -24,6 +24,11 @@ drawKey <- function(key, str, x, y){
 	drawText(ftu, x, y, str);
 };
 
+//Test table for printing as JSON
+::blah <- {
+	thing = "Value",
+	otherthing = "Something"
+};
 
 ///////////////////
 // MAIN FUNCTION //
@@ -150,3 +155,9 @@ while(!quit){
 
 	update();
 };
+
+print(jsonWrite(blah));
+
+::blah2 <- jsonRead(jsonWrite(blah));
+
+print(blah2["thing"]);

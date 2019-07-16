@@ -1,18 +1,12 @@
-/*============================================*\
-| PROJECT:	XYG Studio Runtime Environment     |
-| AUTHOR:		Nick Kovacs                        |
-|	DATE:		8-15-15                              |
-|	DESCRIPTION:Runtime environment used for     |
-|	  games and applications created using       |
-|	  the XYG Studio framework.                  |
-|	LICENSE:	You are free to use, modify, and   |
-|	  redistribute this source code, in part,    |
-|	  or in full, provided proper attribution    |
-|	  is included and this information is not    |
-|	  modified or removed. Please include a      |
-|	  link to WWW.XYGSTUDIO.ORG in all           |
-|	  projects that use this source code.        |
-\*============================================*/
+/*======================================*\
+| PROJECT: Brux Game Runtime Environment |
+| AUTHOR:  Nick Kovacs                   |
+| DATE:    8-15-15                       |
+| DESC:    Runtime environment used for  |
+|  games and applications created using  |
+|  the Brux game framework.              |
+| LICENSE:GNU General Public License v.3 |
+\*======================================*/
 
 /*===========*\
 | MAIN SOURCE |
@@ -40,7 +34,7 @@ using namespace tinyxml2;
 int main(int argc, char* args[]){
 	//Initiate everything
 	if(xyInit() == 0){
-		xyPrint(0, "Failed to initiate XYG!");
+		xyPrint(0, "Failed to initiate Brux!");
 		xyEnd();
 		return 1;
 	};
@@ -60,7 +54,7 @@ int main(int argc, char* args[]){
 			//Input file
 			//If the file is long enough
 			if(curarg.length() > 4){
-				//If the file ends in '.xyg'
+				//If the input is a Squirrel file
 				if(curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut"){
 					//Check that the file really exists
 					if(xyFileExists(curarg.c_str())){
@@ -102,7 +96,7 @@ int xyInit(){
 	gvLog.open("log.txt", ios_base::out);
 
 	//Print opening message
-	xyPrint(0, "\n/========================\\\n| XYG STUDIO RUNTIME LOG |\n\\========================/\n\n");
+	xyPrint(0, "\n/========================\\\n| BRUX GAME RUNTIME LOG |\n\\========================/\n\n");
 	xyPrint(0, "Initializing program...\n\n");
 
 	//Initiate SDL
@@ -112,7 +106,7 @@ int xyInit(){
 	};
 
 	//Create window
-	gvWindow = SDL_CreateWindow("XYG Runtime Environment", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
+	gvWindow = SDL_CreateWindow("Brux Runtime Environment", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
 	if(gvWindow == 0){
 		xyPrint(0, "Window could not be created! SDL Error: %s\n", SDL_GetError());
 		return 0;
@@ -330,6 +324,7 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s");
 	xyBindFunc(v, sqImport, "import", 2, ".s");
 	xyBindFunc(v, sqDoNut, "donut", 2, ".s");
+	xyBindFunc(v, sqDecodeJSON, "jsonRead", 2, ".s");
 
 	//Audio
 	xyPrint(0, "Embedding audio...");
