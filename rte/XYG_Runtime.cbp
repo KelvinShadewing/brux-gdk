@@ -8,7 +8,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/xyg" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/brux" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
@@ -42,6 +42,10 @@
 		<Unit filename="audio.h" />
 		<Unit filename="binds.cpp" />
 		<Unit filename="binds.h" />
+		<Unit filename="cJSON.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cJSON.h" />
 		<Unit filename="core.cpp" />
 		<Unit filename="core.h" />
 		<Unit filename="fileio.cpp" />
