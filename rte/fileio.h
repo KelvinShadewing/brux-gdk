@@ -7,6 +7,8 @@
 #ifndef _FILEIO_H_
 #define _FILEIO_H_
 
+#include "main.h"
+
 bool xyFileExists(const char* file);
 void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item);
 SQInteger sqDecodeJSON(HSQUIRRELVM v);
@@ -17,10 +19,10 @@ SQInteger sqDecodeJSON(HSQUIRRELVM v);
 
 class xyIO{
 private:
-    FILE f*;
+    FILE *f;
     string n;
 public:
-    xyIO(string fname, );
+    xyIO(string fname);
 };
 
 //}

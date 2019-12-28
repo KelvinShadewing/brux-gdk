@@ -1183,3 +1183,49 @@
 	<ctype.h>
 	"cJSON.h"
 
+1577493087 source:/home/kelvin/Code/brux2/rte/audio.cpp
+	"main.h"
+	"global.h"
+	"audio.h"
+
+1577493087 /home/kelvin/Code/brux2/rte/main.h
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+	<string>
+	<stdarg.h>
+	<cmath>
+	<vector>
+	<iostream>
+	<fstream>
+	<algorithm>
+	<sys/stat.h>
+	<limits>
+	<direct.h>
+	<unistd.h>
+	"cJSON.h"
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_mixer.h>
+	<SDL2/SDL_net.h>
+	<SDL2/SDL_mixer.h>
+	<SDL2/SDL2_gfxPrimitives.h>
+	<Squirrel/squirrel.h>
+	<Squirrel/sqstdio.h>
+	<Squirrel/sqstdaux.h>
+	<Squirrel/sqstdmath.h>
+	<Squirrel/sqstdstring.h>
+	<Squirrel/sqstdsystem.h>
+
+1577493087 /home/kelvin/Code/brux2/rte/cJSON.h
+
+1577493087 /home/kelvin/Code/brux2/rte/global.h
+	"sprite.h"
+	"text.h"
+
+1577493087 /home/kelvin/Code/brux2/rte/sprite.h
+
+1577493087 /home/kelvin/Code/brux2/rte/text.h
+
+1577493087 /home/kelvin/Code/brux2/rte/audio.h
+
