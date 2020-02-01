@@ -14,12 +14,22 @@ Developers using Brux may freely make games without any need for paid license or
 
 ### To Do (Runtime)
 
-* FPS management
-* Gamepad
-* TMX maps
-* Collision geometry
-* Fixes needed:
-  * Sprites do not pivot correctly when scaled and rotated at the same time
+- [X] Sprite loading and rendering
+- [X] Sound loading and playing
+- [X] Bitmap monospace text
+- [X] Keyboard and mouse inut
+- [X] Table saving/loading as JSON file
+- [ ] Bitmap dynamic text
+- [ ] FPS management
+- [ ] Gamepad input
+- [ ] TMX map loading and rendering
+- [ ] Collision geometry
+- [ ] Chipmunk physics engine
+- [ ] Create compiled format to contain multiple source files in one (will also be included in squake)
+
+**Fixes needed:**
+
+- [ ] Sprites do not pivot correctly when scaled and rotated at the same time
 
 ### To Do (Editor)
 
@@ -41,5 +51,5 @@ Developers using Brux may freely make games without any need for paid license or
     * Keyboard and mouse input
 	* Sprite loading and rendering
 	* Sound and music
-	* Run games by associating .nut and .sq files with XYG
+	* Run games by associating .nut and .sq files with Brux
 	* Text rendering

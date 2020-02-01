@@ -1000,12 +1000,12 @@
 	<ctype.h>
 	"cJSON.h"
 
-1562651233 source:/home/kelvin/Code/brux/rte/audio.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/audio.cpp
 	"main.h"
 	"global.h"
 	"audio.h"
 
-1563235142 /home/kelvin/Code/brux/rte/main.h
+1577493087 /home/kelvin/Code/brux/rte/main.h
 	<stdio.h>
 	<stdlib.h>
 	<sstream>
@@ -1013,10 +1013,10 @@
 	<stdarg.h>
 	<cmath>
 	<vector>
+	<iostream>
 	<fstream>
 	<algorithm>
 	<sys/stat.h>
-	<iostream>
 	<limits>
 	<direct.h>
 	<unistd.h>
@@ -1034,19 +1034,19 @@
 	<Squirrel/sqstdstring.h>
 	<Squirrel/sqstdsystem.h>
 
-1537763463 /home/kelvin/Code/brux/rte/cJSON.h
+1577493087 /home/kelvin/Code/brux/rte/cJSON.h
 
-1562651233 /home/kelvin/Code/brux/rte/global.h
+1577493087 /home/kelvin/Code/brux/rte/global.h
 	"sprite.h"
 	"text.h"
 
-1562651233 /home/kelvin/Code/brux/rte/sprite.h
+1577493087 /home/kelvin/Code/brux/rte/sprite.h
 
-1562651233 /home/kelvin/Code/brux/rte/text.h
+1577493087 /home/kelvin/Code/brux/rte/text.h
 
-1562651233 /home/kelvin/Code/brux/rte/audio.h
+1577493087 /home/kelvin/Code/brux/rte/audio.h
 
-1562651233 source:/home/kelvin/Code/brux/rte/binds.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -1058,47 +1058,48 @@
 	"audio.h"
 	"sprite.h"
 
-1562651233 /home/kelvin/Code/brux/rte/graphics.h
+1577493087 /home/kelvin/Code/brux/rte/graphics.h
 	"main.h"
 
-1562651233 /home/kelvin/Code/brux/rte/input.h
+1577493087 /home/kelvin/Code/brux/rte/input.h
 	"main.h"
 	"global.h"
 
-1562651233 /home/kelvin/Code/brux/rte/maths.h
+1577493087 /home/kelvin/Code/brux/rte/maths.h
 
-1563205542 /home/kelvin/Code/brux/rte/fileio.h
+1577495827 /home/kelvin/Code/brux/rte/fileio.h
+	"main.h"
 
-1562651233 /home/kelvin/Code/brux/rte/binds.h
+1577493087 /home/kelvin/Code/brux/rte/binds.h
 
-1563235376 source:/home/kelvin/Code/brux/rte/core.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/core.cpp
 	"main.h"
 	"global.h"
 	"core.h"
 
-1562651233 /home/kelvin/Code/brux/rte/core.h
+1577493087 /home/kelvin/Code/brux/rte/core.h
 
-1563055869 source:/home/kelvin/Code/brux/rte/fileio.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/fileio.cpp
 	"main.h"
 	"global.h"
 	"fileio.h"
 
-1562651233 source:/home/kelvin/Code/brux/rte/global.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/global.cpp
 	"main.h"
 	"sprite.h"
 	"global.h"
 	"text.h"
 
-1562651233 source:/home/kelvin/Code/brux/rte/graphics.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/graphics.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"fileio.h"
 
-1562651233 source:/home/kelvin/Code/brux/rte/input.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
-1563227199 source:/home/kelvin/Code/brux/rte/main.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -1111,7 +1112,7 @@
 	"audio.h"
 	"tinyxml2.h"
 
-1562651233 /home/kelvin/Code/brux/rte/tinyxml2.h
+1577493087 /home/kelvin/Code/brux/rte/tinyxml2.h
 	<ctype.h>
 	<limits.h>
 	<stdio.h>
@@ -1127,45 +1128,45 @@
 	<android/log.h>
 	<assert.h>
 
-1562651233 source:/home/kelvin/Code/brux/rte/maths.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/maths.cpp
 	"main.h"
 	"global.h"
 	"maths.h"
 
-1562651233 source:/home/kelvin/Code/brux/rte/shapes.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/shapes.cpp
 	"main.h"
 	"global.h"
 	"maths.h"
 	"shapes.h"
 
-1562651233 /home/kelvin/Code/brux/rte/shapes.h
+1577493087 /home/kelvin/Code/brux/rte/shapes.h
 
-1562651233 source:/home/kelvin/Code/brux/rte/sprite.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/sprite.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"sprite.h"
 	"maths.h"
 
-1562651233 source:/home/kelvin/Code/brux/rte/text.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/text.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"sprite.h"
 	"text.h"
 
-1562651233 source:/home/kelvin/Code/brux/rte/tile.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/tile.cpp
 	"main.h"
 	"graphics.h"
 	"sprite.h"
 	"tile.h"
 	"fileio.h"
 
-1562651233 /home/kelvin/Code/brux/rte/tile.h
+1577493087 /home/kelvin/Code/brux/rte/tile.h
 	"main.h"
 	"tinyxml2.h"
 
-1562651233 source:/home/kelvin/Code/brux/rte/tinyxml2.cpp
+1577493087 source:/home/kelvin/Code/brux/rte/tinyxml2.cpp
 	"tinyxml2.h"
 	<new>
 	<stddef.h>
@@ -1173,7 +1174,7 @@
 	<cstddef>
 	<cstdarg>
 
-1537763463 source:/home/kelvin/Code/brux/rte/cJSON.c
+1577493087 source:/home/kelvin/Code/brux/rte/cJSON.c
 	<string.h>
 	<stdio.h>
 	<math.h>
