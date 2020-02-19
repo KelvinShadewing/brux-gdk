@@ -6,3 +6,4 @@ rte/XYG_Runtime.layout
 rte/XYG_Runtime.depend
 rte/bin/brux
 rte/bin/brux.*
+*.exe
