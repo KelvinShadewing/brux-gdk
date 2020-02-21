@@ -252,6 +252,9 @@ SQInteger sqSetScalingFilter(HSQUIRRELVM v){
 		case 2:
 			strHint = "2";
 			break;
+        default:
+            strHint = "0";
+            break;
 	};
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, strHint.c_str());
@@ -444,6 +447,12 @@ SQInteger sqGetQuit(HSQUIRRELVM v){
 	sq_pushbool(v, gvQuit);
 
 	return 1;
+};
+
+SQInteger sqGetPads(HSQUIRRELVM v){
+    sq_pushinteger(v, SDL_NumJoysticks());
+
+    return 1;
 };
 
 //}

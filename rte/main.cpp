@@ -100,7 +100,7 @@ int xyInit(){
 	xyPrint(0, "Initializing program...\n\n");
 
 	//Initiate SDL
-	if(SDL_Init(SDL_INIT_EVERYTHING < 0)){
+	if(SDL_Init(SDL_INIT_EVERYTHING) < 0){
 		xyPrint(0, "Failed to initialize! %s", SDL_GetError());
 		return 0;
 	};
@@ -302,6 +302,7 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqMouseX, "mouseX");
 	xyBindFunc(v, sqMouseY, "mouseY");
 	xyBindFunc(v, sqGetQuit, "getQuit");
+	xyBindFunc(v, sqGetPads, "getPads");
 
 	//Maths
 	xyPrint(0, "Embedding maths...");

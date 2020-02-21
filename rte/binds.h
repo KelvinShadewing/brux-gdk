@@ -56,6 +56,7 @@ SQInteger sqMouseRelease(HSQUIRRELVM v);
 SQInteger sqGetQuit(HSQUIRRELVM v);
 SQInteger sqMouseX(HSQUIRRELVM v);
 SQInteger sqMouseY(HSQUIRRELVM v);
+SQInteger sqGetPads(HSQUIRRELVM v);
 
 //Maths
 SQInteger sqRandomFloat(HSQUIRRELVM v);

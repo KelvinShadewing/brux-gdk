@@ -1046,7 +1046,7 @@
 
 1577493087 /home/kelvin/Code/brux/rte/audio.h
 
-1577493087 source:/home/kelvin/Code/brux/rte/binds.cpp
+1582267006 source:/home/kelvin/Code/brux/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -1070,7 +1070,7 @@
 1577495827 /home/kelvin/Code/brux/rte/fileio.h
 	"main.h"
 
-1577493087 /home/kelvin/Code/brux/rte/binds.h
+1582267023 /home/kelvin/Code/brux/rte/binds.h
 
 1577493087 source:/home/kelvin/Code/brux/rte/core.cpp
 	"main.h"
@@ -1099,7 +1099,7 @@
 1577493087 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
-1577493087 source:/home/kelvin/Code/brux/rte/main.cpp
+1582267115 source:/home/kelvin/Code/brux/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"

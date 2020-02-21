@@ -35,6 +35,7 @@ drawKey <- function(key, str, x, y){
 ///////////////
 
 ::mode1 <- function(){
+	//Mouse
 	drawText(fntW, 0, 0, "Mouse Position: (" + mouseX().tostring() + "," + mouseY().tostring() + ")");
 
 	//Keyboard
@@ -149,12 +150,17 @@ drawKey <- function(key, str, x, y){
 	drawKey(k_numadd, "+", 32, 80);
 };
 
+::mode2 <- function(){
+	//Gamepad test
+	drawText(fntW, 0, 0, "Gamepads detected: " + getPads().tostring());
+};
+
 ///////////////////
 // MAIN FUNCTION //
 ///////////////////
 
-setScalingFilter(0);
-setResolution(320, 180);
+setScalingFilter(2);
+setResolution(320, 240);
 setBackgroundColor(0);
 setFPS(30);
 
@@ -164,6 +170,7 @@ while(!quit){
 	if(keyPress(k_escape)) quit = true;
 
 	if(keyPress(k_f1)) mode = mode1;
+	if(keyPress(k_f2)) mode = mode2;
 
 	mode();
 	update();
