@@ -10,7 +10,7 @@
 
 //////////
 //SYSTEM//
-//////////
+/////////{
 
 //Clear screen
 void xyClearScreen(){
@@ -30,21 +30,23 @@ void xySetDrawColor(int r, int g, int b, int a){
 	if(a > 255) a = 255;
 	if(a < 0) r = 0;
 
-	SDL_SetRenderDrawColor(gvRender, r, g, b, a);
+	Uint8 _r = r, _g = g, _b = b, _a = a;
+
+	SDL_SetRenderDrawColor(gvRender, _r, _g, _b, _a);
 };
 
 //Set draw color from 24- or 32-bit integer
 void xySetDrawColor(Uint32 color){
 	//If the value of color is too big for a 24-bit integer, then treat it as 32-bit
 	Uint8 r;
-	r = (color & 0xFF000000) >> 24;
+	r = ((color & 0xFF000000) >> 24);
 
 	//Do the same for each color value
 	Uint8 g;
-	g = (color & 0x00FF0000) >> 16;
+	g = ((color & 0x00FF0000) >> 16);
 
 	Uint8 b;
-	b = (color & 0x0000FF00) >> 8;
+	b = ((color & 0x0000FF00) >> 8);
 
 	Uint8 a;
 	a = color & 0x000000FF;
@@ -104,13 +106,11 @@ void xyResetDrawTarget(){
 	SDL_SetRenderTarget(gvRender, 0);
 };
 
-
-
-
+//}
 
 //////////
 //IMAGES//
-//////////
+/////////{
 
 //Load image
 SDL_Texture* xyLoadTexture(const char*  path){
@@ -233,3 +233,11 @@ Uint32 xyGetFPS(){
 	if(delay <= 0) return 1000;
 	else return 1000 / delay;
 };
+
+//}
+
+//////////////
+// GEOMETRY //
+/////////////{
+
+//}

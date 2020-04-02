@@ -81,5 +81,6 @@ SQInteger sqDeleteSound(HSQUIRRELVM v);
 SQInteger sqDeleteMusic(HSQUIRRELVM v);
 
 //SDL_gfx
+SQInteger sqDrawCircle(HSQUIRRELVM v);
 
 #endif

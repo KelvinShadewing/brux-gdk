@@ -2,7 +2,7 @@
 
 &nbsp;
 
-### **License**
+## **License**
 
 All code is available under the GNU General [Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
@@ -11,6 +11,16 @@ All code is available under the GNU General [Public License v3](https://www.gnu.
  Brux (formerly known as XYG) is an open-source, cross-platform, runtime-based game development kit using the Squirrel language. The aim is to make development both easy and versatile, allowing games to be written by hand in a simple text editor or made in an IDE similar to Game Maker, and to allow games to be ported with little to no modification to the code, offering a "build once, run everywhere" development process.
 
 Developers using Brux may freely make games without any need for paid license or royalties. Anyone willing to donate may visit my **[Patreon](http://www.patreon.com/kelvin)** or my **[Ko-Fi](http://www.ko-fi.com/kelvinshadewing)**.
+
+### Dependencies
+
+* SDL2
+* SDL2_image
+* SDL2_mixer
+* SDL2_net
+* SDL2_gfx
+* [Squirrel](http://http://squirrel-lang.org/)
+* TinyXML2 (included in source)
 
 ### To Do (Runtime)
 
@@ -30,6 +40,7 @@ Developers using Brux may freely make games without any need for paid license or
 **Fixes needed:**
 
 - [ ] Sprites do not pivot correctly when scaled and rotated at the same time
+- [ ] setDrawColor() crashes the engine
 
 ### To Do (Editor)
 

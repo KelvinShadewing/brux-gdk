@@ -61,8 +61,8 @@ int main(int argc, char* args[]){
 						//All checks pass, assign the file
 						char tmpstr[64];
 						xygapp = curarg.c_str();
-						getCD(tmpstr, 64);
-						gvWorkDir = tmpstr;
+						size_t found = xygapp.find_last_of("/\\");
+						gvWorkDir = xygapp.substr(0, found);
 						chdir(gvWorkDir.c_str());
 						xyPrint(0, "This is the working directory: %s", getcwd(0,0));
 					};
@@ -282,6 +282,7 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqSetBackgroundColor, "setBackgroundColor", 2, ".n");
 	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".n|b");
 	xyBindFunc(v, sqSetResolution, "setResolution", 3, ".nn");
+	xyBindFunc(v, sqDrawCircle, "drawCircle", 4, ".nnn");
 
 	//Sprites
 	xyPrint(0, "Embedding sprites...");

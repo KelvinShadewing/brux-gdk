@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="XYG_Runtime" />
+		<Option title="brux-rte" />
 		<Option makefile="makefile" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
@@ -22,11 +22,10 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/XYG_Runtime" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/release/brux" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option use_console_runner="0" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>

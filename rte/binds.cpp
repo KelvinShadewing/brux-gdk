@@ -663,4 +663,12 @@ SQInteger sqDeleteMusic(HSQUIRRELVM v){
 // SDL_GFX //
 ////////////{
 
+SQInteger sqDrawCircle(HSQUIRRELVM v){
+    SQInteger x, y, r;
+
+    circleColor(gvRender, x, y, r, gvDrawColor);
+
+    return 0;
+};
+
 //}

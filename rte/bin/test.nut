@@ -153,16 +153,20 @@ drawKey <- function(key, str, x, y){
 ::mode2 <- function(){
 	//Gamepad test
 	drawText(fntW, 0, 0, "Gamepads detected: " + getPads().tostring());
+
+
 };
 
 ///////////////////
 // MAIN FUNCTION //
 ///////////////////
 
-setScalingFilter(2);
+setScalingFilter(0);
 setResolution(320, 240);
 setBackgroundColor(0);
 setFPS(30);
+//setDrawColor(0xFFFFFF);
+print("Set draw color to white");
 
 ::mode <- mode1;
 
