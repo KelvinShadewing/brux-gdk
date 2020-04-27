@@ -13,6 +13,7 @@ local quit = false;
 ::fntR <- newFont(newSprite("cp437r.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
 ::fntG <- newFont(newSprite("cp437g.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
 ::fntB <- newFont(newSprite("cp437b.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
+::fntE <- newFont(newSprite("cp437e.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
 print("Created fonts.");
 
 drawKey <- function(key, str, x, y){
@@ -33,6 +34,11 @@ drawKey <- function(key, str, x, y){
 ///////////////
 // FUNCTIONS //
 ///////////////
+
+::mode0 <- function(){
+	//Search for game
+
+};
 
 ::mode1 <- function(){
 	//Mouse
@@ -168,11 +174,12 @@ setFPS(30);
 //setDrawColor(0xFFFFFF);
 print("Set draw color to white");
 
-::mode <- mode1;
+::mode <- mode0;
 
 while(!quit){
 	if(keyPress(k_escape)) quit = true;
 
+	if(keyPress(k_home)) mode = mode0;
 	if(keyPress(k_f1)) mode = mode1;
 	if(keyPress(k_f2)) mode = mode2;
 
