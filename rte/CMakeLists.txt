@@ -15,7 +15,7 @@ if(NOT WIN32)
     find_package(SDL2_gfx REQUIRED)
     include_directories(${SDL2_GFX_INCLUDE_DIRS})
 endif()
-message( ${SDL2_INCLUDE_DIRS} )
+
 SET(brux_gtk_sources
         audio.cpp
         binds.cpp
