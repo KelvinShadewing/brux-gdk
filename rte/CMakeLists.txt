@@ -34,6 +34,9 @@ SET(brux_gtk_sources
         )
 
 add_executable(brux-gdk ${brux_gtk_sources})
+if (NOT WIN32)
+    target_link_libraries(brux-gdk squirrel::squirrel_static squirrel::sqstdlib_static SDL2::SDL2 SDL2::SDL2main ${SDL2_IMAGE_LIBRARIES} ${SDL2_NET_LIBRARIES} ${SDL2_GFX_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+endif()
 
 if (WIN32 OR MINGW)
     if (MINGW)
