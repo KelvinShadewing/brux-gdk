@@ -1,0 +1,78 @@
+language: cpp
+notifications:
+  email: false
+
+matrix:
+  include:
+    # osx platform
+    - os: osx
+      osx_image: xcode11.3
+      addons:
+        homebrew:
+          packages:
+            - sdl2
+            - sdl2_gfx
+            - sdl2_image
+            - sdl2_net
+            - sdl2_mixer
+      script: ./build.sh
+      cache:
+        directories:
+          - $HOME/Library/Caches/Homebrew
+      before_cache:
+        - brew cleanup
+    # linux platform
+    - os: linux
+      dist: bionic
+      addons:
+        apt:
+          packages:
+            - libsdl2-dev
+            - libsdl2-mixer-dev
+            - libsdl2-net-dev
+            - libsdl2-gfx-dev
+            - libsdl2-image-dev
+      script:
+        - pip install cmake
+        - ./build.sh
+#    # windows platform
+#    - os: windows
+#      before_install:
+#        - |-
+#          case $TRAVIS_OS_NAME in
+#            windows)
+#              [[ ! -f C:/tools/msys64/msys2_shell.cmd ]] && rm -rf C:/tools/msys64
+#              choco uninstall -y mingw
+#              choco upgrade --no-progress -y msys2
+#              export msys2='cmd //C RefreshEnv.cmd '
+#              export msys2+='& set MSYS=winsymlinks:nativestrict '
+#              export msys2+='& C:\\tools\\msys64\\msys2_shell.cmd -defterm -no-start'
+#              export mingw64="$msys2 -mingw64 -full-path -here -c "\"\$@"\" --"
+#              export msys2+=" -msys2 -c "\"\$@"\" --"
+#              $msys2 pacman --sync --noconfirm --needed mingw-w64-x86_64-toolchain
+#              ## Install more MSYS2 packages from https://packages.msys2.org/base here
+#              $msys2 pacman --sync --noconfirm --needed cmake mingw-w64-x86_64-ninja
+#              $msys2 pacman --sync --noconfirm --needed mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_net mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_gfx
+#              taskkill //IM gpg-agent.exe //F  # https://travis-ci.community/t/4967
+#              export PATH=/C/tools/msys64/mingw64/bin:$PATH
+#              export MAKE=mingw32-make  # so that Autotools can find it
+#              ;;
+#          esac
+#
+#      before_cache:
+#        - |-
+#          case $TRAVIS_OS_NAME in
+#            windows)
+#              # https://unix.stackexchange.com/a/137322/107554
+#              $msys2 pacman --sync --clean --noconfirm
+#              $msys2 rm /C/tools/msys64/var/log/pacman.log
+#              ;;
+#          esac
+#
+#      cache:
+#        directories:
+#          - $HOME/AppData/Local/Temp/chocolatey
+#          - /C/tools/msys64
+#      script:
+#        - cmake -DCMAKE_MAKE_PROGRAM=mingw32-make -G "MSYS Makefiles"
+#        - mingw32-make

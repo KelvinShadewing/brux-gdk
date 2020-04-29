@@ -1,21 +1,15 @@
-if(WIN32)
-    set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../winLibs)
 
-endif()
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
-set( EXTRA_SDL "")
-if(NOT WIN32)
-    find_package(SDL2_image REQUIRED)
-    include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
-    find_package(SDL2_net REQUIRED)
-    include_directories(${SDL2_NET_INCLUDE_DIRS})
-    find_package(SDL2_mixer REQUIRED)
-    include_directories(${SDL2_MIXER_INCLUDE_DIRS})
-    find_package(SDL2_gfx REQUIRED)
-    include_directories(${SDL2_GFX_INCLUDE_DIRS})
-endif()
-message( ${SDL2_INCLUDE_DIRS} )
+find_package(SDL2_image REQUIRED)
+include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
+find_package(SDL2_net REQUIRED)
+include_directories(${SDL2_NET_INCLUDE_DIRS})
+find_package(SDL2_mixer REQUIRED)
+include_directories(${SDL2_MIXER_INCLUDE_DIRS})
+find_package(SDL2_gfx REQUIRED)
+include_directories(${SDL2_GFX_INCLUDE_DIRS})
+
 SET(brux_gtk_sources
         audio.cpp
         binds.cpp
