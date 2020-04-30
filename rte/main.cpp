@@ -30,7 +30,9 @@ using namespace tinyxml2;
 /////////////////
 //MAIN FUNCTION//
 /////////////////
-
+#ifdef __cplusplus
+extern "C"
+#endif
 int main(int argc, char* args[]){
 	//Initiate everything
 	if(xyInit() == 0){
