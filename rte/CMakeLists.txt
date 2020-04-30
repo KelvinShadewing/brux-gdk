@@ -14,6 +14,16 @@ if (NOT WIN32)
     find_package(SDL2_gfx REQUIRED)
     include_directories(${SDL2_GFX_INCLUDE_DIRS})
 endif ()
+if(MINGW)
+    find_package(SDL2_image REQUIRED)
+    include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
+    find_package(SDL2_net REQUIRED)
+    include_directories(${SDL2_NET_INCLUDE_DIRS})
+    find_package(SDL2_mixer REQUIRED)
+    include_directories(${SDL2_MIXER_INCLUDE_DIRS})
+    find_package(SDL2_gfx REQUIRED)
+    include_directories(${SDL2_GFX_INCLUDE_DIRS})
+endif()
 SET(brux_gtk_sources
         audio.cpp
         binds.cpp
