@@ -14,7 +14,7 @@ if (NOT WIN32)
     find_package(SDL2_gfx REQUIRED)
     include_directories(${SDL2_GFX_INCLUDE_DIRS})
 endif ()
-if(MINGW)
+if (MINGW)
     find_package(SDL2_image REQUIRED)
     include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
     find_package(SDL2_net REQUIRED)
@@ -23,7 +23,7 @@ if(MINGW)
     include_directories(${SDL2_MIXER_INCLUDE_DIRS})
     find_package(SDL2_gfx REQUIRED)
     include_directories(${SDL2_GFX_INCLUDE_DIRS})
-endif()
+endif ()
 SET(brux_gtk_sources
         audio.cpp
         binds.cpp
@@ -45,8 +45,8 @@ SET(brux_gtk_sources
 
 add_executable(brux-gdk ${brux_gtk_sources})
 if (NOT WIN32)
-    target_link_libraries(brux-gdk squirrel::squirrel_static squirrel::sqstdlib_static SDL2::SDL2 SDL2::SDL2main ${SDL2_IMAGE_LIBRARIES} ${SDL2_NET_LIBRARIES} ${SDL2_GFX_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
-endif()
+    target_link_libraries(brux-gdk squirrel::squirrel_static squirrel::sqstdlib_static ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_NET_LIBRARIES} ${SDL2_GFX_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+endif ()
 
 if (WIN32 OR MINGW)
     if (MINGW)
@@ -54,7 +54,7 @@ if (WIN32 OR MINGW)
     else ()
         target_link_libraries(brux-gdk squirrel::squirrel_static squirrel::sqstdlib_static ${SDL2_LIBRARIES})
     endif ()
-    if(NOT DEFINED ENV{TRAVIS})
+    if (NOT DEFINED ENV{TRAVIS})
         if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
             add_custom_command(TARGET brux-gdk POST_BUILD
                     COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/winLibs/lib/x64" $<TARGET_FILE_DIR:brux-gdk>
