@@ -42,7 +42,12 @@ extern vector<Uint8> keylast;
 extern Uint32 buttonstate[5];
 extern Uint32 buttonlast[5];
 extern Uint8 fileMax;
+
+//Gamepad
 extern SDL_Joystick* gvGamepad[8];
+extern int gvPadButton[8][32];
+extern int gvPadLastButton[8][32];
+
 
 
 #endif

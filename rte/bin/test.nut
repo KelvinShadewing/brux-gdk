@@ -160,7 +160,9 @@ drawKey <- function(key, str, x, y){
 	//Gamepad test
 	drawText(fntW, 0, 0, "Gamepads detected: " + getPads().tostring());
 
-
+	for(i = 0; i < getPads(); i++){
+		drawText(fntw, 0, 8*i, "Gamepad " + i.tostring() + " name:");
+	};
 };
 
 ///////////////////

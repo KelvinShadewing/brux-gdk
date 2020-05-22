@@ -403,6 +403,13 @@ void xyUpdate(){
 	gvMouseX /= sx;
 	gvMouseY /= sy;
 
+	//Gamepad
+	//Check each pad
+	for(int i = 0; i < 8; i++){
+        if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
+
+	};
+
 	gvFPS = 1000 / fLength;
 	//Wait for FPS limit
 	//		delay	4294967290	unsigned int

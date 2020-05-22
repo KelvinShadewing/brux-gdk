@@ -41,4 +41,8 @@ vector<Uint8> keylast(322);
 Uint32 buttonstate[5];
 Uint32 buttonlast[5];
 Uint8 fileMax = 128;
+
+//Gamepad
 SDL_Joystick* gvGamepad[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+int gvPadButton[8][32] = {0};
+int gvPadLastButton[8][32] = {0};
