@@ -21,8 +21,10 @@ SQInteger sqSetWindowTitle(HSQUIRRELVM v);
 SQInteger sqImport(HSQUIRRELVM v);
 SQInteger sqDoNut(HSQUIRRELVM v);
 SQInteger sqFileExists(HSQUIRRELVM v);
-SQInteger sqGetDir(HSQUIRRELVM v);	//Needs def
-SQInteger sqSetDir(HSQUIRRELVM v);	//Needs def
+SQInteger sqFileWrite(HSQUIRRELVM v);
+SQInteger sqFileRead(HSQUIRRELVM v);
+SQInteger sqGetDir(HSQUIRRELVM v);
+SQInteger sqSetDir(HSQUIRRELVM v);
 
 //Graphics
 SQInteger sqWait(HSQUIRRELVM v);

@@ -329,6 +329,10 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqImport, "import", 2, ".s");
 	xyBindFunc(v, sqDoNut, "donut", 2, ".s");
 	xyBindFunc(v, sqDecodeJSON, "jsonRead", 2, ".s");
+	xyBindFunc(v, sqGetDir, "getdir");
+	xyBindFunc(v, sqSetDir, "chdir", 2, ".s");
+	xyBindFunc(v, sqFileWrite, "fileWrite", 3, ".ss");
+	xyBindFunc(v, sqFileRead, "fileRead", 2, ".s");
 
 	//Audio
 	xyPrint(0, "Embedding audio...");
@@ -406,7 +410,7 @@ void xyUpdate(){
 	//Gamepad
 	//Check each pad
 	for(int i = 0; i < 8; i++){
-        if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
+		if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
 
 	};
 

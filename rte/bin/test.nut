@@ -26,10 +26,14 @@ drawKey <- function(key, str, x, y){
 };
 
 //Test table for printing as JSON
-::blah <- {
-	thing = "Value",
-	otherthing = "Something"
+::blah <- jsonRead(fileRead("test.json"));
+::blah2 <- {
+	name = "Jim",
+	age = "24"
 };
+
+print(jsonWrite(blah));
+print(jsonWrite(blah2));
 
 ///////////////
 // FUNCTIONS //
@@ -174,7 +178,10 @@ setResolution(320, 240);
 setBackgroundColor(0);
 setFPS(30);
 //setDrawColor(0xFFFFFF);
-print("Set draw color to white");
+/////////////////////////////////////////
+//! This function causes it to crash. !//
+//! Please help find out why!         !//
+/////////////////////////////////////////
 
 ::mode <- mode0;
 
@@ -188,9 +195,3 @@ while(!quit){
 	mode();
 	update();
 };
-
-print(jsonWrite(blah));
-
-::blah2 <- jsonRead(jsonWrite(blah));
-
-print(blah2["thing"]);
