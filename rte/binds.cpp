@@ -173,6 +173,21 @@ SQInteger sqFileWrite(HSQUIRRELVM v){
     return 0;
 };
 
+SQInteger sqFileAppend(HSQUIRRELVM v){
+    const char* f;
+    const char* s;
+
+    sq_getstring(v, 2, &f);
+    sq_getstring(v, 3, &s);
+
+    ofstream fi;
+    fi.open(f, ios::out | ios::app);
+    fi << s;
+    fi.close();
+
+    return 0;
+};
+
 SQInteger sqFileRead(HSQUIRRELVM v){
 	const char* f;
 	int l;

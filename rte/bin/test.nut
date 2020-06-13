@@ -34,6 +34,7 @@ drawKey <- function(key, str, x, y){
 
 print(jsonWrite(blah));
 print(jsonWrite(blah2));
+fileAppend("count.txt", "blah ");
 
 ///////////////
 // FUNCTIONS //

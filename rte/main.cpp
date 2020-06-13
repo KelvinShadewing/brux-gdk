@@ -332,6 +332,7 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqGetDir, "getdir");
 	xyBindFunc(v, sqSetDir, "chdir", 2, ".s");
 	xyBindFunc(v, sqFileWrite, "fileWrite", 3, ".ss");
+	xyBindFunc(v, sqFileAppend, "fileAppend", 3, ".ss");
 	xyBindFunc(v, sqFileRead, "fileRead", 2, ".s");
 
 	//Audio

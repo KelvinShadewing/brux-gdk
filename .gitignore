@@ -8,3 +8,4 @@ rte/bin/brux
 rte/bin/brux.*
 *.exe
 rte/bin/release/*
+rte/bin/count.txt
