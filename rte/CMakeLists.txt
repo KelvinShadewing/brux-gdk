@@ -1,7 +1,4 @@
-if (WIN32 AND NOT MINGW)
-    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/winLibs/")
-    include_directories(${PROJECT_SOURCE_DIR}/winLibs/include)
-endif ()
+
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 if (NOT WIN32)
@@ -41,18 +38,18 @@ SET(brux_gtk_sources
         tile.cpp
         tinyxml2.cpp
         tmap.cpp
-        )
+         Phyisics.cpp)
 
 add_executable(brux-gdk ${brux_gtk_sources})
 if (NOT WIN32)
-    target_link_libraries(brux-gdk squirrel::squirrel_static squirrel::sqstdlib_static ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_NET_LIBRARIES} ${SDL2_GFX_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+    target_link_libraries(brux-gdk squirrel::squirrel_static squirrel::sqstdlib_static  ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_NET_LIBRARIES} ${SDL2_GFX_LIBRARIES} ${SDL2_MIXER_LIBRARIES} chipmunk_static)
 endif ()
 
 if (WIN32 OR MINGW)
     if (MINGW)
-        target_link_libraries(brux-gdk squirrel::squirrel_static squirrel::sqstdlib_static SDL2::SDL2 SDL2::SDL2main ${SDL2_IMAGE_LIBRARIES} ${SDL2_NET_LIBRARIES} ${SDL2_GFX_LIBRARIES} ${SDL2_MIXER_LIBRARIES} -lmingw32 -mwindows)
+        target_link_libraries(brux-gdk squirrel::squirrel_static squirrel::sqstdlib_static SDL2::SDL2 SDL2::SDL2main ${SDL2_IMAGE_LIBRARIES} ${SDL2_NET_LIBRARIES} ${SDL2_GFX_LIBRARIES} ${SDL2_MIXER_LIBRARIES} chipmunk_static -lmingw32 -mwindows)
     else ()
-        target_link_libraries(brux-gdk squirrel::squirrel_static squirrel::sqstdlib_static ${SDL2_LIBRARIES})
+        target_link_libraries(brux-gdk squirrel::squirrel_static squirrel::sqstdlib_static ${SDL2_LIBRARIES} chipmunk_static)
     endif ()
     if (NOT DEFINED ENV{TRAVIS})
         if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)

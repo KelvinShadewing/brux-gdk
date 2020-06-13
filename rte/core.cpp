@@ -7,7 +7,7 @@
 #include "core.h"
 
 void xyLoadCore(){
-	char* cmd =" \
+	const SQChar *cmd =" \
 	const k__0 = 0; \
 	const k__1 = 1; \
 	const k__2 = 2; \
