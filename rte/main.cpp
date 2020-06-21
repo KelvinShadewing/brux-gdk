@@ -349,7 +349,7 @@ void xyUpdate(){
 	//Update ticks counter for FPS
 	gvTickLast = gvTicks;
 	gvTicks = SDL_GetTicks();
-	auto fLength = gvTicks - gvTickLast;
+	int fLength = gvTicks - gvTickLast;
 
 	//Update last button state
 	for(int i = 0; i < 5; i++){
