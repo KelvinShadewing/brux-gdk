@@ -166,7 +166,7 @@ fileAppend("count.txt", "blah ");
 	drawText(fntW, 0, 0, "Gamepads detected: " + getPads().tostring());
 
 	for(local i = 0; i < getPads(); i++){
-		drawText(fntw, 0, 8*i, "Gamepad " + i.tostring() + " name:");
+		drawText(fntW, 0, (8*i) + 8, "Gamepad " + i.tostring() + " name:");
 	};
 };
 

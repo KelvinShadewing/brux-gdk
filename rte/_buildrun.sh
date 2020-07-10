@@ -1,4 +1,4 @@
 make clean
 make
 cd ./bin
-xyg test.nut
+brux test.nut
