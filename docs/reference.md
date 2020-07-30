@@ -21,7 +21,7 @@
 * [Text](#text)
 * [Constants](#constants)
 
-  >>*Notice:* Any function with a double bar in front of its name, like this box, has not yet been implemented/completed, and cannot be used in scripts.
+ >> *Notice:* Any function with a double bar in front of its name, like this box, has not yet been implemented/completed, and cannot/should not be used in scripts.
 
 
 
@@ -268,6 +268,18 @@
 
 *(TIP: Using the JSON functions with reading and writing files is an easy way to save and load game data by storing important variables in a table.)*
 
+* <a name="getdir"></a>**`getdir();`**
+
+  Returns the current working directory as a string.
+
+* <a name="getdir"></a>**`chdir( string );`**
+
+  Attempts to change the current working directory.
+
+* <a name="lsdir"></a>**`lsdir();`**
+
+  Returns a list of the current directory's contents as an array.
+
 &nbsp;
 
 
@@ -325,6 +337,22 @@
 * <a name="closefont"></a>**`closeFont( font );`**
 
   Removes `font` from memory.
+  
+
+
+&nbsp;
+
+
+
+----
+
+## <a name="misc"></a><center>**==== Misc ====**</center>
+
+----
+
+* <a name="arraySort"></a>**`arraySort( array );`**
+
+  Takes an array and attempts to sort it. If a wrong value is passed, it will return that value unchanged.
 
 
 &nbsp;

@@ -25,29 +25,6 @@ drawKey <- function(key, str, x, y){
 	drawText(ftu, x, y, str);
 };
 
-arraySort <- function(arr){
-	//Skip sorting if it's not an array
-	if(typeof arr != "array") return arr;
-
-	//or if there's nothing to sort
-	if(arr.len() <= 1) return arr;
-
-	local needsort = true;
-	while(needsort){
-		needsort = false;
-		for(local i = 0; i < arr.len() - 2; i++){
-			if(arr[i] > arr[i+1]){
-				local temp = arr[i];
-				arr[i] = arr[i+1];
-				arr[i+1] = temp;
-				needsort = true;
-			};
-		};
-	};
-
-	return arr;
-};
-
 //Test table for printing as JSON
 ::blah <- jsonRead(fileRead("test.json"));
 ::blah2 <- {
