@@ -85,3 +85,30 @@ SQInteger sqDecodeJSON(HSQUIRRELVM v){
   cJSON_Delete(Root);
   return 1;
 }
+
+SQInteger sqLsDir(HSQUIRRELVM v){
+	const SQChar *dir;
+	sq_getstring(v, 2, &dir);
+
+	//Get the current directory
+	DIR *folder;
+	struct dirent *entry;
+	string s_entry;
+
+	folder = opendir(dir);
+	if(folder == NULL){
+		xyPrint(0, "Failed to open directory: %s\n", dir);
+		sq_pushstring(v, "", 0);
+		return 1;
+	} else {
+		sq_newarray(v, 0);
+		while(entry = readdir(folder)){
+			s_entry = entry->d_name;
+			sq_pushstring(v, s_entry.c_str(), s_entry.length());
+			sq_arrayappend(v, -2);
+		};
+	};
+
+	closedir(folder);
+	return 1;
+};

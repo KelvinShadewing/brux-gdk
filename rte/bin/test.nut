@@ -25,6 +25,29 @@ drawKey <- function(key, str, x, y){
 	drawText(ftu, x, y, str);
 };
 
+arraySort <- function(arr){
+	//Skip sorting if it's not an array
+	if(typeof arr != "array") return arr;
+
+	//or if there's nothing to sort
+	if(arr.len() <= 1) return arr;
+
+	local needsort = true;
+	while(needsort){
+		needsort = false;
+		for(local i = 0; i < arr.len() - 2; i++){
+			if(arr[i] > arr[i+1]){
+				local temp = arr[i];
+				arr[i] = arr[i+1];
+				arr[i+1] = temp;
+				needsort = true;
+			};
+		};
+	};
+
+	return arr;
+};
+
 //Test table for printing as JSON
 ::blah <- jsonRead(fileRead("test.json"));
 ::blah2 <- {
@@ -36,6 +59,11 @@ print(jsonWrite(blah));
 print(jsonWrite(blah2));
 fileAppend("count.txt", "blah ");
 
+::dirls <- arraySort(lsdir(getdir()));
+::dircurs <- 0;
+::menutimerd <- 20;
+::menutimeru <- 20;
+
 ///////////////
 // FUNCTIONS //
 ///////////////
@@ -43,6 +71,43 @@ fileAppend("count.txt", "blah ");
 ::mode0 <- function(){
 	//Search for game
 
+	if(dircurs < 0) dircurs += dirls.len();
+	if(dircurs >= dirls.len()) dircurs -= dirls.len();
+
+	if(keyPress(k_down)) dircurs++;
+	if(keyPress(k_up)) dircurs--;
+
+	if(keyDown(k_down)){
+		if(menutimerd > 0) menutimerd--;
+		else {
+			menutimerd = 2;
+			dircurs++;
+		};
+	};
+	if(keyRelease(k_down)) menutimerd = 20;
+
+	if(keyDown(k_up)){
+		if(menutimeru > 0) menutimeru--;
+		else {
+			menutimeru = 2;
+			dircurs--;
+		};
+	};
+	if(keyRelease(k_up)) menutimeru = 20;
+
+	for(local i = 0; i < dirls.len(); i++){
+		if(dircurs == i) drawText(fntG, 0, 32 + (i * 8) - (dircurs * 8), ">" + dirls[i])
+		else drawText(fntW, 0, 32 + (i * 8) - (dircurs * 8), " " + dirls[i]);
+	};
+
+	if(keyPress(k_enter)){
+		if(dirls[dircurs] == ".."){
+			chdir("..");
+			dirls = arraySort(lsdir(getdir()));
+		};
+	};
+
+	drawText(fntW, 0, 0, "Current directory:\n" + getdir().tostring());
 };
 
 ::mode1 <- function(){

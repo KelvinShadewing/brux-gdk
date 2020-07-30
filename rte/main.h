@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <sys/stat.h>
 #include <limits>
+#include <dirent.h>
 
 
 //If running on Windows, use Windows
