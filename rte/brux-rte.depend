@@ -116,7 +116,7 @@
 1577493087 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
-1596058671 source:/home/kelvin/Code/brux/rte/main.cpp
+1596177243 source:/home/kelvin/Code/brux/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -127,7 +127,6 @@
 	"binds.h"
 	"text.h"
 	"audio.h"
-	"tinyxml2.h"
 
 1577493087 /home/kelvin/Code/brux/rte/tinyxml2.h
 	<ctype.h>

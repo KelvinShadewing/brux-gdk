@@ -9,9 +9,9 @@
 #include "maths.h"
 #include "fileio.h"
 #include "text.h"
-#include "binds.h"
 #include "audio.h"
 #include "sprite.h"
+#include "binds.h"
 
 //////////
 // MAIN //
