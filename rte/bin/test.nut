@@ -47,10 +47,6 @@ fileAppend("count.txt", "blah ");
 
 ::mode0 <- function(){
 	//Search for game
-
-	if(dircurs < 0) dircurs += dirls.len();
-	if(dircurs >= dirls.len()) dircurs -= dirls.len();
-
 	if(keyPress(k_down)) dircurs++;
 	if(keyPress(k_up)) dircurs--;
 
@@ -71,6 +67,9 @@ fileAppend("count.txt", "blah ");
 		};
 	};
 	if(keyRelease(k_up)) menutimeru = 20;
+
+	if(dircurs < 0) dircurs += dirls.len();
+	if(dircurs >= dirls.len()) dircurs -= dirls.len();
 
 	for(local i = 0; i < dirls.len(); i++){
 		if(dircurs == i) drawText(fntG, 0, 32 + (i * 8) - (dircurs * 8), ">" + dirls[i])
