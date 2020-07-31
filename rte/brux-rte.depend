@@ -4,7 +4,7 @@
 	"global.h"
 	"audio.h"
 
-1595971438 /home/kelvin/Code/brux/rte/main.h
+1596184809 /home/kelvin/Code/brux/rte/main.h
 	<stdio.h>
 	<stdlib.h>
 	<sstream>
@@ -19,6 +19,7 @@
 	<sys/stat.h>
 	<limits>
 	<dirent.h>
+	<sys/stat.h>
 	<direct.h>
 	<unistd.h>
 	"cJSON.h"
@@ -59,7 +60,7 @@
 
 1577493087 /home/kelvin/Code/brux/rte/audio.h
 
-1591507862 source:/home/kelvin/Code/brux/rte/binds.cpp
+1596179778 source:/home/kelvin/Code/brux/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -67,9 +68,9 @@
 	"maths.h"
 	"fileio.h"
 	"text.h"
-	"binds.h"
 	"audio.h"
 	"sprite.h"
+	"binds.h"
 
 1577493087 /home/kelvin/Code/brux/rte/graphics.h
 	"main.h"
@@ -80,7 +81,7 @@
 
 1577493087 /home/kelvin/Code/brux/rte/maths.h
 
-1596058773 /home/kelvin/Code/brux/rte/fileio.h
+1596186833 /home/kelvin/Code/brux/rte/fileio.h
 	"main.h"
 
 1591508048 /home/kelvin/Code/brux/rte/binds.h
@@ -102,7 +103,7 @@
 
 1577493087 /home/kelvin/Code/brux/rte/core.h
 
-1596059788 source:/home/kelvin/Code/brux/rte/fileio.cpp
+1596186822 source:/home/kelvin/Code/brux/rte/fileio.cpp
 	"main.h"
 	"global.h"
 	"fileio.h"
@@ -116,7 +117,7 @@
 1577493087 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
-1596177243 source:/home/kelvin/Code/brux/rte/main.cpp
+1596186915 source:/home/kelvin/Code/brux/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"

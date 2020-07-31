@@ -13,5 +13,6 @@ bool xyFileExists(const char* file);
 void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item);
 SQInteger sqDecodeJSON(HSQUIRRELVM v);
 SQInteger sqLsDir(HSQUIRRELVM v);
+SQInteger sqIsDir(HSQUIRRELVM v);
 
 #endif

@@ -8,13 +8,12 @@ print("Test Nut");
 //////////////////////
 
 //Misc
-local quit = false;
+local brxQuit = false;
 ::fntW <- newFont(newSprite("cp437w.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
 ::fntR <- newFont(newSprite("cp437r.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
 ::fntG <- newFont(newSprite("cp437g.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
 ::fntB <- newFont(newSprite("cp437b.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
 ::fntE <- newFont(newSprite("cp437e.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
-print("Created fonts.");
 
 drawKey <- function(key, str, x, y){
 	local ftu = 0;
@@ -25,21 +24,25 @@ drawKey <- function(key, str, x, y){
 	drawText(ftu, x, y, str);
 };
 
-//Test table for printing as JSON
-::blah <- jsonRead(fileRead("test.json"));
-::blah2 <- {
-	name = "Jim",
-	age = "24"
-};
-
-print(jsonWrite(blah));
-print(jsonWrite(blah2));
-fileAppend("count.txt", "blah ");
-
+//File menu handling stuff
 ::dirls <- arraySort(lsdir(getdir()));
 ::dircurs <- 0;
 ::menutimerd <- 20;
 ::menutimeru <- 20;
+::isnut <- function(str){
+	if(typeof str != "string") return false;
+	if(str.find(".sq") > 0 || str.find(".nut") > 0) return true;
+	return false;
+};
+::tidydirls <- function(){
+	local newarr = [];
+	for(local i = 0; i < dirls.len(); i++){
+		if((isdir(dirls[i]) && dirls[i] != ".") || isnut(dirls[i])) newarr.push(dirls[i]);
+	};
+	dirls = newarr;
+};
+tidydirls();
+::menuFont <- fntW;
 
 ///////////////
 // FUNCTIONS //
@@ -72,15 +75,21 @@ fileAppend("count.txt", "blah ");
 	if(dircurs >= dirls.len()) dircurs -= dirls.len();
 
 	for(local i = 0; i < dirls.len(); i++){
-		if(dircurs == i) drawText(fntG, 0, 32 + (i * 8) - (dircurs * 8), ">" + dirls[i])
-		else drawText(fntW, 0, 32 + (i * 8) - (dircurs * 8), " " + dirls[i]);
+		if(isnut(dirls[i])) drawText(fntW, 0, 32 + (i * 8) - (dircurs * 8), "  " + dirls[i]);
+		else drawText(fntE, 0, 32 + (i * 8) - (dircurs * 8), "  " + dirls[i]);
+
+		if(i == dircurs) drawText(fntG, 0, 32 + (i * 8) - (dircurs * 8), "=>")
 	};
 
 	if(keyPress(k_enter)){
-		if(dirls[dircurs] == ".."){
-			chdir("..");
+		if(isdir(dirls[dircurs])){
+			chdir(dirls[dircurs]);
 			dirls = arraySort(lsdir(getdir()));
+			dircurs = 0;
+			tidydirls();
 		};
+
+		if(isnut(dirls[dircurs])) donut(dirls[dircurs]);
 	};
 
 	drawText(fntW, 0, 0, "Current directory:\n" + getdir().tostring());
@@ -227,8 +236,8 @@ setFPS(30);
 
 ::mode <- mode0;
 
-while(!quit){
-	if(keyPress(k_escape)) quit = true;
+while(!brxQuit){
+	if(keyPress(k_escape)) brxQuit = true;
 
 	if(keyPress(k_home)) mode = mode0;
 	if(keyPress(k_f1)) mode = mode1;

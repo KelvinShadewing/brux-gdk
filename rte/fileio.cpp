@@ -112,3 +112,20 @@ SQInteger sqLsDir(HSQUIRRELVM v){
 	closedir(folder);
 	return 1;
 };
+
+SQInteger sqIsDir(HSQUIRRELVM v){
+	const SQChar *dir;
+	sq_getstring(v, 2, &dir);
+	struct stat info;
+
+	if(stat(dir, &info) != 0){
+		sq_pushbool(v, false);
+		return 1;
+	} else if(info.st_mode & S_IFDIR){
+		sq_pushbool(v, true);
+		return 1;
+	} else {
+		sq_pushbool(v, false);
+		return 1;
+	};
+};

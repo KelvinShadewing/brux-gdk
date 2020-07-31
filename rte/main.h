@@ -20,6 +20,7 @@
 #include <sys/stat.h>
 #include <limits>
 #include <dirent.h>
+#include <sys/stat.h>
 
 
 //If running on Windows, use Windows
