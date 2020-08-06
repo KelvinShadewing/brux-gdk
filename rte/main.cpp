@@ -40,7 +40,7 @@ int main(int argc, char* args[]){
 	};
 
 	//Process arguments
-	string xygapp = "test.nut";
+	string xygapp = "";
 	string curarg = "";
 	for(int i = 0; i < argc; i++){
 		//Print each argument and process them
@@ -55,7 +55,7 @@ int main(int argc, char* args[]){
 			//If the file is long enough
 			if(curarg.length() > 4){
 				//If the input is a Squirrel file
-				if(curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut"){
+				if(curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut" || curarg.substr(curarg.find_last_of(".")) == ".brx"){
 					//Check that the file really exists
 					if(xyFileExists(curarg.c_str())){
 						//All checks pass, assign the file
@@ -77,7 +77,12 @@ int main(int argc, char* args[]){
 
 	//Run app
 	xyLoadCore(); //Squirrel-side definitions
-	sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
+	if(xygapp != ""){
+		xyPrint(0, "Running %s...", xygapp.c_str());
+		sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
+	} else {
+		if(xyFileExists("test.nut")) sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
+	};
 
 	//End game
 	xyEnd();
@@ -445,12 +450,6 @@ int xyGetOS(){
 #endif
 };
 
-int xyRun(char* cmd){
-	int result = 0;
-	SQInteger oldtop = sq_gettop(gvSquirrel);
-	sq_compilebuffer(gvSquirrel, cmd, (int)strlen(cmd) * sizeof(SQChar), "run", 1);
-	sq_pushroottable(gvSquirrel);
-	result = sq_call(gvSquirrel, 1, SQFalse, SQTrue);
-	sq_settop(gvSquirrel, oldtop);
-	return result;
+void xyRun(){
+
 };

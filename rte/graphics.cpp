@@ -28,7 +28,7 @@ void xySetDrawColor(int r, int g, int b, int a){
 	if(b > 255) b = 255;
 	if(b < 0) b = 0;
 	if(a > 255) a = 255;
-	if(a < 0) r = 0;
+	if(a < 0) a = 0;
 
 	Uint8 _r = r, _g = g, _b = b, _a = a;
 
@@ -36,7 +36,7 @@ void xySetDrawColor(int r, int g, int b, int a){
 };
 
 //Set draw color from 24- or 32-bit integer
-void xySetDrawColor(Uint32 color){
+void xySetDrawColor(SQInteger color){
 	//If the value of color is too big for a 24-bit integer, then treat it as 32-bit
 	Uint8 r;
 	r = ((color & 0xFF000000) >> 24);

@@ -15,7 +15,7 @@ void xyResetDrawTarget();
 void xyDrawImage(Uint32 tex, float x, float y);
 Uint32 xyLoadImage(const char* path, Uint32 key);
 void xySetDrawColor(int r, int g, int b, int a);
-void xySetDrawColor(Uint32 color);
+void xySetDrawColor(SQInteger color);
 Uint32 xyLoadImage(const char* path);
 Uint32 xyLoadImageKeyed(const char* path, Uint32 key);
 void xySetBackgroundColor(Uint32 color);

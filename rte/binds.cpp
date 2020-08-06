@@ -121,15 +121,17 @@ SQInteger sqDoNut(HSQUIRRELVM v){
 
 	sq_getstring(v, 2, &a);
 
+	/*
 	string b = "";
 	char c[256];
 	if(getcwd(c, sizeof(c)) == 0) return 0;
 	b += c;
 	b += "/";
 	b += a;
+	*/
 
-	xyPrint(0, "Running %s...", b.c_str());
-	sqstd_dofile(gvSquirrel, b.c_str(), 0, 1);
+	xyPrint(0, "Running %s...", a);
+	sqstd_dofile(gvSquirrel, a, 0, 1);
 
 	return 0;
 };
@@ -253,9 +255,9 @@ SQInteger sqDrawImage(HSQUIRRELVM v){
 };
 
 SQInteger sqSetDrawColor(HSQUIRRELVM v){
-	Uint32 c;
+	SQInteger c;
 
-	sq_getinteger(v, 2, (SQInteger*)&c);
+	sq_getinteger(v, 2, &c);
 
 	xySetDrawColor(c);
 

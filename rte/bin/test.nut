@@ -1,7 +1,6 @@
 /*========*\
 | TEST NUT |
 \*========*/
-print("Test Nut");
 
 //////////////////////
 // GLOBAL VARIABLES //
@@ -89,7 +88,7 @@ tidydirls();
 			tidydirls();
 		};
 
-		if(isnut(dirls[dircurs])) donut(dirls[dircurs]);
+		if(isnut(dirls[dircurs]) == true) donut(dirls[dircurs]);
 	};
 
 	drawText(fntW, 0, 0, "Current directory:\n" + getdir().tostring());
@@ -228,13 +227,13 @@ setScalingFilter(0);
 setResolution(320, 240);
 setBackgroundColor(0);
 setFPS(30);
-//setDrawColor(0xFFFFFF);
+setDrawColor(0xFFFFFF);
 /////////////////////////////////////////
 //! This function causes it to crash. !//
 //! Please help find out why!         !//
 /////////////////////////////////////////
 
-::mode <- mode0;
+::mode <- mode1;
 
 while(!brxQuit){
 	if(keyPress(k_escape)) brxQuit = true;

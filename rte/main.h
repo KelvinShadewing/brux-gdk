@@ -85,7 +85,6 @@ void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nPa
 void xyBindAllFunctions(HSQUIRRELVM v);
 int xyGetOS();
 void xyUpdate();
-int xyRun(char* cmd);
 
 
 #endif
