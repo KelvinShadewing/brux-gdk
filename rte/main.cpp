@@ -74,6 +74,8 @@ int main(int argc, char* args[]){
 		};
 	};
 
+	SDL_ShowCursor(0);
+
 
 	//Run app
 	xyLoadCore(); //Squirrel-side definitions
@@ -287,7 +289,11 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqSetBackgroundColor, "setBackgroundColor", 2, ".n");
 	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".n|b");
 	xyBindFunc(v, sqSetResolution, "setResolution", 3, ".nn");
-	xyBindFunc(v, sqDrawCircle, "drawCircle", 4, ".nnn");
+	xyBindFunc(v, sqDrawCircle, "drawCircle", 5, ".nnnn|b");
+	xyBindFunc(v, sqDrawRect, "drawRect", 6, ".nnnnn|b");
+	xyBindFunc(v, sqDrawPoint, "drawPoint", 3, ".nn");
+	xyBindFunc(v, sqDrawLine, "drawLine", 5, ".nnnn");
+	xyBindFunc(v, sqDrawLineWide, "drawLineWide", 6, ".nnnnn");
 
 	//Sprites
 	xyPrint(0, "Embedding sprites...");
@@ -308,7 +314,8 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqMouseX, "mouseX");
 	xyBindFunc(v, sqMouseY, "mouseY");
 	xyBindFunc(v, sqGetQuit, "getQuit");
-	xyBindFunc(v, sqGetPads, "getPads");
+	xyBindFunc(v, sqGetPads, "joyCount");
+	xyBindFunc(v, sqPadName, "joyName", 2, ".i");
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
@@ -390,9 +397,11 @@ void xyUpdate(){
 
 	//Update screen
 	SDL_RenderPresent(gvRender);
+	Uint32 olddraw = gvDrawColor;
 	xySetDrawColor(gvBackColor);
 	SDL_RenderClear(gvRender);
-	xySetDrawColor(gvDrawColor);
+	xySetDrawColor(olddraw);
+	if(SDL_BYTEORDER == SDL_LIL_ENDIAN) gvDrawColor = SDL_Swap32(gvDrawColor);
 
 	//Update input
 	keylast = keystate;
@@ -402,6 +411,24 @@ void xyUpdate(){
 	};
 
 	SDL_GetMouseState(&gvMouseX, &gvMouseY);
+
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < 32; j++){
+			gvPadLastButton[i][j] = gvPadButton[i][j];
+		};
+
+		if(SDL_JoystickGetAttached(gvGamepad[i])){
+            gvPadX[i] = SDL_JoystickGetAxis(gvGamepad[i], 0);
+            gvPadY[i] = SDL_JoystickGetAxis(gvGamepad[i], 1);
+            gvPadZ[i] = SDL_JoystickGetAxis(gvGamepad[i], 2);
+            gvPadName[i] = SDL_JoystickName(gvGamepad[i]);
+		} else {
+			gvPadX[i] = 0;
+			gvPadY[i] = 0;
+			gvPadZ[i] = 0;
+			gvPadName[i] = "?";
+		};
+	};
 
 	//Divide by scale
 	float sx, sy;

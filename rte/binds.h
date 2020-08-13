@@ -60,6 +60,7 @@ SQInteger sqGetQuit(HSQUIRRELVM v);
 SQInteger sqMouseX(HSQUIRRELVM v);
 SQInteger sqMouseY(HSQUIRRELVM v);
 SQInteger sqGetPads(HSQUIRRELVM v);
+SQInteger sqPadName(HSQUIRRELVM v);
 
 //Maths
 SQInteger sqRandomFloat(HSQUIRRELVM v);
@@ -85,5 +86,9 @@ SQInteger sqDeleteMusic(HSQUIRRELVM v);
 
 //SDL_gfx
 SQInteger sqDrawCircle(HSQUIRRELVM v);
+SQInteger sqDrawRect(HSQUIRRELVM v);
+SQInteger sqDrawLine(HSQUIRRELVM v);
+SQInteger sqDrawPoint(HSQUIRRELVM v);
+SQInteger sqDrawLineWide(HSQUIRRELVM v);
 
 #endif

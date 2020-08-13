@@ -50,7 +50,7 @@
 
 1577493087 /home/kelvin/Code/brux/rte/cJSON.h
 
-1591393286 /home/kelvin/Code/brux/rte/global.h
+1597269627 /home/kelvin/Code/brux/rte/global.h
 	"sprite.h"
 	"text.h"
 
@@ -60,7 +60,7 @@
 
 1577493087 /home/kelvin/Code/brux/rte/audio.h
 
-1596221980 source:/home/kelvin/Code/brux/rte/binds.cpp
+1597354786 source:/home/kelvin/Code/brux/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -84,7 +84,7 @@
 1596186833 /home/kelvin/Code/brux/rte/fileio.h
 	"main.h"
 
-1591508048 /home/kelvin/Code/brux/rte/binds.h
+1597354921 /home/kelvin/Code/brux/rte/binds.h
 
 1577493087 source:/home/kelvin/Code/brux/rte/cJSON.c
 	<string.h>
@@ -108,7 +108,7 @@
 	"global.h"
 	"fileio.h"
 
-1588025160 source:/home/kelvin/Code/brux/rte/graphics.cpp
+1597168936 source:/home/kelvin/Code/brux/rte/graphics.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -117,7 +117,7 @@
 1577493087 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
-1596661587 source:/home/kelvin/Code/brux/rte/main.cpp
+1597354916 source:/home/kelvin/Code/brux/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -191,7 +191,7 @@
 	<cstddef>
 	<cstdarg>
 
-1591393286 source:/home/kelvin/Code/brux/rte/global.cpp
+1597269633 source:/home/kelvin/Code/brux/rte/global.cpp
 	"main.h"
 	"sprite.h"
 	"global.h"

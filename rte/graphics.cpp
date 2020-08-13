@@ -54,6 +54,7 @@ void xySetDrawColor(SQInteger color){
 	//Set the color
 	SDL_SetRenderDrawColor(gvRender, r, g, b, a);
 	gvDrawColor = color;
+	if(SDL_BYTEORDER == SDL_LIL_ENDIAN) gvDrawColor = SDL_Swap32(gvDrawColor);
 };
 
 

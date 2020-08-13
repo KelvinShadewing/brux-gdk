@@ -517,6 +517,15 @@ SQInteger sqGetPads(HSQUIRRELVM v){
     return 1;
 };
 
+SQInteger sqPadName(HSQUIRRELVM v){
+    SQInteger i;
+    sq_getinteger(v, 2, &i);
+
+	sq_pushstring(v, gvPadName[i].c_str(), gvPadName[i].length());
+
+    return 1;
+};
+
 //}
 
 ///////////
@@ -727,8 +736,75 @@ SQInteger sqDeleteMusic(HSQUIRRELVM v){
 
 SQInteger sqDrawCircle(HSQUIRRELVM v){
     SQInteger x, y, r;
+    SQBool f;
 
-    circleColor(gvRender, x, y, r, gvDrawColor);
+    sq_getinteger(v, 2, &x);
+    sq_getinteger(v, 3, &y);
+    sq_getinteger(v, 4, &r);
+    sq_getbool(v, 5, &f);
+
+	if(f){
+		filledCircleColor(gvRender, x, y, r, gvDrawColor);
+    } else {
+		circleColor(gvRender, x, y, r, gvDrawColor);
+    };
+
+    return 0;
+};
+
+SQInteger sqDrawRect(HSQUIRRELVM v){
+    SQInteger x, y, w, h;
+    SQBool f;
+
+    sq_getinteger(v, 2, &x);
+    sq_getinteger(v, 3, &y);
+    sq_getinteger(v, 4, &w);
+    sq_getinteger(v, 5, &h);
+    sq_getbool(v, 6, &f);
+
+    if(f){
+		boxColor(gvRender, x, y, x + w, y + h, gvDrawColor);
+    } else {
+		rectangleColor(gvRender, x, y, x + w, y + h, gvDrawColor);
+    };
+
+    return 0;
+};
+
+SQInteger sqDrawPoint(HSQUIRRELVM v){
+    SQInteger x, y;
+
+    sq_getinteger(v, 2, &x);
+    sq_getinteger(v, 3, &y);
+
+    pixelColor(gvRender, x, y, gvDrawColor);
+
+    return 0;
+};
+
+SQInteger sqDrawLine(HSQUIRRELVM v){
+	SQInteger x1, y1, x2, y2;
+
+	sq_getinteger(v, 2, &x1);
+    sq_getinteger(v, 3, &y1);
+    sq_getinteger(v, 4, &x2);
+    sq_getinteger(v, 5, &y2);
+
+    lineColor(gvRender, x1, y1, x2, y2, gvDrawColor);
+
+    return 0;
+};
+
+SQInteger sqDrawLineWide(HSQUIRRELVM v){
+	SQInteger x1, y1, x2, y2, w;
+
+	sq_getinteger(v, 2, &x1);
+    sq_getinteger(v, 3, &y1);
+    sq_getinteger(v, 4, &x2);
+    sq_getinteger(v, 5, &y2);
+    sq_getinteger(v, 6, &w);
+
+    thickLineColor(gvRender, x1, y1, x2, y2, w, gvDrawColor);
 
     return 0;
 };

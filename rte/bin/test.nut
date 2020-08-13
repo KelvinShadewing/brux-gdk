@@ -208,14 +208,19 @@ tidydirls();
 	drawKey(k_nummul, "*", 32, 64);
 	drawKey(k_numsub, "-", 32, 72);
 	drawKey(k_numadd, "+", 32, 80);
+
+	//Draw mouse
+	drawLine(mouseX() - 8, mouseY(), mouseX() + 8, mouseY());
+	drawLine(mouseX(), mouseY() - 8, mouseX(), mouseY() + 8);
+	drawCircle(mouseX(), mouseY(), 4, false);
 };
 
 ::mode2 <- function(){
 	//Gamepad test
-	drawText(fntW, 0, 0, "Gamepads detected: " + getPads().tostring());
+	drawText(fntW, 0, 0, "Gamepads detected: " + joyCount().tostring());
 
-	for(local i = 0; i < getPads(); i++){
-		drawText(fntW, 0, (8*i) + 8, "Gamepad " + i.tostring() + " name:");
+	for(local i = 0; i < joyCount(); i++){
+		drawText(fntW, 0, (8*i) + 8, "Gamepad " + i.tostring() + " name: " + joyName(i));
 	};
 };
 
@@ -227,7 +232,7 @@ setScalingFilter(0);
 setResolution(320, 240);
 setBackgroundColor(0);
 setFPS(30);
-setDrawColor(0xFFFFFF);
+setDrawColor(0x0000ffff);
 /////////////////////////////////////////
 //! This function causes it to crash. !//
 //! Please help find out why!         !//

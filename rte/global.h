@@ -47,6 +47,11 @@ extern Uint8 fileMax;
 extern SDL_Joystick* gvGamepad[8];
 extern int gvPadButton[8][32];
 extern int gvPadLastButton[8][32];
+extern int gvPadX[8];
+extern int gvPadY[8];
+extern int gvPadZ[8];
+extern string gvPadName[8];
+extern int gvPadHat[8];
 
 
 
