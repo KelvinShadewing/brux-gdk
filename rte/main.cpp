@@ -107,6 +107,7 @@ int xyInit(){
 	xyPrint(0, "Initializing program...\n\n");
 
 	//Initiate SDL
+	SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0){
 		xyPrint(0, "Failed to initialize! %s", SDL_GetError());
 		return 0;
@@ -316,6 +317,14 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqGetQuit, "getQuit");
 	xyBindFunc(v, sqGetPads, "joyCount");
 	xyBindFunc(v, sqPadName, "joyName", 2, ".i");
+	xyBindFunc(v, sqPadX, "joyX", 2, ".i");
+	xyBindFunc(v, sqPadY, "joyY", 2, ".i");
+	xyBindFunc(v, sqPadZ, "joyZ", 2, ".i");
+	xyBindFunc(v, sqPadH, "joyH", 2, ".i");
+	xyBindFunc(v, sqPadV, "joyV", 2, ".i");
+	xyBindFunc(v, sqPadR, "joyR", 2, ".i");
+	xyBindFunc(v, sqPadL, "joyL", 2, ".i");
+	xyBindFunc(v, sqPadAxis, "joyAxis", 3, ".ii");
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
@@ -327,6 +336,7 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqCeil, "ceil", 2, ".n");
 	xyBindFunc(v, sqFloor, "floor", 2, ".n");
 	xyBindFunc(v, sqPointAngle, "pointAngle", 5, ".nnnn");
+	xyBindFunc(v, sqAbs, "abs", 2, ".n");
 
 	//Text
 	xyPrint(0, "Embedding text...");
@@ -418,14 +428,28 @@ void xyUpdate(){
 		};
 
 		if(SDL_JoystickGetAttached(gvGamepad[i])){
+			for(int j = 0; j < 10; j++){
+				gvPadAxis[i][j] = SDL_JoystickGetAxis(gvGamepad[i], j);
+			};
             gvPadX[i] = SDL_JoystickGetAxis(gvGamepad[i], 0);
             gvPadY[i] = SDL_JoystickGetAxis(gvGamepad[i], 1);
             gvPadZ[i] = SDL_JoystickGetAxis(gvGamepad[i], 2);
+            gvPadH[i] = SDL_JoystickGetAxis(gvGamepad[i], 3);
+            gvPadV[i] = SDL_JoystickGetAxis(gvGamepad[i], 4);
+            gvPadR[i] = SDL_JoystickGetAxis(gvGamepad[i], 8);
+            gvPadL[i] = SDL_JoystickGetAxis(gvGamepad[i], 9);
             gvPadName[i] = SDL_JoystickName(gvGamepad[i]);
 		} else {
+			for(int j = 0; j < 10; j++){
+				gvPadAxis[i][j] = 0;
+			};
 			gvPadX[i] = 0;
 			gvPadY[i] = 0;
 			gvPadZ[i] = 0;
+			gvPadH[i] = 0;
+			gvPadV[i] = 0;
+			gvPadR[i] = 0;
+			gvPadL[i] = 0;
 			gvPadName[i] = "?";
 		};
 	};

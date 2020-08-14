@@ -369,6 +369,8 @@ void xyLoadCore(){
 	const os_android = 2; \
 	const os_mac = 3; \
 	\
+	const js_max = 32768; \
+	\
 	arraySort <- function(arr){\n\t//Skip sorting if it's not an array\n\tif(typeof arr != \"array\") return arr;\n\n\t//or if there's nothing to sort\n\tif(arr.len() <= 1) return arr;\n\n\tlocal needsort = true;\n\twhile(needsort){\n\t\tneedsort = false;\n\t\tfor(local i = 0; i < arr.len() - 2; i++){\n\t\t\tif(arr[i] > arr[i+1]){\n\t\t\t\tlocal temp = arr[i];\n\t\t\t\tarr[i] = arr[i+1];\n\t\t\t\tarr[i+1] = temp;\n\t\t\t\tneedsort = true;\n\t\t\t};\n\t\t};\n\t};\n\n\treturn arr;\n}; \
 	\
 	::jsonWrite <- function(Table) { \

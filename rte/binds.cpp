@@ -526,6 +526,79 @@ SQInteger sqPadName(HSQUIRRELVM v){
     return 1;
 };
 
+SQInteger sqPadX(HSQUIRRELVM v){
+    SQInteger i;
+    sq_getinteger(v, 2, &i);
+
+    sq_pushinteger(v, gvPadX[i]);
+
+    return 1;
+};
+
+SQInteger sqPadY(HSQUIRRELVM v){
+    SQInteger i;
+    sq_getinteger(v, 2, &i);
+
+    sq_pushinteger(v, gvPadY[i]);
+
+    return 1;
+};
+
+SQInteger sqPadZ(HSQUIRRELVM v){
+    SQInteger i;
+    sq_getinteger(v, 2, &i);
+
+    sq_pushinteger(v, gvPadZ[i]);
+
+    return 1;
+};
+
+SQInteger sqPadH(HSQUIRRELVM v){
+    SQInteger i;
+    sq_getinteger(v, 2, &i);
+
+    sq_pushinteger(v, gvPadH[i]);
+
+    return 1;
+};
+
+SQInteger sqPadV(HSQUIRRELVM v){
+    SQInteger i;
+    sq_getinteger(v, 2, &i);
+
+    sq_pushinteger(v, gvPadV[i]);
+
+    return 1;
+};
+
+SQInteger sqPadR(HSQUIRRELVM v){
+    SQInteger i;
+    sq_getinteger(v, 2, &i);
+
+    sq_pushinteger(v, gvPadR[i]);
+
+    return 1;
+};
+
+SQInteger sqPadL(HSQUIRRELVM v){
+    SQInteger i;
+    sq_getinteger(v, 2, &i);
+
+    sq_pushinteger(v, gvPadL[i]);
+
+    return 1;
+};
+
+SQInteger sqPadAxis(HSQUIRRELVM v){
+    SQInteger i, j;
+    sq_getinteger(v, 2, &i);
+    sq_getinteger(v, 3, &j);
+
+    sq_pushinteger(v, gvPadAxis[i][j]);
+
+    return 1;
+};
+
 //}
 
 ///////////
@@ -611,6 +684,15 @@ SQInteger sqPointAngle(HSQUIRRELVM v){
 	sq_getfloat(v, 5, &y2);
 
 	sq_pushfloat(v, xyPointAngle(x1, y1, x2, y2));
+
+	return 1;
+};
+
+SQInteger sqAbs(HSQUIRRELVM v){
+	float f;
+
+	sq_getfloat(v, 2, &f);
+	sq_pushfloat(v, abs(f));
 
 	return 1;
 };

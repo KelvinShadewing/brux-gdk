@@ -61,6 +61,14 @@ SQInteger sqMouseX(HSQUIRRELVM v);
 SQInteger sqMouseY(HSQUIRRELVM v);
 SQInteger sqGetPads(HSQUIRRELVM v);
 SQInteger sqPadName(HSQUIRRELVM v);
+SQInteger sqPadX(HSQUIRRELVM v);
+SQInteger sqPadY(HSQUIRRELVM v);
+SQInteger sqPadZ(HSQUIRRELVM v);
+SQInteger sqPadH(HSQUIRRELVM v);
+SQInteger sqPadV(HSQUIRRELVM v);
+SQInteger sqPadR(HSQUIRRELVM v);
+SQInteger sqPadL(HSQUIRRELVM v);
+SQInteger sqPadAxis(HSQUIRRELVM v);
 
 //Maths
 SQInteger sqRandomFloat(HSQUIRRELVM v);
@@ -71,6 +79,7 @@ SQInteger sqRound(HSQUIRRELVM v);
 SQInteger sqCeil(HSQUIRRELVM v);
 SQInteger sqFloor(HSQUIRRELVM v);
 SQInteger sqPointAngle(HSQUIRRELVM v);
+SQInteger sqAbs(HSQUIRRELVM v);
 
 //Text
 SQInteger sqNewFont(HSQUIRRELVM v);

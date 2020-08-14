@@ -94,7 +94,7 @@ tidydirls();
 	drawText(fntW, 0, 0, "Current directory:\n" + getdir().tostring());
 };
 
-::mode1 <- function(){
+::mode1 <- function(){ //Keyboard and mouse test
 	//Mouse
 	drawText(fntW, 0, 0, "Mouse Position: (" + mouseX().tostring() + "," + mouseY().tostring() + ")");
 
@@ -215,13 +215,32 @@ tidydirls();
 	drawCircle(mouseX(), mouseY(), 4, false);
 };
 
-::mode2 <- function(){
-	//Gamepad test
+::mode2 <- function(){ //Gamepad test
 	drawText(fntW, 0, 0, "Gamepads detected: " + joyCount().tostring());
 
 	for(local i = 0; i < joyCount(); i++){
 		drawText(fntW, 0, (8*i) + 8, "Gamepad " + i.tostring() + " name: " + joyName(i));
 	};
+
+	//Graphical test
+	setDrawColor(0xffff);
+
+	//L stick
+	drawCircle(64, 200, 8, false);
+	drawCircle(64 + (joyX(0) / (js_max / 8)), 200 + (joyY(0) / (js_max / 8)), 4, true);
+
+	//R stick
+	drawCircle(96, 200, 8, false);
+	drawCircle(96 + (joyH(0) / (js_max / 8)), 200 + (joyV(0) / (js_max / 8)), 4, true);
+
+	//Triggers don't seem to work on Linux, even with SDL hint set.
+	//Need test on Windows.
+
+	//L trigger
+	drawRect(60, 160, 8, 0 - (joyL(0)), true);
+
+	//R trigger
+	drawRect(92, 160, 8, 0 - (joyR(0)), true);
 };
 
 ///////////////////

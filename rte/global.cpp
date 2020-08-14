@@ -43,11 +43,16 @@ Uint32 buttonlast[5];
 Uint8 fileMax = 128;
 
 //Gamepad
-SDL_Joystick* gvGamepad[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+SDL_Joystick* gvGamepad[8] = {0};
 int gvPadButton[8][32] = {0};
 int gvPadLastButton[8][32] = {0};
+int gvPadAxis[8][10] = {0};
 int gvPadX[8] = {0};
 int gvPadY[8] = {0};
 int gvPadZ[8] = {0};
+int gvPadH[8] = {0};
+int gvPadV[8] = {0};
+int gvPadR[8] = {0};
+int gvPadL[8] = {0};
 string gvPadName[8] = {"?"};
 int gvPadHat[8] = {0};

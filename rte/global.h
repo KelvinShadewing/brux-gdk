@@ -50,6 +50,11 @@ extern int gvPadLastButton[8][32];
 extern int gvPadX[8];
 extern int gvPadY[8];
 extern int gvPadZ[8];
+extern int gvPadH[8];
+extern int gvPadV[8];
+extern int gvPadR[8];
+extern int gvPadL[8];
+extern int gvPadAxis[8][10];
 extern string gvPadName[8];
 extern int gvPadHat[8];
 
