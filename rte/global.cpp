@@ -56,3 +56,4 @@ int gvPadR[8] = {0};
 int gvPadL[8] = {0};
 string gvPadName[8] = {"?"};
 int gvPadHat[8] = {0};
+int gvPadHatLast[8] = {0};

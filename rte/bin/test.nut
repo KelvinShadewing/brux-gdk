@@ -241,6 +241,12 @@ tidydirls();
 
 	//R trigger
 	drawRect(92, 160, 8, 0 - (joyR(0)), true);
+
+	setDrawColor(0x808080ff);
+	drawCircle(128, 176, 4, true); //Y
+	drawCircle(120, 184, 4, true); //X
+	drawCircle(136, 184, 4, true); //B
+	drawCircle(128, 192, 4, true); //A
 };
 
 ///////////////////
