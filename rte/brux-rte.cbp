@@ -65,8 +65,6 @@
 		<Unit filename="sprite.h" />
 		<Unit filename="text.cpp" />
 		<Unit filename="text.h" />
-		<Unit filename="tile.cpp" />
-		<Unit filename="tile.h" />
 		<Unit filename="tinyxml2.cpp" />
 		<Unit filename="tinyxml2.h" />
 		<Unit filename="xyg.ico" />
@@ -74,9 +72,6 @@
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
