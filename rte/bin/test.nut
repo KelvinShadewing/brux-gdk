@@ -223,30 +223,109 @@ tidydirls();
 	};
 
 	//Graphical test
-	setDrawColor(0xffff);
+	drawText(fntW, 160, 160, "Axes:\nX:" + joyX(0) + "\nY:" + joyY(0) + "\nH:" + joyH(0) + "\nV:" + joyV(0) + "\nL:" + joyL(0) + "\nR:" + joyR(0));
 
 	//L stick
+	setDrawColor(0xf8ff);
 	drawCircle(64, 200, 8, false);
+	setDrawColor(0x808080ff);
+	if(joyButtonDown(0, 9)) setDrawColor(0xf8ff);
+	if(joyButtonPress(0, 9)) setDrawColor(0xf8f800ff);
+	if(joyButtonRelease(0, 9)) setDrawColor(0xf80000ff);
 	drawCircle(64 + (joyX(0) / (js_max / 8)), 200 + (joyY(0) / (js_max / 8)), 4, true);
 
 	//R stick
+	setDrawColor(0xf8ff);
 	drawCircle(96, 200, 8, false);
+	setDrawColor(0x808080ff);
+	if(joyButtonDown(0, 10)) setDrawColor(0xf8ff);
+	if(joyButtonPress(0, 10)) setDrawColor(0xf8f800ff);
+	if(joyButtonRelease(0, 10)) setDrawColor(0xf80000ff);
 	drawCircle(96 + (joyH(0) / (js_max / 8)), 200 + (joyV(0) / (js_max / 8)), 4, true);
 
-	//Triggers don't seem to work on Linux, even with SDL hint set.
-	//Need test on Windows.
+	setDrawColor(0xf8ff);
 
 	//L trigger
-	drawRect(60, 160, 8, 0 - (joyL(0)), true);
+	drawRect(48, 160, 8, 0 - (joyL(0) / (js_max / 32)), true);
 
 	//R trigger
-	drawRect(92, 160, 8, 0 - (joyR(0)), true);
+	drawRect(104, 160, 8, 0 - (joyR(0) / (js_max / 32)), true);
 
+	//Button neutral
 	setDrawColor(0x808080ff);
 	drawCircle(128, 176, 4, true); //Y
 	drawCircle(120, 184, 4, true); //X
 	drawCircle(136, 184, 4, true); //B
 	drawCircle(128, 192, 4, true); //A
+	drawCircle(64, 176, 4, true); //Back
+	drawCircle(96, 176, 4, true); //Start
+	drawCircle(32, 160, 4, true); //L
+	drawCircle(128, 160, 4, true); //R
+	drawCircle(80, 160, 6, true); //Logo
+
+	//Button down
+	setDrawColor(0x0000f8ff);
+	if(joyButtonDown(0, 3)) drawCircle(128, 176, 4, true); //Y
+	if(joyButtonDown(0, 2)) drawCircle(120, 184, 4, true); //X
+	if(joyButtonDown(0, 1)) drawCircle(136, 184, 4, true); //B
+	if(joyButtonDown(0, 0)) drawCircle(128, 192, 4, true); //A
+	if(joyButtonDown(0, 6)) drawCircle(64, 176, 4, true); //Back
+	if(joyButtonDown(0, 7)) drawCircle(96, 176, 4, true); //Start
+	if(joyButtonDown(0, 4)) drawCircle(32, 160, 4, true); //L
+	if(joyButtonDown(0, 5)) drawCircle(128, 160, 4, true); //R
+	if(joyButtonDown(0, 8)) drawCircle(80, 160, 6, true); //Logo
+
+	//Button press
+	setDrawColor(0xf8f800ff);
+	if(joyButtonPress(0, 3)) drawCircle(128, 176, 4, true); //Y
+	if(joyButtonPress(0, 2)) drawCircle(120, 184, 4, true); //X
+	if(joyButtonPress(0, 1)) drawCircle(136, 184, 4, true); //B
+	if(joyButtonPress(0, 0)) drawCircle(128, 192, 4, true); //A
+	if(joyButtonPress(0, 6)) drawCircle(64, 176, 4, true); //Back
+	if(joyButtonPress(0, 7)) drawCircle(96, 176, 4, true); //Start
+	if(joyButtonPress(0, 4)) drawCircle(32, 160, 4, true); //L
+	if(joyButtonPress(0, 5)) drawCircle(128, 160, 4, true); //R
+	if(joyButtonPress(0, 8)) drawCircle(80, 160, 6, true); //Logo
+
+	//Button release
+	setDrawColor(0xf80000ff);
+	if(joyButtonRelease(0, 3)) drawCircle(128, 176, 4, true); //Y
+	if(joyButtonRelease(0, 2)) drawCircle(120, 184, 4, true); //X
+	if(joyButtonRelease(0, 1)) drawCircle(136, 184, 4, true); //B
+	if(joyButtonRelease(0, 0)) drawCircle(128, 192, 4, true); //A
+	if(joyButtonRelease(0, 6)) drawCircle(64, 176, 4, true); //Back
+	if(joyButtonRelease(0, 7)) drawCircle(96, 176, 4, true); //Start
+	if(joyButtonRelease(0, 4)) drawCircle(32, 160, 4, true); //L
+	if(joyButtonRelease(0, 5)) drawCircle(128, 160, 4, true); //R
+	if(joyButtonRelease(0, 8)) drawCircle(80, 160, 6, true); //Logo
+
+	//D-pad neutral
+	setDrawColor(0x808080ff);
+	drawCircle(32, 176, 4, true); //Up
+	drawCircle(24, 184, 4, true); //Left
+	drawCircle(40, 184, 4, true); //Right
+	drawCircle(32, 192, 4, true); //Down
+
+	//D-pad down
+	setDrawColor(0x0000f8ff);
+	if(joyHatDown(0, js_up)) drawCircle(32, 176, 4, true); //Up
+	if(joyHatDown(0, js_left)) drawCircle(24, 184, 4, true); //Left
+	if(joyHatDown(0, js_right)) drawCircle(40, 184, 4, true); //Right
+	if(joyHatDown(0, js_down)) drawCircle(32, 192, 4, true); //Down
+
+	//D-pad press
+	setDrawColor(0xf8f800ff);
+	if(joyHatPress(0, js_up)) drawCircle(32, 176, 4, true); //Up
+	if(joyHatPress(0, js_left)) drawCircle(24, 184, 4, true); //Left
+	if(joyHatPress(0, js_right)) drawCircle(40, 184, 4, true); //Right
+	if(joyHatPress(0, js_down)) drawCircle(32, 192, 4, true); //Down
+
+	//D-pad release
+	setDrawColor(0xf80000ff);
+	if(joyHatRelease(0, js_up)) drawCircle(32, 176, 4, true); //Up
+	if(joyHatRelease(0, js_left)) drawCircle(24, 184, 4, true); //Left
+	if(joyHatRelease(0, js_right)) drawCircle(40, 184, 4, true); //Right
+	if(joyHatRelease(0, js_down)) drawCircle(32, 192, 4, true); //Down
 };
 
 ///////////////////

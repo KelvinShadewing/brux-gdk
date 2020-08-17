@@ -325,6 +325,12 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqPadR, "joyR", 2, ".i");
 	xyBindFunc(v, sqPadL, "joyL", 2, ".i");
 	xyBindFunc(v, sqPadAxis, "joyAxis", 3, ".ii");
+	xyBindFunc(v, sqPadHatDown, "joyHatDown", 3, ".ii");
+	xyBindFunc(v, sqPadHatPress, "joyHatPress", 3, ".ii");
+	xyBindFunc(v, sqPadHatRelease, "joyHatRelease", 3, ".ii");
+	xyBindFunc(v, sqPadButtonDown, "joyButtonDown", 3, ".ii");
+	xyBindFunc(v, sqPadButtonPress, "joyButtonPress", 3, ".ii");
+	xyBindFunc(v, sqPadButtonRelease, "joyButtonRelease", 3, ".ii");
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
@@ -428,20 +434,32 @@ void xyUpdate(){
 		};
 
 		if(SDL_JoystickGetAttached(gvGamepad[i])){
+			gvPadHatLast[i] = gvPadHat[i];
+			gvPadHat[i] = SDL_JoystickGetHat(gvGamepad[i], 0);
 			for(int j = 0; j < 10; j++){
 				gvPadAxis[i][j] = SDL_JoystickGetAxis(gvGamepad[i], j);
+			};
+			for(int j = 0; j < 32; j++){
+				gvPadLastButton[i][j] = gvPadButton[i][j];
+				gvPadButton[i][j] = SDL_JoystickGetButton(gvGamepad[i], j);
 			};
             gvPadX[i] = SDL_JoystickGetAxis(gvGamepad[i], 0);
             gvPadY[i] = SDL_JoystickGetAxis(gvGamepad[i], 1);
             gvPadZ[i] = SDL_JoystickGetAxis(gvGamepad[i], 2);
             gvPadH[i] = SDL_JoystickGetAxis(gvGamepad[i], 3);
             gvPadV[i] = SDL_JoystickGetAxis(gvGamepad[i], 4);
-            gvPadR[i] = SDL_JoystickGetAxis(gvGamepad[i], 8);
-            gvPadL[i] = SDL_JoystickGetAxis(gvGamepad[i], 9);
+            gvPadR[i] = (SDL_JoystickGetAxis(gvGamepad[i], 5) + 32768) / 2;
+            gvPadL[i] = (SDL_JoystickGetAxis(gvGamepad[i], 2) + 32768) / 2;
             gvPadName[i] = SDL_JoystickName(gvGamepad[i]);
 		} else {
+			gvPadHatLast[i] = gvPadHat[i];
+			gvPadHat[i] = 0;
 			for(int j = 0; j < 10; j++){
 				gvPadAxis[i][j] = 0;
+			};
+			for(int j = 0; j < 32; j++){
+				gvPadLastButton[i][j] = gvPadButton[i][j];
+				gvPadButton[i][j] = 0;
 			};
 			gvPadX[i] = 0;
 			gvPadY[i] = 0;

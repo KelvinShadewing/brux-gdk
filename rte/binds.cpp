@@ -599,6 +599,75 @@ SQInteger sqPadAxis(HSQUIRRELVM v){
     return 1;
 };
 
+SQInteger sqPadHatDown(HSQUIRRELVM v){
+	SQInteger i, d;
+
+	sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 3, &d);
+
+	if (gvPadHat[i] & (1 << (d - 1))) sq_pushbool(v, true);
+	else sq_pushbool(v, false);
+
+	return 1;
+};
+
+SQInteger sqPadHatPress(HSQUIRRELVM v){
+	SQInteger i, d;
+
+	sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 3, &d);
+
+	if ((gvPadHat[i] & (1 << (d - 1))) && !(gvPadHatLast[i] & (1 << (d - 1)))) sq_pushbool(v, true);
+	else sq_pushbool(v, false);
+
+	return 1;
+};
+
+SQInteger sqPadHatRelease(HSQUIRRELVM v){
+	SQInteger i, d;
+
+	sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 3, &d);
+
+	if (!(gvPadHat[i] & (1 << (d - 1))) && (gvPadHatLast[i] & (1 << (d - 1)))) sq_pushbool(v, true);
+	else sq_pushbool(v, false);
+
+	return 1;
+};
+
+SQInteger sqPadButtonDown(HSQUIRRELVM v){
+	SQInteger i, b;
+
+	sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 3, &b);
+
+	sq_pushinteger(v, gvPadButton[i][b]);
+
+	return 1;
+};
+
+SQInteger sqPadButtonPress(HSQUIRRELVM v){
+	SQInteger i, b;
+
+	sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 3, &b);
+
+	sq_pushinteger(v, (gvPadButton[i][b] && !gvPadLastButton[i][b]) );
+
+	return 1;
+};
+
+SQInteger sqPadButtonRelease(HSQUIRRELVM v){
+	SQInteger i, b;
+
+	sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 3, &b);
+
+	sq_pushinteger(v, (!gvPadButton[i][b] && gvPadLastButton[i][b]) );
+
+	return 1;
+};
+
 //}
 
 ///////////

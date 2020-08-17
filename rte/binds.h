@@ -69,6 +69,12 @@ SQInteger sqPadV(HSQUIRRELVM v);
 SQInteger sqPadR(HSQUIRRELVM v);
 SQInteger sqPadL(HSQUIRRELVM v);
 SQInteger sqPadAxis(HSQUIRRELVM v);
+SQInteger sqPadHatDown(HSQUIRRELVM v);
+SQInteger sqPadHatPress(HSQUIRRELVM v);
+SQInteger sqPadHatRelease(HSQUIRRELVM v);
+SQInteger sqPadButtonDown(HSQUIRRELVM v);
+SQInteger sqPadButtonPress(HSQUIRRELVM v);
+SQInteger sqPadButtonRelease(HSQUIRRELVM v);
 
 //Maths
 SQInteger sqRandomFloat(HSQUIRRELVM v);
