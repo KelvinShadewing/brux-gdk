@@ -6,6 +6,7 @@
 #include "sprite.h"
 #include "global.h"
 #include "text.h"
+#include "shapes.h"
 
 bool gvQuit = 0;
 int gvMouseX = 0, gvMouseY = 0;
@@ -41,6 +42,7 @@ vector<Uint8> keylast(322);
 Uint32 buttonstate[5];
 Uint32 buttonlast[5];
 Uint8 fileMax = 128;
+vector<xyShape*> gvShape;
 
 //Gamepad
 SDL_Joystick* gvGamepad[8] = {0};

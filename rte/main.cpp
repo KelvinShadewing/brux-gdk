@@ -303,6 +303,7 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqDrawSprite, "drawSprite", 5, ".innn");
 	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".innnninnn");
 	xyBindFunc(v, sqDeleteSprite, "deleteSprite", 2, ".i");
+	xyBindFunc(v, sqFindSprite, "findSprite", 2, ".s");
 
 	//Input
 	xyPrint(0, "Embedding input...");
@@ -486,7 +487,6 @@ void xyUpdate(){
 	//Check each pad
 	for(int i = 0; i < 8; i++){
 		if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
-
 	};
 
 	gvFPS = 1000 / fLength;

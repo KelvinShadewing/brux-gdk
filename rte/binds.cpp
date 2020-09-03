@@ -365,6 +365,21 @@ SQInteger sqSpriteName(HSQUIRRELVM v){
 	return 1;
 };
 
+SQInteger sqFindSprite(HSQUIRRELVM v){
+	const char* n;
+	sq_getstring(v, 2, &n);
+
+	for(int i = 0; i < vcSprites.size(); i++){
+		if(vcSprites[i]->name.c_str() == n) {
+			sq_pushinteger(v, i);
+			return 1;
+		};
+	};
+
+	sq_pushinteger(v, -1);
+	return 1;
+};
+
 SQInteger sqNewSprite(HSQUIRRELVM v){
 	SQInteger w, h, m, p, px, py, f;
 	const char* i;

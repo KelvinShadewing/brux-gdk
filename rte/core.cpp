@@ -386,7 +386,7 @@ void xyLoadCore(){
 			switch(typeof(Item)) { \
 				case \"table\": \
 				case \"array\": \
-					return ToJSON(Item); \
+					return jsonWrite(Item); \
 				case \"string\": \
 					local Len = Item.len(); \
 					local Str = \"\"; \

@@ -11,3 +11,4 @@ rte/bin/release/*
 rte/bin/count.txt
 rte/*.layout
 rte/brux
+test/log.txt

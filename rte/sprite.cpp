@@ -25,7 +25,6 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
 
 	//Extract short file name
-	name = filename;
 	string::size_type slashnum = name.find_last_of("/");
 	if(slashnum != string::npos) name = name.substr(slashnum, name.length() - 1);
 

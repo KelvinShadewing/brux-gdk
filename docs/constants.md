@@ -2,6 +2,8 @@
 
 ## Scan Codes
 
+Used for keyboard input.
+
 ### I have no idea what these do
 
 * k__0
@@ -579,6 +581,8 @@
 
 ### Bits
 
+Used to directly address a given bit in an integer. They equal the value of that bit being on by itself. For instance, 1 is 1, 2 is 2, but 3 is 4, 4 is 8, 5 is 16, and so on.
+
 * _1
 
 * _2
@@ -645,6 +649,8 @@
 
 ### Alignment
 
+For use in text rendering functions.
+
 * ha_left
 
 * ha_center
@@ -659,6 +665,8 @@
 
 ### Blend modes
 
+For use when drawing sprites/textures/geometry. Currently unsupported.
+
 * bm_norm
 
 * bm_add
@@ -668,6 +676,8 @@
 * bm_mult
 
 ### Operating systems
+
+Used to identify what system Brux is currently running on. May not work perfectly.
 
 * os_windows
 

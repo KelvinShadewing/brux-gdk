@@ -50,17 +50,18 @@
 
 1577493087 /home/kelvin/Code/brux/rte/cJSON.h
 
-1597451248 /home/kelvin/Code/brux/rte/global.h
+1597650553 /home/kelvin/Code/brux/rte/global.h
 	"sprite.h"
 	"text.h"
+	"shapes.h"
 
-1577493087 /home/kelvin/Code/brux/rte/sprite.h
+1598503709 /home/kelvin/Code/brux/rte/sprite.h
 
 1577493087 /home/kelvin/Code/brux/rte/text.h
 
 1577493087 /home/kelvin/Code/brux/rte/audio.h
 
-1597644682 source:/home/kelvin/Code/brux/rte/binds.cpp
+1598550817 source:/home/kelvin/Code/brux/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -84,7 +85,7 @@
 1596186833 /home/kelvin/Code/brux/rte/fileio.h
 	"main.h"
 
-1597614791 /home/kelvin/Code/brux/rte/binds.h
+1598550861 /home/kelvin/Code/brux/rte/binds.h
 
 1577493087 source:/home/kelvin/Code/brux/rte/cJSON.c
 	<string.h>
@@ -96,7 +97,7 @@
 	<ctype.h>
 	"cJSON.h"
 
-1597644637 source:/home/kelvin/Code/brux/rte/core.cpp
+1598502520 source:/home/kelvin/Code/brux/rte/core.cpp
 	"main.h"
 	"global.h"
 	"core.h"
@@ -117,7 +118,7 @@
 1577493087 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
-1597647846 source:/home/kelvin/Code/brux/rte/main.cpp
+1598555281 source:/home/kelvin/Code/brux/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -150,15 +151,15 @@
 	"global.h"
 	"maths.h"
 
-1577493087 source:/home/kelvin/Code/brux/rte/shapes.cpp
+1597649642 source:/home/kelvin/Code/brux/rte/shapes.cpp
 	"main.h"
 	"global.h"
 	"maths.h"
 	"shapes.h"
 
-1577493087 /home/kelvin/Code/brux/rte/shapes.h
+1597649642 /home/kelvin/Code/brux/rte/shapes.h
 
-1577493087 source:/home/kelvin/Code/brux/rte/sprite.cpp
+1598503703 source:/home/kelvin/Code/brux/rte/sprite.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -191,9 +192,10 @@
 	<cstddef>
 	<cstdarg>
 
-1597451225 source:/home/kelvin/Code/brux/rte/global.cpp
+1597649719 source:/home/kelvin/Code/brux/rte/global.cpp
 	"main.h"
 	"sprite.h"
 	"global.h"
 	"text.h"
+	"shapes.h"
 

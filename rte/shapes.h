@@ -63,7 +63,7 @@ public:
 	float getArea();
 };
 
-class xyShp{
+class xyShape{
 public:
 	int type;
 	float x, y, a, xmin, xmax, ymin, ymax;
@@ -86,6 +86,6 @@ public:
 };
 
 bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d);
-bool xyHitTest(xyShp* a, xyShp* b);
+bool xyHitTest(xyShape* a, xyShape* b);
 
 #endif

@@ -167,7 +167,7 @@ bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d){
 	return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
 };
 
-bool xyHitTest(xyShp* a, xyShp* b){
+bool xyHitTest(xyShape* a, xyShape* b){
 	//Get type of A
 	switch(a->type){
 		case _LIN:

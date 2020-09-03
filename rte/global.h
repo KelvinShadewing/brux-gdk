@@ -7,6 +7,7 @@
 
 #include "sprite.h"
 #include "text.h"
+#include "shapes.h"
 
 extern bool gvQuit;					//Let's the game know when to quit
 extern int gvMouseX, gvMouseY;		//Mouse coordinates
@@ -42,6 +43,7 @@ extern vector<Uint8> keylast;
 extern Uint32 buttonstate[5];
 extern Uint32 buttonlast[5];
 extern Uint8 fileMax;
+extern vector<xyShape*> gvShape;
 
 //Gamepad
 extern SDL_Joystick* gvGamepad[8];
