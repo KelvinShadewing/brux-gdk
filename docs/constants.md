@@ -92,7 +92,7 @@ Used for keyboard input.
 
 ### Special Keys
 
-* k_return
+* k_return / k_enter
 
 * k_escape
 
@@ -117,19 +117,13 @@ Used for keyboard input.
 
 * k_semicolon
 
-* k_apostrophe
+* k_apostrophe / k_quote
 
-* k_quote
-
-* k_grave
-
-* k_tick
+* k_grave / k_tick
 
 * k_comma
 
-* k_period
-
-* k_fullstop
+* k_period / k_fullstop
 
 * k_slash
 
@@ -173,17 +167,13 @@ Used for keyboard input.
 
 * k_home
 
-* k_pageup
-
-* k_pgup
+* k_pageup / k_pgup
 
 * k_delete
 
 * k_end
 
-* k_pagedown
-
-* k_pgdn
+* k_pagedown / k_pgdn
 
 * k_right
 
@@ -197,17 +187,15 @@ Used for keyboard input.
 * k_numlock
 
 
-* k_numdivide
+* k_numdivide / k_numdiv
 
-* k_nummultiply
+* k_nummultiply / k_nummul
 
-* k_numminus
+* k_numminus / k_numsub
 
-* k_numplus
+* k_numplus / k_numadd
 
-* k_numadd
-
-* k_numenter
+* k_numenter / k_numreturn
 
 * k_num1
 
@@ -229,9 +217,7 @@ Used for keyboard input.
 
 * k_num0
 
-* k_numperiod
-
-* k_numfullstop
+* k_numperiod / k_numfullstop
 
 
 * k_nonusbackslash
@@ -483,9 +469,7 @@ Used for keyboard input.
 * k_numhexadecimal
 
 
-* k_lctrl
-
-* k_lcontrol
+* k_lctrl / k_lcontrol
 
 * k_lshift
 
@@ -493,9 +477,7 @@ Used for keyboard input.
 
 * k_lgui
 
-* k_rctrl
-
-* k_rcontrol
+* k_rctrl / k_rcontrol
 
 * k_rshift
 
@@ -527,21 +509,15 @@ Used for keyboard input.
 
 * k_calc
 
-* k_computer
-
-* k_com
+* k_computer / k_com
 
 * k_acsearch
 
 * k_achome
 
-* k_acback
+* k_acback / k_acprev
 
-* k_acprev
-
-* k_acforward
-
-* k_acnext
+* k_acforward / k_acnext
 
 * k_acstop
 

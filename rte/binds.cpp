@@ -956,7 +956,7 @@ SQInteger sqDrawLine(HSQUIRRELVM v){
     sq_getinteger(v, 4, &x2);
     sq_getinteger(v, 5, &y2);
 
-    lineColor(gvRender, x1, y1, x2, y2, gvDrawColor);
+    thickLineColor(gvRender, x1, y1, x2, y2, 1, gvDrawColor);
 
     return 0;
 };

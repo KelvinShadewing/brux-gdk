@@ -209,7 +209,13 @@ tidydirls();
 	drawKey(k_numsub, "-", 32, 72);
 	drawKey(k_numadd, "+", 32, 80);
 
-	//Draw mouse
+	//Draw mouse angle
+	setDrawColor(0xff0000ff);
+	drawLine(160, 120, mouseX(), mouseY());
+	drawText(fntW, 0, 232, "Angle to mouse from center: " + pointAngle(160, 120, mouseX(), mouseY()));
+
+	//Draw mouse reticle
+	setDrawColor(0xffff);
 	drawLine(mouseX() - 8, mouseY(), mouseX() + 8, mouseY());
 	drawLine(mouseX(), mouseY() - 8, mouseX(), mouseY() + 8);
 	drawCircle(mouseX(), mouseY(), 4, false);

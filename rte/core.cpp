@@ -122,6 +122,7 @@ void xyLoadCore(){
 	const k_numplus = 87; \
 	const k_numadd = 87; \
 	const k_numenter = 88; \
+	const k_numreturn = 88; \
 	const k_num1 = 89; \
 	const k_num2 = 90; \
 	const k_num3 = 91; \

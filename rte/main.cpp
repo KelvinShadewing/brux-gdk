@@ -1,10 +1,10 @@
 /*======================================*\
 | PROJECT: Brux Game Runtime Environment |
-| AUTHOR:  Nick Kovacs                   |
-| DATE:    8-15-15                       |
-| DESC:    Runtime environment used for  |
+| AUTHOR:  Nick Kovacs   				|
+| DATE:	8-15-15   					|
+| DESC:	Runtime environment used for  |
 |  games and applications created using  |
-|  the Brux game framework.              |
+|  the Brux game framework.  			|
 | LICENSE:GNU General Public License v.3 |
 \*======================================*/
 
@@ -31,7 +31,7 @@
 #ifdef __cplusplus
 extern "C"
 #endif
-int main(int argc, char* args[]){
+int main(int argc, char* argv[]){
 	//Initiate everything
 	if(xyInit() == 0){
 		xyPrint(0, "Failed to initiate Brux!");
@@ -44,12 +44,12 @@ int main(int argc, char* args[]){
 	string curarg = "";
 	for(int i = 0; i < argc; i++){
 		//Print each argument and process them
-		curarg = args[i];
+		curarg = argv[i];
 		xyPrint(0, curarg.c_str());
 
-    //The first argument is just the
-    //command to invoke the runtime,
-    //so skip it.
+	//The first argument is just the
+	//command to invoke the runtime,
+	//so skip it.
 		if(i != 0){
 			//Input file
 			//If the file is long enough
@@ -230,11 +230,11 @@ void xyEnd(){
 };
 
 void xyPrint(HSQUIRRELVM v, const SQChar *s, ...){
-	va_list args;
-	va_start(args, s);
+	va_list argv;
+	va_start(argv, s);
 	SQChar buffer[1024] = _SC("");
-	vsnprintf(buffer, sizeof(buffer), s, args);
-	va_end(args);
+	vsnprintf(buffer, sizeof(buffer), s, argv);
+	va_end(argv);
 	cout << buffer << endl;
 	gvLog << buffer << endl;
 };
@@ -444,14 +444,14 @@ void xyUpdate(){
 				gvPadLastButton[i][j] = gvPadButton[i][j];
 				gvPadButton[i][j] = SDL_JoystickGetButton(gvGamepad[i], j);
 			};
-            gvPadX[i] = SDL_JoystickGetAxis(gvGamepad[i], 0);
-            gvPadY[i] = SDL_JoystickGetAxis(gvGamepad[i], 1);
-            gvPadZ[i] = SDL_JoystickGetAxis(gvGamepad[i], 2);
-            gvPadH[i] = SDL_JoystickGetAxis(gvGamepad[i], 3);
-            gvPadV[i] = SDL_JoystickGetAxis(gvGamepad[i], 4);
-            gvPadR[i] = (SDL_JoystickGetAxis(gvGamepad[i], 5) + 32768) / 2;
-            gvPadL[i] = (SDL_JoystickGetAxis(gvGamepad[i], 2) + 32768) / 2;
-            gvPadName[i] = SDL_JoystickName(gvGamepad[i]);
+			gvPadX[i] = SDL_JoystickGetAxis(gvGamepad[i], 0);
+			gvPadY[i] = SDL_JoystickGetAxis(gvGamepad[i], 1);
+			gvPadZ[i] = SDL_JoystickGetAxis(gvGamepad[i], 2);
+			gvPadH[i] = SDL_JoystickGetAxis(gvGamepad[i], 3);
+			gvPadV[i] = SDL_JoystickGetAxis(gvGamepad[i], 4);
+			gvPadR[i] = (SDL_JoystickGetAxis(gvGamepad[i], 5) + 32768) / 2;
+			gvPadL[i] = (SDL_JoystickGetAxis(gvGamepad[i], 2) + 32768) / 2;
+			gvPadName[i] = SDL_JoystickName(gvGamepad[i]);
 		} else {
 			gvPadHatLast[i] = gvPadHat[i];
 			gvPadHat[i] = 0;

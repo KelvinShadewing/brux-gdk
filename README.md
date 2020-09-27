@@ -31,8 +31,8 @@ Developers using Brux may freely make games without any need for paid license or
 - [X] Table saving/loading as JSON file
 - [ ] Bitmap dynamic text
 - [ ] FPS management
-- [ ] Gamepad input
-- [ ] TMX map loading and rendering
+- [X] Gamepad input
+- [ ] JSON map loading and rendering
 - [ ] Collision geometry
 - [ ] Chipmunk physics engine
 - [ ] Create compiled format to contain multiple source files in one (will also be included in squake)
