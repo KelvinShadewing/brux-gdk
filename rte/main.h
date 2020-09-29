@@ -19,16 +19,18 @@
 #include <algorithm>
 #include <sys/stat.h>
 #include <limits>
-#include <dirent.h>
 #include <sys/stat.h>
 
 
 //If running on Windows, use Windows
 //working directory functions.
 #ifdef _WIN32
+	#include "wdirent.h"
 	#include <direct.h>
 	#define getCD _getcwd
+
 #else
+	#include <dirent.h>
 	#include <unistd.h>
 	#define getCD getcwd
 #endif // _WIN32

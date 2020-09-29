@@ -61,4 +61,6 @@ extern string gvPadName[8];
 extern int gvPadHat[8];
 extern int gvPadHatLast[8];
 
+extern const char* didwin;
+
 #endif

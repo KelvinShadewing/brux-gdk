@@ -105,6 +105,7 @@ int xyInit(){
 	//Print opening message
 	xyPrint(0, "\n/========================\\\n| BRUX GAME RUNTIME LOG |\n\\========================/\n\n");
 	xyPrint(0, "Initializing program...\n\n");
+	xyPrint(0, didwin);
 
 	//Initiate SDL
 	SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");

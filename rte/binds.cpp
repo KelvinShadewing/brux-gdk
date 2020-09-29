@@ -148,7 +148,7 @@ SQInteger sqFileExists(HSQUIRRELVM v){
 
 SQInteger sqGetDir(HSQUIRRELVM v){
 	char* buff;
-	getcwd(buff, FILENAME_MAX);
+	getCD(buff, FILENAME_MAX);
 	sq_pushstring(v, buff, FILENAME_MAX);
 	return 1;
 };

@@ -59,3 +59,9 @@ int gvPadL[8] = {0};
 string gvPadName[8] = {"?"};
 int gvPadHat[8] = {0};
 int gvPadHatLast[8] = {0};
+
+#ifdef _WIN32
+	const char *didwin = "Defined _WIN32";
+#else
+	const char *didwin = "Did not define _WIN32";
+#endif
