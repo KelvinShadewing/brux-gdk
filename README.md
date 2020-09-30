@@ -48,6 +48,15 @@ Developers using Brux may freely make games without any need for paid license or
 
 ### Change Log
 
+* **0.0.4**
+  * Added basic joystick support
+  * Added Xinput mapping for Linux
+  * Fixed `getdir()` on Windows
+  * `test.nut` features keyboard/mouse (F1) and gamepad (F2) testing modes
+  * Added basic geometry rendering
+  * Divided reference docs into multiple files
+  * Started writing tutorials
+
 * **0.0.3**
   * Added monospace bitmap font support
   * Added support for importing/exporting tables as JSON files
