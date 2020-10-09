@@ -352,7 +352,8 @@ SQInteger sqSetResolution(HSQUIRRELVM v){
 // SPRITES //
 ////////////{
 
-SQInteger sqSpriteName(HSQUIRRELVM v){
+SQInteger sqSpriteName(HSQUIRRELVM v)
+{
 	SQInteger s;
 
 	sq_getinteger(v, 2, &s);
@@ -364,13 +365,16 @@ SQInteger sqSpriteName(HSQUIRRELVM v){
 	return 1;
 };
 
-SQInteger sqFindSprite(HSQUIRRELVM v){
+SQInteger sqFindSprite(HSQUIRRELVM v)
+{
 	const char* n;
 	sq_getstring(v, 2, &n);
 
-	for(int i = 0; i < vcSprites.size(); i++){
-		if(vcSprites[i]->name.c_str() == n) {
-			sq_pushinteger(v, i);
+	for(size_t i = 0; i < vcSprites.size(); i++)
+	{
+		if(vcSprites[i]->getname() == n)
+		{
+			sq_pushinteger(v, vcSprites[i]->getnum());
 			return 1;
 		};
 	};
@@ -720,13 +724,13 @@ SQInteger sqDistance2(HSQUIRRELVM v){
 };
 
 SQInteger sqWrap(HSQUIRRELVM v){
-	SQInteger x, mx, mn;
+	SQFloat x, mx, mn;
 
-	sq_getinteger(v, 2, &x);
-	sq_getinteger(v, 3, &mx);
-	sq_getinteger(v, 4, &mn);
+	sq_getfloat(v, 2, &x);
+	sq_getfloat(v, 3, &mx);
+	sq_getfloat(v, 4, &mn);
 
-	sq_pushinteger(v, xyWrap(x, mn, mx));
+	sq_pushfloat(v, xyWrap(x, mn, mx));
 
 	return 1;
 };

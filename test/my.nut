@@ -1,4 +1,4 @@
-#!/bin/brux
+#!/usr/bin/brux
 
 /*================*\
 | TEST APPLICATION |

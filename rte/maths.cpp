@@ -29,9 +29,16 @@ float xyRandomFloat(float mx){
 	return numb;
 };
 
-int xyWrap(int N, int L, int H){
-  H=H-L+1; return (N-L+(N<L)*H)%H+L;
-}
+float xyWrap(float x, float a0, float a1)
+{
+	float mx = max(a0, a1);
+	float mn = min(a0, a1);
+
+	float diff = mx - mn;
+
+	if(x >= 0) return mn + fmodf(x, diff);
+	if(x < 0) return mx + fmod(x, diff);
+};
 
 float xyPointAngle(float x1, float y1, float x2, float y2){
 	return atan2(y2 - y1, x2 - x1) * (180 / pi);

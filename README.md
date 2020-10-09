@@ -48,6 +48,10 @@ Developers using Brux may freely make games without any need for paid license or
 
 ### Change Log
 
+* **0.0.5**
+  * Update `wrap()` to support floats
+  * Created std library folder
+
 * **0.0.4**
   * Added basic joystick support
   * Added Xinput mapping for Linux

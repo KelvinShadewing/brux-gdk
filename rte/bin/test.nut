@@ -47,8 +47,8 @@ tidydirls();
 // FUNCTIONS //
 ///////////////
 
-::mode0 <- function(){
-	//Search for game
+::mode0 <- function() //Search for game
+{
 	if(keyPress(k_down)) dircurs++;
 	if(keyPress(k_up)) dircurs--;
 
@@ -94,7 +94,8 @@ tidydirls();
 	drawText(fntW, 0, 0, "Current directory:\n" + getdir().tostring());
 };
 
-::mode1 <- function(){ //Keyboard and mouse test
+::mode1 <- function() //Keyboard and mouse test
+{
 	//Mouse
 	drawText(fntW, 0, 0, "Mouse Position: (" + mouseX().tostring() + "," + mouseY().tostring() + ")");
 
@@ -212,7 +213,8 @@ tidydirls();
 	//Draw mouse angle
 	setDrawColor(0xff0000ff);
 	drawLine(160, 120, mouseX(), mouseY());
-	drawText(fntW, 0, 232, "Angle to mouse from center: " + pointAngle(160, 120, mouseX(), mouseY()));
+	drawText(fntW, 0, 232, "Angle to mouse from center: " + wrap(pointAngle(160, 120, mouseX(), mouseY()), 0, 90));
+	drawText(fntW, 0, 224, "                            " + pointAngle(160, 120, mouseX(), mouseY()));
 
 	//Draw mouse reticle
 	setDrawColor(0xffff);
@@ -221,7 +223,8 @@ tidydirls();
 	drawCircle(mouseX(), mouseY(), 4, false);
 };
 
-::mode2 <- function(){ //Gamepad test
+::mode2 <- function() //Gamepad test
+{
 	drawText(fntW, 0, 0, "Gamepads detected: " + joyCount().tostring());
 
 	for(local i = 0; i < joyCount(); i++){
@@ -334,6 +337,11 @@ tidydirls();
 	if(joyHatRelease(0, js_down)) drawCircle(32, 192, 4, true); //Down
 };
 
+::mode3 <- function()
+{
+
+};
+
 ///////////////////
 // MAIN FUNCTION //
 ///////////////////
@@ -356,6 +364,7 @@ while(!brxQuit){
 	if(keyPress(k_home)) mode = mode0;
 	if(keyPress(k_f1)) mode = mode1;
 	if(keyPress(k_f2)) mode = mode2;
+	if(keyPress(k_f3)) mode = mode3;
 
 	mode();
 	update();

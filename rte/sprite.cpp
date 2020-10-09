@@ -168,3 +168,4 @@ Uint32 xySprite::getframes(){
 
 Uint32 xySprite::getw(){ return w; };
 Uint32 xySprite::geth(){ return h; };
+const char* xySprite::getname(){ return name.c_str(); };

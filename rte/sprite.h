@@ -24,6 +24,7 @@ public:
 	Uint32 getframes();
 	Uint32 getw();
 	Uint32 geth();
+	const char* getname();
 };
 
 #endif
