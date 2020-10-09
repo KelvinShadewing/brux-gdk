@@ -19,7 +19,7 @@ Developers using Brux may freely make games without any need for paid license or
 * SDL2_mixer
 * SDL2_net
 * SDL2_gfx
-* [Squirrel](http://http://squirrel-lang.org/)
+* [Squirrel](http://squirrel-lang.org/)
 * TinyXML2 (included in source)
 
 ### To Do (Runtime)
