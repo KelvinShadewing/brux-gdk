@@ -51,6 +51,7 @@ Developers using Brux may freely make games without any need for paid license or
 * **0.0.5**
   * Update `wrap()` to support floats
   * Created std library folder
+  * Fixed `findSprite()`, segfault no longer occurs
 
 * **0.0.4**
   * Added basic joystick support
