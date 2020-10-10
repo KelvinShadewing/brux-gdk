@@ -14,6 +14,8 @@ local brxQuit = false;
 ::fntB <- newFont(newSprite("cp437b.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
 ::fntE <- newFont(newSprite("cp437e.png", 8, 8, 0, 0, 0, 0, 0), 0, 0, 1, 0);
 
+print("fntE = " + findSprite("cp437e.png"));
+
 drawKey <- function(key, str, x, y){
 	local ftu = 0;
 

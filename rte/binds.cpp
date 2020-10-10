@@ -369,17 +369,26 @@ SQInteger sqFindSprite(HSQUIRRELVM v)
 {
 	const char* n;
 	sq_getstring(v, 2, &n);
+	string nn = n;
+	xyPrint(0, "Searching for sprite: %s", n);
+	xyPrint(0, "Number of sprites to search: %i", vcSprites.size());
 
 	for(size_t i = 0; i < vcSprites.size(); i++)
 	{
-		if(vcSprites[i]->getname() == n)
+		if(i != 0)
 		{
-			sq_pushinteger(v, vcSprites[i]->getnum());
-			return 1;
+			xyPrint(0, "Current sprite name: %s", vcSprites[i]->getname());
+
+			if(vcSprites[i]->getname() == nn)
+			{
+				sq_pushinteger(v, vcSprites[i]->getnum());
+				return 1;
+				break;
+			};
 		};
 	};
 
-	sq_pushinteger(v, -1);
+	sq_pushinteger(v, 0);
 	return 1;
 };
 
