@@ -12,6 +12,10 @@ All code is available under the GNU General [Public License v3](https://www.gnu.
 
 Developers using Brux may freely make games without any need for paid license or royalties. Anyone willing to donate may visit my **[Patreon](http://www.patreon.com/kelvin)** or my **[Ko-Fi](http://www.ko-fi.com/kelvinshadewing)**.
 
+### Nightly Build
+
+http://kelvinshadewing.net/dl/brux-nightly.zip
+
 ### Dependencies
 
 * SDL2
