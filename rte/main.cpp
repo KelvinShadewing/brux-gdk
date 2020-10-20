@@ -160,10 +160,14 @@ int xyInit(){
 	//Initiate Squirrel
 	gvSquirrel = sq_open(1024);
 
-	sqstd_register_mathlib(gvSquirrel);
-	sqstd_register_iolib(gvSquirrel);
+
 	sq_setprintfunc(gvSquirrel, xyPrint, xyPrint);
 	sq_pushroottable(gvSquirrel);
+
+	sqstd_register_iolib(gvSquirrel);
+	sqstd_register_systemlib(gvSquirrel);
+	sqstd_register_mathlib(gvSquirrel);
+	sqstd_register_stringlib(gvSquirrel);
 
 	xyBindAllFunctions(gvSquirrel);
 

@@ -215,8 +215,7 @@ tidydirls();
 	//Draw mouse angle
 	setDrawColor(0xff0000ff);
 	drawLine(160, 120, mouseX(), mouseY());
-	drawText(fntW, 0, 232, "Angle to mouse from center: " + wrap(pointAngle(160, 120, mouseX(), mouseY()), 0, 90));
-	drawText(fntW, 0, 224, "                            " + pointAngle(160, 120, mouseX(), mouseY()));
+	drawText(fntW, 0, 232, "Angle to mouse from center: " + pointAngle(160, 120, mouseX(), mouseY()));
 
 	//Draw mouse reticle
 	setDrawColor(0xffff);
