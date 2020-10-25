@@ -521,6 +521,9 @@ int xyGetOS(){
 #ifdef __APPLE__
 	return 3;
 #endif
+#ifdef _DINGUX
+	return 4
+#endif
 };
 
 void xyRun(){

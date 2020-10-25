@@ -4,18 +4,21 @@
 
 ::tileSearchDir <- ["."];
 
-::findFileName <- function(path){
+::findFileName <- function(path)
+{
 	if(typeof path != "string") return "";
 	if(path.len() == 0) return "";
 
-	for(local i = path.len() - 1; i >= 0; i--){
+	for(local i = path.len() - 1; i >= 0; i--)
+	{
 		if(path[i] == "/" || path[i] == "\\") return path.slice(i + 1);
-	};
+	}
 
 	return path;
-};
+}
 
-::Tilemap <- class {
+::Tilemap <- class
+{
 	data = {};
 	tileset = [];
 	tilebeg = [];
@@ -25,8 +28,10 @@
 	mapw = 0;
 	maph = 0;
 
-	constructor(filename){
-		if(fileExists(filename)){
+	constructor(filename)
+	{
+		if(fileExists(filename))
+		{
 			data = jsonRead(fileRead(filename));
 
 			mapw = data.width;
@@ -54,7 +59,7 @@
 				if(tempspr != -1)
 				{
 					tileset.push(tempspr);
-					print("Added tempspr.");
+					print("Added tempspr: " + shortname);
 				}
 				else
 				{ //Search for file
@@ -71,14 +76,14 @@
 							print("Adding from search path: " + tileSearchDir[j]);
 							break;
 						}
-					};
-				};
-			};
-		};
-	};
+					}
+				}
+			}
+		}
+	}
 
 	function drawTile(tx, ty, dx, dy){
-	};
+	}
 
 	function draw(x, y){
 	};

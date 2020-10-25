@@ -21,5 +21,8 @@ linux: $(DEPS)
 windows: $(DEPS)
 	x86_64-w64-mingw32-gcc-win32 -o bin/brux.exe $(SRC) -lmingw32  $(CFLAGS) $(WINDEFS) $(WINLIBS)
 
+gcw0: $(DEPS)
+	mipsel-gcw0-linux-uclibc-g++ -o bin/brux.dge $(SRC) -mips32 -D_DINGUX -I/opt/gcw0-toolchain/usr/include/ $(CFLAGS) -L/opt/gcw0-toolchain/usr/lib/
+
 clean:
 	rm *.o
