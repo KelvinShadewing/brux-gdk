@@ -522,10 +522,11 @@ int xyGetOS(){
 	return 3;
 #endif
 #ifdef _DINGUX
-	return 4
+	return 4;
 #endif
 };
 
-void xyRun(){
-
+void __stack_chk_fail(void)
+{
+	xyPrint(0, "Stack smash detected.");
 };

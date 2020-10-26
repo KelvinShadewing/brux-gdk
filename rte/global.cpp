@@ -8,6 +8,7 @@
 #include "text.h"
 #include "shapes.h"
 
+int __stack_chk_guard = 0xdeadbeef;
 bool gvQuit = 0;
 int gvMouseX = 0, gvMouseY = 0;
 Uint32 gvScrW = 320, gvScrH = 240;

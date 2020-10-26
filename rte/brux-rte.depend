@@ -4,7 +4,7 @@
 	"global.h"
 	"audio.h"
 
-1601392804 /home/kelvin/Code/brux/rte/main.h
+1603662136 /home/kelvin/Code/brux/rte/main.h
 	<stdio.h>
 	<stdlib.h>
 	<sstream>
@@ -30,18 +30,6 @@
 	<SDL2/SDL_net.h>
 	<SDL2/SDL_mixer.h>
 	<SDL2/SDL2_gfxPrimitives.h>
-	<SDL.h>
-	<SDL_image.h>
-	<SDL_mixer.h>
-	<SDL_net.h>
-	<SDL_mixer.h>
-	<SDL2_gfxPrimitives.h>
-	<Squirrel/squirrel.h>
-	<Squirrel/sqstdio.h>
-	<Squirrel/sqstdaux.h>
-	<Squirrel/sqstdmath.h>
-	<Squirrel/sqstdstring.h>
-	<Squirrel/sqstdsystem.h>
 	<squirrel.h>
 	<sqstdio.h>
 	<sqstdaux.h>
@@ -51,7 +39,7 @@
 
 1577493087 /home/kelvin/Code/brux/rte/cJSON.h
 
-1601696530 /home/kelvin/Code/brux/rte/global.h
+1603662033 /home/kelvin/Code/brux/rte/global.h
 	"sprite.h"
 	"text.h"
 	"shapes.h"

@@ -9,6 +9,7 @@
 #include "text.h"
 #include "shapes.h"
 
+extern int __stack_chk_guard;
 extern bool gvQuit;					//Let's the game know when to quit
 extern int gvMouseX, gvMouseY;		//Mouse coordinates
 extern Uint32 gvScrW, gvScrH;		//Screen resolution

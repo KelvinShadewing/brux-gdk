@@ -35,6 +35,8 @@
 	#define getCD getcwd
 #endif // _WIN32
 
+void __stack_chk_fail(void);
+
 #include "cJSON.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -61,7 +63,6 @@ using namespace std;
 //Prototypes
 int xyInit();
 void xyStart();
-void xyRun();
 void xyEnd();
 void xyPrint(HSQUIRRELVM v, const SQChar *s, ...);
 void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key);
