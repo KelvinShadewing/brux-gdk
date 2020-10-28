@@ -107,7 +107,7 @@
 1577493087 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
-1603173129 source:/home/kelvin/Code/brux/rte/main.cpp
+1603662129 source:/home/kelvin/Code/brux/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -181,7 +181,7 @@
 	<cstddef>
 	<cstdarg>
 
-1601696530 source:/home/kelvin/Code/brux/rte/global.cpp
+1603662011 source:/home/kelvin/Code/brux/rte/global.cpp
 	"main.h"
 	"sprite.h"
 	"global.h"

@@ -17,7 +17,7 @@ enum sh
 	y = 0;
 }
 
-::Shape <- class
+::Shape <- class //Base class for all shapes
 {
 	x = 0.0;
 	y = 0.0;
@@ -36,25 +36,10 @@ enum sh
 	ux = 0.0;
 	uy = 0.0;
 
-	constructor(_x, _y, _type, w = 1, h = 1, _a = 0)
+	constructor(_x, _y)
 	{
 		x = _x;
 		y = _y;
-		a = _a;
-		t = _type;
-
-		switch(_type)
-		{
-			case sh.cir:
-				r = w;
-				break;
-			case sh.rec:
-				p.push(Point(-w / 2, -h / 2));
-				p.push(Point(-w / 2, h / 2));
-				p.push(Point(w / 2, h / 2));
-				p.push(Point(w / 2, -h / 2));
-				break;
-		}
 	}
 
 	function updatePoints()
@@ -77,4 +62,9 @@ enum sh
 		a += _a;
 		updatePoints();
 	}
+}
+
+::Circle <- class extends Shape
+{
+
 }
