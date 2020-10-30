@@ -896,7 +896,8 @@ SQInteger sqDeleteSound(HSQUIRRELVM v){
 	return 0;
 };
 
-SQInteger sqDeleteMusic(HSQUIRRELVM v){
+SQInteger sqDeleteMusic(HSQUIRRELVM v)
+{
 	SQInteger i;
 
 	sq_getinteger(v, 2, &i);
@@ -904,6 +905,69 @@ SQInteger sqDeleteMusic(HSQUIRRELVM v){
 	xyDeleteMusic(i);
 
 	return 0;
+};
+
+SQInteger sqStopSound(HSQUIRRELVM v)
+{
+	SQInteger c;
+
+	sq_getinteger(v, 2, &c);
+
+	Mix_HaltChannel(c);
+
+	return 0;
+};
+
+SQInteger sqStopMusic(HSQUIRRELVM v)
+{
+	Mix_HaltMusic();
+	return 0;
+};
+
+SQInteger sqCheckMusic(HSQUIRRELVM v)
+{
+	bool b = Mix_PlayingMusic();
+	sq_pushbool(v, b);
+	return 1;
+};
+
+SQInteger sqCheckSound(HSQUIRRELVM v)
+{
+	bool b;
+	SQInteger c;
+	sq_getinteger(v, 2, &c);
+	b = Mix_Playing(c);
+	sq_pushbool(v, b);
+	return 1;
+};
+
+SQInteger sqSetMaxChannels(HSQUIRRELVM v)
+{
+	SQInteger c;
+	sq_getinteger(v, 2, &c);
+	Mix_AllocateChannels(c);
+	return 0;
+};
+
+SQInteger sqPauseMusic(HSQUIRRELVM v)
+{
+	Mix_PauseMusic();
+	return 0;
+};
+
+SQInteger sqResumeMusic(HSQUIRRELVM v)
+{
+	Mix_ResumeMusic();
+	return 0;
+};
+
+SQInteger sqMusicPaused(HSQUIRRELVM v)
+{
+	bool b;
+	if(Mix_PlayingMusic()) b = Mix_PausedMusic();
+	else b = false;
+	sq_pushbool(v, b);
+	return 1;
 };
 
 //}

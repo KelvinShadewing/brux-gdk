@@ -147,7 +147,7 @@ int xyInit(){
 	};
 
 	//Initialize audio
-	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
+	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
 		xyPrint(0, "SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
 		return 0;
 	};
@@ -376,6 +376,14 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqPlayMusic, "playMusic", 3, ".nn");
 	xyBindFunc(v, sqDeleteSound, "deleteSound", 2, ".n");
 	xyBindFunc(v, sqDeleteMusic, "deleteMusic", 2, ".n");
+	xyBindFunc(v, sqStopSound, "stopSound", 2, ".n");
+	xyBindFunc(v, sqStopMusic, "stopMusic");
+	xyBindFunc(v, sqCheckMusic, "checkMusic");
+	xyBindFunc(v, sqCheckSound, "checkSound", 2, ".n");
+	xyBindFunc(v, sqSetMaxChannels, "setMaxChannels", 2, ".n");
+	xyBindFunc(v, sqPauseMusic, "pauseMusic");
+	xyBindFunc(v, sqResumeMusic, "resumeMusic");
+	xyBindFunc(v, sqMusicPaused, "musicPaused");
 };
 
 void xyUpdate(){

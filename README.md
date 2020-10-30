@@ -52,6 +52,10 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.0.6**
+  * Add functions to stop, pause, and check music status
+  * Remove TinyXML, using cJSON instead
+
 * **0.0.5**
   * Update `wrap()` to support floats
   * Created std library folder

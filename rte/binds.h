@@ -99,6 +99,14 @@ SQInteger sqPlaySound(HSQUIRRELVM v);
 SQInteger sqPlayMusic(HSQUIRRELVM v);
 SQInteger sqDeleteSound(HSQUIRRELVM v);
 SQInteger sqDeleteMusic(HSQUIRRELVM v);
+SQInteger sqStopSound(HSQUIRRELVM v);
+SQInteger sqStopMusic(HSQUIRRELVM v);
+SQInteger sqCheckMusic(HSQUIRRELVM v);
+SQInteger sqCheckSound(HSQUIRRELVM v);
+SQInteger sqSetMaxChannels(HSQUIRRELVM v);
+SQInteger sqPauseMusic(HSQUIRRELVM v);
+SQInteger sqResumeMusic(HSQUIRRELVM v);
+SQInteger sqMusicPaused(HSQUIRRELVM v);
 
 //SDL_gfx
 SQInteger sqDrawCircle(HSQUIRRELVM v);

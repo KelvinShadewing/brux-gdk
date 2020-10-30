@@ -65,8 +65,6 @@
 		<Unit filename="sprite.h" />
 		<Unit filename="text.cpp" />
 		<Unit filename="text.h" />
-		<Unit filename="tinyxml2.cpp" />
-		<Unit filename="tinyxml2.h" />
 		<Unit filename="xyg.ico" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

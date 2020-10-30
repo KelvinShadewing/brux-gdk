@@ -62,9 +62,35 @@ enum sh
 		a += _a;
 		updatePoints();
 	}
+
+	function getA()
+	{
+		return a;
+	}
+
+	function getX()
+	{
+		return x;
+	}
+
+	function getY()
+	{
+		return y;
+	}
+
+	function getW()
+	{
+		return ux - lx;
+	}
+
+	function getH()
+	{
+		return uy - ly;
+	}
 }
 
 ::Circle <- class extends Shape
 {
-
+	r = 0.0;
+	constructor(_x, _y, _r)
 }

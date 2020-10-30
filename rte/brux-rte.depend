@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1577493087 source:/home/kelvin/Code/brux/rte/audio.cpp
+1604013204 source:/home/kelvin/Code/brux/rte/audio.cpp
 	"main.h"
 	"global.h"
 	"audio.h"
@@ -50,7 +50,7 @@
 
 1577493087 /home/kelvin/Code/brux/rte/audio.h
 
-1602363834 source:/home/kelvin/Code/brux/rte/binds.cpp
+1604013516 source:/home/kelvin/Code/brux/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -74,7 +74,7 @@
 1596186833 /home/kelvin/Code/brux/rte/fileio.h
 	"main.h"
 
-1598550861 /home/kelvin/Code/brux/rte/binds.h
+1604019392 /home/kelvin/Code/brux/rte/binds.h
 
 1577493087 source:/home/kelvin/Code/brux/rte/cJSON.c
 	<string.h>
