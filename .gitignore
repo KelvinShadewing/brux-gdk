@@ -12,3 +12,4 @@ rte/bin/count.txt
 rte/*.layout
 rte/brux
 test/log.txt
+*.dll
