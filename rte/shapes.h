@@ -86,6 +86,7 @@ public:
 };
 
 bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d);
+bool xyPointLine(xyPnt* a, xyPnt* b, xyPnt* c);
 bool xyHitTest(xyShape* a, xyShape* b);
 
 #endif

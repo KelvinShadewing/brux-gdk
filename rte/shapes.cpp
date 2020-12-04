@@ -154,7 +154,8 @@ float xyPnt::getArea(){
 // SHAPE //
 //////////{
 
-bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d){
+bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d)
+{
 	float denom = ((b->x - a->x) * (d->y - c->y)) - ((b->y - a->y) * (d->x - c->x));
 	float nume0 = ((a->y - c->y) * (d->x - c->x)) - ((a->x - c->x) * (d->y - c->y));
 	float nume1 = ((a->y - c->y) * (b->x - a->x)) - ((a->x - c->x) * (b->y - a->y));
@@ -167,7 +168,12 @@ bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d){
 	return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
 };
 
-bool xyHitTest(xyShape* a, xyShape* b){
+bool xyPointLine(xyPnt* a, xyPnt* b, xyPnt* c)
+{
+};
+
+bool xyHitTest(xyShape* a, xyShape* b)
+{
 	//Get type of A
 	switch(a->type){
 		case _LIN:

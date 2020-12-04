@@ -1052,3 +1052,11 @@ SQInteger sqDrawLineWide(HSQUIRRELVM v){
 };
 
 //}
+
+////////////
+// SHAPES //
+///////////{
+
+
+
+//}
