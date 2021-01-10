@@ -2,10 +2,13 @@
 // SHAPES //
 ////////////
 
+::shape <- {};
+::lastshape <- 0;
+
 ::Point <- class
 {
-	x = 0;
-	y = 0;
+	x = 0.0;
+	y = 0.0;
 }
 
 ::Shape <- class //Base class for all shapes
@@ -72,13 +75,6 @@
 	function _typeof(){ return "shape"; }
 }
 
-::Rectangle <- class extends Shape
-{
-	w = 0.0;
-	h = 0.0;
-	p = [];
-}
-
 ::Circle <- class extends Shape
 {
 	r = 0.0;
@@ -108,8 +104,13 @@
 	function _typeof(){ return "line"; }
 }
 
+/*
+Squares and rectangles will just be polygons generated with specific parameters.
+*/
+
 ::Polygon <- class extends Shape
 {
+	a = 0.0;
 	p = [];
 	pc = [];
 
@@ -271,3 +272,4 @@
 	//fully programmed
 	return false;
 }
+
