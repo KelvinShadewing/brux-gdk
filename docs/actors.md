@@ -19,7 +19,7 @@
 
   Goes through every existing actor instance and executes their respective `run()` function.
 
-* <a name="countActors"></a>**`countActors()**
+* <a name="countActors"></a>**`countActors()`**
 
   Counts the number of active actor instances.
 
