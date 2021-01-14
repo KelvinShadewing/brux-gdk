@@ -3,60 +3,60 @@
 
 
 
-&nbsp;
+&nbsp
 
-* <a name="loadsound"></a>**`loadSound( file );`**
+* <a name="loadsound"></a>**`loadSound( file )`**
 
   Loads a new sound from `file` and returns the index.
 
-* <a name="loadmusic"></a>**`loadMusic( file );`**
+* <a name="loadmusic"></a>**`loadMusic( file )`**
 
   Loads a new track from `file` and returns the index.
 
-* <a name="playsound"></a>**`playSound( sound, loops );`**
+* <a name="playsound"></a>**`playSound( sound, loops )`**
 
   Plays a sound that repeats as many times as defined by `loops`. If `-1` is used, the sound will loop until stopped. Returns the channel number of the sound being played. If looping, the return value should be stored in order to stop it later.
 
-* <a name="playmusic"></a>**`playMusic( music, loops );`**
+* <a name="playmusic"></a>**`playMusic( music, loops )`**
 
   Plays a music track and repeats as many times as `loops` says. Unlike with sound, it does not return a channel since only one music track can play at once.
 
-* <a name="deletesound"></a>**`deleteSound( sound );`**
+* <a name="deletesound"></a>**`deleteSound( sound )`**
 
   Unloads the specified sound file.
 
-* <a name="deletemusic"></a>**`deleteMusic( music );`**
+* <a name="deletemusic"></a>**`deleteMusic( music )`**
 
   Unloads the specified music track.
 
-* <a name="checksound"></a>**`checkSound( channel );`**
+* <a name="checksound"></a>**`checkSound( channel )`**
 
   Checks if a sound is currently playing on the given `channel`.
 
-* <a name="checkmusic"></a>**`checkMusic();`**
+* <a name="checkmusic"></a>**`checkMusic()`**
 
   Checks if music is currently playing.
 
-* <a name="stopsound"></a>**`stopSound( channel );`**
+* <a name="stopsound"></a>**`stopSound( channel )`**
 
   Stops the audio playing on a given channel. Use `-1` to stop all channels.
 
-* <a name="stopmusic"></a>**`stopMusic();`**
+* <a name="stopmusic"></a>**`stopMusic()`**
 
   Stops the currently playing music.
 
-* <a name="setmaxchannels"></a>**`setMaxChannels( integer );`**
+* <a name="setmaxchannels"></a>**`setMaxChannels( integer )`**
 
   Sets the maximum number of audio channels that can be playing at once. Useful for saving memory.
 
-* <a name="pausemusic"></a>**`pauseMusic();`**
+* <a name="pausemusic"></a>**`pauseMusic()`**
 
   Pauses the current music.
 
-* <a name="resumemusic"></a>**`resumeMusic();`**
+* <a name="resumemusic"></a>**`resumeMusic()`**
 
   Resumes the current music.
 
-* <a name="musicpaused"></a>**`musicPaused();`**
+* <a name="musicpaused"></a>**`musicPaused()`**
 
   Checks whether the music is paused.
