@@ -701,7 +701,8 @@ SQInteger sqPadButtonRelease(HSQUIRRELVM v){
 // MATHS //
 //////////{
 
-SQInteger sqRandomFloat(HSQUIRRELVM v){
+SQInteger sqRandomFloat(HSQUIRRELVM v)
+{
 	float a;
 
 	sq_getfloat(v, 2, &a);
@@ -710,7 +711,8 @@ SQInteger sqRandomFloat(HSQUIRRELVM v){
 	return 1;
 };
 
-SQInteger sqRandomInt(HSQUIRRELVM v){
+SQInteger sqRandomInt(HSQUIRRELVM v)
+{
 	SQInteger a;
 
 	sq_getinteger(v, 2, &a);
@@ -719,7 +721,8 @@ SQInteger sqRandomInt(HSQUIRRELVM v){
 	return 1;
 };
 
-SQInteger sqDistance2(HSQUIRRELVM v){
+SQInteger sqDistance2(HSQUIRRELVM v)
+{
 	SQInteger x1, y1, x2, y2;
 
 	sq_getinteger(v, 2, &x1);
@@ -732,7 +735,24 @@ SQInteger sqDistance2(HSQUIRRELVM v){
 	return 1;
 };
 
-SQInteger sqWrap(HSQUIRRELVM v){
+SQInteger sqDistance3(HSQUIRRELVM v)
+{
+	SQInteger x1, y1, z1, x2, y2, z2;
+
+	sq_getinteger(v, 2, &x1);
+	sq_getinteger(v, 3, &y1);
+	sq_getinteger(v, 4, &z1);
+	sq_getinteger(v, 5, &x2);
+	sq_getinteger(v, 6, &y2);
+	sq_getinteger(v, 7, &z2);
+
+	sq_pushinteger(v, xyDistance3(x1, y1, z1, x2, y2, z2));
+
+	return 1;
+};
+
+SQInteger sqWrap(HSQUIRRELVM v)
+{
 	SQFloat x, mx, mn;
 
 	sq_getfloat(v, 2, &x);
@@ -744,7 +764,8 @@ SQInteger sqWrap(HSQUIRRELVM v){
 	return 1;
 };
 
-SQInteger sqFloor(HSQUIRRELVM v){
+SQInteger sqFloor(HSQUIRRELVM v)
+{
 	float f;
 
 	sq_getfloat(v, 2, &f);
@@ -753,7 +774,8 @@ SQInteger sqFloor(HSQUIRRELVM v){
 	return 1;
 };
 
-SQInteger sqCeil(HSQUIRRELVM v){
+SQInteger sqCeil(HSQUIRRELVM v)
+{
 	float f;
 
 	sq_getfloat(v, 2, &f);
@@ -789,6 +811,28 @@ SQInteger sqAbs(HSQUIRRELVM v){
 
 	sq_getfloat(v, 2, &f);
 	sq_pushfloat(v, abs(f));
+
+	return 1;
+};
+
+SQInteger sqLenDirX(HSQUIRRELVM v)
+{
+	float l, d;
+
+	sq_getfloat(v, 2, &l);
+	sq_getfloat(v, 3, &d);
+	sq_pushfloat(v, xyLenDirX(l, d));
+
+	return 1;
+};
+
+SQInteger sqLenDirY(HSQUIRRELVM v)
+{
+	float l, d;
+
+	sq_getfloat(v, 2, &l);
+	sq_getfloat(v, 3, &d);
+	sq_pushfloat(v, xyLenDirY(l, d));
 
 	return 1;
 };

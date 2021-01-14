@@ -98,8 +98,8 @@
 
 ::Line <- class extends Shape
 {
-	w = 0.0;
-	h = 0.0;
+	x2 = 0.0;
+	y2 = 0.0;
 
 	function _typeof(){ return "line"; }
 }

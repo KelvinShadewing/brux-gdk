@@ -348,6 +348,8 @@ void xyBindAllFunctions(HSQUIRRELVM v){
 	xyBindFunc(v, sqFloor, "floor", 2, ".n");
 	xyBindFunc(v, sqPointAngle, "pointAngle", 5, ".nnnn");
 	xyBindFunc(v, sqAbs, "abs", 2, ".n");
+	xyBindFunc(v, sqLenDirX, "lendirX", 3, ".nn");
+	xyBindFunc(v, sqLenDirY, "lendirY", 3, ".nn");
 
 	//Text
 	xyPrint(0, "Embedding text...");

@@ -13,11 +13,11 @@
 
   Returns a random float between 0 and `max`.
 
-* >><a name="lendirX"></a>**`lendirX( distance, direction );`**
+* <a name="lendirX"></a>**`lendirX( length, direction );`**
 
   Returns the X coordinate of a vector.
 
-* >><a name="lendirY"></a>**`lendirY( distance, direction );`**
+* <a name="lendirY"></a>**`lendirY( length, direction );`**
 
   Returns the Y coordinate of a vector.
 

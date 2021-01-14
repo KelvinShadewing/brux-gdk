@@ -87,6 +87,8 @@ SQInteger sqCeil(HSQUIRRELVM v);
 SQInteger sqFloor(HSQUIRRELVM v);
 SQInteger sqPointAngle(HSQUIRRELVM v);
 SQInteger sqAbs(HSQUIRRELVM v);
+SQInteger sqLenDirX(HSQUIRRELVM v);
+SQInteger sqLenDirY(HSQUIRRELVM v);
 
 //Text
 SQInteger sqNewFont(HSQUIRRELVM v);
