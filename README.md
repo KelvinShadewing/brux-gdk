@@ -44,13 +44,15 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 **Fixes needed:**
 
 - [ ] Sprites do not pivot correctly when scaled and rotated at the same time
-- [ ] setDrawColor() crashes the engine
 
 ### To Do (Editor)
 
 * Everything (I haven't planned everything needed yet. I'll wait until the RE grows some more.)
 
 ### Change Log
+
+* **0.0.7**
+  * Added lendirX/Y, equivalent to Game Maker's lengthdir_x/y.
 
 * **0.0.6**
   * Add functions to stop, pause, and check music status

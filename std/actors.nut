@@ -19,7 +19,7 @@
 		y = _y;
 	};
 
-	function step(){
+	function run(){
 		drawSprite(sprite, frame, x, y);
 	};
 
@@ -47,7 +47,7 @@
 };
 
 ::runActors <- function(){
-	foreach(i in actor) i.step();
+	foreach(i in actor) i.run();
 };
 
 ::checkActor <- function(id){

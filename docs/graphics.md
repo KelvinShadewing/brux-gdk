@@ -3,7 +3,7 @@
 
 
 
-&nbsp
+&nbsp;
 
 * <a name="clearScreen"></a>**`clearScreen()`**
 

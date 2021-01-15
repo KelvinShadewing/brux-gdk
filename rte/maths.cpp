@@ -76,5 +76,5 @@ float xyLenDirX(float l, float d)
 
 float xyLenDirY(float l, float d)
 {
-    return l * -sin(d * pi / 180);
+    return l * sin(d * pi / 180);
 };
