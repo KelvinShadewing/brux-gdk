@@ -127,6 +127,7 @@ while(!quit)
 			break;
 		}
 	}
+
 	if(ball.vspeed != 0) for(local i = 0; i < abs(floor(ball.vspeed)); i++)
 	{
 		if(placeFree(ball.x, ball.y + (ball.vspeed / abs(ball.vspeed)), ball.r))
@@ -136,13 +137,13 @@ while(!quit)
 		}
 		else break;
 	}
+
 	if(keyDown(k_left) && ball.hspeed > -4) ball.hspeed -= 0.8;
 	if(keyDown(k_right) && ball.hspeed < 4) ball.hspeed += 0.8;
 	if(ball.hspeed > 0) ball.hspeed -= 0.3;
 	if(ball.hspeed < 0) ball.hspeed += 0.3;
 	if(abs(ball.hspeed) < 0.3) ball.hspeed = 0.0;
 	if(ball.vspeed > 16) ball.vspeed = 8;
-	
 
 	//Basic stuff
 	setDrawColor(0xd0ff);

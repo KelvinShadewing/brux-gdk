@@ -7,56 +7,69 @@
 #include "maths.h"
 #include "shapes.h"
 
+/*
+This part is being put on hold.
+It's being implemented in Squirrel for now.
+*/
+
 ///////////
 // POINT //
 //////////{
 
 //Constructors
-xyPnt::xyPnt(){
+xyPnt::xyPnt()
+{
 	x = 0;
 	y = 0;
 };
 
-xyPnt::xyPnt(float _x, float _y){
+xyPnt::xyPnt(float _x, float _y)
+{
 	x = _x;
 	y = _y;
 };
 
-xyPnt::xyPnt(const xyPnt& v){
+xyPnt::xyPnt(const xyPnt& v)
+{
 	x = v.x;
 	y = v.y;
 };
 
 //Assignment Operators
-xyPnt& xyPnt::operator = (const xyPnt& v){
+xyPnt& xyPnt::operator = (const xyPnt& v)
+{
 	x = v.x;
 	y = v.y;
 
 	return *this;
 };
 
-xyPnt& xyPnt::operator += (const xyPnt& v){
+xyPnt& xyPnt::operator += (const xyPnt& v)
+{
 	x += v.x;
 	y += v.y;
 
 	return *this;
 };
 
-xyPnt& xyPnt::operator -= (const xyPnt& v){
+xyPnt& xyPnt::operator -= (const xyPnt& v)
+{
 	x -= v.x;
 	y -= v.y;
 
 	return *this;
 };
 
-xyPnt& xyPnt::operator *= (const float s){
+xyPnt& xyPnt::operator *= (const float s)
+{
 	x *= s;
 	y *= s;
 
 	return *this;
 };
 
-xyPnt& xyPnt::operator /= (const float s){
+xyPnt& xyPnt::operator /= (const float s)
+{
 	x /= s;
 	y /= s;
 
@@ -64,41 +77,48 @@ xyPnt& xyPnt::operator /= (const float s){
 };
 
 //Comparison Operators
-bool xyPnt::operator == (const xyPnt& v){
+bool xyPnt::operator == (const xyPnt& v)
+{
 	return(x == v.x && y == v.y);
 };
 
-bool xyPnt::operator != (const xyPnt& v){
+bool xyPnt::operator != (const xyPnt& v)
+{
 	return(x != v.x || y != v.y);
 };
 
 //Binary operators
-const xyPnt xyPnt::operator + (const xyPnt& v){
+const xyPnt xyPnt::operator + (const xyPnt& v)
+{
 	xyPnt result(*this);
 	result += v;
 	return result;
 };
 
-const xyPnt xyPnt::operator - (const xyPnt& v){
+const xyPnt xyPnt::operator - (const xyPnt& v)
+{
 	xyPnt result(*this);
 	result -= v;
 	return result;
 };
 
-const xyPnt xyPnt::operator * ( const float& s ){
+const xyPnt xyPnt::operator * ( const float& s )
+{
 	xyPnt result( *this );
 	result *= s;
 	return result;
 };
 
-const xyPnt xyPnt::operator / ( const float& s ){
+const xyPnt xyPnt::operator / ( const float& s )
+{
 	xyPnt result( *this );
 	result /= s;
 	return result;
 };
 
 //Access operator
-const float xyPnt::operator[](const int& i){
+const float xyPnt::operator[](const int& i)
+{
 	switch(i){
 		case 0: return x;
 		case 1: return y;
@@ -107,11 +127,13 @@ const float xyPnt::operator[](const int& i){
 };
 
 //Functions
-float xyPnt::getLength(){
+float xyPnt::getLength()
+{
 	return(sqrt((x * x) + (y * y)));
 };
 
-void xyPnt::setLength(float l){
+void xyPnt::setLength(float l)
+{
 	float h = getLength();
 	float a = (l / h) * x;
 	float b = (l / h) * y;
@@ -123,7 +145,8 @@ void xyPnt::setLength(float l){
 	y = b;
 };
 
-void xyPnt::rotate(float angle){
+void xyPnt::rotate(float angle)
+{
 	float theta = angle * (pi / 180);
 	float nx = (x * cos(theta)) - (y * sin(theta));
 	float ny = (x * sin(theta)) + (y * cos(theta));
@@ -131,7 +154,8 @@ void xyPnt::rotate(float angle){
 	y = ny;
 };
 
-void xyPnt::rotate(float angle, float pivx, float pivy){
+void xyPnt::rotate(float angle, float pivx, float pivy)
+{
 	//Offset the vector
 	x -= pivx;
 	y -= pivy;
@@ -144,7 +168,8 @@ void xyPnt::rotate(float angle, float pivx, float pivy){
 	y += pivy;
 };
 
-float xyPnt::getArea(){
+float xyPnt::getArea()
+{
 	return 0;
 };
 
@@ -175,9 +200,11 @@ bool xyPointLine(xyPnt* a, xyPnt* b, xyPnt* c)
 bool xyHitTest(xyShape* a, xyShape* b)
 {
 	//Get type of A
-	switch(a->type){
+	switch(a->type)
+	{
 		case _LIN:
-			switch(b->type){
+			switch(b->type)
+			{
 				case _LIN:
 					return xyLineLine(a->pnt[0], a->pnt[1], b->pnt[0], b->pnt[1]);
 					break;
@@ -211,7 +238,8 @@ bool xyHitTest(xyShape* a, xyShape* b)
 			};
 			break;
 		case _CIR:
-			switch(b->type){
+			switch(b->type)
+			{
 				case _LIN:
 					return 0;
 					break;
@@ -279,7 +307,8 @@ bool xyHitTest(xyShape* a, xyShape* b)
 			};
 			break;
 		case _TRI:
-			switch(b->type){
+			switch(b->type)
+			{
 				case _LIN:
 					return 0;
 					break;
@@ -313,7 +342,8 @@ bool xyHitTest(xyShape* a, xyShape* b)
 			};
 			break;
 		case _DIA:
-			switch(b->type){
+			switch(b->type)
+			{
 				case _LIN:
 					return 0;
 					break;
@@ -347,7 +377,8 @@ bool xyHitTest(xyShape* a, xyShape* b)
 			};
 			break;
 		case _OVL:
-			switch(b->type){
+			switch(b->type)
+			{
 				case _LIN:
 					return 0;
 					break;
@@ -381,7 +412,8 @@ bool xyHitTest(xyShape* a, xyShape* b)
 			};
 			break;
 		case _PLY:
-			switch(b->type){
+			switch(b->type)
+			{
 				case _LIN:
 					return 0;
 					break;
@@ -415,7 +447,8 @@ bool xyHitTest(xyShape* a, xyShape* b)
 			};
 			break;
 		case _PRM:
-			switch(b->type){
+			switch(b->type)
+			{
 				case _LIN:
 					return 0;
 					break;
@@ -449,7 +482,8 @@ bool xyHitTest(xyShape* a, xyShape* b)
 			};
 			break;
 		case _BDY:
-			switch(b->type){
+			switch(b->type)
+			{
 				case _LIN:
 					return 0;
 					break;

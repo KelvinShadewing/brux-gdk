@@ -5,7 +5,8 @@
 #ifndef _TEXT_H_
 #define _TEXT_H_
 
-class xyFont{
+class xyFont
+{
 private:
 	xySprite* source;
 	vector<int> cx;

@@ -7,7 +7,7 @@
 
 #include "main.h"
 
-SDL_Texture* xyLoadTexture(const char*  path);
+SDL_Texture* xyLoadTexture(const char* path);
 void xyClearScreen();
 void xyWait(int ticks);
 void xySetDrawTarget(Uint32 tex);

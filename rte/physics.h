@@ -7,9 +7,10 @@
 #include <chipmunk.h>
 
 
-class Phyisics {
+class Phyisics
+{
 public:
-    static int ChipMonkHelloWorld();
+	static int ChipMonkHelloWorld();
 };
 
 
