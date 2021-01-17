@@ -6,7 +6,8 @@
 #include "global.h"
 #include "audio.h"
 
-Uint32 xyLoadSound(const char* filename){
+Uint32 xyLoadSound(const char* filename)
+{
 	//Load the sound file
 	Mix_Chunk* newSnd = Mix_LoadWAV(filename);
 	if(newSnd == 0){
