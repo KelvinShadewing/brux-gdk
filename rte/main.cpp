@@ -125,7 +125,7 @@ int xyInit()
 	};
 
 	//Create window
-	gvWindow = SDL_CreateWindow("Brux Runtime Environment", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
+	gvWindow = SDL_CreateWindow("BRUX", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
 	if(gvWindow == 0)
 	{
 		xyPrint(0, "Window could not be created! SDL Error: %s\n", SDL_GetError());

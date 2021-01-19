@@ -80,11 +80,37 @@
 				}
 			}
 		}
+		else print("Map file " + filename + " does not exist!");
 	}
 
-	function drawTile(tx, ty, dx, dy){
-	}
+	function drawTiles(x, y, mx, my, mw, mh, l)
+	{ //@mx through @mh are the rectangle of tiles that will be drawn
+		//Find layer
+		local t = -1; //Target layer
+		foreach(i in data.layers)
+		{
+			if(data.layers[i]["type"] == "tilemap" && data.layers[i].name == l)
+			{
+				t = i;
+				break;
+			}
+		}
+		if(t == -1) return;
 
-	function draw(x, y){
-	};
+		//Make sure values are in range
+		if(data.layers[t].width < mx + mw) mw = data.layers[t].width - mx;
+		if(data.layers[t].height < my + mh) mh = data.layers[t].height - my;
+
+		for(local i = mx; i < mx + mw; i++)
+		{
+			for(local j = my; j < my + mh; j++)
+			{
+				local n = data.layers[t].data[(j * data.layers[t].width) + i]; //Number value of the tile
+				if(n != 0)
+				{
+
+				}
+			}
+		}
+	}
 };

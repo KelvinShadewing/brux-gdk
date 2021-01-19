@@ -2,6 +2,8 @@
 // PLATFORM TEST //
 ///////////////////
 
+setResolution(320, 180);
+
 ball <-
 {
 	x = 120.0,
@@ -35,7 +37,7 @@ boxes <-
 	{
 		x = 264,
 		y = 168,
-		w = 80,
+		w = 96,
 		h = 8
 	},
 	{
@@ -133,7 +135,7 @@ while(!quit)
 		if(placeFree(ball.x, ball.y + (ball.vspeed / abs(ball.vspeed)), ball.r))
 		{
 			ball.y += (ball.vspeed / abs(ball.vspeed));
-			if(ball.y > 240) ball.y = wrap(ball.y, 0, 320);
+			if(ball.y > 180) ball.y = wrap(ball.y, 0, 180);
 		}
 		else break;
 	}

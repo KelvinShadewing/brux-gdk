@@ -3,13 +3,14 @@
 \*===============*/
 
 /*\
- # This app loads a tilemap and 
+ # This app loads a tilemap and
  # renders it on screen.
  #
  # This comment is needlessly
  # decorated, but I don't care.
 \*/
 
+setResolution(320, 180);
 
 donut("src/assets.nut");
 donut("src/actors.nut");
