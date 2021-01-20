@@ -21,6 +21,9 @@ donut("src/tilemap.nut");
 setFPS(30);
 
 local map = Tilemap("res/test.json");
+print(map.tileset.len());
+print(map.tileset[0]);
+print(spriteName(map.tileset[0]));
 
 //Add search directories
 tileSearchDir.push("res");
@@ -35,6 +38,9 @@ while(!quit)
 		else pauseMusic();
 	}
 	if(keyPress(k_s)) stopMusic();
+
+	map.drawTiles(0, 0, 0, 0, 20, 15, "bg");
+	drawSprite(map.tileset[0], 0, 0, 0);
 
 	if(keyPress(k_escape)) quit = true;
 	update();

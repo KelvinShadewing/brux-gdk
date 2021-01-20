@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1608421927 source:/home/kelvin/Code/brux/rte/audio.cpp
+1610870234 source:/home/kelvin/Code/brux/rte/audio.cpp
 	"main.h"
 	"global.h"
 	"audio.h"
@@ -44,13 +44,13 @@
 	"text.h"
 	"shapes.h"
 
-1608421927 /home/kelvin/Code/brux/rte/sprite.h
+1610918592 /home/kelvin/Code/brux/rte/sprite.h
 
-1608421927 /home/kelvin/Code/brux/rte/text.h
+1610918818 /home/kelvin/Code/brux/rte/text.h
 
 1608421927 /home/kelvin/Code/brux/rte/audio.h
 
-1610591550 source:/home/kelvin/Code/brux/rte/binds.cpp
+1610870014 source:/home/kelvin/Code/brux/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -62,7 +62,7 @@
 	"sprite.h"
 	"binds.h"
 
-1608421927 /home/kelvin/Code/brux/rte/graphics.h
+1610875561 /home/kelvin/Code/brux/rte/graphics.h
 	"main.h"
 
 1608421927 /home/kelvin/Code/brux/rte/input.h
@@ -74,7 +74,7 @@
 1608421927 /home/kelvin/Code/brux/rte/fileio.h
 	"main.h"
 
-1610603287 /home/kelvin/Code/brux/rte/binds.h
+1611130017 /home/kelvin/Code/brux/rte/binds.h
 
 1608421927 source:/home/kelvin/Code/brux/rte/cJSON.c
 	<string.h>
@@ -86,25 +86,25 @@
 	<ctype.h>
 	"cJSON.h"
 
-1608421927 source:/home/kelvin/Code/brux/rte/core.cpp
+1610870218 source:/home/kelvin/Code/brux/rte/core.cpp
 	"main.h"
 	"global.h"
 	"core.h"
 
 1608421927 /home/kelvin/Code/brux/rte/core.h
 
-1608421927 source:/home/kelvin/Code/brux/rte/fileio.cpp
+1610919509 source:/home/kelvin/Code/brux/rte/fileio.cpp
 	"main.h"
 	"global.h"
 	"fileio.h"
 
-1608421927 source:/home/kelvin/Code/brux/rte/graphics.cpp
+1610870497 source:/home/kelvin/Code/brux/rte/graphics.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"fileio.h"
 
-1608421927 source:/home/kelvin/Code/brux/rte/input.cpp
+1610917740 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
 1610603316 source:/home/kelvin/Code/brux/rte/main.cpp
@@ -135,12 +135,12 @@
 	<android/log.h>
 	<assert.h>
 
-1608421927 source:/home/kelvin/Code/brux/rte/maths.cpp
+1610658827 source:/home/kelvin/Code/brux/rte/maths.cpp
 	"main.h"
 	"global.h"
 	"maths.h"
 
-1608421927 source:/home/kelvin/Code/brux/rte/shapes.cpp
+1610918384 source:/home/kelvin/Code/brux/rte/shapes.cpp
 	"main.h"
 	"global.h"
 	"maths.h"
@@ -148,14 +148,14 @@
 
 1608421927 /home/kelvin/Code/brux/rte/shapes.h
 
-1608421927 source:/home/kelvin/Code/brux/rte/sprite.cpp
+1610918555 source:/home/kelvin/Code/brux/rte/sprite.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
 	"sprite.h"
 	"maths.h"
 
-1608421927 source:/home/kelvin/Code/brux/rte/text.cpp
+1610918810 source:/home/kelvin/Code/brux/rte/text.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"

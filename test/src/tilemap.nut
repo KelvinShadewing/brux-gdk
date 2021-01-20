@@ -21,8 +21,6 @@
 {
 	data = {};
 	tileset = [];
-	tilebeg = [];
-	tileend = [];
 	tilew = 0;
 	tileh = 0;
 	mapw = 0;
@@ -41,11 +39,6 @@
 
 			for(local i = 0; i < data.tilesets.len(); i++)
 			{
-				print("Adding tile IDs...");
-				tilebeg.push(data.tilesets[i].firstgid);
-				tileend.push(data.tilesets[i].firstgid + data.tilesets[i].tilecount);
-				print("Added tile IDs.");
-
 				//Extract filename
 				print("Get filename");
 				local filename = data.tilesets[i].image;
@@ -67,6 +60,7 @@
 					{
 						print("Attempting to add full filename");
 						tileset.push(newSprite(filename, data.tilewidth, data.tileheight, data.tilesests[i].margin, data.tilesets[i].spacing, 0, 0, 0));
+						tilebeg.push(data.tilesets[i].firstgid);
 						print("Added tileset " + shortname + ".");
 					}
 					else for(local j = 0; j < tileSearchDir.len(); j++)
@@ -89,13 +83,13 @@
 		local t = -1; //Target layer
 		foreach(i in data.layers)
 		{
-			if(data.layers[i]["type"] == "tilemap" && data.layers[i].name == l)
+			if(i["type"] == "tilemap" && i.name == l)
 			{
 				t = i;
 				break;
 			}
 		}
-		if(t == -1) return;
+		if(t == -1) return; //Quit if no tile layer by that name was found
 
 		//Make sure values are in range
 		if(data.layers[t].width < mx + mw) mw = data.layers[t].width - mx;
@@ -108,7 +102,14 @@
 				local n = data.layers[t].data[(j * data.layers[t].width) + i]; //Number value of the tile
 				if(n != 0)
 				{
-
+					for(local k = data.tilesets.len(); k > 0; k--)
+					{
+						if(n >= data.tilesets[k].firstgid)
+						{
+							drawSprite(tileset[k], n - data.tilesets[k].firstgid, x + (i * data.tilewidth), y + (j * data.tileheight));
+							k = 0;
+						}
+					}
 				}
 			}
 		}

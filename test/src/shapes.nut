@@ -156,7 +156,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "point":
 					return (distance2(a.x, a.y, b.x, b.y) <= a.r);
 					break;
-				case default:
+				default:
 					break;
 			}
 			break;
@@ -175,7 +175,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 					break;
 				case "point":
 					break;
-				case default:
+				default:
 					break;
 			}
 			break;
@@ -187,7 +187,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "polygon":
 					break;
 				case "line":
-					
+
 					break;
 				case "ellipse":
 					break;

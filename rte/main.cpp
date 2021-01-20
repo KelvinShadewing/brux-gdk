@@ -335,6 +335,7 @@ void xyBindAllFunctions(HSQUIRRELVM v)
 	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".innnninnn");
 	xyBindFunc(v, sqDeleteSprite, "deleteSprite", 2, ".i");
 	xyBindFunc(v, sqFindSprite, "findSprite", 2, ".s");
+	xyBindFunc(v, sqSpriteName, "spriteName");
 
 	//Input
 	xyPrint(0, "Embedding input...");
