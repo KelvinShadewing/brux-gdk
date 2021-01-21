@@ -407,7 +407,7 @@ SQInteger sqFindSprite(HSQUIRRELVM v)
 
 	for(size_t i = 0; i < vcSprites.size(); i++)
 	{
-		if(i != 0)
+		if(vcSprites[i] != 0)
 		{
 			xyPrint(0, "Current sprite name: %s", vcSprites[i]->getname());
 

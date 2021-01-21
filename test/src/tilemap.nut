@@ -60,7 +60,6 @@
 					{
 						print("Attempting to add full filename");
 						tileset.push(newSprite(filename, data.tilewidth, data.tileheight, data.tilesests[i].margin, data.tilesets[i].spacing, 0, 0, 0));
-						tilebeg.push(data.tilesets[i].firstgid);
 						print("Added tileset " + shortname + ".");
 					}
 					else for(local j = 0; j < tileSearchDir.len(); j++)
@@ -72,6 +71,8 @@
 						}
 					}
 				}
+
+				print("Added " + spriteName(tileset[i]) + ".\n");
 			}
 		}
 		else print("Map file " + filename + " does not exist!");
@@ -83,7 +84,7 @@
 		local t = -1; //Target layer
 		foreach(i in data.layers)
 		{
-			if(i["type"] == "tilemap" && i.name == l)
+			if(i.type == "tilemap" && i.name == l)
 			{
 				t = i;
 				break;
@@ -95,18 +96,18 @@
 		if(data.layers[t].width < mx + mw) mw = data.layers[t].width - mx;
 		if(data.layers[t].height < my + mh) mh = data.layers[t].height - my;
 
-		for(local i = mx; i < mx + mw; i++)
+		for(local i = my; i < my + mh; i++)
 		{
-			for(local j = my; j < my + mh; j++)
+			for(local j = mx; j < mx + mw; j++)
 			{
-				local n = data.layers[t].data[(j * data.layers[t].width) + i]; //Number value of the tile
+				local n = data.layers[t].data[(i * data.layers[t].width) + j]; //Number value of the tile
 				if(n != 0)
 				{
-					for(local k = data.tilesets.len(); k > 0; k--)
+					for(local k = data.tilesets.len() - 1; k > 0; k--)
 					{
 						if(n >= data.tilesets[k].firstgid)
 						{
-							drawSprite(tileset[k], n - data.tilesets[k].firstgid, x + (i * data.tilewidth), y + (j * data.tileheight));
+							drawSprite(tileset[k], n - data.tilesets[k].firstgid, x + (j * data.tilewidth), y + (i * data.tileheight));
 							k = 0;
 						}
 					}

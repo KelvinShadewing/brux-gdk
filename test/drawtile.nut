@@ -10,23 +10,19 @@
  # decorated, but I don't care.
 \*/
 
-setResolution(320, 180);
-
 donut("src/assets.nut");
 donut("src/actors.nut");
 donut("src/shapes.nut");
 donut("src/tilemap.nut");
+print("");
 
 ::quit <- 0;
 setFPS(30);
 
-local map = Tilemap("res/test.json");
-print(map.tileset.len());
-print(map.tileset[0]);
-print(spriteName(map.tileset[0]));
-
 //Add search directories
 tileSearchDir.push("res");
+local map = Tilemap("res/test.json");
+print(map.data.layers[0].type);
 
 while(!quit)
 {
@@ -39,7 +35,7 @@ while(!quit)
 	}
 	if(keyPress(k_s)) stopMusic();
 
-	map.drawTiles(0, 0, 0, 0, 20, 15, "bg");
+	map.drawTiles(0, 0, 0, 0, 10, 10, "bg");
 	drawSprite(map.tileset[0], 0, 0, 0);
 
 	if(keyPress(k_escape)) quit = true;

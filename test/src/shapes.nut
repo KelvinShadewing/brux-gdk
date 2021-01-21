@@ -195,7 +195,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 					break;
 				case "point":
 					break;
-				case default:
+				default:
 					break;
 			}
 			break;
@@ -214,7 +214,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 					break;
 				case "point":
 					break;
-				case default:
+				default:
 					break;
 			}
 			break;
@@ -233,7 +233,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 					break;
 				case "point":
 					break;
-				case default:
+				default:
 					break;
 			}
 			break;
@@ -258,7 +258,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "point":
 					return (a.x == b.x && a.y == b.y);
 					break;
-				case default:
+				default:
 					break;
 			}
 			break;

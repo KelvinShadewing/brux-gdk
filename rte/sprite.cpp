@@ -27,7 +27,7 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 
 	//Extract short file name
 	string::size_type slashnum = name.find_last_of("/");
-	if(slashnum != string::npos) name = name.substr(slashnum, name.length() - 1);
+	if(slashnum != string::npos) name = name.substr(slashnum + 1, name.length() - 1);
 
 	//Add sprite to list
 

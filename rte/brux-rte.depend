@@ -50,7 +50,7 @@
 
 1608421927 /home/kelvin/Code/brux/rte/audio.h
 
-1610870014 source:/home/kelvin/Code/brux/rte/binds.cpp
+1611192880 source:/home/kelvin/Code/brux/rte/binds.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
@@ -107,7 +107,7 @@
 1610917740 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
-1610603316 source:/home/kelvin/Code/brux/rte/main.cpp
+1611130044 source:/home/kelvin/Code/brux/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -148,7 +148,7 @@
 
 1608421927 /home/kelvin/Code/brux/rte/shapes.h
 
-1610918555 source:/home/kelvin/Code/brux/rte/sprite.cpp
+1611138061 source:/home/kelvin/Code/brux/rte/sprite.cpp
 	"main.h"
 	"global.h"
 	"graphics.h"
