@@ -49,7 +49,7 @@
 				local tempspr = findSprite(shortname);
 				print("Temp sprite: " + shortname);
 
-				if(tempspr != -1)
+				if(tempspr != 0)
 				{
 					tileset.push(tempspr);
 					print("Added tempspr: " + shortname);
@@ -59,7 +59,7 @@
 					if(fileExists(filename))
 					{
 						print("Attempting to add full filename");
-						tileset.push(newSprite(filename, data.tilewidth, data.tileheight, data.tilesests[i].margin, data.tilesets[i].spacing, 0, 0, 0));
+						tileset.push(newSprite(filename, data.tilewidth, data.tileheight, data.tilesets[i].margin, data.tilesets[i].spacing, 0, 0, 0));
 						print("Added tileset " + shortname + ".");
 					}
 					else for(local j = 0; j < tileSearchDir.len(); j++)
@@ -67,6 +67,7 @@
 						if(fileExists(tileSearchDir[j] + "/" + shortname))
 						{
 							print("Adding from search path: " + tileSearchDir[j]);
+							tileset.push(newSprite(tileSearchDir[j] + "/" + shortname, data.tilewidth, data.tileheight, data.tilesets[i].margin, data.tilesets[i].spacing, 0, 0, 0));
 							break;
 						}
 					}
@@ -82,15 +83,19 @@
 	{ //@mx through @mh are the rectangle of tiles that will be drawn
 		//Find layer
 		local t = -1; //Target layer
-		foreach(i in data.layers)
+		for(local i = 0; i < data.layers.len(); i++)
 		{
-			if(i.type == "tilemap" && i.name == l)
+			if(data.layers[i].type == "tilelayer" && data.layers[i].name == l)
 			{
 				t = i;
 				break;
 			}
 		}
-		if(t == -1) return; //Quit if no tile layer by that name was found
+		if(t == -1)
+		{
+			print("no");
+			return; //Quit if no tile layer by that name was found
+		}
 
 		//Make sure values are in range
 		if(data.layers[t].width < mx + mw) mw = data.layers[t].width - mx;
@@ -103,12 +108,13 @@
 				local n = data.layers[t].data[(i * data.layers[t].width) + j]; //Number value of the tile
 				if(n != 0)
 				{
-					for(local k = data.tilesets.len() - 1; k > 0; k--)
+					for(local k = data.tilesets.len() - 1; k >= 0; k--)
 					{
 						if(n >= data.tilesets[k].firstgid)
 						{
 							drawSprite(tileset[k], n - data.tilesets[k].firstgid, x + (j * data.tilewidth), y + (i * data.tileheight));
-							k = 0;
+							k = -1;
+							break;
 						}
 					}
 				}

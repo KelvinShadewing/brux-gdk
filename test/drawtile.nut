@@ -10,7 +10,7 @@
  # decorated, but I don't care.
 \*/
 
-donut("src/assets.nut");
+//donut("src/assets.nut");
 donut("src/actors.nut");
 donut("src/shapes.nut");
 donut("src/tilemap.nut");
@@ -35,8 +35,8 @@ while(!quit)
 	}
 	if(keyPress(k_s)) stopMusic();
 
-	map.drawTiles(0, 0, 0, 0, 10, 10, "bg");
-	drawSprite(map.tileset[0], 0, 0, 0);
+	map.drawTiles(0, 0, 0, 0, 20, 15, "bg");
+	map.drawTiles(0, 0, 0, 0, 20, 15, "fg");
 
 	if(keyPress(k_escape)) quit = true;
 	update();
