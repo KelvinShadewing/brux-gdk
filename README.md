@@ -24,7 +24,6 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 * SDL2_net
 * SDL2_gfx
 * [Squirrel](http://squirrel-lang.org/)
-* TinyXML2 (included in source)
 
 ### To Do (Runtime)
 
@@ -36,7 +35,7 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 - [ ] Bitmap dynamic text
 - [ ] FPS management
 - [X] Gamepad input
-- [ ] JSON map loading and rendering
+- [X] JSON map loading and rendering
 - [ ] Collision geometry
 - [ ] Chipmunk physics engine
 - [ ] Create compiled format to contain multiple source files in one (will also be included in squake)
@@ -53,6 +52,7 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 * **0.0.7**
   * Added lendirX/Y, equivalent to Game Maker's lengthdir_x/y.
+  * Added graphical tilemap per layer rendering
 
 * **0.0.6**
   * Add functions to stop, pause, and check music status
