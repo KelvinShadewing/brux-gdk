@@ -16,8 +16,13 @@ donut("src/shapes.nut");
 donut("src/tilemap.nut");
 print("");
 
+setResolution(320, 180);
+
 ::quit <- 0;
-setFPS(30);
+::camx <- 0;
+::camy <- 0;
+::layer1 <- true;
+::layer2 <- true;
 
 //Add search directories
 tileSearchDir.push("res");
@@ -35,8 +40,15 @@ while(!quit)
 	}
 	if(keyPress(k_s)) stopMusic();
 
-	map.drawTiles(0, 0, 0, 0, 20, 15, "bg");
-	map.drawTiles(0, 0, 0, 0, 20, 15, "fg");
+	if(keyDown(k_left)) camx -= 2;
+	if(keyDown(k_right)) camx += 2;
+	if(keyDown(k_up)) camy -= 2;
+	if(keyDown(k_down)) camy += 2;
+
+	if(keyPress(k_1)) layer1 = !layer1;
+	if(layer1) map.drawTiles(-camx, -camy, floor(camx / 16), floor(camy / 16), 21, 13, "bg");
+	if(keyPress(k_2)) layer2 = !layer2;
+	if(layer2) map.drawTiles(-camx, -camy, floor(camx / 16), floor(camy / 16), 21, 13, "fg");
 
 	if(keyPress(k_escape)) quit = true;
 	update();

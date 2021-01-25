@@ -1181,6 +1181,9 @@ SQInteger sqDrawLineWide(HSQUIRRELVM v)
 // SHAPES //
 ///////////{
 
+SQInteger sqLineLine(HSQUIRRELVM v)
+{
 
+}
 
 //}

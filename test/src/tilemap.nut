@@ -100,6 +100,10 @@
 		//Make sure values are in range
 		if(data.layers[t].width < mx + mw) mw = data.layers[t].width - mx;
 		if(data.layers[t].height < my + mh) mh = data.layers[t].height - my;
+		if(mx < 0) mx = 0;
+		if(my < 0) my = 0;
+		if(mx > data.layers[t].width) mx = data.layers[t].width;
+		if(my > data.layers[t].height) my = data.layers[t].height;
 
 		for(local i = my; i < my + mh; i++)
 		{

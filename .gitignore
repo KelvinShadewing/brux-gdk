@@ -13,3 +13,5 @@ rte/*.layout
 rte/brux
 test/log.txt
 *.dll
+log.txt
+*/log.txt

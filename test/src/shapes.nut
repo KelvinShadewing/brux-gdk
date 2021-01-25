@@ -132,7 +132,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 		}
 	}
 
-	function _typeof(){ return "Shape"; }
+	function _typeof(){ return "Polygon"; }
 }
 
 ::hitTest <- function(a, b)
@@ -187,7 +187,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "polygon":
 					break;
 				case "line":
-
+					lineLine
 					break;
 				case "ellipse":
 					break;
