@@ -121,8 +121,8 @@ Squares and rectangles will just be polygons generated with specific parameters.
 ::Polygon <- class extends Shape
 {
 	a = 0.0;
-	p = [];
-	pc = [];
+	p = []; //Original points
+	pc = []; //Current points
 	t = 0; //0 is polygon, 1 is rectangle
 
 	function addPoint(_x = 0.0, _y = 0.0)
@@ -171,6 +171,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 					return (distance2(a.x, a.y, b.x, b.y) <= a.r);
 					break;
 				default:
+					return false;
 					break;
 			}
 			break;
@@ -190,6 +191,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "point":
 					break;
 				default:
+					return false;
 					break;
 			}
 			break;
@@ -210,6 +212,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "point":
 					break;
 				default:
+					return false;
 					break;
 			}
 			break;
@@ -229,6 +232,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "point":
 					break;
 				default:
+					return false;
 					break;
 			}
 			break;
@@ -248,6 +252,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "point":
 					break;
 				default:
+					return false;
 					break;
 			}
 			break;
@@ -273,6 +278,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 					return (a.x == b.x && a.y == b.y);
 					break;
 				default:
+					return false;
 					break;
 			}
 			break;
