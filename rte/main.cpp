@@ -414,6 +414,9 @@ void xyBindAllFunctions(HSQUIRRELVM v)
 	xyBindFunc(v, sqPauseMusic, "pauseMusic");
 	xyBindFunc(v, sqResumeMusic, "resumeMusic");
 	xyBindFunc(v, sqMusicPaused, "musicPaused");
+
+	//Shapes
+	xyBindFunc(v, sqLineLine, "lineLine", 9, ".nnnnnnnn");
 };
 
 void xyUpdate()

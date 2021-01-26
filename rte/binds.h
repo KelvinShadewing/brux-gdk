@@ -118,4 +118,8 @@ SQInteger sqDrawLine(HSQUIRRELVM v);
 SQInteger sqDrawPoint(HSQUIRRELVM v);
 SQInteger sqDrawLineWide(HSQUIRRELVM v);
 
+//Shapes
+SQInteger sqLineLine(HSQUIRRELVM v);
+
+
 #endif

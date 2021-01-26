@@ -9,6 +9,8 @@
 {
 	x = 0.0;
 	y = 0.0;
+
+	function _typeof() { return "point"; }
 }
 
 ::Shape <- class //Base class for all shapes
@@ -101,6 +103,14 @@
 	x2 = 0.0;
 	y2 = 0.0;
 
+	constructor(_x, _y, _x2, _y2)
+	{
+		x = _x.tofloat();
+		y = _y.tofloat();
+		x2 = _x2.tofloat();
+		y2 = _y2.tofloat();
+	}
+
 	function _typeof(){ return "line"; }
 }
 
@@ -113,6 +123,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 	a = 0.0;
 	p = [];
 	pc = [];
+	t = 0; //0 is polygon, 1 is rectangle
 
 	function addPoint(_x = 0.0, _y = 0.0)
 	{
@@ -132,7 +143,10 @@ Squares and rectangles will just be polygons generated with specific parameters.
 		}
 	}
 
-	function _typeof(){ return "Polygon"; }
+	function _typeof(){
+		if(t == 1) return "rectangle"
+		return "polygon";
+	}
 }
 
 ::hitTest <- function(a, b)
@@ -187,7 +201,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "polygon":
 					break;
 				case "line":
-					lineLine
+					return lineLine(a.x, a.y, a.x2, a.y2, b.x, b.y, b.x2, b.y2);
 					break;
 				case "ellipse":
 					break;
