@@ -34,32 +34,11 @@
          "y":0
         }, 
         {
+         "color":"#ff0000",
          "draworder":"topdown",
          "id":2,
          "name":"solid",
          "objects":[
-                {
-                 "height":48,
-                 "id":3,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":48,
-                 "x":16,
-                 "y":32
-                }, 
-                {
-                 "height":16,
-                 "id":5,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":48,
-                 "x":80,
-                 "y":144
-                }, 
                 {
                  "height":0,
                  "id":31,
@@ -251,15 +230,81 @@
                  "width":0,
                  "x":0,
                  "y":208
+                }, 
+                {
+                 "height":0,
+                 "id":34,
+                 "name":"",
+                 "polygon":[
+                        {
+                         "x":0,
+                         "y":0
+                        }, 
+                        {
+                         "x":48,
+                         "y":0
+                        }, 
+                        {
+                         "x":48,
+                         "y":16
+                        }, 
+                        {
+                         "x":0,
+                         "y":16
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":80,
+                 "y":144
+                }, 
+                {
+                 "height":0,
+                 "id":35,
+                 "name":"",
+                 "polygon":[
+                        {
+                         "x":0,
+                         "y":0
+                        }, 
+                        {
+                         "x":48,
+                         "y":0
+                        }, 
+                        {
+                         "x":48,
+                         "y":48
+                        }, 
+                        {
+                         "x":0,
+                         "y":48
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":16,
+                 "y":32
                 }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "id":5,
+         "image":"",
+         "name":"actor",
+         "opacity":1,
+         "type":"imagelayer",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":5,
- "nextobjectid":34,
+ "nextlayerid":6,
+ "nextobjectid":38,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",

@@ -27,7 +27,8 @@ It will probably be easier to update them using
 separate position and rotation functions.
 */
 
-class xyPnt{//Used to store coordinates of each
+class xyPnt
+{//Used to store coordinates of each
 public:
 	float x, y;
 	//Constructors
@@ -63,7 +64,8 @@ public:
 	float getArea();
 };
 
-class xyShape{
+class xyShape
+{
 public:
 	int type;
 	float x, y, a, xmin, xmax, ymin, ymax;
@@ -74,6 +76,8 @@ public:
 	not have to be recalculated every time a hit test is run.
 	*/
 
+	xyShape(float _x, float _y, float _a, int _type);
+
 	vector<xyPnt*> pnt, pbase;
 	/**
 	pbase is used to store the positions of the vertices as they
@@ -83,6 +87,7 @@ public:
 	*/
 	void setpos(float _x, float _y, float _a); //Set position based on absolute coordinates
 	void modpos(float _X, float _y, float _a); //Set position based on relative coordinates
+	void addpnt(float _x, float _y)
 };
 
 bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d);

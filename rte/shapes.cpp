@@ -179,6 +179,14 @@ float xyPnt::getArea()
 // SHAPE //
 //////////{
 
+xyShape::xyShape(float _x, float _y, float _a, int _type)
+{
+    x = _x;
+    y = _y;
+    a = _a;
+    type = _type;
+};
+
 bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d)
 {
 	float denom = ((b->x - a->x) * (d->y - c->y)) - ((b->y - a->y) * (d->x - c->x));
