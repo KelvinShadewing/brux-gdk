@@ -30,6 +30,13 @@ while(!quit)
 	drawCircle(c.x, c.y, c.r, false);
 	drawCircle(d.x, d.y, d.r, false);
 
+	if(hitTest(a, d))
+	{
+		setDrawColor(0xffff);
+		drawLine(a.x, a.y, a.x2, a.y2);
+		drawCircle(d.x, d.y, d.r, false);
+	}
+
 	if(keyPress(k_escape)) quit = true;
 	update();
 }

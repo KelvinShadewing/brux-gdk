@@ -25,6 +25,7 @@
 	tileh = 0;
 	mapw = 0;
 	maph = 0;
+	geo = [];
 
 	constructor(filename)
 	{

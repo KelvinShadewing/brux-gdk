@@ -11,6 +11,7 @@
 	y = 0.0;
 
 	function _typeof() { return "point"; }
+	function dot(p) { return (x * p.x) + (y* p.y); }
 }
 
 ::Shape <- class //Base class for all shapes
@@ -162,6 +163,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "polygon":
 					break;
 				case "line":
+					return hitLineCircle(b.x, b.y, b.x2, b.y2, a.x, a.y, a.r);
 					break;
 				case "ellipse":
 					break;
@@ -199,11 +201,12 @@ Squares and rectangles will just be polygons generated with specific parameters.
 			switch(typeof b)
 			{
 				case "circle":
+					return hitLineCircle(a.x, a.y, a.x2, a.y2, b.x, b.y, b.r);
 					break;
 				case "polygon":
 					break;
 				case "line":
-					return lineLine(a.x, a.y, a.x2, a.y2, b.x, b.y, b.x2, b.y2);
+					return hitLineLine(a.x, a.y, a.x2, a.y2, b.x, b.y, b.x2, b.y2);
 					break;
 				case "ellipse":
 					break;

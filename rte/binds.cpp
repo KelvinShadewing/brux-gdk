@@ -1204,4 +1204,37 @@ SQInteger sqLineLine(HSQUIRRELVM v)
     return 1;
 }
 
+SQInteger sqLineCircle(HSQUIRRELVM v)
+{
+    SQFloat x0, y0, x1, y1, x2, y2, r;
+
+    sq_getfloat(v, 2, &x0);
+    sq_getfloat(v, 3, &y0);
+    sq_getfloat(v, 4, &x1);
+    sq_getfloat(v, 5, &y1);
+    sq_getfloat(v, 6, &x2);
+    sq_getfloat(v, 7, &y2);
+    sq_getfloat(v, 8, &r);
+
+    xyPnt* a = new xyPnt(x0, y0);
+    xyPnt* b = new xyPnt(x1, y1);
+    xyPnt* c = new xyPnt(x2, y2);
+
+    sq_pushbool(v, xyLineCircle(a, b, c, r));
+}
+
+SQInteger sqLinePoint(HSQUIRRELVM v)
+{
+    SQFloat x0, y0, x1, y1, x2, y2;
+
+    sq_getfloat(v, 2, &x0);
+    sq_getfloat(v, 3, &y0);
+    sq_getfloat(v, 4, &x1);
+    sq_getfloat(v, 5, &y1);
+    sq_getfloat(v, 6, &x2);
+    sq_getfloat(v, 7, &y2);
+
+    sq_pushbool(v, xyLinePoint(x0, y0, x1, y1, x2, y2));
+}
+
 //}

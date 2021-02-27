@@ -21,19 +21,19 @@ xyPnt::xyPnt()
 {
 	x = 0;
 	y = 0;
-};
+}
 
 xyPnt::xyPnt(float _x, float _y)
 {
 	x = _x;
 	y = _y;
-};
+}
 
 xyPnt::xyPnt(const xyPnt& v)
 {
 	x = v.x;
 	y = v.y;
-};
+}
 
 //Assignment Operators
 xyPnt& xyPnt::operator = (const xyPnt& v)
@@ -42,7 +42,7 @@ xyPnt& xyPnt::operator = (const xyPnt& v)
 	y = v.y;
 
 	return *this;
-};
+}
 
 xyPnt& xyPnt::operator += (const xyPnt& v)
 {
@@ -50,7 +50,7 @@ xyPnt& xyPnt::operator += (const xyPnt& v)
 	y += v.y;
 
 	return *this;
-};
+}
 
 xyPnt& xyPnt::operator -= (const xyPnt& v)
 {
@@ -58,7 +58,7 @@ xyPnt& xyPnt::operator -= (const xyPnt& v)
 	y -= v.y;
 
 	return *this;
-};
+}
 
 xyPnt& xyPnt::operator *= (const float s)
 {
@@ -66,7 +66,7 @@ xyPnt& xyPnt::operator *= (const float s)
 	y *= s;
 
 	return *this;
-};
+}
 
 xyPnt& xyPnt::operator /= (const float s)
 {
@@ -74,18 +74,18 @@ xyPnt& xyPnt::operator /= (const float s)
 	y /= s;
 
 	return *this;
-};
+}
 
 //Comparison Operators
 bool xyPnt::operator == (const xyPnt& v)
 {
 	return(x == v.x && y == v.y);
-};
+}
 
 bool xyPnt::operator != (const xyPnt& v)
 {
 	return(x != v.x || y != v.y);
-};
+}
 
 //Binary operators
 const xyPnt xyPnt::operator + (const xyPnt& v)
@@ -93,44 +93,45 @@ const xyPnt xyPnt::operator + (const xyPnt& v)
 	xyPnt result(*this);
 	result += v;
 	return result;
-};
+}
 
 const xyPnt xyPnt::operator - (const xyPnt& v)
 {
 	xyPnt result(*this);
 	result -= v;
 	return result;
-};
+}
 
 const xyPnt xyPnt::operator * ( const float& s )
 {
 	xyPnt result( *this );
 	result *= s;
 	return result;
-};
+}
 
 const xyPnt xyPnt::operator / ( const float& s )
 {
 	xyPnt result( *this );
 	result /= s;
 	return result;
-};
+}
 
 //Access operator
 const float xyPnt::operator[](const int& i)
 {
-	switch(i){
+	switch(i)
+	{
 		case 0: return x;
 		case 1: return y;
 		default: return -1;
-	};
-};
+	}
+}
 
 //Functions
 float xyPnt::getLength()
 {
 	return(sqrt((x * x) + (y * y)));
-};
+}
 
 void xyPnt::setLength(float l)
 {
@@ -143,7 +144,7 @@ void xyPnt::setLength(float l)
 
 	x = a;
 	y = b;
-};
+}
 
 void xyPnt::rotate(float angle)
 {
@@ -152,7 +153,7 @@ void xyPnt::rotate(float angle)
 	float ny = (x * sin(theta)) + (y * cos(theta));
 	x = nx;
 	y = ny;
-};
+}
 
 void xyPnt::rotate(float angle, float pivx, float pivy)
 {
@@ -166,12 +167,17 @@ void xyPnt::rotate(float angle, float pivx, float pivy)
 	//Reset the vector
 	x += pivx;
 	y += pivy;
-};
+}
 
 float xyPnt::getArea()
 {
 	return 0;
-};
+}
+
+float xyPnt::dot(xyPnt* p)
+{
+	return (x * p->x) + (y * p->y);
+}
 
 //}
 
@@ -187,6 +193,8 @@ xyShape::xyShape(float _x, float _y, float _a, int _type)
     type = _type;
 };
 
+//}
+
 bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d)
 {
 	float denom = ((b->x - a->x) * (d->y - c->y)) - ((b->y - a->y) * (d->x - c->x));
@@ -199,11 +207,42 @@ bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d)
 	float s = nume1 / denom;
 
 	return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
-};
+}
 
 bool xyPointLine(xyPnt* a, xyPnt* b, xyPnt* c)
 {
-};
+}
+
+bool xyLineCircle(xyPnt* a, xyPnt* b, xyPnt* c, float r)
+{
+    if(xyDistance(a->x, a->y, c->x, c->y) <= r) return true;
+    if(xyDistance(b->x, b->y, c->x, c->y) <= r) return true;
+
+    float distX = a->x - b->x;
+    float distY = a->y - b->y;
+    float len = sqrt((distX * distX) + (distY * distY));
+
+    float dot = ( ((c->x - a->x) * (b->x - a->x)) + ((c->y - a->y) * (b->y - a->y)) ) / pow(len, 2);
+    float cx = a->x + (dot * (b->x - a->x));
+    float cy = a->y + (dot * (b->y - a->y));
+
+    if (!xyLinePoint(a->x, a->y, b->x, b->y, cx, cy)) return false;
+
+    distX = cx - c->x;
+    distY = cy - c->y;
+    len = sqrt((distX * distX) + (distY * distY));
+
+    return (len <= r);
+}
+
+bool xyLinePoint(float lx0, float ly0, float lx1, float ly1, float px, float py)
+{
+    float ll = xyDistance(lx0, ly0, lx1, ly1);
+    float d1 = xyDistance(lx0, ly0, px, py);
+    float d2 = xyDistance(px, py, lx1, ly1);
+
+    return (d1 + d2 <= ll + 1 && d1 + d2 >= ll - 1); //Literal is floating point buffer
+}
 
 bool xyHitTest(xyShape* a, xyShape* b)
 {
@@ -529,5 +568,3 @@ bool xyHitTest(xyShape* a, xyShape* b)
 			break;
 	};
 };
-
-//}

@@ -62,6 +62,7 @@ public:
 	void rotate(float angle);
 	void rotate(float angle, float pivx, float pivy);
 	float getArea();
+	float dot(xyPnt* p);
 };
 
 class xyShape
@@ -87,11 +88,13 @@ public:
 	*/
 	void setpos(float _x, float _y, float _a); //Set position based on absolute coordinates
 	void modpos(float _X, float _y, float _a); //Set position based on relative coordinates
-	void addpnt(float _x, float _y)
+	void addpnt(float _x, float _y);
 };
 
 bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d);
 bool xyPointLine(xyPnt* a, xyPnt* b, xyPnt* c);
+bool xyLineCircle(xyPnt* a, xyPnt* b, xyPnt* c, float r);
+bool xyLinePoint(float lx0, float ly0, float lx1, float ly1, float px, float py);
 bool xyHitTest(xyShape* a, xyShape* b);
 
 #endif
