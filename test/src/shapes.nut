@@ -10,8 +10,18 @@
 	x = 0.0;
 	y = 0.0;
 
+	constructor(_x, _y)
+	{
+		x = _x;
+		y = _y;
+	}
+
 	function _typeof() { return "point"; }
 	function dot(p) { return (x * p.x) + (y* p.y); }
+	function rotate(pivx, pivy, angle)
+	{
+
+	}
 }
 
 ::Shape <- class //Base class for all shapes
@@ -96,6 +106,14 @@
 	w = 0.0;
 	h = 0.0;
 
+	constructor(_x, _y, _w, _h)
+	{
+		x = _x;
+		y = _y;
+		w = _w;
+		h = _h;
+	}
+
 	function _typeof(){ return "ellipse"; }
 }
 
@@ -134,20 +152,103 @@ Squares and rectangles will just be polygons generated with specific parameters.
 	function updatePoints()
 	{
 		pc = [];
+		local pt = Point(p[i][0] + x, p[i][1] + y);
 		if(p.len() > 0) for(local i = 0; i < p.len(); i++)
 		{
-			local pt = clone(p[i]);
-			pt.x += x;
-			pt.y += y;
-			//Rotate point position here
-			pc.push(pt);
+			pt.x = p[i][0];
+			pt.y = p[i][1];
+			pt.rotate(x, y, a);
+			pc.push([pt.x, pt.y]);
 		}
+	}
+
+	constructor(_x, _y, _p)
+	{
+		x = _x;
+		y = _y;
+		p = _p;
+		pc = _p;
+
+		if(p.len() > 0)
+		{
+			ux = p[0][0];
+			uy = p[0][1];
+			lx = p[0][0];
+			ly = p[0][1];
+			for(local i = 0; i < p.len(); i++)
+			{
+				if(p[i][0] <= lx) lx = p[i][0];
+				if(p[i][0] >= ux) ux = p[i][0];
+				if(p[i][1] <= ly) ly = p[i][1];
+				if(p[i][1] >= uy) uy = p[i][1];
+			}
+		}
+	}
+
+	function draw()
+	{
+		if(p.len() == 0) return;
+		if(p.len() == 1)
+		{
+			drawPoint(pc[0].x, pc[0][1]);
+			return;
+		}
+
+		for(local i = 0; i < p.len(); i++)
+		{
+			if(i < p.len() - 1) drawLine(pc[i][0], pc[i][1], pc[i + 1][0], pc[i + 1][1]);
+			else drawLine(pc[i][0], pc[i][1], pc[0][0], pc[0][1]);
+		}
+
+		drawLine(lx, ly, ux, ly);
+		drawLine(ux, ly, ux, uy);
+		drawLine(lx, ly, lx, uy);
+		drawLine(lx, uy, ux, uy);
 	}
 
 	function _typeof(){
 		if(t == 1) return "rectangle"
 		return "polygon";
 	}
+}
+
+::hitPointPoly <- function(x, y, p)
+{
+	//Cases for incomplete polygons
+	if(p.pc.len() == 0) return false;
+	if(p.pc.len() == 1) return (p.pc[0][0] == x && p.pc[0][1] == y);
+	if(p.pc.len() == 2) return hitLinePoint(p.pc[0][0], p.pc[0][1], p.pc[1][0], p.pc[1][1], x, y);
+
+	//Check that point is in bounds
+	if(x < p.lx || x > p.ux || y < p.ly || y > p.uy) return false;
+
+	//If so, count how many lines it touches
+	local count = 0;
+
+	for(local i = 0; i < p.pc.len(); i++)
+	{
+		if(i < p.pc.len() -1)
+		{
+			//Check between each point
+			if(hitLineLine(x, y, p.lx - 1, y, p.pc[i][0], p.pc[i][1], p.pc[i + 1][0], p.pc[i + 1][1])) count++;
+		} else {
+			//Connect last point to first point
+			if(hitLineLine(x, y, p.lx - 1, y, p.pc[i][0], p.pc[i][1], p.pc[0][0], p.pc[0][1])) count++;
+		}
+	}
+
+	//Even number of hits means the point is outside
+	//I imagine possible but rare cases where this
+	//may not be true, but the odds seem extremely
+	//low, especially if the shapes have different
+	//vectors of motion.
+	if(count % 2 == 1) return true;
+	else return false;
+}
+
+::hitPolyPoly <- function(a, b)
+{
+
 }
 
 ::hitTest <- function(a, b)
@@ -183,6 +284,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "circle":
 					break;
 				case "polygon":
+					return hitPolyPoly(a, b);
 					break;
 				case "line":
 					break;
@@ -191,6 +293,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "rectangle":
 					break;
 				case "point":
+					return hitPointPoly(b.x, b.y, a);
 					break;
 				default:
 					return false;
@@ -266,10 +369,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 					return (distance2(a.x, a.y, b.x, b.y) <= b.r);
 					break;
 				case "polygon":
-					if(a.x >= b.lx && a.x <= b.ux && a.y >= b.ly && a.y <= b.uy)
-					{
-						//TODO: Precise point in polygon
-					} else return false;
+					return hitPointPoly(a.x, a.y, b);
 					break;
 				case "line":
 					break;
