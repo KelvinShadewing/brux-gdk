@@ -91,7 +91,7 @@
 	"global.h"
 	"core.h"
 
-1608421927 /home/kelvin/Code/brux/rte/core.h
+1616095669 /home/kelvin/Code/brux/rte/core.h
 
 1610919509 source:/home/kelvin/Code/brux/rte/fileio.cpp
 	"main.h"
@@ -107,7 +107,7 @@
 1610917740 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
-1614372603 source:/home/kelvin/Code/brux/rte/main.cpp
+1616095896 source:/home/kelvin/Code/brux/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -140,7 +140,7 @@
 	"global.h"
 	"maths.h"
 
-1614381687 source:/home/kelvin/Code/brux/rte/shapes.cpp
+1614381980 source:/home/kelvin/Code/brux/rte/shapes.cpp
 	"main.h"
 	"global.h"
 	"maths.h"
@@ -199,4 +199,9 @@
 	<sys/types.h>
 	<sys/stat.h>
 	<errno.h>
+
+1616096145 source:/home/kelvin/Code/brux/rte/actors.cpp
+	"main.h"
+	"global.h"
+	"core.h"
 

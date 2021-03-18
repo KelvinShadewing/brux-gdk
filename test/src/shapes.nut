@@ -246,6 +246,20 @@ Squares and rectangles will just be polygons generated with specific parameters.
 	else return false;
 }
 
+::hitLinePoly <- function(a, b)
+{
+	if(a.p.len() == 0 || b.p.len() == 0) return false;
+	if(a.p.len() == 1) return hitPointPoly(a, b);
+
+	for(local i = 0; i < p.len(); i++)
+	{
+		if(i < p.len() - 1)
+		{
+
+		}
+	}
+}
+
 ::hitPolyPoly <- function(a, b)
 {
 

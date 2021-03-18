@@ -84,7 +84,6 @@ int main(int argc, char* argv[])
 
 
 	//Run app
-	xyLoadCore(); //Squirrel-side definitions
 	if(xygapp != "")
 	{
 		xyPrint(0, "Running %s...", xygapp.c_str());
@@ -203,6 +202,9 @@ int xyInit()
 	vcSounds.push_back(0);
 	vcMusic.push_back(0);
 	vcFonts.push_back(0);
+
+	xyLoadCore(); //Squirrel-side definitions
+	xyLoadActors();
 
 	xyPrint(0, "\n================\n");
 

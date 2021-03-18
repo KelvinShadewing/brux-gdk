@@ -37,6 +37,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="actors.cpp" />
 		<Unit filename="audio.cpp" />
 		<Unit filename="audio.h" />
 		<Unit filename="binds.cpp" />
@@ -68,6 +69,8 @@
 		<Unit filename="xyg.ico" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
+			<code_completion />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

@@ -6,5 +6,6 @@
 #define _CORE_H_
 
 void xyLoadCore();
+void xyLoadActors();
 
 #endif

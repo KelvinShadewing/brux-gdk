@@ -352,10 +352,7 @@ setResolution(320, 240);
 setBackgroundColor(0);
 setFPS(30);
 setDrawColor(0x0000ffff);
-/////////////////////////////////////////
-//! This function causes it to crash. !//
-//! Please help find out why!         !//
-/////////////////////////////////////////
+newActor(Actor, 0, 0);
 
 ::mode <- mode1;
 
