@@ -20,7 +20,12 @@
 	function dot(p) { return (x * p.x) + (y* p.y); }
 	function rotate(pivx, pivy, angle)
 	{
+		local theta = angle * (3.14159 / 180);
+		local nx = (pivx * cos(theta)) - (pivy * sin(theta));
+		local ny = (pivx * sin(theta)) + (pivy * cos(theta));
 
+		x = nx;
+		y = ny;
 	}
 }
 
@@ -146,19 +151,37 @@ Squares and rectangles will just be polygons generated with specific parameters.
 
 	function addPoint(_x = 0.0, _y = 0.0)
 	{
-		p.push(Point(_x, _y));
+		p.push([_x, _y]);
+		updatePoints();
 	}
 
 	function updatePoints()
 	{
+
 		pc = [];
-		local pt = Point(p[i][0] + x, p[i][1] + y);
-		if(p.len() > 0) for(local i = 0; i < p.len(); i++)
+		local pt = Point(0, 0);
+		if(p.len() > 0)
 		{
-			pt.x = p[i][0];
-			pt.y = p[i][1];
-			pt.rotate(x, y, a);
-			pc.push([pt.x, pt.y]);
+			for(local i = 0; i < p.len(); i++)
+			{
+				pt.x = p[i][0] + x;
+				pt.y = p[i][1] + y;
+				//pt.rotate(x, y, a);
+				pc.push([pt.x, pt.y]);
+			}
+
+			ux = pc[0][0];
+			lx = pc[0][0];
+			uy = pc[0][1];
+			ly = pc[0][1];
+
+			for(local i = 0; i < p.len(); i++)
+			{
+				if(ux < pc[i][0]) ux = pc[i][0];
+				if(lx > pc[i][0]) lx = pc[i][0];
+				if(uy < pc[i][1]) uy = pc[i][1];
+				if(ly < pc[i][1]) ly = pc[i][1];
+			}
 		}
 	}
 
@@ -200,15 +223,33 @@ Squares and rectangles will just be polygons generated with specific parameters.
 			else drawLine(pc[i][0], pc[i][1], pc[0][0], pc[0][1]);
 		}
 
+		/*
 		drawLine(lx, ly, ux, ly);
 		drawLine(ux, ly, ux, uy);
 		drawLine(lx, ly, lx, uy);
 		drawLine(lx, uy, ux, uy);
+		*/
 	}
 
 	function _typeof(){
 		if(t == 1) return "rectangle"
 		return "polygon";
+	}
+
+	function setPos(_x, _y, _a)
+	{
+		x = _x;
+		y = _y;
+		a = _a;
+		updatePoints();
+	}
+
+	function modPos(_x, _y, _a)
+	{
+		x += _x;
+		y += _y;
+		a += _a;
+		updatePoints();
 	}
 }
 
@@ -248,21 +289,42 @@ Squares and rectangles will just be polygons generated with specific parameters.
 
 ::hitLinePoly <- function(a, b)
 {
-	if(a.p.len() == 0 || b.p.len() == 0) return false;
-	if(a.p.len() == 1) return hitPointPoly(a, b);
 
-	for(local i = 0; i < p.len(); i++)
-	{
-		if(i < p.len() - 1)
-		{
-
-		}
-	}
 }
 
 ::hitPolyPoly <- function(a, b)
 {
+	if(a.p.len() == 0 || b.p.len() == 0) return false;
+	if(a.p.len() == 1) return hitPointPoly(a, b);
+	if(b.p.len() == 1) return hitPointPoly(b, a);
 
+	for(local i = 0; i < a.p.len(); i++)
+	{
+		if(i < a.p.len() - 1)
+		{
+			for(local j = 0; j < b.p.len(); j++)
+			{
+				if(j < b.p.len() - 1)
+				{
+					if(hitLineLine(a.pc[i][0], a.pc[i][1], a.pc[i + 1][0], a.pc[i + 1][1], b.pc[j][0], b.pc[j][1], b.pc[j + 1][0], b.pc[j + 1][1])) return true;
+				} else {
+					if(hitLineLine(a.pc[i][0], a.pc[i][1], a.pc[i + 1][0], a.pc[i + 1][1], b.pc[j][0], b.pc[j][1], b.pc[0][0], b.pc[0][1])) return true;
+				}
+			}
+		} else {
+			for(local j = 0; j < b.p.len(); j++)
+			{
+				if(j < b.p.len() - 1)
+				{
+					if(hitLineLine(a.pc[i][0], a.pc[i][1], a.pc[0][0], a.pc[0][1], b.pc[j][0], b.pc[j][1], b.pc[j + 1][0], b.pc[j + 1][1])) return true;
+				} else {
+					if(hitLineLine(a.pc[i][0], a.pc[i][1], a.pc[0][0], a.pc[0][1], b.pc[j][0], b.pc[j][1], b.pc[0][0], b.pc[0][1])) return true;
+				}
+			}
+		}
+	}
+
+	return false;
 }
 
 ::hitTest <- function(a, b)

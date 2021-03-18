@@ -15,15 +15,18 @@ while(!quit)
 {
 	//Hit test
 	setDrawColor(0xf80000ff); //No hit
-	if(mouseX() >= poly.lx && mouseX() <= poly.ux && mouseY() >= poly.ly && mouseY() <= poly.uy) setDrawColor(0xf800f8ff);//Within bounds
-	if(hitPointPoly(mouseX(), mouseY(), poly)) setDrawColor(0x00f800ff); //Hit the poly
+	pmou.setPos(mouseX(), mouseY(), 0);
+	if(hitPolyPoly(poly, pmou)) setDrawColor(0x00f800ff); //Hit the poly
 
 	//Draw shapes
 	poly.draw();
-	drawLine(mouseX() - 4, mouseY(), mouseX() + 4, mouseY());
-	drawLine(mouseX(), mouseY() - 4, mouseX(), mouseY() + 4);
+	pmou.draw();
+	print(jsonWrite(pmou.pc));
 
 	//Update
 	if(keyPress(k_escape)) quit = true;
 	update();
 }
+
+print(jsonWrite(pmou.p));
+print(jsonWrite(pmou.pc));
