@@ -20,9 +20,15 @@
 	function dot(p) { return (x * p.x) + (y* p.y); }
 	function rotate(pivx, pivy, angle)
 	{
+		x -= pivx;
+		y -= pivy;
+
 		local theta = angle * (3.14159 / 180);
-		local nx = (pivx * cos(theta)) - (pivy * sin(theta));
-		local ny = (pivx * sin(theta)) + (pivy * cos(theta));
+		local nx = (x * cos(theta)) - (y * sin(theta));
+		local ny = (x * sin(theta)) + (y * cos(theta));
+
+		nx += pivx;
+		ny += pivy;
 
 		x = nx;
 		y = ny;
@@ -166,7 +172,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 			{
 				pt.x = p[i][0] + x;
 				pt.y = p[i][1] + y;
-				//pt.rotate(x, y, a);
+				pt.rotate(x, y, a);
 				pc.push([pt.x, pt.y]);
 			}
 
@@ -297,6 +303,16 @@ Squares and rectangles will just be polygons generated with specific parameters.
 	if(a.p.len() == 0 || b.p.len() == 0) return false;
 	if(a.p.len() == 1) return hitPointPoly(a, b);
 	if(b.p.len() == 1) return hitPointPoly(b, a);
+
+	for(local i = 0; i < a.p.len(); i++)
+	{
+		if(hitPointPoly(a.pc[i][0], a.pc[i][1], b)) return true;
+	}
+
+	for(local i = 0; i < b.p.len(); i++)
+	{
+		if(hitPointPoly(b.pc[i][0], b.pc[i][1], a)) return true;
+	}
 
 	for(local i = 0; i < a.p.len(); i++)
 	{
