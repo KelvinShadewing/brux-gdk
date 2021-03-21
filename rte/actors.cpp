@@ -15,11 +15,10 @@ void xyLoadActors()
      \
     ::Actor <-class{ \
         id = 0; \
-        x = 0; \
-        y = 0; \
+        x = 0.0; \
+        y = 0.0; \
         sprite = 0; \
-        shape = 0; \
-        frame = 0; \
+        frame = 0.0; \
      \
         constructor(_x, _y){ \
             x = _x; \

@@ -369,8 +369,6 @@ Squares and rectangles will just be polygons generated with specific parameters.
 					break;
 				case "ellipse":
 					break;
-				case "rectangle":
-					break;
 				case "point":
 					return (distance2(a.x, a.y, b.x, b.y) <= a.r);
 					break;
@@ -390,8 +388,6 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "line":
 					break;
 				case "ellipse":
-					break;
-				case "rectangle":
 					break;
 				case "point":
 					return hitPointPoly(b.x, b.y, a);
@@ -414,8 +410,6 @@ Squares and rectangles will just be polygons generated with specific parameters.
 					break;
 				case "ellipse":
 					break;
-				case "rectangle":
-					break;
 				case "point":
 					break;
 				default:
@@ -433,28 +427,6 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "line":
 					break;
 				case "ellipse":
-					break;
-				case "rectangle":
-					break;
-				case "point":
-					break;
-				default:
-					return false;
-					break;
-			}
-			break;
-		case "rectangle":
-			switch(typeof b)
-			{
-				case "circle":
-					break;
-				case "polygon":
-					break;
-				case "line":
-					break;
-				case "ellipse":
-					break;
-				case "rectangle":
 					break;
 				case "point":
 					break;
@@ -475,8 +447,6 @@ Squares and rectangles will just be polygons generated with specific parameters.
 				case "line":
 					break;
 				case "ellipse":
-					break;
-				case "rectangle":
 					break;
 				case "point":
 					return (a.x == b.x && a.y == b.y);
