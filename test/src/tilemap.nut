@@ -76,6 +76,28 @@
 
 				print("Added " + spriteName(tileset[i]) + ".\n");
 			}
+
+			//Generate polygon lists
+			for(local i = 0; i < data.layers.len(); i++)
+			{
+				if(data.layers[i].type == "objectgroup")
+				{
+					local nl = [data.layers[i].name, []]; //New layer, stores name and object list
+					for(local j = 0; j < data.layers[i].objects.len(); j++)
+					{
+						if(data.layers[i].objects[j].rawin("polygon"))
+						{
+							local np = Polygon(data.layers[i].objects[j].x, data.layers[i].objects[j].y, []);
+							for(local k = 0; k < data.layers[i].objects[j].polygon.len(); k++)
+							{
+								np.addPoint(data.layers[i].objects[j].polygon[k].x, data.layers[i].objects[j].polygon[k].y);
+							}
+							nl[1].push(np);
+						}
+					}
+					geo.push(nl);
+				}
+			}
 		}
 		else print("Map file " + filename + " does not exist!");
 	}
@@ -123,6 +145,19 @@
 						}
 					}
 				}
+			}
+		}
+	}
+
+	function drawShapes(_x, _y, l)
+	{
+		if(geo.len() == 0) return;
+
+		for(local i = 0; i < geo.len(); i++)
+		{
+			if(geo[i][0] == l)
+			{
+				for(local j = 0; j < geo[i][1].len(); j++) geo[i][1][j].drawPos(_x, _y);
 			}
 		}
 	}

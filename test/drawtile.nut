@@ -13,9 +13,9 @@
 //donut("src/assets.nut");
 donut("src/shapes.nut");
 donut("src/tilemap.nut");
-print("");
 
 setResolution(320, 180);
+setDrawColor(0xffff);
 
 ::quit <- 0;
 ::camx <- 0;
@@ -48,6 +48,8 @@ while(!quit)
 	if(layer1) map.drawTiles(-camx, -camy, floor(camx / 16), floor(camy / 16), 21, 13, "bg");
 	if(keyPress(k_2)) layer2 = !layer2;
 	if(layer2) map.drawTiles(-camx, -camy, floor(camx / 16), floor(camy / 16), 21, 13, "fg");
+
+	map.drawShapes(-camx, -camy, "solid");
 
 	if(keyPress(k_escape)) quit = true;
 	update();

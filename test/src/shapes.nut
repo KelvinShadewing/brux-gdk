@@ -219,7 +219,7 @@ Squares and rectangles will just be polygons generated with specific parameters.
 		if(p.len() == 0) return;
 		if(p.len() == 1)
 		{
-			drawPoint(pc[0].x, pc[0][1]);
+			drawPoint(pc[0][0], pc[0][1]);
 			return;
 		}
 
@@ -228,13 +228,6 @@ Squares and rectangles will just be polygons generated with specific parameters.
 			if(i < p.len() - 1) drawLine(pc[i][0], pc[i][1], pc[i + 1][0], pc[i + 1][1]);
 			else drawLine(pc[i][0], pc[i][1], pc[0][0], pc[0][1]);
 		}
-
-		/*
-		drawLine(lx, ly, ux, ly);
-		drawLine(ux, ly, ux, uy);
-		drawLine(lx, ly, lx, uy);
-		drawLine(lx, uy, ux, uy);
-		*/
 	}
 
 	function _typeof(){
@@ -256,6 +249,22 @@ Squares and rectangles will just be polygons generated with specific parameters.
 		y += _y;
 		a += _a;
 		updatePoints();
+	}
+
+	function drawPos(_x, _y)
+	{
+		if(p.len() == 0) return;
+		if(p.len() == 1)
+		{
+			drawPoint(_x + x, _y + y);
+			return;
+		}
+
+		for(local i = 0; i < p.len(); i++)
+		{
+			if(i < p.len() - 1) drawLine(p[i][0] + _x + x, p[i][1] + _y + y, p[i + 1][0] + _x + x, p[i + 1][1] + _y + y);
+			else drawLine(p[i][0] + _x + x, p[i][1] + _y + y, p[0][0] + _x + x, p[0][1] + _y + y);
+		}
 	}
 }
 
