@@ -224,7 +224,7 @@ SQInteger sqFileRead(HSQUIRRELVM v)
 		t.open(f);
 		t.seekg(0, ios::end);
 		l = t.tellg();
-		char* b = new char[l];
+		char b[l];
 		t.seekg(0, ios::beg);
 		t.read(b, l);
 		t.close();
@@ -1194,12 +1194,12 @@ SQInteger sqLineLine(HSQUIRRELVM v)
     sq_getfloat(v, 8, &x3);
     sq_getfloat(v, 9, &y3);
 
-    xyPnt* a = new xyPnt(x0, y0);
-    xyPnt* b = new xyPnt(x1, y1);
-    xyPnt* c = new xyPnt(x2, y2);
-    xyPnt* d = new xyPnt(x3, y3);
+    xyPnt a(x0, y0);
+    xyPnt b(x1, y1);
+    xyPnt c(x2, y2);
+    xyPnt d(x3, y3);
 
-    sq_pushbool(v, xyLineLine(a, b, c, d));
+    sq_pushbool(v, xyLineLine(&a, &b, &c, &d));
 
     return 1;
 }
@@ -1216,11 +1216,11 @@ SQInteger sqLineCircle(HSQUIRRELVM v)
     sq_getfloat(v, 7, &y2);
     sq_getfloat(v, 8, &r);
 
-    xyPnt* a = new xyPnt(x0, y0);
-    xyPnt* b = new xyPnt(x1, y1);
-    xyPnt* c = new xyPnt(x2, y2);
+    xyPnt a(x0, y0);
+    xyPnt b(x1, y1);
+    xyPnt c(x2, y2);
 
-    sq_pushbool(v, xyLineCircle(a, b, c, r));
+    sq_pushbool(v, xyLineCircle(&a, &b, &c, r));
 }
 
 SQInteger sqLinePoint(HSQUIRRELVM v)

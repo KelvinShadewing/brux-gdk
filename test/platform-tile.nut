@@ -15,7 +15,7 @@ donut("src/shapes.nut");
 donut("src/tilemap.nut");
 
 setResolution(320, 180);
-setDrawColor(0xffff);
+setDrawColor(0x4040ffff);
 
 ::quit <- 0;
 ::camx <- 0;
@@ -32,6 +32,23 @@ print(map.data.layers[0].type);
 	hspeed = 0.0;
 	vspeed = 0.0;
 	shape = 0;
+
+	constructor(_x, _y)
+	{
+		base.constructor(_x, _y);
+		shape = Polygon(0, 0, [[-4, 0], [0, -4], [4, 0], [0, 4]]);
+	}
+
+	function run()
+	{
+
+	}
+
+	function placeFree(_x, _y)
+	{
+		local result = 0;
+		shape.setPos(_x, _y, shape.a);
+	}
 }
 
 while(!quit)

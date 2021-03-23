@@ -10,17 +10,17 @@
 float xyDistance(float x1, float y1, float x2, float y2)
 {
 	//2D distance formula
-	float xd = abs((float)(x1 - x2));
-	float yd = abs((float)(y1 - y2));
+	float xd = (float)(x1 - x2);
+	float yd = (float)(y1 - y2);
 
 	return sqrt((xd * xd) + (yd * yd));
 };
 
 float xyDistance3(float x1, float y1, float z1, float x2, float y2, float z2)
 {
-    float xd = abs((float)(x1 - x2));
-	float yd = abs((float)(y1 - y2));
-	float zd = abs((float)(z1 - z2));
+    float xd = (float)(x1 - x2);
+	float yd = (float)(y1 - y2);
+	float zd = (float)(z1 - z2);
 
 	return sqrt((xd * xd) + (yd * yd) + (zd * zd));
 };
@@ -35,10 +35,7 @@ int xyRandomInt(int mx)
 
 float xyRandomFloat(float mx)
 {
-	float numb = rand();
-	while(numb > mx) numb -= mx;
-
-	return numb;
+	return (rand() / (float)RAND_MAX) * mx;
 };
 
 float xyWrap(float x, float a0, float a1)
