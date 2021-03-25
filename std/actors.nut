@@ -6,7 +6,7 @@
 ::actor <- {};
 ::actlast <- 0;
 
-::Actor <-class{
+::Actor <- class{
 	id = 0;
 	x = 0;
 	y = 0;
@@ -14,20 +14,24 @@
 	shape = 0;
 	frame = 0;
 
-	constructor(_x, _y){
+	constructor(_x, _y)
+	{
 		x = _x;
 		y = _y;
-	};
+	}
 
-	function run(){
+	function run()
+	{
 		drawSprite(sprite, frame, x, y);
-	};
+	}
 
-	function destructor(){
-	};
+	function destructor() {}
+
+	function _typeof() { return "Actor"; }
 };
 
-::newActor <- function(type, x, y){
+::newActor <- function(type, x, y)
+{
 	local na = type(x, y);
 	na.id = actlast;
 	actor[actlast] <- na;
@@ -35,21 +39,25 @@
 	return na.id;
 };
 
-::deleteActor <- function(id){
+::deleteActor <- function(id)
+{
 	if(!actor.rawin(id)) return;
 
 	actor[id].destructor();
 	delete actor[id];
 };
 
-::countActors <- function(){
+::countActors <- function()
+{
 	print("Actor count: " + actor.len());
 };
 
-::runActors <- function(){
+::runActors <- function()
+{
 	foreach(i in actor) i.run();
 };
 
-::checkActor <- function(id){
+::checkActor <- function(id)
+{
 	return actor.rawin(id);
 };

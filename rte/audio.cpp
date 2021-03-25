@@ -12,7 +12,7 @@ Uint32 xyLoadSound(const char* filename)
 	Mix_Chunk* newSnd = Mix_LoadWAV(filename);
 	if(newSnd == 0){
 		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename, Mix_GetError());
-	};
+	}
 
 	//Add the file to the list
 	if(vcSounds.size() == 0){
@@ -25,9 +25,9 @@ Uint32 xyLoadSound(const char* filename)
 				vcSounds[i] = newSnd;
 				return i;
 				break;
-			};
-		};
-	};
+			}
+		}
+	}
 
 	//If an open space wasn't found
 	vcSounds.push_back(newSnd);
@@ -41,7 +41,7 @@ Uint32 xyLoadMusic(const char* filename)
 	if(newMsc == 0)
 	{
 		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename, Mix_GetError());
-	};
+	}
 
 	//Add the file to the list
 	if(vcMusic.size() == 0)
@@ -57,9 +57,9 @@ Uint32 xyLoadMusic(const char* filename)
 				vcMusic[i] = newMsc;
 				return i;
 				break;
-			};
-		};
-	};
+			}
+		}
+	}
 
 	//If an open space wasn't found
 	vcMusic.push_back(newMsc);

@@ -142,11 +142,11 @@ SDL_Texture* xyLoadTexture(const char* path)
 		if(newTexture == 0)
 		{
 			xyPrint(0, "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
-		};
+		}
 
 		//Delete old surface
 		SDL_FreeSurface(loadedSurface);
-	};
+	}
 
 	return newTexture;
 };
@@ -171,10 +171,10 @@ SDL_Texture* xyLoadTextureKeyed(const char* path, Uint32 key)
 		if(newTexture == 0)
 		{
 			xyPrint(0, "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
-		};
+		}
 
 		SDL_FreeSurface(loadedSurface);
-	};
+	}
 
 	return newTexture;
 };
@@ -188,7 +188,7 @@ Uint32 xyLoadImage(const char* path)
 	{
 		xyPrint(0, "Unable to load file: %s", path);
 		gvQuit = 1;
-	};
+	}
 
 	//Make sure vcTextures[0] == 0
 	if(vcTextures.size() == 1) vcTextures.push_back(0);
@@ -200,8 +200,8 @@ Uint32 xyLoadImage(const char* path)
 			vcTextures[i] = nimg;
 			//Return the texture index
 			return i;
-		};
-	};
+		}
+	}
 
 	//Return the texture index
 	vcTextures.push_back(nimg);
@@ -216,7 +216,7 @@ Uint32 xyLoadImageKeyed(const char* path, Uint32 key)
 	{
 		xyPrint(0, "Unable to load file: %s", path);
 		gvQuit = 1;
-	};
+	}
 
 	//Make sure vcTextures[0] == 0
 	if(vcTextures.size() == 1) vcTextures.push_back(0);
@@ -227,8 +227,8 @@ Uint32 xyLoadImageKeyed(const char* path, Uint32 key)
 		{
 			vcTextures[i] = nimg;
 			return i;
-		};
-	};
+		}
+	}
 
 	vcTextures.push_back(nimg);
 	return vcTextures.size() - 1;
@@ -246,8 +246,8 @@ void xyDrawImage(Uint32 tex, float x, float y)
 		{
 			SDL_QueryTexture(vcTextures[tex], 0, 0, &rec.w, &rec.h);
 			SDL_RenderCopy(gvRender, vcTextures[tex], 0, &rec);
-		};
-	};
+		}
+	}
 };
 
 //Delete image

@@ -230,7 +230,7 @@ SQInteger sqFileRead(HSQUIRRELVM v)
 		t.close();
 		sq_pushstring(v, b, l);
 		return 1;
-	};
+	}
 };
 
 //}
@@ -346,7 +346,7 @@ SQInteger sqSetScalingFilter(HSQUIRRELVM v)
 		default:
 			strHint = "0";
 			break;
-	};
+	}
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, strHint.c_str());
 
@@ -364,7 +364,7 @@ SQInteger sqSetResolution(HSQUIRRELVM v)
 	{
 		xyPrint(0, "Window dimensions cannot be 0.");
 		return 0;
-	};
+	}
 
 	SDL_Rect screensize;
 	screensize.x = 0;
@@ -416,9 +416,9 @@ SQInteger sqFindSprite(HSQUIRRELVM v)
 				sq_pushinteger(v, vcSprites[i]->getnum());
 				return 1;
 				break;
-			};
-		};
-	};
+			}
+		}
+	}
 
 	sq_pushinteger(v, 0);
 	return 1;
@@ -1101,13 +1101,8 @@ SQInteger sqDrawCircle(HSQUIRRELVM v)
 	sq_getinteger(v, 4, &r);
 	sq_getbool(v, 5, &f);
 
-	if(f){
-		filledCircleColor(gvRender, x, y, r, gvDrawColor);
-	}
-	else
-	{
-		circleColor(gvRender, x, y, r, gvDrawColor);
-	};
+	if(f) filledCircleColor(gvRender, x, y, r, gvDrawColor);
+	else circleColor(gvRender, x, y, r, gvDrawColor);
 
 	return 0;
 };
@@ -1123,13 +1118,8 @@ SQInteger sqDrawRect(HSQUIRRELVM v)
 	sq_getinteger(v, 5, &h);
 	sq_getbool(v, 6, &f);
 
-	if(f){
-		boxColor(gvRender, x, y, x + w, y + h, gvDrawColor);
-	}
-	else
-	{
-		rectangleColor(gvRender, x, y, x + w, y + h, gvDrawColor);
-	};
+	if(f) boxColor(gvRender, x, y, x + w, y + h, gvDrawColor);
+	else rectangleColor(gvRender, x, y, x + w, y + h, gvDrawColor);
 
 	return 0;
 };

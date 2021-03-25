@@ -33,14 +33,14 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 		xyPrint(0, "The sprite does not exist!");
 		delete this;
 		return;
-	};
+	}
 
 	if(vcSprites[index] == 0)
 	{
 		xyPrint(0, "The sprite does not exist!");
 		delete this;
 		return;
-	};
+	}
 
 	//Add to the list
 	numero = -1;
@@ -59,16 +59,16 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 				vcFonts[i] = this;
 				numero = i;
 				break;
-			};
-		};
+			}
+		}
 
 		//If an open space wasn't found
 		if(numero == -1)
 		{
 			vcFonts.push_back(this);
 			numero = vcFonts.size() - 1;
-		};
-	};
+		}
+	}
 
 	//Get the sprite
 	source = vcSprites[index];
@@ -83,8 +83,8 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 			{
 				cx[i] = 0;
 				cw[i] = source->getw();
-			};
-		};
+			}
+		}
 	}
 	else
 	{	//Dynamic (ignored until character scanning is done)
@@ -115,8 +115,8 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 				for(int k = 0; k < source->geth(); k++)
 				{
 					//If pixel alpha is above threshold, set cx here, then break
-				};
-			};
+				}
+			}
 
 			//For each column in source width
 			for(int j = 0; j < source->getw(); j++)
@@ -127,13 +127,13 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 				for(int k = 0; k < source->geth(); k++)
 				{
 					//If pixel alpha is above threshold, update cw to this coord minus cx, then break
-				};
-			};
+				}
+			}
 			//Clear texture
-		};
+		}
 		//Delete temp texture
 		//Reset render target to stored texture
-	};
+	}
 
 	start = firstchar;
 	kern = _kern;
@@ -163,9 +163,9 @@ void xyFont::draw(int x, int y, string text)
 			{
 				// undefined characters should be blank
 				dx += source->getw() + kern;
-			};
-		};
-	};
+			}
+		}
+	}
 };
 
 Uint32 xyFont::getnum()

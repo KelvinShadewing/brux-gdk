@@ -7,10 +7,18 @@
 #include "maths.h"
 #include "shapes.h"
 
-/*
+/*\
 This part is being put on hold.
 It's being implemented in Squirrel for now.
-*/
+Once all the math is worked out, it will be
+moved here to C++. How shapes are addressed
+will also be changed to suit the new system.
+
+Some functions will still need to be done in
+Squirrel, just to make them easier, but all
+the heavy math will be done here for
+performance reasons.
+\*/
 
 ///////////
 // POINT //

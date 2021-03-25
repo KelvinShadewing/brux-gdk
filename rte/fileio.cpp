@@ -106,8 +106,8 @@ SQInteger sqLsDir(HSQUIRRELVM v){
 			s_entry = entry->d_name;
 			sq_pushstring(v, s_entry.c_str(), s_entry.length());
 			sq_arrayappend(v, -2);
-		};
-	};
+		}
+	}
 
 	closedir(folder);
 	return 1;
@@ -127,5 +127,5 @@ SQInteger sqIsDir(HSQUIRRELVM v){
 	} else {
 		sq_pushbool(v, false);
 		return 1;
-	};
+	}
 };
