@@ -46,16 +46,16 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 				vcSprites[i] = this;
 				numero = i;
 				break;
-			};
-		};
+			}
+		}
 
 		//If an open space wasn't found
 		if(numero == 0)
 		{
 			vcSprites.push_back(this);
 			numero = vcSprites.size() - 1;
-		};
-	};
+		}
+	}
 
 	//Parse the image for rows and colums
 	int origW, origH;

@@ -27,6 +27,10 @@
 
   Deletes a sprite from memory. If a new sprite is made afterwards, the index of a deleted sprite will be recycled to save memory. Be careful when creating new sprites, as any pointers to the deleted sprite will now point to that one.
 
- * <a name="findSprite"></a>**`findSprite( filename )`**
+* <a name="findSprite"></a>**`findSprite( filename )`**
 
-   Searches through loaded sprites to find one that was loaded from the filename given as an argument. Path is ignored. Returns the index of the first match found, or -1 if no match is found.
+  Searches through loaded sprites to find one that was loaded from the filename given as an argument. Path is ignored. Returns the index of the first match found, or -1 if no match is found.
+
+* <a name="spriteName"></a>**`spriteName( id )`**
+
+  Returns the filename of a sprite with the given ID. Returns "N/A" if the sprite does not exist.
