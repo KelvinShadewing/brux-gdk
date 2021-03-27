@@ -31,6 +31,8 @@
 	local na = type(x, y);
 	na.id = actlast;
 	actor[actlast] <- na;
+	if(!actor.rawin(typeof na)) actor[typeof na] <- {};
+	actor[typeof na][actlast] <- na;
 	actlast++;
 	return na.id;
 };
@@ -38,6 +40,8 @@
 ::deleteActor <- function(id){
 	if(!actor.rawin(id)) return;
 
+	local cat = typeof actor[id];
+	delete actor[cat][id];
 	actor[id].destructor();
 	delete actor[id];
 };

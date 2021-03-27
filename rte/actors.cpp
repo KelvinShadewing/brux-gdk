@@ -6,6 +6,14 @@
 #include "global.h"
 #include "core.h"
 
+/*\
+ # Actor standard lib is embedded in the RTE so
+ # that users do not need to include actors.nut
+ # in every project. Using actors.nut is still
+ # an option for anyone wanting to modify the
+ # functionality.
+\*/
+
 void xyLoadActors()
 {
 	const SQChar *cmd =" \
@@ -33,19 +41,21 @@ void xyLoadActors()
         }; \
     }; \
      \
-    ::newActor <- function(type, x, y){ \
-        local na = type(x, y); \
-        na.id = actlast; \
-        actor[actlast] <- na; \
-        actlast++; \
-        return na.id; \
-    }; \
-     \
-    ::deleteActor <- function(id){ \
-        if(!actor.rawin(id)) return; \
-     \
-        actor[id].destructor(); \
-        delete actor[id]; \
+    ::newActor <- function(type, x, y){\n\
+    \tlocal na = type(x, y);\n\tna.id = actlast;\n\
+    \tactor[actlast] <- na;\n\
+    \tif(!actor.rawin(typeof na)) actor[typeof na] <- {};\n\
+    \tactor[typeof na][actlast] <- na;\n\
+    \tactlast++;\n\
+    \treturn na.id;\n\
+    };\n\
+    \n\
+    ::deleteActor <- function(id){\n\
+    \tif(!actor.rawin(id)) return;\n\
+    \n\
+    \tlocal cat = typeof actor[id];\n\
+    \tdelete actor[cat][id];\n\tactor[id].destructor();\n\
+    \tdelete actor[id];\n\
     }; \
      \
     ::countActors <- function(){ \
