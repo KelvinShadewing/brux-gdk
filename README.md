@@ -50,6 +50,10 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.0.8**
+  * Embed actors.nut into runtime, now feature complete
+  * Added polygon-polygon hit detection
+
 * **0.0.7**
   * Added lendirX/Y, equivalent to Game Maker's lengthdir_x/y.
   * Added graphical tilemap per layer rendering
