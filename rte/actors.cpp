@@ -34,7 +34,6 @@ void xyLoadActors()
         }; \
      \
         function run(){ \
-            drawSprite(sprite, frame, x, y); \
         }; \
      \
         function destructor(){ \
@@ -63,7 +62,9 @@ void xyLoadActors()
     }; \
      \
     ::runActors <- function(){ \
-        foreach(i in actor) i.run(); \
+        foreach(i in actor) {\n\
+            if(typeof i != \"table\") i.run(); \
+        }\
     }; \
      \
     ::checkActor <- function(id){ \

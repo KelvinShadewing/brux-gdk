@@ -5,8 +5,6 @@
 
 &nbsp;
 
-**NOTE:** These functions require `actors.nut` to be included in your project.
-
 * <a name="newActor"></a>**`newActor( type, x, y )`**
 
   Creates a new instance of an actor class. `type` should be the name of a class that extends `Actor`. Returns the ID number of the new instance to use with `actor[id]` to address an instance.
