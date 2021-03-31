@@ -21,6 +21,7 @@
 {
 	data = {};
 	tileset = [];
+	tilef = [];
 	tilew = 0;
 	tileh = 0;
 	mapw = 0;
@@ -74,6 +75,8 @@
 					}
 				}
 
+				tilef.push(data.tilesets[i].firstgid);
+
 				print("Added " + spriteName(tileset[i]) + ".\n");
 			}
 
@@ -116,7 +119,6 @@
 		}
 		if(t == -1)
 		{
-			print("no");
 			return; //Quit if no tile layer by that name was found
 		}
 
@@ -132,6 +134,7 @@
 		{
 			for(local j = mx; j < mx + mw; j++)
 			{
+				if(i * data.layers[t].width + j >= data.layers[t].data.len()) return;
 				local n = data.layers[t].data[(i * data.layers[t].width) + j]; //Number value of the tile
 				if(n != 0)
 				{
