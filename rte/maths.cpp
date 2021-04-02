@@ -43,7 +43,7 @@ float xyWrap(float x, float a0, float a1)
 	float mx = max(a0, a1);
 	float mn = min(a0, a1);
 
-	float diff = mx - mn;
+	float diff = mx - mn + 1;
 
 	if(x >= 0) return mn + fmodf(x, diff);
 	if(x < 0) return mx + fmod(x, diff);
