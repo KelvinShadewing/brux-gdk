@@ -9,10 +9,6 @@
 
   Draws a string to the current render target using a loaded font. `halign` can be set with `ha_left`, `ha_center`, or `ha_right`, and `valign` can be set with `va_top`, `va_middle`, or `va_bottom`.
 
-* <a name="openfont"></a>**`openFont( file, size )`**
+* <a name="newFont"></a>**`newFont( sprite, firstchar, threshold, monospace, kerning )`**
 
-  Loads a font from a `.ttf` file. `size` is in points.
-
-* <a name="closefont"></a>**`closeFont( font )`**
-
-  Removes `font` from memory.
+  Creates a bitmap font from a sprite. `firstchar` is usually best set to 33 when using a full ascii sheet. `threshold` is the alpha value used for determining the width of a character for fonts using partial transparency. `monospace` is whether or not the font is monospace, and is currently locked true by default. `kerning` is the space between images, and can be negative to make them closer together.
