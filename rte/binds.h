@@ -47,6 +47,8 @@ SQInteger sqDrawSpriteEx(HSQUIRRELVM v);
 SQInteger sqDeleteSprite(HSQUIRRELVM v);
 SQInteger sqFindSprite(HSQUIRRELVM v);
 SQInteger sqSpriteName(HSQUIRRELVM v);
+SQInteger sqSpriteW(HSQUIRRELVM v);
+SQInteger sqSpriteH(HSQUIRRELVM v);
 
 //Input
 SQInteger sqKeyPress(HSQUIRRELVM v);

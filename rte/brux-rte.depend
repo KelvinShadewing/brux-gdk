@@ -74,7 +74,7 @@
 1608421927 /home/kelvin/Code/brux/rte/fileio.h
 	"main.h"
 
-1614369366 /home/kelvin/Code/brux/rte/binds.h
+1617948002 /home/kelvin/Code/brux/rte/binds.h
 
 1608421927 source:/home/kelvin/Code/brux/rte/cJSON.c
 	<string.h>
@@ -107,7 +107,7 @@
 1610917740 source:/home/kelvin/Code/brux/rte/input.cpp
 	"input.h"
 
-1616476821 source:/home/kelvin/Code/brux/rte/main.cpp
+1617954346 source:/home/kelvin/Code/brux/rte/main.cpp
 	"main.h"
 	"core.h"
 	"global.h"
@@ -135,7 +135,7 @@
 	<android/log.h>
 	<assert.h>
 
-1617255566 source:/home/kelvin/Code/brux/rte/maths.cpp
+1617394165 source:/home/kelvin/Code/brux/rte/maths.cpp
 	"main.h"
 	"global.h"
 	"maths.h"

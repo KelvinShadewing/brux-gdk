@@ -483,8 +483,7 @@ SQInteger sqDrawSpriteEx(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqDeleteSprite(HSQUIRRELVM v)
-{
+SQInteger sqDeleteSprite(HSQUIRRELVM v) {
 	SQInteger i;
 
 	sq_getinteger(v, 2, &i);
@@ -493,6 +492,30 @@ SQInteger sqDeleteSprite(HSQUIRRELVM v)
 	if(vcSprites[i] != 0) delete vcSprites[i];
 
 	return 0;
+};
+
+SQInteger sqSpriteW(HSQUIRRELVM v) {
+    SQInteger i;
+
+    sq_getinteger(v, 2, &i);
+
+    if(i >= vcSprites.size()) return 0;
+	if(vcSprites[i] != 0) sq_pushinteger(v, vcSprites[i]->getw());
+	else sq_pushinteger(v, 0);
+
+	return 1;
+};
+
+SQInteger sqSpriteH(HSQUIRRELVM v) {
+    SQInteger i;
+
+    sq_getinteger(v, 2, &i);
+
+    if(i >= vcSprites.size()) return 0;
+	if(vcSprites[i] != 0) sq_pushinteger(v, vcSprites[i]->geth());
+	else sq_pushinteger(v, 0);
+
+	return 1;
 };
 
 //}

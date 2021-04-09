@@ -34,3 +34,11 @@
 * <a name="spriteName"></a>**`spriteName( id )`**
 
   Returns the filename of a sprite with the given ID. Returns "N/A" if the sprite does not exist.
+
+* <a name="spriteW"></a>**`spriteW( id )`**
+
+  Returns the frame width of a sprite. Returns 0 if the sprite does not exist.
+
+* <a name="spriteH"></a>**`spriteH( id )`**
+
+  Returns the frame height of a sprite. Returns 0 if the sprite does not exist.
