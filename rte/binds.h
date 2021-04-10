@@ -16,6 +16,7 @@ SQInteger sqGetTicks(HSQUIRRELVM v);
 SQInteger sqGetFPS(HSQUIRRELVM v);
 SQInteger sqSetFPS(HSQUIRRELVM v);
 SQInteger sqSetWindowTitle(HSQUIRRELVM v);
+SQInteger sqGetFrames(HSQUIRRELVM v);
 
 //File IO
 SQInteger sqImport(HSQUIRRELVM v);

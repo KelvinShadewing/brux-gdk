@@ -104,6 +104,11 @@ SQInteger sqSetWindowTitle(HSQUIRRELVM v)
 	return 0;
 };
 
+SQInteger sqGetFrames(HSQUIRRELVM v) {
+    sq_pushinteger(v, gvFrames);
+    return 1;
+}
+
 //}
 
 /////////////

@@ -19,4 +19,8 @@
 
 * <a name="donut"></a>**`donut( file )`**
 
-  Loads and runs a script file local to the current game. If ".nut" is not included in the file name given, it will add it automatically.#
+  Loads and runs a script file local to the current game. If ".nut" is not included in the file name given, it will add it automatically.
+
+* <a name="getFrames"></a>**`getFrames()`**
+
+  Returns the number of frames that have passed since the game began. Frames are counted by the number of calls to [update()][#update].
