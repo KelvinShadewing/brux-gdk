@@ -5,9 +5,9 @@
 
 &nbsp
 
-* <a name="drawtext"></a>**`drawText( x, y, text, font, color, halign, valign )`**
+* <a name="drawtext"></a>**`drawText( font, x, y, text )`**
 
-  Draws a string to the current render target using a loaded font. `halign` can be set with `ha_left`, `ha_center`, or `ha_right`, and `valign` can be set with `va_top`, `va_middle`, or `va_bottom`.
+  Draws a string to the current render target using the selected `font`.
 
 * <a name="newFont"></a>**`newFont( sprite, firstchar, threshold, monospace, kerning )`**
 

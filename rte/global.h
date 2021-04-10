@@ -24,7 +24,7 @@ extern float gvFPS;
 extern Uint32 gvMaxFPS;
 extern Uint32 gvTicks;
 extern Uint32 gvTickLast;
-extern Uint32 gvFrames = 0;
+extern Uint32 gvFrames;
 extern const char *gvVNo;			//XYRE version number
 extern const float pi;				//Pi
 extern bool gvClearScreen;			//Whether to clear the screen on update
