@@ -935,8 +935,7 @@ SQInteger sqLenDirY(HSQUIRRELVM v)
 // TEXT //
 /////////{
 
-SQInteger sqNewFont(HSQUIRRELVM v)
-{
+SQInteger sqNewFont(HSQUIRRELVM v) {
 	SQInteger i, c, t, k;
 	SQBool m;
 
@@ -958,8 +957,7 @@ SQInteger sqNewFont(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqDrawText(HSQUIRRELVM v)
-{
+SQInteger sqDrawText(HSQUIRRELVM v) {
 	SQInteger f, x, y;
 	const char* s;
 
@@ -975,6 +973,18 @@ SQInteger sqDrawText(HSQUIRRELVM v)
 
 	return 0;
 };
+
+SQInteger sqChint(HSQUIRRELVM v) {
+    SQInteger i;
+
+    sq_getinteger(v, 2, &i);
+
+    const char s = (const char)i;
+
+    sq_pushstring(v, &s, 1);
+
+    return 1;
+}
 
 //}
 

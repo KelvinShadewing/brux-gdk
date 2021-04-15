@@ -97,6 +97,7 @@ SQInteger sqLenDirY(HSQUIRRELVM v);
 //Text
 SQInteger sqNewFont(HSQUIRRELVM v);
 SQInteger sqDrawText(HSQUIRRELVM v);
+SQInteger sqChint(HSQUIRRELVM v);
 
 //Audio
 SQInteger sqLoadSound(HSQUIRRELVM v);

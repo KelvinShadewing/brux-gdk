@@ -385,6 +385,7 @@ void xyBindAllFunctions(HSQUIRRELVM v)
 	xyPrint(0, "Embedding text...");
 	xyBindFunc(v, sqNewFont, "newFont", 6, ".nnnnn");
 	xyBindFunc(v, sqDrawText, "drawText", 5, ".nnns");
+	xyBindFunc(v, sqChint, "chint", 2, ".i");
 
 	//File IO
 	xyPrint(0, "Embedding file I/O...");
