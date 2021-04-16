@@ -56,7 +56,7 @@ SQInteger sqGetOS(HSQUIRRELVM v) {
 		case 6:
 			sq_pushstring(v, "ios", 7);
 			break;
-	};
+	}
 
 	return 1;
 };
@@ -205,8 +205,7 @@ SQInteger sqFileRead(HSQUIRRELVM v) {
 		xyPrint(0, "WARNING: %s does not exist!", f);
 		sq_pushstring(v, "-1", 2);
 		return 1;
-	}
-	else {
+	} else {
 		t.open(f);
 		t.seekg(0, ios::end);
 		l = t.tellg();

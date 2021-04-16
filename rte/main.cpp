@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 		xyPrint(0, "Failed to initiate Brux!");
 		xyEnd();
 		return 1;
-	};
+	}
 
 	//Process arguments
 	string xygapp = "";
@@ -62,14 +62,14 @@ int main(int argc, char* argv[]) {
 						gvWorkDir = xygapp.substr(0, found);
 						chdir(gvWorkDir.c_str());
 						xyPrint(0, "Working directory: %s", getcwd(0,0));
-					};
-				};
-			};
+					}
+				}
+			}
 		//Other arguments
 
 		if(curarg == "-f") SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
-		};
-	};
+		}
+	}
 
 	SDL_ShowCursor(0);
 
@@ -80,13 +80,13 @@ int main(int argc, char* argv[]) {
 		sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
 	} else {
 		if(xyFileExists("test.nut")) sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
-	};
+	}
 
 	//End game
 	xyEnd();
 
 	return 0;
-};
+}
 
 ///////////////////
 //OTHER FUNCTIONS//
@@ -107,7 +107,7 @@ int xyInit() {
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		xyPrint(0, "Failed to initialize! %s", SDL_GetError());
 		return 0;
-	};
+	}
 
 	//Create window
 	gvWindow = SDL_CreateWindow("BRUX", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
@@ -128,7 +128,7 @@ int xyInit() {
 			if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
 				xyPrint(0, "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 				return 0;
-			};
+			}
 
 			//Set up the viewport
 			SDL_Rect screensize;
@@ -138,15 +138,14 @@ int xyInit() {
 			screensize.h = gvScrH;
 			SDL_RenderSetViewport(gvRender, &screensize);
 			SDL_RenderSetLogicalSize(gvRender, gvScrW, gvScrH);
-
-		};
-	};
+		}
+	}
 
 	//Initialize audio
 	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 		xyPrint(0, "SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
 		return 0;
-	};
+	}
 
 	//Initialize input
 	xyInitInput();
@@ -198,19 +197,19 @@ void xyEnd(){
 	xyPrint(0, "Cleaning up all resources...");
 	for(int i = 0; i < vcTextures.size(); i++) {
 		xyDeleteImage(i);
-	};
+	}
 
 	for(int i = 0; i < vcSprites.size(); i++) {
 		delete vcSprites[i];
-	};
+	}
 
 	for(int i = 0; i < vcSounds.size(); i++) {
 		xyDeleteSound(i);
-	};
+	}
 
 	for(int i = 0; i < vcMusic.size(); i++) {
 		xyDeleteMusic(i);
-	};
+	}
 
 	//Close Squirrel
 	xyPrint(0, "Closing Squirrel...");
@@ -424,7 +423,7 @@ void xyUpdate() {
 			if(Event.button.button == SDL_BUTTON_RIGHT) buttonstate[2] = 1;
 			if(Event.button.button == SDL_BUTTON_X1) buttonstate[3] = 1;
 			if(Event.button.button == SDL_BUTTON_X2) buttonstate[4] = 1;
-		};
+		}
 
 		if(Event.type == SDL_MOUSEBUTTONUP) {
 			if(Event.button.button == SDL_BUTTON_LEFT) buttonstate[0] = 0;
@@ -432,8 +431,8 @@ void xyUpdate() {
 			if(Event.button.button == SDL_BUTTON_RIGHT) buttonstate[2] = 0;
 			if(Event.button.button == SDL_BUTTON_X1) buttonstate[3] = 0;
 			if(Event.button.button == SDL_BUTTON_X2) buttonstate[4] = 0;
-		};
-	};
+		}
+	}
 
 	//Update screen
 	SDL_RenderPresent(gvRender);
@@ -448,7 +447,7 @@ void xyUpdate() {
 	SDL_PumpEvents();
 	for(int i = 0; i < 322; i++) {
 		keystate[i] = sdlKeys[i];
-	};
+	}
 
 	SDL_GetMouseState(&gvMouseX, &gvMouseY);
 
@@ -481,12 +480,12 @@ void xyUpdate() {
 
 			for(int j = 0; j < 10; j++) {
 				gvPadAxis[i][j] = 0;
-			};
+			}
 
 			for(int j = 0; j < 32; j++) {
 				gvPadLastButton[i][j] = gvPadButton[i][j];
 				gvPadButton[i][j] = 0;
-			};
+			}
 
 			gvPadX[i] = 0;
 			gvPadY[i] = 0;
@@ -496,8 +495,8 @@ void xyUpdate() {
 			gvPadR[i] = 0;
 			gvPadL[i] = 0;
 			gvPadName[i] = "?";
-		};
-	};
+		}
+	}
 
 	//Divide by scale
 	float sx, sy;
@@ -513,7 +512,7 @@ void xyUpdate() {
 	//Check each pad
 	for(int i = 0; i < 8; i++) {
 		if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
-	};
+	}
 
 	gvFPS = 1000 / fLength;
 	//Wait for FPS limit

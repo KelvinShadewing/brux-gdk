@@ -3,7 +3,7 @@
 //
 
 #include <cstdio>
-#include "Phyisics.h"
+#include "physics.h"
 
 int Phyisics::ChipMonkHelloWorld() {
     // cpVect is a 2D vector and cpv() is a shortcut for initializing them.
