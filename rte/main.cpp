@@ -28,11 +28,9 @@
 /////////////////
 //MAIN FUNCTION//
 /////////////////
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
 	//Initiate everything
-	if(xyInit() == 0)
-	{
+	if(xyInit() == 0) {
 		xyPrint(0, "Failed to initiate Brux!");
 		xyEnd();
 		return 1;
@@ -41,8 +39,7 @@ int main(int argc, char* argv[])
 	//Process arguments
 	string xygapp = "";
 	string curarg = "";
-	for(int i = 0; i < argc; i++)
-	{
+	for(int i = 0; i < argc; i++) {
 		//Print each argument and process them
 		curarg = argv[i];
 		xyPrint(0, curarg.c_str());
@@ -50,17 +47,14 @@ int main(int argc, char* argv[])
 	//The first argument is just the
 	//command to invoke the runtime,
 	//so skip it.
-		if(i != 0)
-		{
+		if(i != 0) {
 			//Input file
 			//If the file is long enough
-			if(curarg.length() > 4)
-			{
+			if(curarg.length() > 4) {
 				//If the input is a Squirrel file
 				if(curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut" || curarg.substr(curarg.find_last_of(".")) == ".brx"){
 					//Check that the file really exists
-					if(xyFileExists(curarg.c_str()))
-					{
+					if(xyFileExists(curarg.c_str())) {
 						//All checks pass, assign the file
 						char tmpstr[64];
 						xygapp = curarg.c_str();
@@ -81,13 +75,10 @@ int main(int argc, char* argv[])
 
 
 	//Run app
-	if(xygapp != "")
-	{
+	if(xygapp != "") {
 		xyPrint(0, "Running %s...", xygapp.c_str());
 		sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
-	}
-	else
-	{
+	} else {
 		if(xyFileExists("test.nut")) sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
 	};
 
@@ -102,8 +93,7 @@ int main(int argc, char* argv[])
 ///////////////////
 
 //Handles initialization of SDL2 and Squirrel
-int xyInit()
-{
+int xyInit() {
 	//Initiate log file
 	remove("log.txt");
 	gvLog.open("log.txt", ios_base::out);
@@ -114,36 +104,28 @@ int xyInit()
 
 	//Initiate SDL
 	SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
-	if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
-	{
+	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		xyPrint(0, "Failed to initialize! %s", SDL_GetError());
 		return 0;
 	};
 
 	//Create window
 	gvWindow = SDL_CreateWindow("BRUX", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
-	if(gvWindow == 0)
-	{
+	if(gvWindow == 0) {
 		xyPrint(0, "Window could not be created! SDL Error: %s\n", SDL_GetError());
 		return 0;
-	}
-	else
-	{
+	} else {
 		//Create renderer for window
 		gvRender = SDL_CreateRenderer(gvWindow, -1, SDL_RENDERER_ACCELERATED);
-		if(gvRender == 0)
-		{
+		if(gvRender == 0) {
 			xyPrint(0, "Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 			return 0;
-		}
-		else
-		{
+		} else {
 			//Initialize renderer color
 			SDL_SetRenderDrawColor(gvRender, 0xFF, 0xFF, 0xFF, 0xFF);
 
 			//Initialize PNG loading
-			if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
-			{
+			if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
 				xyPrint(0, "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 				return 0;
 			};
@@ -161,8 +143,7 @@ int xyInit()
 	};
 
 	//Initialize audio
-	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-	{
+	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 		xyPrint(0, "SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
 		return 0;
 	};
@@ -215,23 +196,19 @@ void xyEnd(){
 
 	//Cleanup all resources
 	xyPrint(0, "Cleaning up all resources...");
-	for(int i = 0; i < vcTextures.size(); i++)
-	{
+	for(int i = 0; i < vcTextures.size(); i++) {
 		xyDeleteImage(i);
 	};
 
-	for(int i = 0; i < vcSprites.size(); i++)
-	{
+	for(int i = 0; i < vcSprites.size(); i++) {
 		delete vcSprites[i];
 	};
 
-	for(int i = 0; i < vcSounds.size(); i++)
-	{
+	for(int i = 0; i < vcSounds.size(); i++) {
 		xyDeleteSound(i);
 	};
 
-	for(int i = 0; i < vcMusic.size(); i++)
-	{
+	for(int i = 0; i < vcMusic.size(); i++) {
 		xyDeleteMusic(i);
 	};
 
@@ -255,8 +232,7 @@ void xyEnd(){
 	gvLog.close();
 };
 
-void xyPrint(HSQUIRRELVM v, const SQChar *s, ...)
-{
+void xyPrint(HSQUIRRELVM v, const SQChar *s, ...) {
 	va_list argv;
 	va_start(argv, s);
 	SQChar buffer[1024] = _SC("");
@@ -266,8 +242,7 @@ void xyPrint(HSQUIRRELVM v, const SQChar *s, ...)
 	gvLog << buffer << endl;
 };
 
-void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key)
-{
+void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key) {
 	sq_pushroottable(v);
 	sq_pushstring(v, key, -1);
 	sq_newclosure(v, func, 0);
@@ -275,8 +250,7 @@ void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key)
 	sq_pop(v, 1);
 };
 
-void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nParams, const SQChar* sParams)
-{
+void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nParams, const SQChar* sParams) {
   //Binds a function from C++ to a word in
   //Squirrel to be called from scripts.
 	sq_pushroottable(v);
@@ -287,8 +261,7 @@ void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nPa
 	sq_pop(v, 1);
 };
 
-void xyBindAllFunctions(HSQUIRRELVM v)
-{
+void xyBindAllFunctions(HSQUIRRELVM v) {
 	//Binds all functions needed by the game.
 	//Calling this function again will fix any
 	//overwritten embedded functions, but the
@@ -424,16 +397,14 @@ void xyBindAllFunctions(HSQUIRRELVM v)
 	xyBindFunc(v, sqLinePoint, "hitLinePoint", 7, ".nnnnnn");
 };
 
-void xyUpdate()
-{
+void xyUpdate() {
 	//Update ticks counter for FPS
 	gvTickLast = gvTicks;
 	gvTicks = SDL_GetTicks();
 	int fLength = gvTicks - gvTickLast;
 
 	//Update last button state
-	for(int i = 0; i < 5; i++)
-	{
+	for(int i = 0; i < 5; i++) {
 		buttonlast[i] = buttonstate[i];
 	};
 
@@ -442,14 +413,12 @@ void xyUpdate()
 
 
 	//Poll events
-	while(SDL_PollEvent(&Event))
-	{
+	while(SDL_PollEvent(&Event)) {
 		//Quit
 		if(Event.type == SDL_QUIT) gvQuit = 1;
 
 		//Mouse button
-		if(Event.type == SDL_MOUSEBUTTONDOWN)
-		{
+		if(Event.type == SDL_MOUSEBUTTONDOWN) {
 			if(Event.button.button == SDL_BUTTON_LEFT) buttonstate[0] = 1;
 			if(Event.button.button == SDL_BUTTON_MIDDLE) buttonstate[1] = 1;
 			if(Event.button.button == SDL_BUTTON_RIGHT) buttonstate[2] = 1;
@@ -457,8 +426,7 @@ void xyUpdate()
 			if(Event.button.button == SDL_BUTTON_X2) buttonstate[4] = 1;
 		};
 
-		if(Event.type == SDL_MOUSEBUTTONUP)
-		{
+		if(Event.type == SDL_MOUSEBUTTONUP) {
 			if(Event.button.button == SDL_BUTTON_LEFT) buttonstate[0] = 0;
 			if(Event.button.button == SDL_BUTTON_MIDDLE) buttonstate[1] = 0;
 			if(Event.button.button == SDL_BUTTON_RIGHT) buttonstate[2] = 0;
@@ -478,22 +446,18 @@ void xyUpdate()
 	//Update input
 	keylast = keystate;
 	SDL_PumpEvents();
-	for(int i = 0; i < 322; i++)
-	{
+	for(int i = 0; i < 322; i++) {
 		keystate[i] = sdlKeys[i];
 	};
 
 	SDL_GetMouseState(&gvMouseX, &gvMouseY);
 
-	for(int i = 0; i < 8; i++)
-	{
-		for(int j = 0; j < 32; j++)
-		{
+	for(int i = 0; i < 8; i++) {
+		for(int j = 0; j < 32; j++) {
 			gvPadLastButton[i][j] = gvPadButton[i][j];
 		};
 
-		if(SDL_JoystickGetAttached(gvGamepad[i]))
-		{
+		if(SDL_JoystickGetAttached(gvGamepad[i])) {
 			gvPadHatLast[i] = gvPadHat[i];
 			gvPadHat[i] = SDL_JoystickGetHat(gvGamepad[i], 0);
 			for(int j = 0; j < 10; j++){
@@ -511,19 +475,15 @@ void xyUpdate()
 			gvPadR[i] = (SDL_JoystickGetAxis(gvGamepad[i], 5) + 32768) / 2;
 			gvPadL[i] = (SDL_JoystickGetAxis(gvGamepad[i], 2) + 32768) / 2;
 			gvPadName[i] = SDL_JoystickName(gvGamepad[i]);
-		}
-		else
-		{
+		} else {
 			gvPadHatLast[i] = gvPadHat[i];
 			gvPadHat[i] = 0;
 
-			for(int j = 0; j < 10; j++)
-			{
+			for(int j = 0; j < 10; j++) {
 				gvPadAxis[i][j] = 0;
 			};
 
-			for(int j = 0; j < 32; j++)
-			{
+			for(int j = 0; j < 32; j++) {
 				gvPadLastButton[i][j] = gvPadButton[i][j];
 				gvPadButton[i][j] = 0;
 			};
@@ -551,8 +511,7 @@ void xyUpdate()
 
 	//Gamepad
 	//Check each pad
-	for(int i = 0; i < 8; i++)
-	{
+	for(int i = 0; i < 8; i++) {
 		if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
 	};
 
@@ -561,8 +520,7 @@ void xyUpdate()
 	//delay	4294967290	unsigned int
 	Uint32 current_time = (static_cast<Uint32>(fLength) / gvMaxFPS);
 	Uint32 max_delay = (500 / gvMaxFPS);
-	if (current_time < max_delay)
-	{
+	if (current_time < max_delay) {
 		if (gvMaxFPS != 0) SDL_Delay(max_delay - current_time);
 	}
 	/*while(fLength < 1000 / gvMaxFPS){
@@ -573,8 +531,7 @@ void xyUpdate()
 	gvFrames++;
 };
 
-int xyGetOS()
-{
+int xyGetOS() {
 #ifdef _WIN32
 	return 0;
 #endif
@@ -592,7 +549,6 @@ int xyGetOS()
 #endif
 };
 
-void __stack_chk_fail(void)
-{
+void __stack_chk_fail(void) {
 	xyPrint(0, "Stack smash detected.");
 };

@@ -47,7 +47,7 @@
 
 * <a name="setScalingFilter"></a>**`setScalingFilter( bool )`**
 
-  If set to true, pixels will be softened when the window is stretched, otherwise, they will remain sharp.
+  If set to true, pixels will be softened when the window is stretched, otherwise, they will remain sharp. This must be set AT THE BEGINNING in order to work properly, as it takes effect when textures are created, not rendered. Padding should also be used in sprites to avoid artifacting.
 
 * >><a name="setBlendMode"></a>**`setBlendMode( mode )`**
 

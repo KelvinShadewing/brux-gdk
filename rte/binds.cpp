@@ -17,8 +17,7 @@
 // MAIN //
 /////////{
 
-SQInteger sqWait(HSQUIRRELVM v)
-{
+SQInteger sqWait(HSQUIRRELVM v) {
 	SQInteger a;
 
 	sq_getinteger(v, 2, &a);
@@ -28,17 +27,14 @@ SQInteger sqWait(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqUpdate(HSQUIRRELVM v)
-{
+SQInteger sqUpdate(HSQUIRRELVM v) {
 	xyUpdate();
 
 	return 0;
 };
 
-SQInteger sqGetOS(HSQUIRRELVM v)
-{
-	switch(xyGetOS())
-	{
+SQInteger sqGetOS(HSQUIRRELVM v) {
+	switch(xyGetOS()) {
 		case 0:
 			sq_pushstring(v, "windows", 7);
 			break;
@@ -65,28 +61,24 @@ SQInteger sqGetOS(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqGetTicks(HSQUIRRELVM v)
-{
+SQInteger sqGetTicks(HSQUIRRELVM v) {
 	sq_pushinteger(v, SDL_GetTicks());
 
 	return 1;
 };
 
-SQInteger sqGetFPS(HSQUIRRELVM v)
-{
+SQInteger sqGetFPS(HSQUIRRELVM v) {
 	sq_pushinteger(v, gvFPS);
 
 	return 1;
 };
 
-SQInteger sqSetFPS(HSQUIRRELVM v)
-{
+SQInteger sqSetFPS(HSQUIRRELVM v) {
 	SQInteger iMax;
 
 	sq_getinteger(v, 2, &iMax);
 
-	if(iMax < 0)
-	{
+	if(iMax < 0) {
 		xyPrint(0, "Maximum FPS cannot be negative.");
 		return 0;
 	} else gvMaxFPS = iMax;
@@ -94,8 +86,7 @@ SQInteger sqSetFPS(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqSetWindowTitle(HSQUIRRELVM v)
-{
+SQInteger sqSetWindowTitle(HSQUIRRELVM v) {
 	const char* t;
 
 	sq_getstring(v, 2, &t);
@@ -115,8 +106,7 @@ SQInteger sqGetFrames(HSQUIRRELVM v) {
 // FILE IO //
 ////////////{
 
-SQInteger sqImport(HSQUIRRELVM v)
-{
+SQInteger sqImport(HSQUIRRELVM v) {
 	const char* a;
 
 	sq_getstring(v, 2, &a);
@@ -131,8 +121,7 @@ SQInteger sqImport(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqDoNut(HSQUIRRELVM v)
-{
+SQInteger sqDoNut(HSQUIRRELVM v) {
 	const char* a;
 
 	sq_getstring(v, 2, &a);
@@ -152,8 +141,7 @@ SQInteger sqDoNut(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqFileExists(HSQUIRRELVM v)
-{
+SQInteger sqFileExists(HSQUIRRELVM v) {
 	const char* file;
 
 	sq_getstring(v, 2, &file);
@@ -163,23 +151,20 @@ SQInteger sqFileExists(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqGetDir(HSQUIRRELVM v)
-{
+SQInteger sqGetDir(HSQUIRRELVM v) {
 	char* buff = getCD(NULL, 0);
 	sq_pushstring(v, buff, strlen(buff));
 	return 1;
 };
 
-SQInteger sqSetDir(HSQUIRRELVM v)
-{
+SQInteger sqSetDir(HSQUIRRELVM v) {
 	const char* d;
 	sq_getstring(v, 2, &d);
 	chdir(d);
 	return 0;
 };
 
-SQInteger sqFileWrite(HSQUIRRELVM v)
-{
+SQInteger sqFileWrite(HSQUIRRELVM v) {
 	const char* f;
 	const char* s;
 
@@ -194,8 +179,7 @@ SQInteger sqFileWrite(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqFileAppend(HSQUIRRELVM v)
-{
+SQInteger sqFileAppend(HSQUIRRELVM v) {
 	const char* f;
 	const char* s;
 
@@ -210,22 +194,19 @@ SQInteger sqFileAppend(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqFileRead(HSQUIRRELVM v)
-{
+SQInteger sqFileRead(HSQUIRRELVM v) {
 	const char* f;
 	int l;
 	ifstream t;
 
 	sq_getstring(v, 2, &f);
 
-	if(!xyFileExists(f))
-	{
+	if(!xyFileExists(f)) {
 		xyPrint(0, "WARNING: %s does not exist!", f);
 		sq_pushstring(v, "-1", 2);
 		return 1;
 	}
-	else
-	{
+	else {
 		t.open(f);
 		t.seekg(0, ios::end);
 		l = t.tellg();
@@ -244,15 +225,13 @@ SQInteger sqFileRead(HSQUIRRELVM v)
 // GRAPHICS //
 /////////////{
 
-SQInteger sqClearScreen(HSQUIRRELVM v)
-{
+SQInteger sqClearScreen(HSQUIRRELVM v) {
 	SDL_RenderClear(gvRender);
 
 	return 0;
 };
 
-SQInteger sqSetDrawTarget(HSQUIRRELVM v)
-{
+SQInteger sqSetDrawTarget(HSQUIRRELVM v) {
 	SQInteger tex;
 
 	sq_getinteger(v, 2, &tex);
@@ -262,15 +241,13 @@ SQInteger sqSetDrawTarget(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqResetDrawTarget(HSQUIRRELVM v)
-{
+SQInteger sqResetDrawTarget(HSQUIRRELVM v) {
 	xyResetDrawTarget();
 
 	return 0;
 };
 
-SQInteger sqDrawImage(HSQUIRRELVM v)
-{
+SQInteger sqDrawImage(HSQUIRRELVM v) {
 	SQInteger x, y, img;
 
 	sq_getinteger(v, 2, &img);
@@ -282,8 +259,7 @@ SQInteger sqDrawImage(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqSetDrawColor(HSQUIRRELVM v)
-{
+SQInteger sqSetDrawColor(HSQUIRRELVM v) {
 	SQInteger c;
 
 	sq_getinteger(v, 2, &c);
@@ -293,8 +269,7 @@ SQInteger sqSetDrawColor(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqLoadImage(HSQUIRRELVM v)
-{
+SQInteger sqLoadImage(HSQUIRRELVM v) {
 	const char* file;
 
 	sq_getstring(v, 2, &file);
@@ -304,8 +279,7 @@ SQInteger sqLoadImage(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqLoadImageKeyed(HSQUIRRELVM v)
-{
+SQInteger sqLoadImageKeyed(HSQUIRRELVM v) {
 	const char* file;
 	SQInteger key;
 
@@ -317,8 +291,7 @@ SQInteger sqLoadImageKeyed(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqSetBackgroundColor(HSQUIRRELVM v)
-{
+SQInteger sqSetBackgroundColor(HSQUIRRELVM v) {
 	SQInteger color;
 
 	sq_getinteger(v, 2, &color);
@@ -328,8 +301,7 @@ SQInteger sqSetBackgroundColor(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqSetScalingFilter(HSQUIRRELVM v)
-{
+SQInteger sqSetScalingFilter(HSQUIRRELVM v) {
 	SQInteger hint;
 
 	sq_getinteger(v, 2, &hint);
@@ -337,8 +309,7 @@ SQInteger sqSetScalingFilter(HSQUIRRELVM v)
 	if(hint < 0) hint = 0;
 
 	string strHint;
-	switch(hint)
-	{
+	switch(hint) {
 		case 0:
 			strHint = "0";
 			break;
@@ -358,15 +329,13 @@ SQInteger sqSetScalingFilter(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqSetResolution(HSQUIRRELVM v)
-{
+SQInteger sqSetResolution(HSQUIRRELVM v) {
 	SQInteger w, h;
 
 	sq_getinteger(v, 2, &w);
 	sq_getinteger(v, 3, &h);
 
-	if(w < 1 || h < 1)
-	{
+	if(w < 1 || h < 1) {
 		xyPrint(0, "Window dimensions cannot be 0.");
 		return 0;
 	}
@@ -389,8 +358,7 @@ SQInteger sqSetResolution(HSQUIRRELVM v)
 // SPRITES //
 ////////////{
 
-SQInteger sqSpriteName(HSQUIRRELVM v)
-{
+SQInteger sqSpriteName(HSQUIRRELVM v) {
 	SQInteger s;
 
 	sq_getinteger(v, 2, &s);
@@ -402,22 +370,18 @@ SQInteger sqSpriteName(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqFindSprite(HSQUIRRELVM v)
-{
+SQInteger sqFindSprite(HSQUIRRELVM v) {
 	const char* n;
 	sq_getstring(v, 2, &n);
 	string nn = n;
 	xyPrint(0, "Searching for sprite: %s", n);
 	xyPrint(0, "Number of sprites to search: %i", vcSprites.size());
 
-	for(size_t i = 0; i < vcSprites.size(); i++)
-	{
-		if(vcSprites[i] != 0)
-		{
+	for(size_t i = 0; i < vcSprites.size(); i++) {
+		if(vcSprites[i] != 0) {
 			xyPrint(0, "Current sprite name: %s", vcSprites[i]->getname());
 
-			if(vcSprites[i]->getname() == nn)
-			{
+			if(vcSprites[i]->getname() == nn) {
 				sq_pushinteger(v, vcSprites[i]->getnum());
 				return 1;
 				break;
@@ -429,8 +393,7 @@ SQInteger sqFindSprite(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqNewSprite(HSQUIRRELVM v)
-{
+SQInteger sqNewSprite(HSQUIRRELVM v) {
 	SQInteger w, h, m, p, px, py, f;
 	const char* i;
 
@@ -449,8 +412,7 @@ SQInteger sqNewSprite(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqDrawSprite(HSQUIRRELVM v)
-{
+SQInteger sqDrawSprite(HSQUIRRELVM v) {
 	SQInteger i, f, x, y;
 
 	sq_getinteger(v, 2, &i);
@@ -466,8 +428,7 @@ SQInteger sqDrawSprite(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqDrawSpriteEx(HSQUIRRELVM v)
-{
+SQInteger sqDrawSpriteEx(HSQUIRRELVM v) {
 	SQInteger i, f, x, y, a, l;
 	float sx, sy;
 
@@ -529,8 +490,7 @@ SQInteger sqSpriteH(HSQUIRRELVM v) {
 // INPUT //
 //////////{
 
-SQInteger sqKeyPress(HSQUIRRELVM v)
-{
+SQInteger sqKeyPress(HSQUIRRELVM v) {
 	SQInteger a;
 
 	sq_getinteger(v, 2, &a);
@@ -539,8 +499,7 @@ SQInteger sqKeyPress(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqKeyDown(HSQUIRRELVM v)
-{
+SQInteger sqKeyDown(HSQUIRRELVM v) {
 	SQInteger a;
 
 	sq_getinteger(v, 2, &a);
@@ -549,8 +508,7 @@ SQInteger sqKeyDown(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqKeyRelease(HSQUIRRELVM v)
-{
+SQInteger sqKeyRelease(HSQUIRRELVM v) {
 	SQInteger a;
 
 	sq_getinteger(v, 2, &a);
@@ -559,8 +517,7 @@ SQInteger sqKeyRelease(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqMouseDown(HSQUIRRELVM v)
-{
+SQInteger sqMouseDown(HSQUIRRELVM v) {
 	SQInteger i;
 
 	sq_getinteger(v, 2, &i);
@@ -570,8 +527,7 @@ SQInteger sqMouseDown(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqMousePress(HSQUIRRELVM v)
-{
+SQInteger sqMousePress(HSQUIRRELVM v) {
 	SQInteger i;
 
 	sq_getinteger(v, 2, &i);
@@ -581,8 +537,7 @@ SQInteger sqMousePress(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqMouseRelease(HSQUIRRELVM v)
-{
+SQInteger sqMouseRelease(HSQUIRRELVM v) {
 	SQInteger i;
 
 	sq_getinteger(v, 2, &i);
@@ -592,34 +547,29 @@ SQInteger sqMouseRelease(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqMouseX(HSQUIRRELVM v)
-{
+SQInteger sqMouseX(HSQUIRRELVM v) {
 	sq_pushinteger(v, gvMouseX);
 	return 1;
 };
 
-SQInteger sqMouseY(HSQUIRRELVM v)
-{
+SQInteger sqMouseY(HSQUIRRELVM v) {
 	sq_pushinteger(v, gvMouseY);
 	return 1;
 };
 
-SQInteger sqGetQuit(HSQUIRRELVM v)
-{
+SQInteger sqGetQuit(HSQUIRRELVM v) {
 	sq_pushbool(v, gvQuit);
 
 	return 1;
 };
 
-SQInteger sqGetPads(HSQUIRRELVM v)
-{
+SQInteger sqGetPads(HSQUIRRELVM v) {
 	sq_pushinteger(v, SDL_NumJoysticks());
 
 	return 1;
 };
 
-SQInteger sqPadName(HSQUIRRELVM v)
-{
+SQInteger sqPadName(HSQUIRRELVM v) {
 	SQInteger i;
 	sq_getinteger(v, 2, &i);
 
@@ -628,8 +578,7 @@ SQInteger sqPadName(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadX(HSQUIRRELVM v)
-{
+SQInteger sqPadX(HSQUIRRELVM v) {
 	SQInteger i;
 	sq_getinteger(v, 2, &i);
 
@@ -638,8 +587,7 @@ SQInteger sqPadX(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadY(HSQUIRRELVM v)
-{
+SQInteger sqPadY(HSQUIRRELVM v) {
 	SQInteger i;
 	sq_getinteger(v, 2, &i);
 
@@ -648,8 +596,7 @@ SQInteger sqPadY(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadZ(HSQUIRRELVM v)
-{
+SQInteger sqPadZ(HSQUIRRELVM v) {
 	SQInteger i;
 	sq_getinteger(v, 2, &i);
 
@@ -658,8 +605,7 @@ SQInteger sqPadZ(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadH(HSQUIRRELVM v)
-{
+SQInteger sqPadH(HSQUIRRELVM v) {
 	SQInteger i;
 	sq_getinteger(v, 2, &i);
 
@@ -668,8 +614,7 @@ SQInteger sqPadH(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadV(HSQUIRRELVM v)
-{
+SQInteger sqPadV(HSQUIRRELVM v) {
 	SQInteger i;
 	sq_getinteger(v, 2, &i);
 
@@ -678,8 +623,7 @@ SQInteger sqPadV(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadR(HSQUIRRELVM v)
-{
+SQInteger sqPadR(HSQUIRRELVM v) {
 	SQInteger i;
 	sq_getinteger(v, 2, &i);
 
@@ -688,8 +632,7 @@ SQInteger sqPadR(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadL(HSQUIRRELVM v)
-{
+SQInteger sqPadL(HSQUIRRELVM v) {
 	SQInteger i;
 	sq_getinteger(v, 2, &i);
 
@@ -698,8 +641,7 @@ SQInteger sqPadL(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadAxis(HSQUIRRELVM v)
-{
+SQInteger sqPadAxis(HSQUIRRELVM v) {
 	SQInteger i, j;
 	sq_getinteger(v, 2, &i);
 	sq_getinteger(v, 3, &j);
@@ -709,8 +651,7 @@ SQInteger sqPadAxis(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadHatDown(HSQUIRRELVM v)
-{
+SQInteger sqPadHatDown(HSQUIRRELVM v) {
 	SQInteger i, d;
 
 	sq_getinteger(v, 2, &i);
@@ -722,8 +663,7 @@ SQInteger sqPadHatDown(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadHatPress(HSQUIRRELVM v)
-{
+SQInteger sqPadHatPress(HSQUIRRELVM v) {
 	SQInteger i, d;
 
 	sq_getinteger(v, 2, &i);
@@ -735,8 +675,7 @@ SQInteger sqPadHatPress(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadHatRelease(HSQUIRRELVM v)
-{
+SQInteger sqPadHatRelease(HSQUIRRELVM v) {
 	SQInteger i, d;
 
 	sq_getinteger(v, 2, &i);
@@ -748,8 +687,7 @@ SQInteger sqPadHatRelease(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadButtonDown(HSQUIRRELVM v)
-{
+SQInteger sqPadButtonDown(HSQUIRRELVM v) {
 	SQInteger i, b;
 
 	sq_getinteger(v, 2, &i);
@@ -760,8 +698,7 @@ SQInteger sqPadButtonDown(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadButtonPress(HSQUIRRELVM v)
-{
+SQInteger sqPadButtonPress(HSQUIRRELVM v) {
 	SQInteger i, b;
 
 	sq_getinteger(v, 2, &i);
@@ -772,8 +709,7 @@ SQInteger sqPadButtonPress(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPadButtonRelease(HSQUIRRELVM v)
-{
+SQInteger sqPadButtonRelease(HSQUIRRELVM v) {
 	SQInteger i, b;
 
 	sq_getinteger(v, 2, &i);
@@ -790,8 +726,7 @@ SQInteger sqPadButtonRelease(HSQUIRRELVM v)
 // MATHS //
 //////////{
 
-SQInteger sqRandomFloat(HSQUIRRELVM v)
-{
+SQInteger sqRandomFloat(HSQUIRRELVM v) {
 	float a;
 
 	sq_getfloat(v, 2, &a);
@@ -800,8 +735,7 @@ SQInteger sqRandomFloat(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqRandomInt(HSQUIRRELVM v)
-{
+SQInteger sqRandomInt(HSQUIRRELVM v) {
 	SQInteger a;
 
 	sq_getinteger(v, 2, &a);
@@ -810,8 +744,7 @@ SQInteger sqRandomInt(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqDistance2(HSQUIRRELVM v)
-{
+SQInteger sqDistance2(HSQUIRRELVM v) {
 	SQInteger x1, y1, x2, y2;
 
 	sq_getinteger(v, 2, &x1);
@@ -824,8 +757,7 @@ SQInteger sqDistance2(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqDistance3(HSQUIRRELVM v)
-{
+SQInteger sqDistance3(HSQUIRRELVM v) {
 	SQInteger x1, y1, z1, x2, y2, z2;
 
 	sq_getinteger(v, 2, &x1);
@@ -840,8 +772,7 @@ SQInteger sqDistance3(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqWrap(HSQUIRRELVM v)
-{
+SQInteger sqWrap(HSQUIRRELVM v) {
 	SQFloat x, mx, mn;
 
 	sq_getfloat(v, 2, &x);
@@ -853,8 +784,7 @@ SQInteger sqWrap(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqFloor(HSQUIRRELVM v)
-{
+SQInteger sqFloor(HSQUIRRELVM v) {
 	float f;
 
 	sq_getfloat(v, 2, &f);
@@ -863,8 +793,7 @@ SQInteger sqFloor(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqCeil(HSQUIRRELVM v)
-{
+SQInteger sqCeil(HSQUIRRELVM v) {
 	float f;
 
 	sq_getfloat(v, 2, &f);
@@ -873,8 +802,7 @@ SQInteger sqCeil(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqRound(HSQUIRRELVM v)
-{
+SQInteger sqRound(HSQUIRRELVM v) {
 	float f;
 
 	sq_getfloat(v, 2, &f);
@@ -883,8 +811,7 @@ SQInteger sqRound(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPointAngle(HSQUIRRELVM v)
-{
+SQInteger sqPointAngle(HSQUIRRELVM v) {
 	float x1, y1, x2, y2;
 
 	sq_getfloat(v, 2, &x1);
@@ -897,8 +824,7 @@ SQInteger sqPointAngle(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqAbs(HSQUIRRELVM v)
-{
+SQInteger sqAbs(HSQUIRRELVM v) {
 	float f;
 
 	sq_getfloat(v, 2, &f);
@@ -907,8 +833,7 @@ SQInteger sqAbs(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqLenDirX(HSQUIRRELVM v)
-{
+SQInteger sqLenDirX(HSQUIRRELVM v) {
 	float l, d;
 
 	sq_getfloat(v, 2, &l);
@@ -918,8 +843,7 @@ SQInteger sqLenDirX(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqLenDirY(HSQUIRRELVM v)
-{
+SQInteger sqLenDirY(HSQUIRRELVM v) {
 	float l, d;
 
 	sq_getfloat(v, 2, &l);
@@ -992,8 +916,7 @@ SQInteger sqChint(HSQUIRRELVM v) {
 // AUDIO //
 //////////{
 
-SQInteger sqLoadSound(HSQUIRRELVM v)
-{
+SQInteger sqLoadSound(HSQUIRRELVM v) {
 	const char* s;
 
 	sq_getstring(v, 2, &s);
@@ -1003,8 +926,7 @@ SQInteger sqLoadSound(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqLoadMusic(HSQUIRRELVM v)
-{
+SQInteger sqLoadMusic(HSQUIRRELVM v) {
 	const char* m;
 
 	sq_getstring(v, 2, &m);
@@ -1014,8 +936,7 @@ SQInteger sqLoadMusic(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPlaySound(HSQUIRRELVM v)
-{
+SQInteger sqPlaySound(HSQUIRRELVM v) {
 	SQInteger s, l;
 
 	sq_getinteger(v, 2, &s);
@@ -1026,8 +947,7 @@ SQInteger sqPlaySound(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqPlayMusic(HSQUIRRELVM v)
-{
+SQInteger sqPlayMusic(HSQUIRRELVM v) {
 	SQInteger m, l;
 
 	sq_getinteger(v, 2, &m);
@@ -1038,8 +958,7 @@ SQInteger sqPlayMusic(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqDeleteSound(HSQUIRRELVM v)
-{
+SQInteger sqDeleteSound(HSQUIRRELVM v) {
 	SQInteger i;
 
 	sq_getinteger(v, 2, &i);
@@ -1049,8 +968,7 @@ SQInteger sqDeleteSound(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqDeleteMusic(HSQUIRRELVM v)
-{
+SQInteger sqDeleteMusic(HSQUIRRELVM v) {
 	SQInteger i;
 
 	sq_getinteger(v, 2, &i);
@@ -1060,8 +978,7 @@ SQInteger sqDeleteMusic(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqStopSound(HSQUIRRELVM v)
-{
+SQInteger sqStopSound(HSQUIRRELVM v) {
 	SQInteger c;
 
 	sq_getinteger(v, 2, &c);
@@ -1071,21 +988,18 @@ SQInteger sqStopSound(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqStopMusic(HSQUIRRELVM v)
-{
+SQInteger sqStopMusic(HSQUIRRELVM v) {
 	Mix_HaltMusic();
 	return 0;
 };
 
-SQInteger sqCheckMusic(HSQUIRRELVM v)
-{
+SQInteger sqCheckMusic(HSQUIRRELVM v) {
 	bool b = Mix_PlayingMusic();
 	sq_pushbool(v, b);
 	return 1;
 };
 
-SQInteger sqCheckSound(HSQUIRRELVM v)
-{
+SQInteger sqCheckSound(HSQUIRRELVM v) {
 	bool b;
 	SQInteger c;
 	sq_getinteger(v, 2, &c);
@@ -1094,28 +1008,24 @@ SQInteger sqCheckSound(HSQUIRRELVM v)
 	return 1;
 };
 
-SQInteger sqSetMaxChannels(HSQUIRRELVM v)
-{
+SQInteger sqSetMaxChannels(HSQUIRRELVM v) {
 	SQInteger c;
 	sq_getinteger(v, 2, &c);
 	Mix_AllocateChannels(c);
 	return 0;
 };
 
-SQInteger sqPauseMusic(HSQUIRRELVM v)
-{
+SQInteger sqPauseMusic(HSQUIRRELVM v) {
 	Mix_PauseMusic();
 	return 0;
 };
 
-SQInteger sqResumeMusic(HSQUIRRELVM v)
-{
+SQInteger sqResumeMusic(HSQUIRRELVM v) {
 	Mix_ResumeMusic();
 	return 0;
 };
 
-SQInteger sqMusicPaused(HSQUIRRELVM v)
-{
+SQInteger sqMusicPaused(HSQUIRRELVM v) {
 	bool b;
 	if(Mix_PlayingMusic()) b = Mix_PausedMusic();
 	else b = false;
@@ -1129,8 +1039,7 @@ SQInteger sqMusicPaused(HSQUIRRELVM v)
 // SDL_GFX //
 ////////////{
 
-SQInteger sqDrawCircle(HSQUIRRELVM v)
-{
+SQInteger sqDrawCircle(HSQUIRRELVM v) {
 	SQInteger x, y, r;
 	SQBool f;
 
@@ -1145,8 +1054,7 @@ SQInteger sqDrawCircle(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqDrawRect(HSQUIRRELVM v)
-{
+SQInteger sqDrawRect(HSQUIRRELVM v) {
 	SQInteger x, y, w, h;
 	SQBool f;
 
@@ -1162,8 +1070,7 @@ SQInteger sqDrawRect(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqDrawPoint(HSQUIRRELVM v)
-{
+SQInteger sqDrawPoint(HSQUIRRELVM v) {
 	SQInteger x, y;
 
 	sq_getinteger(v, 2, &x);
@@ -1174,8 +1081,7 @@ SQInteger sqDrawPoint(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqDrawLine(HSQUIRRELVM v)
-{
+SQInteger sqDrawLine(HSQUIRRELVM v) {
 	SQInteger x1, y1, x2, y2;
 
 	sq_getinteger(v, 2, &x1);
@@ -1188,8 +1094,7 @@ SQInteger sqDrawLine(HSQUIRRELVM v)
 	return 0;
 };
 
-SQInteger sqDrawLineWide(HSQUIRRELVM v)
-{
+SQInteger sqDrawLineWide(HSQUIRRELVM v) {
 	SQInteger x1, y1, x2, y2, w;
 
 	sq_getinteger(v, 2, &x1);
@@ -1209,8 +1114,7 @@ SQInteger sqDrawLineWide(HSQUIRRELVM v)
 // SHAPES //
 ///////////{
 
-SQInteger sqLineLine(HSQUIRRELVM v)
-{
+SQInteger sqLineLine(HSQUIRRELVM v) {
     SQFloat x0, y0, x1, y1, x2, y2, x3, y3;
 
     sq_getfloat(v, 2, &x0);
@@ -1232,8 +1136,7 @@ SQInteger sqLineLine(HSQUIRRELVM v)
     return 1;
 }
 
-SQInteger sqLineCircle(HSQUIRRELVM v)
-{
+SQInteger sqLineCircle(HSQUIRRELVM v) {
     SQFloat x0, y0, x1, y1, x2, y2, r;
 
     sq_getfloat(v, 2, &x0);
@@ -1251,8 +1154,7 @@ SQInteger sqLineCircle(HSQUIRRELVM v)
     sq_pushbool(v, xyLineCircle(&a, &b, &c, r));
 }
 
-SQInteger sqLinePoint(HSQUIRRELVM v)
-{
+SQInteger sqLinePoint(HSQUIRRELVM v) {
     SQFloat x0, y0, x1, y1, x2, y2;
 
     sq_getfloat(v, 2, &x0);

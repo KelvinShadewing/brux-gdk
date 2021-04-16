@@ -6,8 +6,7 @@
 #include "global.h"
 #include "core.h"
 
-void xyLoadCore()
-{
+void xyLoadCore() {
 	const SQChar *cmd =" \
 	const k__0 = 0; \
 	const k__1 = 1; \

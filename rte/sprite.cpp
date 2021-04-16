@@ -10,8 +10,7 @@
 #include "sprite.h"
 #include "maths.h"
 
-xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames)
-{
+xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames) {
 	//Set variables
 	w = width;
 	h = height;
@@ -31,18 +30,13 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 
 	//Add sprite to list
 
-	if(vcSprites.size() == 0)
-	{
+	if(vcSprites.size() == 0) {
 		vcSprites.push_back(this);
 		numero = 0;
-	}
-	else
-	{
+	} else {
 		//Check for an open space in the list
-		for(int i = 1; i < vcSprites.size(); i++)
-		{
-			if(vcSprites[i] == 0)
-			{
+		for(int i = 1; i < vcSprites.size(); i++) {
+			if(vcSprites[i] == 0) {
 				vcSprites[i] = this;
 				numero = i;
 				break;
@@ -50,8 +44,7 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 		}
 
 		//If an open space wasn't found
-		if(numero == 0)
-		{
+		if(numero == 0) {
 			vcSprites.push_back(this);
 			numero = vcSprites.size() - 1;
 		}
@@ -69,8 +62,7 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	if(frames == 0) frames = col * row;
 };
 
-void xySprite::replaceSprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames)
-{
+void xySprite::replaceSprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames) {
 	//Set variables
 	w = width;
 	h = height;
@@ -105,15 +97,12 @@ void xySprite::replaceSprite(const char* filename, Uint32 width, Uint32 height, 
 	if(frames == 0) frames = col * row;
 };
 
-xySprite::~xySprite()
-{
+xySprite::~xySprite() {
 	//Remove from list
-	if(numero == vcSprites.size() - 1) vcSprites.pop_back();
-	else vcSprites[numero] = 0;
+	if(numero == vcSprites.size() - 1) vcSprites.pop_back(); else vcSprites[numero] = 0;
 };
 
-void xySprite::draw(int f, int x, int y)
-{
+void xySprite::draw(int f, int x, int y) {
 	int fd = xyWrap(f, 0, frames - 1);
 
 	SDL_Rect rec;
@@ -135,8 +124,7 @@ void xySprite::draw(int f, int x, int y)
 	SDL_RenderCopy(gvRender, vcTextures[tex], &rec, &des);
 };
 
-void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale)
-{
+void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale) {
 	//Do nothing if scaling is set to 0 on either dimension
 	if(xscale == 0 || yscale == 0) return;
 
@@ -165,18 +153,15 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
     SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
 };
 
-Uint32 xySprite::getnum()
-{
+Uint32 xySprite::getnum() {
 	return numero;
 };
 
-Uint32 xySprite::gettex()
-{
+Uint32 xySprite::gettex() {
 	return tex;
 };
 
-Uint32 xySprite::getframes()
-{
+Uint32 xySprite::getframes() {
     return frames;
 };
 

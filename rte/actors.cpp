@@ -14,8 +14,7 @@
  # functionality.
 \*/
 
-void xyLoadActors()
-{
+void xyLoadActors() {
 	const SQChar *cmd =" \
      \
     ::actor <- {}; \

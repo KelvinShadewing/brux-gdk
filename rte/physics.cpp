@@ -5,8 +5,7 @@
 #include <cstdio>
 #include "Phyisics.h"
 
-int Phyisics::ChipMonkHelloWorld()
-{
+int Phyisics::ChipMonkHelloWorld() {
     // cpVect is a 2D vector and cpv() is a shortcut for initializing them.
     cpVect gravity = cpv(0, -100);
 
@@ -48,8 +47,7 @@ int Phyisics::ChipMonkHelloWorld()
     // stepping forward through time in small increments called steps.
     // It is *highly* recommended to use a fixed size time step.
     cpFloat timeStep = 1.0/60.0;
-    for(cpFloat time = 0; time < 2; time += timeStep)
-    {
+    for(cpFloat time = 0; time < 2; time += timeStep) {
         cpVect pos = cpBodyGetPosition(ballBody);
         cpVect vel = cpBodyGetVelocity(ballBody);
         printf(

@@ -8,7 +8,7 @@
 #include "global.h"
 #include "fileio.h"
 
-bool xyFileExists(const char* file){
+bool xyFileExists(const char* file) {
 	//Checks if a file exists
 	struct stat buff;
 	if (stat(file, &buff) != -1) return true;
@@ -18,7 +18,7 @@ bool xyFileExists(const char* file){
 
 // Credit to Nova Storm for the JSON encoding and decoding functions
 
-void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item){
+void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item) {
 	if(!Item)
 		return;
 	while(Item) {
@@ -60,7 +60,7 @@ void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item){
 	}
 };
 
-SQInteger sqDecodeJSON(HSQUIRRELVM v){
+SQInteger sqDecodeJSON(HSQUIRRELVM v) {
 	const SQChar *Str;
 	sq_getstring(v, 2, &Str);
 	if(Str[0]!='{' && Str[0]!='[') {
@@ -86,7 +86,7 @@ SQInteger sqDecodeJSON(HSQUIRRELVM v){
 	return 1;
 }
 
-SQInteger sqLsDir(HSQUIRRELVM v){
+SQInteger sqLsDir(HSQUIRRELVM v) {
 	const SQChar *dir;
 	sq_getstring(v, 2, &dir);
 
@@ -96,13 +96,13 @@ SQInteger sqLsDir(HSQUIRRELVM v){
 	string s_entry;
 
 	folder = opendir(dir);
-	if(folder == NULL){
+	if(folder == NULL) {
 		xyPrint(0, "Failed to open directory: %s\n", dir);
 		sq_pushstring(v, "", 0);
 		return 1;
 	} else {
 		sq_newarray(v, 0);
-		while(entry = readdir(folder)){
+		while(entry = readdir(folder)) {
 			s_entry = entry->d_name;
 			sq_pushstring(v, s_entry.c_str(), s_entry.length());
 			sq_arrayappend(v, -2);
@@ -113,15 +113,15 @@ SQInteger sqLsDir(HSQUIRRELVM v){
 	return 1;
 };
 
-SQInteger sqIsDir(HSQUIRRELVM v){
+SQInteger sqIsDir(HSQUIRRELVM v) {
 	const SQChar *dir;
 	sq_getstring(v, 2, &dir);
 	struct stat info;
 
-	if(stat(dir, &info) != 0){
+	if(stat(dir, &info) != 0) {
 		sq_pushbool(v, false);
 		return 1;
-	} else if(info.st_mode & S_IFDIR){
+	} else if(info.st_mode & S_IFDIR) {
 		sq_pushbool(v, true);
 		return 1;
 	} else {
