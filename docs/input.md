@@ -57,7 +57,7 @@
 
   Returns position of Z axis on pad numbered `id`.
 
-  * <a name="padH"></a>**`padH( id )`**
+* <a name="padH"></a>**`padH( id )`**
 
   Returns position of 'horizontal' axis on pad numbered `id`.
 

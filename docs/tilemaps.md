@@ -16,5 +16,18 @@ Maps should have tileset data embedded in them, and have the directory where the
 
 ## Tilemap class functions
 
-* <a name="drawTiles"></a>[SYNTAX]
-  Draws a section of
+**NOTE:** These functions exist within `Tilemap`, and should be called with a map instance. Example:
+
+```
+local map = Tilemap("file")
+
+map.drawTiles( x, y, mapx, mapy, mapw, maph, layer )
+```
+
+* <a name="drawTiles"></a>**`drawTiles( x, y, mapx, mapy, mapw, maph, layer )`**
+
+  Draws a section of `layer`, identified as a string matching the layer's name. `mapx` and `mapy` are the top left tile to start from, while `mapw` and `maph` are how wide and tall a region to draw from. `x` and `y` determine where on screen to draw the section.
+
+* <a name="drawShapes"></a>**`drawShapes( x, y, layer )`**
+
+  Draws the shapes within an object layer named `layer`. Shapes will automatically be offset by their position in the layer. `x` and `y` determine where to draw the layer as a whole.
