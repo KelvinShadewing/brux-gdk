@@ -27,6 +27,8 @@ SQInteger sqFileRead(HSQUIRRELVM v);
 SQInteger sqFileAppend(HSQUIRRELVM v);
 SQInteger sqGetDir(HSQUIRRELVM v);
 SQInteger sqSetDir(HSQUIRRELVM v);
+SQInteger sqLsDir(HSQUIRRELVM v);
+SQInteger sqIsDir(HSQUIRRELVM v);
 
 //Graphics
 SQInteger sqWait(HSQUIRRELVM v);

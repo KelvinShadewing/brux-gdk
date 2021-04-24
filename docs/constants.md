@@ -107,9 +107,9 @@ Used for keyboard input.
 
 * k_equals
 
-* k_lbracket
+* k_lbracket / k_lbrace
 
-* k_rbracket
+* k_rbracket / k_rbrace
 
 * k_backslash
 
@@ -123,12 +123,12 @@ Used for keyboard input.
 
 * k_comma
 
-* k_period / k_fullstop
+* k_period / k_fullstop / k_dot
 
 * k_slash
 
 
-* k_capslock
+* k_capslock / k_caps
 
 
 * k_f1
@@ -156,7 +156,7 @@ Used for keyboard input.
 * k_f12
 
 
-* k_printscreen
+* k_printscreen / k_print
 
 * k_scrolllock
 
@@ -217,7 +217,7 @@ Used for keyboard input.
 
 * k_num0
 
-* k_numperiod / k_numfullstop
+* k_numperiod / k_numfullstop / k_numdot
 
 
 * k_nonusbackslash
@@ -257,7 +257,7 @@ Used for keyboard input.
 
 ### Very special keys
 
-* k_execute
+* k_execute / k_exe
 
 * k_help
 
@@ -662,3 +662,17 @@ Used to identify what system Brux is currently running on. May not work perfectl
 * os_android
 
 * os_mac
+
+### <a name="joystick"></a>Joystick
+
+* js_max (Maximum value of a joystick axis)
+
+*Hat/D-pad directions*
+
+* js_up
+
+* js_down
+
+* js_right
+
+* js_left

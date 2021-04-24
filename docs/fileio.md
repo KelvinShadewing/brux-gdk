@@ -3,7 +3,7 @@
 
 
 
-&nbsp
+&nbsp;
 
 * <a name="fileExists"></a>**`fileExists( name )`**
 

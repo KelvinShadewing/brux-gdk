@@ -56,9 +56,13 @@ void xyLoadActors() {
     \tdelete actor[id];\n\
     }; \
      \
-    ::countActors <- function(){ \
-        print(\"Actor count: \" + actor.len()); \
-    }; \
+    ::countActors <- function() {\n\
+        local c = 0; \
+        foreach(i in actor) {\n\
+            if(typeof i != \"table\") c++; \n\
+        }\n\
+        return c;\n\
+    };\n\
      \
     ::runActors <- function(){ \
         foreach(i in actor) {\n\

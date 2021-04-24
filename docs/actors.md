@@ -19,7 +19,7 @@
 
 * <a name="countActors"></a>**`countActors()`**
 
-  Counts the number of active actor instances.
+  Counts the number of active actor instances and returns the result.
 
 * <a name="checkActor"></a>**`checkActor( id )`**
 

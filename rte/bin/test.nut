@@ -45,6 +45,9 @@ drawKey <- function(key, str, x, y) {
 tidydirls()
 ::menuFont <- fntW
 
+local d = lsdir(".")
+print(jsonWrite(arraySort(d)))
+
 ///////////////
 // FUNCTIONS //
 ///////////////

@@ -74,9 +74,11 @@ void xyLoadCore() {
 	const k_comma = 54; \
 	const k_period = 55; \
 	const k_fullstop = 55; \
+	const k_dot = 55; \
 	const k_slash = 56; \
 	 \
 	const k_capslock = 57; \
+	const k_caps = 57; \
 	 \
 	const k_f1 = 58; \
 	const k_f2 = 59; \
@@ -137,6 +139,7 @@ void xyLoadCore() {
 	const k_numfullstop = 99; \
 	const k_numdelete = 99; \
 	const k_numdel = 99; \
+	const k_numdot = 99; \
 	 \
 	const k_nonusbackslash = 100; \
 	const k_application = 101; \
@@ -158,6 +161,7 @@ void xyLoadCore() {
 	const k_f24 = 115; \
 	 \
 	const k_execute = 116; \
+	const k_exe = 116; \
 	const k_help = 117; \
 	const k_menu = 118; \
 	const k_select = 119; \
