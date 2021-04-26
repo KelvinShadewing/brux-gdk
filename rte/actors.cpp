@@ -37,15 +37,22 @@ void xyLoadActors() {
      \
         function destructor(){ \
         }; \
+        \
+        function colist(name) { \
+            /*Add self to new list in actor table*/\
+            /*Useful if actor needs to identify as more than one thing*/\
+            if(!actor.rawin(name)) actor.name <- {}\
+            actor[name][id] <- this\
+        }\
     }; \
      \
     ::newActor <- function(type, x, y){\n\
-    \tlocal na = type(x, y);\n\tna.id = actlast;\n\
-    \tactor[actlast] <- na;\n\
-    \tif(!actor.rawin(typeof na)) actor[typeof na] <- {};\n\
-    \tactor[typeof na][actlast] <- na;\n\
-    \tactlast++;\n\
-    \treturn na.id;\n\
+        local na = type(x, y);\n\tna.id = actlast;\n\
+        actor[actlast] <- na;\n\
+        if(!actor.rawin(typeof na)) actor[typeof na] <- {};\n\
+        actor[typeof na][actlast] <- na;\n\
+        actlast++;\n\
+        return na.id;\n\
     };\n\
     \n\
     ::deleteActor <- function(id){\n\

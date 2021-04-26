@@ -24,3 +24,7 @@
 * <a name="checkActor"></a>**`checkActor( id )`**
 
   Checks if an actor with the given `id` exists. Returns true if it does, false if no actor with that ID was found.
+
+### Actor Members
+
+**NOTE** These functions are predefined within `Actor`, and are called by `Actor` instances or within derived `Actor` class methods.

@@ -399,8 +399,6 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 void xyUpdate() {
 	//Update ticks counter for FPS
 	gvTickLast = gvTicks;
-	gvTicks = SDL_GetTicks();
-	int fLength = gvTicks - gvTickLast;
 
 	//Update last button state
 	for(int i = 0; i < 5; i++) {
@@ -514,7 +512,8 @@ void xyUpdate() {
 		if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
 	}
 
-	gvFPS = 1000 / fLength;
+	gvTicks = SDL_GetTicks();
+	int fLength = gvTicks - gvTickLast;
 	//Wait for FPS limit
 	//delay	4294967290	unsigned int
 	Uint32 current_time = (static_cast<Uint32>(fLength) / gvMaxFPS);

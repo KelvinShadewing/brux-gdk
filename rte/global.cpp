@@ -19,7 +19,7 @@ SDL_Window *gvWindow;
 SDL_Renderer *gvRender;
 SDL_Texture *gvScreen;
 int gvError;
-Uint32 gvTicks = 0;
+Uint32 gvTicks = 1;
 Uint32 gvTickLast = 0;
 float gvFPS = 0;
 Uint32 gvMaxFPS = 60;
