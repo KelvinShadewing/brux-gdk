@@ -525,7 +525,7 @@ void xyUpdate() {
 		gvTicks = SDL_GetTicks();
 		fLength = gvTicks - gvTickLast;
 	};*/
-	gvFPS = 1000 / fLength;
+	if(fLength != 0) gvFPS = 1000 / fLength;
 	gvFrames++;
 };
 
