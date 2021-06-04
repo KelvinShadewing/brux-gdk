@@ -155,6 +155,10 @@ Squares and rectangles will just be polygons generated with specific parameters.
 	pc = []; //Current points
 	t = 0; //0 is polygon, 1 is rectangle
 
+	//Array for keeping track of intersect ranges on x parallels
+	//Eases collision detection, overhead if polygons are constantly updating
+	xintersects = [];
+
 	function addPoint(_x = 0.0, _y = 0.0)
 	{
 		p.push([_x, _y]);
@@ -181,14 +185,139 @@ Squares and rectangles will just be polygons generated with specific parameters.
 			uy = pc[0][1];
 			ly = pc[0][1];
 
-			for(local i = 0; i < p.len(); i++)
+			foreach(p in pc)
 			{
-				if(ux < pc[i][0]) ux = pc[i][0];
-				if(lx > pc[i][0]) lx = pc[i][0];
-				if(uy < pc[i][1]) uy = pc[i][1];
-				if(ly < pc[i][1]) ly = pc[i][1];
+				if(p[0] > ux) ux = p[0];
+				if(p[0] < lx) lx = p[0];
+				if(p[1] > uy) uy = p[1];
+				if(p[1] < ly) ly = p[1];
+			}
+
+			updateIntersects();
+		}
+	}
+
+	function updateIntersects() {
+		xintersects = [];
+
+		local unique_ys, rangesFound, p1, p2, y1, y2;
+
+		// Compile unique Y values
+		unique_ys = [];
+		foreach(p in pc)
+		{
+			if ( !unique_ys.find( p[1] ) ) unique_ys.push( p[1] );
+		}
+
+		local aux = null;
+
+		unique_ys.sort();
+		foreach(uq_y in unique_ys)
+		{
+			// First iteration only
+			if (aux == null)
+			{
+				// Generate auxiliary table for the intersect -- could be a class
+				aux = {
+					y1 = uq_y	// lower limit
+					y2 = null	// upper limit
+					amp = null	// amplitude
+					edges = []	// edges intersected at any Y inside this segment
+				}
+
+				continue;
+			}
+
+			// Subsequent iterations
+			if (aux.y2 == null)
+			{
+				aux.y2 = uq_y;	// upper limit of the segment
+				aux.amp = aux.y2 - aux.y1;	// calculate amplitude
+
+				xintersects.push(clone aux);	// copy the table into this property
+				aux = {		// and start a new segment
+					y1 = uq_y
+					y2 = null
+					amp = null
+					edges = []
+				}
 			}
 		}
+
+		// Sort by lower limit ASC and amplitude DESC
+		xintersects.sort(
+			function(a, b)
+			{
+				if (a.y1 < b.y1) return -1;
+				if (a.y1 > b.y1) return 1;
+
+				if (a.amp > b.amp) return -1;
+				if (a.amp < b.amp) return 1;
+
+				return 0;
+			}
+		);
+
+		// Analyse every one of the edges and save to intersects
+		for(local i = 0; i < pc.len(); i++)
+		{
+			// Grab two adjacent points
+			p1 = pc[i];
+			p2 = pc[ (i + 1) % pc.len() ];
+
+			// Make sure that y1 is the lower limit
+			y1 = p1[1];
+			y2 = p2[1];
+
+			if (y1 > y2)
+			{
+				aux = y1;
+
+				y1 = y2;
+				y2 = aux;
+
+
+				aux = p1;
+
+				p1 = p2;
+				p2 = aux;
+			}
+
+			// Look for a segment that shares Y values
+			foreach( xint in xintersects )
+			{
+				if (
+					!(
+						xint.y1 >= y2 ||
+						xint.y2 <= y1
+					)
+				) xint.edges.push([ p1, p2 ]);
+			}
+		}
+	}
+
+	function getXIntersectsAt(target_y)
+	{
+		local prev_amp = uy - ly;	// maximum possible amplitude for a segment
+		local retval = null;	// default return value
+
+		// Look for a segment that contains this Y value
+		foreach(
+			xint in xintersects.filter(
+				function(i, val) {
+					return val.y1 <= target_y && val.y2 >= target_y;
+				}
+			)
+		)
+		{
+			//Narrow it down
+			if (xint.amp < prev_amp) {
+				prev_amp = xint.amp;
+				retval = xint;
+			}
+		}
+
+		return retval;
 	}
 
 	constructor(_x, _y, _p)
@@ -196,37 +325,27 @@ Squares and rectangles will just be polygons generated with specific parameters.
 		x = _x;
 		y = _y;
 		p = _p;
-		pc = _p;
 
-		if(p.len() > 0)
-		{
-			ux = p[0][0];
-			uy = p[0][1];
-			lx = p[0][0];
-			ly = p[0][1];
-			for(local i = 0; i < p.len(); i++)
-			{
-				if(p[i][0] <= lx) lx = p[i][0];
-				if(p[i][0] >= ux) ux = p[i][0];
-				if(p[i][1] <= ly) ly = p[i][1];
-				if(p[i][1] >= uy) uy = p[i][1];
-			}
-		}
+		updatePoints();
 	}
 
 	function draw()
 	{
-		if(p.len() == 0) return;
-		if(p.len() == 1)
+		if(pc.len() == 0) return;
+		if(pc.len() == 1)
 		{
 			drawPoint(pc[0][0], pc[0][1]);
 			return;
 		}
 
-		for(local i = 0; i < p.len(); i++)
+		for(local i = 0; i < pc.len(); i++)
 		{
-			if(i < p.len() - 1) drawLine(pc[i][0], pc[i][1], pc[i + 1][0], pc[i + 1][1]);
-			else drawLine(pc[i][0], pc[i][1], pc[0][0], pc[0][1]);
+			drawLine(
+				pc[i][0],
+				pc[i][1],
+				pc[(i + 1) % pc.len()][0],
+				pc[(i + 1) % pc.len()][1]
+			);
 		}
 	}
 
@@ -237,18 +356,32 @@ Squares and rectangles will just be polygons generated with specific parameters.
 
 	function setPos(_x, _y, _a)
 	{
+		local needsUpdate = (
+			x != _x ||
+			y != _y ||
+			a != _a
+		);
+
 		x = _x;
 		y = _y;
 		a = _a;
-		updatePoints();
+
+		if (needsUpdate) updatePoints();
 	}
 
 	function modPos(_x, _y, _a)
 	{
+		local needsUpdate = (
+			_x != 0 ||
+			_y != 0 ||
+			_a != 0
+		);
+
 		x += _x;
 		y += _y;
 		a += _a;
-		updatePoints();
+
+		if (needsUpdate) updatePoints();
 	}
 
 	function drawPos(_x, _y)
@@ -279,18 +412,28 @@ Squares and rectangles will just be polygons generated with specific parameters.
 	if(x < p.lx || x > p.ux || y < p.ly || y > p.uy) return false;
 
 	//If so, count how many lines it touches
-	local count = 0;
+	local xint = p.getXIntersectsAt(y);	//Get the intersect segment first
 
-	for(local i = 0; i < p.pc.len(); i++)
+	//If no intersects were found, this is either a vertex or a miss
+	if (!xint) return p.pc.filter(
+		function(i, v) { return abs(v[0] - x) < 1 && abs(v[1] - y) < 1; }
+	).len() > 0;
+
+	//Test the edges that are part of this segment only
+	local count = 0;
+	foreach(edge in xint.edges)
 	{
-		if(i < p.pc.len() -1)
-		{
-			//Check between each point
-			if(hitLineLine(x, y, p.lx - 1, y, p.pc[i][0], p.pc[i][1], p.pc[i + 1][0], p.pc[i + 1][1])) count++;
-		} else {
-			//Connect last point to first point
-			if(hitLineLine(x, y, p.lx - 1, y, p.pc[i][0], p.pc[i][1], p.pc[0][0], p.pc[0][1])) count++;
-		}
+		if (
+			hitLineLine(
+				// Polygon edge
+				edge[0][0], edge[0][1],
+				edge[1][0], edge[1][1],
+
+				// Target coordinates to boundary
+				x, y,
+				p.lx, y
+			)
+		) count++;
 	}
 
 	//Even number of hits means the point is outside
@@ -298,55 +441,94 @@ Squares and rectangles will just be polygons generated with specific parameters.
 	//may not be true, but the odds seem extremely
 	//low, especially if the shapes have different
 	//vectors of motion.
-	if(count % 2 == 1) return true;
-	else return false;
+	return (count % 2 == 1);
 }
 
-::hitLinePoly <- function(a, b)
+::hitLinePoly <- function(x1, y1, x2, y2, p)
 {
+	//Test for PointPoly before doing any additional projections
+	if (
+		hitPointPoly(x1, y1, p) ||
+		hitPointPoly(x2, y2, p)
+	) return true;
+	
+	//Neither of the points are a hit, check LineLine against the intersects
+	local x_intersect1 = p.getXIntersectsAt(y1);
+	local x_intersect2 = p.getXIntersectsAt(y2);
 
+	//No intersects = no hit
+	if ( !x_intersect1 && !x_intersect2 ) return false;
+
+	if (x_intersect1)
+		foreach(edge in x_intersect1.edges)
+			if (
+				hitLineLine(
+					edge[0][0], edge[0][1],
+					edge[1][0], edge[1][1],
+
+					x1, y1,
+					x2, y2
+				)
+			) return true;
+
+	if (x_intersect2)
+		foreach(edge in x_intersect2.edges)
+			if (
+				hitLineLine(
+					edge[0][0], edge[0][1],
+					edge[1][0], edge[1][1],
+
+					x1, y1,
+					x2, y2
+				)
+			) return true;
+
+	return false;
 }
 
 ::hitPolyPoly <- function(a, b)
 {
-	if(a.p.len() == 0 || b.p.len() == 0) return false;
-	if(a.p.len() == 1) return hitPointPoly(a, b);
-	if(b.p.len() == 1) return hitPointPoly(b, a);
-
-	for(local i = 0; i < a.p.len(); i++)
-	{
-		if(hitPointPoly(a.pc[i][0], a.pc[i][1], b)) return true;
+	//Process the polygon with less points first
+	if (b.pc.len() < a.pc.len()) {
+		local aux = a;
+		a = b;
+		b = aux;
 	}
 
-	for(local i = 0; i < b.p.len(); i++)
+	//Go over each point and take the next to form the edge
+	local edge = [];
+	for(local i = 0; i < a.pc.len(); i++)
 	{
-		if(hitPointPoly(b.pc[i][0], b.pc[i][1], a)) return true;
+		edge = [
+			a.pc[i],
+			a.pc[ (i + 1) % a.pc.len() ]	// nifty index wrap
+		];
+
+		if (
+			hitLinePoly(
+				edge[0][0], edge[0][1],
+				edge[1][0], edge[1][1],
+
+				b
+			)
+		) return true;
 	}
 
-	for(local i = 0; i < a.p.len(); i++)
+	for(local i = 0; i < b.pc.len(); i++)
 	{
-		if(i < a.p.len() - 1)
-		{
-			for(local j = 0; j < b.p.len(); j++)
-			{
-				if(j < b.p.len() - 1)
-				{
-					if(hitLineLine(a.pc[i][0], a.pc[i][1], a.pc[i + 1][0], a.pc[i + 1][1], b.pc[j][0], b.pc[j][1], b.pc[j + 1][0], b.pc[j + 1][1])) return true;
-				} else {
-					if(hitLineLine(a.pc[i][0], a.pc[i][1], a.pc[i + 1][0], a.pc[i + 1][1], b.pc[j][0], b.pc[j][1], b.pc[0][0], b.pc[0][1])) return true;
-				}
-			}
-		} else {
-			for(local j = 0; j < b.p.len(); j++)
-			{
-				if(j < b.p.len() - 1)
-				{
-					if(hitLineLine(a.pc[i][0], a.pc[i][1], a.pc[0][0], a.pc[0][1], b.pc[j][0], b.pc[j][1], b.pc[j + 1][0], b.pc[j + 1][1])) return true;
-				} else {
-					if(hitLineLine(a.pc[i][0], a.pc[i][1], a.pc[0][0], a.pc[0][1], b.pc[j][0], b.pc[j][1], b.pc[0][0], b.pc[0][1])) return true;
-				}
-			}
-		}
+		edge = [
+			b.pc[i],
+			b.pc[ (i + 1) % b.pc.len() ]
+		];
+
+		if (
+			hitLinePoly(
+				edge[0][0], edge[0][1],
+				edge[1][0], edge[1][1],
+
+				a
+			)
+		) return true;
 	}
 
 	return false;
