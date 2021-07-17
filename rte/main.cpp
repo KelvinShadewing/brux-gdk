@@ -397,8 +397,6 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 };
 
 void xyUpdate() {
-	//Update ticks counter for FPS
-	gvTickLast = gvTicks;
 
 	//Update last button state
 	for(int i = 0; i < 5; i++) {
@@ -407,7 +405,6 @@ void xyUpdate() {
 
 	//Reset event-related globals
 	gvQuit = 0;
-
 
 	//Poll events
 	while(SDL_PollEvent(&Event)) {
@@ -511,15 +508,16 @@ void xyUpdate() {
 	for(int i = 0; i < 8; i++) {
 		if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
 	}
-
-	gvTicks = SDL_GetTicks();
-	int fLength = gvTicks - gvTickLast;
+	
 	//Wait for FPS limit
+	//Update ticks counter for FPS
+	gvTicks = SDL_GetTicks();
+	Uint32 fLength = gvTicks - gvTickLast;
+	gvTickLast = gvTicks;
 	//delay	4294967290	unsigned int
-	Uint32 current_time = (static_cast<Uint32>(fLength) / gvMaxFPS);
-	Uint32 max_delay = (500 / gvMaxFPS);
-	if (current_time < max_delay) {
-		if (gvMaxFPS != 0) SDL_Delay(max_delay - current_time);
+	Uint32 max_delay = (1000 / gvMaxFPS);
+	if (fLength < max_delay) {
+		if (gvMaxFPS != 0) SDL_Delay(max_delay - fLength);
 	}
 	/*while(fLength < 1000 / gvMaxFPS){
 		gvTicks = SDL_GetTicks();
