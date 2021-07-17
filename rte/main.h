@@ -1,4 +1,4 @@
-    /*===========*\
+/*===========*\
 | MAIN HEADER |
 \*===========*/
 
@@ -44,12 +44,12 @@ void __stack_chk_fail(void);
 #include <SDL2/SDL_net.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
-#include <squirrel.h>
-#include <sqstdio.h>
-#include <sqstdaux.h>
-#include <sqstdmath.h>
-#include <sqstdstring.h>
-#include <sqstdsystem.h>
+#include <squirrel3/squirrel.h>
+#include <squirrel3/sqstdio.h>
+#include <squirrel3/sqstdaux.h>
+#include <squirrel3/sqstdmath.h>
+#include <squirrel3/sqstdstring.h>
+#include <squirrel3/sqstdsystem.h>
 
 using namespace std;
 
