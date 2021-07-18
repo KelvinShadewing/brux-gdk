@@ -351,6 +351,20 @@ SQInteger sqSetResolution(HSQUIRRELVM v) {
 	return 0;
 };
 
+SQInteger sqGetScreenW(HSQUIRRELVM v) {
+	SDL_Rect vp;
+	SDL_RenderGetViewport(gvRender, &vp);
+	sq_pushinteger(v, vp.w);
+	return 1;
+}
+
+SQInteger sqGetScreenH(HSQUIRRELVM v) {
+	SDL_Rect vp;
+	SDL_RenderGetViewport(gvRender, &vp);
+	sq_pushinteger(v, vp.h);
+	return 1;
+}
+
 //}
 
 /////////////
@@ -1151,6 +1165,8 @@ SQInteger sqLineCircle(HSQUIRRELVM v) {
     xyPnt c(x2, y2);
 
     sq_pushbool(v, xyLineCircle(&a, &b, &c, r));
+
+	return 1;
 }
 
 SQInteger sqLinePoint(HSQUIRRELVM v) {
@@ -1164,6 +1180,8 @@ SQInteger sqLinePoint(HSQUIRRELVM v) {
     sq_getfloat(v, 7, &y2);
 
     sq_pushbool(v, xyLinePoint(x0, y0, x1, y1, x2, y2));
+
+	return 1;
 }
 
 //}

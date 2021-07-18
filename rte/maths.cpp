@@ -42,6 +42,7 @@ float xyWrap(float x, float a0, float a1) {
 
 	if(x >= 0) return mn + fmodf(x, diff);
 	if(x < 0) return mx + fmod(x, diff);
+	return 0; //Just so GCC is happy
 };
 
 float xyPointAngle(float x1, float y1, float x2, float y2) {
