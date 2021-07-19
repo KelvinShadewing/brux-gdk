@@ -194,6 +194,7 @@ bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d) {
 }
 
 bool xyPointLine(xyPnt* a, xyPnt* b, xyPnt* c) {
+	return false; //TODO: Fill this in
 }
 
 bool xyLineCircle(xyPnt* a, xyPnt* b, xyPnt* c, float r) {

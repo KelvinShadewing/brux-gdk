@@ -278,6 +278,8 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqSetFPS, "setFPS", 2, ".n");
 	xyBindFunc(v, sqSetWindowTitle, "setWindowTitle", 2, ".s");
 	xyBindFunc(v, sqGetFrames, "getFrames");
+	xyBindFunc(v, sqGetScreenW, "screenW");
+	xyBindFunc(v, sqGetScreenH, "screenH");
 
 	//Graphics
 	xyPrint(0, "Embedding graphics...");
@@ -508,7 +510,7 @@ void xyUpdate() {
 	for(int i = 0; i < 8; i++) {
 		if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
 	}
-	
+
 	//Wait for FPS limit
 	//Update ticks counter for FPS
 	gvTicks = SDL_GetTicks();
