@@ -141,6 +141,19 @@ SQInteger sqDoNut(HSQUIRRELVM v) {
 	return 0;
 };
 
+SQInteger sqDoString(HSQUIRRELVM v) {
+	const char* a;
+	sq_getstring(v, 2, &a);
+
+	SQInteger oldtop = sq_gettop(gvSquirrel);
+	sq_compilebuffer(gvSquirrel, a, (int)strlen(a) * sizeof(SQChar), "string", 1);
+	sq_pushroottable(gvSquirrel);
+	sq_call(gvSquirrel, 1, SQFalse, SQTrue);
+	sq_settop(gvSquirrel, oldtop);
+
+	return 0;
+}
+
 SQInteger sqFileExists(HSQUIRRELVM v) {
 	const char* file;
 

@@ -366,6 +366,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s");
 	xyBindFunc(v, sqImport, "import", 2, ".s");
 	xyBindFunc(v, sqDoNut, "donut", 2, ".s");
+	xyBindFunc(v, sqDoString, "dostr", 2, ".s");
 	xyBindFunc(v, sqDecodeJSON, "jsonRead", 2, ".s");
 	xyBindFunc(v, sqGetDir, "getdir");
 	xyBindFunc(v, sqSetDir, "chdir", 2, ".s");

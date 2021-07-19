@@ -23,6 +23,7 @@ SQInteger sqGetScreenH(HSQUIRRELVM v);
 //File IO
 SQInteger sqImport(HSQUIRRELVM v);
 SQInteger sqDoNut(HSQUIRRELVM v);
+SQInteger sqDoString(HSQUIRRELVM v);
 SQInteger sqFileExists(HSQUIRRELVM v);
 SQInteger sqFileWrite(HSQUIRRELVM v);
 SQInteger sqFileRead(HSQUIRRELVM v);
