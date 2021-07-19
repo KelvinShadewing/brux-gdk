@@ -30,13 +30,13 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 - [X] Sprite loading and rendering
 - [X] Sound loading and playing
 - [X] Bitmap monospace text
-- [X] Keyboard and mouse inut
+- [X] Keyboard and mouse input
 - [X] Table saving/loading as JSON file
 - [ ] Bitmap dynamic text
-- [ ] FPS management
+- [X] FPS management
 - [X] Gamepad input
 - [X] JSON map loading and rendering
-- [ ] Collision geometry
+- [ ] Collision geometry (Currently implemented in Squirrel)
 - [ ] Chipmunk physics engine
 - [ ] Create compiled format to contain multiple source files in one (will also be included in squake)
 
@@ -49,6 +49,14 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 * Everything (I haven't planned everything needed yet. I'll wait until the RE grows some more.)
 
 ### Change Log
+
+* **0.0.9**
+  * Added functions to get current display dimensions
+  * Fixed FPS limiter
+  * Added `chint()`, which gets an ascii character from an integer
+  * Added `getFrames()`, which returns the number of frames since the game began
+  * Added `spriteW/H()`, which returns the dimensions of a sprite
+  * Fixed `wrap()`
 
 * **0.0.8**
   * Embed actors.nut into runtime, now feature complete
