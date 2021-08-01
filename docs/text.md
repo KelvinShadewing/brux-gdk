@@ -3,7 +3,7 @@
 
 
 
-&nbsp
+&nbsp;
 
 * <a name="drawtext"></a>**`drawText( font, x, y, text )`**
 

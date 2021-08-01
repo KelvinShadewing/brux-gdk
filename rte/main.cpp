@@ -296,6 +296,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".n|b");
 	xyBindFunc(v, sqSetResolution, "setResolution", 3, ".nn");
 	xyBindFunc(v, sqDrawCircle, "drawCircle", 5, ".nnnn|b");
+	xyBindFunc(v, sqDrawRect, "drawRec", 6, ".nnnnn|b");
 	xyBindFunc(v, sqDrawRect, "drawRect", 6, ".nnnnn|b");
 	xyBindFunc(v, sqDrawPoint, "drawPoint", 3, ".nn");
 	xyBindFunc(v, sqDrawLine, "drawLine", 5, ".nnnn");
@@ -304,7 +305,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	//Sprites
 	xyPrint(0, "Embedding sprites...");
 	xyBindFunc(v, sqSpriteName, "spriteName", 2, ".n");
-	xyBindFunc(v, sqNewSprite, "newSprite", 9, ".siiiiiii");
+	xyBindFunc(v, sqNewSprite, "newSprite", 8, ".siiiiii");
 	xyBindFunc(v, sqDrawSprite, "drawSprite", 5, ".innn");
 	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".innnninnn");
 	xyBindFunc(v, sqDeleteSprite, "deleteSprite", 2, ".i");

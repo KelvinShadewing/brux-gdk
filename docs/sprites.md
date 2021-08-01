@@ -5,15 +5,13 @@
 
 &nbsp
 
-* <a name="newSprite"></a>**`newSprite( file, width, height, margin, padding, pivotX, pivotY, frames )`**
+* <a name="newSprite"></a>**`newSprite( file, width, height, margin, padding, pivotX, pivotY )`**
 
   Creates a new sprite from a grid of frames in an image file. The filename for a sprite is stored internally for use with TMX maps.
 
   `margin` is the distance between the frames and edges of the image, and `padding` is the space between frames. If [`setScalingFilter()`](graphics.md#setScalingFilter) has been set to true, a margin and padding of at least 1 should be used to prevent frame bleeding.
 
   `pivotX` and `pivotY` are the points around which the sprite is rotated and offsets where it will appear when drawn. Margin and padding are not taken into account with these it only applies to the frame itself.
-
-  If `frames` is set to 0, then all cells of the grid will be used. If the sprite does not fit every possible cell in the grid, then it is best to set this value to the total number of frames.
 
 * <a name="drawSprite"></a>**`drawSprite( sprite, frame, x, y )`**
 

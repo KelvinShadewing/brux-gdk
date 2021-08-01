@@ -15,9 +15,9 @@ private:
 	Uint32 *format;
 public:
 	string name;
-	xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames);
+	xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY);
 	~xySprite();
-	void replaceSprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames);
+	void replaceSprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY);
 	void draw(int f, int x, int y);
 	void drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale);
 	Uint32 getnum();

@@ -3,7 +3,7 @@
 
 
 
-&nbsp
+&nbsp;
 
 * <a name="loadsound"></a>**`loadSound( file )`**
 

@@ -420,7 +420,7 @@ SQInteger sqFindSprite(HSQUIRRELVM v) {
 };
 
 SQInteger sqNewSprite(HSQUIRRELVM v) {
-	SQInteger w, h, m, p, px, py, f;
+	SQInteger w, h, m, p, px, py;
 	const char* i;
 
 	sq_getstring(v, 2, &i);
@@ -430,9 +430,8 @@ SQInteger sqNewSprite(HSQUIRRELVM v) {
 	sq_getinteger(v, 6, &p);
 	sq_getinteger(v, 7, &px);
 	sq_getinteger(v, 8, &py);
-	sq_getinteger(v, 9, &f);
 
-	xySprite* newSprite = new xySprite(i, w, h, m, p, px, py, f);
+	xySprite* newSprite = new xySprite(i, w, h, m, p, px, py);
 
 	sq_pushinteger(v, newSprite->getnum());
 	return 1;

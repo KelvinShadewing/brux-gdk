@@ -3,7 +3,7 @@
 
 
 
-&nbsp
+&nbsp;
 
 **NOTE:** This section is not feature complete, and currently requires `std/tilemap.nut` to be included in your project.
 

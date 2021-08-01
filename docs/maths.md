@@ -3,7 +3,7 @@
 
 
 
-&nbsp
+&nbsp;
 
 * <a name="randInt"></a>**`randInt( max )`**
 

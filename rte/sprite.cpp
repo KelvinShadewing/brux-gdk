@@ -10,7 +10,7 @@
 #include "sprite.h"
 #include "maths.h"
 
-xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames) {
+xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) {
 	//Set variables
 	w = width;
 	h = height;
@@ -19,7 +19,7 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	pvX = pivotX;
 	pvY = pivotY;
 	numero = 0;
-	frames = _frames;
+	frames = 0; //Obsolete, will untangle later
 	tex = xyLoadImage(filename);
 	name = filename;
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
@@ -62,7 +62,7 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	if(frames == 0) frames = col * row;
 };
 
-void xySprite::replaceSprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY, Uint32 _frames) {
+void xySprite::replaceSprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) {
 	//Set variables
 	w = width;
 	h = height;
@@ -71,7 +71,7 @@ void xySprite::replaceSprite(const char* filename, Uint32 width, Uint32 height, 
 	pvX = pivotX;
 	pvY = pivotY;
 	numero = 0;
-	frames = _frames;
+	frames = 0; //Obsolete, will untangle later
 	Uint32 newtex = xyLoadImage(filename);
 	name = filename;
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
