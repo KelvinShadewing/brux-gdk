@@ -16,7 +16,7 @@ float xyDistance(float x1, float y1, float x2, float y2) {
 };
 
 float xyDistance3(float x1, float y1, float z1, float x2, float y2, float z2) {
-    float xd = (float)(x1 - x2);
+	float xd = (float)(x1 - x2);
 	float yd = (float)(y1 - y2);
 	float zd = (float)(z1 - z2);
 
@@ -65,5 +65,5 @@ float xyLenDirX(float l, float d) {
 };
 
 float xyLenDirY(float l, float d) {
-    return l * sin(d * pi / 180);
+	return l * sin(d * pi / 180);
 };

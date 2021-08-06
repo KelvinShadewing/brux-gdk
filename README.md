@@ -50,6 +50,11 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.0.10**
+  * Added sprite alpha blending (Why did this take so long?)
+  * Removed unnecessary argument from `newSprite()`
+  * Fixed FPS limiter for real this time
+
 * **0.0.9**
   * Added functions to get current display dimensions
   * Fixed FPS limiter

@@ -19,7 +19,7 @@
 
 * <a name="drawSpriteEx"></a>**`drawSpriteEx( sprite, frame, x, y, angle, flip, xscale, yscale, alpha )`**
 
-  Draws a sprite that is also transformed and blended with the given `alpha` value.
+  Draws a sprite that is also transformed and blended with the given `alpha` value. `alpha` should be a float between `0.0` and `1.0`.
 
 * <a name="deleteSprite"></a>**`deleteSprite( sprite )`**
 

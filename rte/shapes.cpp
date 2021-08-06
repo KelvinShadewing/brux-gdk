@@ -172,10 +172,10 @@ float xyPnt::dot(xyPnt* p) {
 //////////{
 
 xyShape::xyShape(float _x, float _y, float _a, int _type) {
-    x = _x;
-    y = _y;
-    a = _a;
-    type = _type;
+	x = _x;
+	y = _y;
+	a = _a;
+	type = _type;
 };
 
 //}
@@ -198,32 +198,32 @@ bool xyPointLine(xyPnt* a, xyPnt* b, xyPnt* c) {
 }
 
 bool xyLineCircle(xyPnt* a, xyPnt* b, xyPnt* c, float r) {
-    if(xyDistance(a->x, a->y, c->x, c->y) <= r) return true;
-    if(xyDistance(b->x, b->y, c->x, c->y) <= r) return true;
+	if(xyDistance(a->x, a->y, c->x, c->y) <= r) return true;
+	if(xyDistance(b->x, b->y, c->x, c->y) <= r) return true;
 
-    float distX = a->x - b->x;
-    float distY = a->y - b->y;
-    float len = sqrt((distX * distX) + (distY * distY));
+	float distX = a->x - b->x;
+	float distY = a->y - b->y;
+	float len = sqrt((distX * distX) + (distY * distY));
 
-    float dot = ( ((c->x - a->x) * (b->x - a->x)) + ((c->y - a->y) * (b->y - a->y)) ) / pow(len, 2);
-    float cx = a->x + (dot * (b->x - a->x));
-    float cy = a->y + (dot * (b->y - a->y));
+	float dot = ( ((c->x - a->x) * (b->x - a->x)) + ((c->y - a->y) * (b->y - a->y)) ) / pow(len, 2);
+	float cx = a->x + (dot * (b->x - a->x));
+	float cy = a->y + (dot * (b->y - a->y));
 
-    if (!xyLinePoint(a->x, a->y, b->x, b->y, cx, cy)) return false;
+	if (!xyLinePoint(a->x, a->y, b->x, b->y, cx, cy)) return false;
 
-    distX = cx - c->x;
-    distY = cy - c->y;
-    len = sqrt((distX * distX) + (distY * distY));
+	distX = cx - c->x;
+	distY = cy - c->y;
+	len = sqrt((distX * distX) + (distY * distY));
 
-    return (len <= r);
+	return (len <= r);
 }
 
 bool xyLinePoint(float lx0, float ly0, float lx1, float ly1, float px, float py) {
-    float ll = xyDistance(lx0, ly0, lx1, ly1);
-    float d1 = xyDistance(lx0, ly0, px, py);
-    float d2 = xyDistance(px, py, lx1, ly1);
+	float ll = xyDistance(lx0, ly0, lx1, ly1);
+	float d1 = xyDistance(lx0, ly0, px, py);
+	float d2 = xyDistance(px, py, lx1, ly1);
 
-    return (d1 + d2 <= ll + 1 && d1 + d2 >= ll - 1); //Literal is floating point buffer
+	return (d1 + d2 <= ll + 1 && d1 + d2 >= ll - 1); //Literal is floating point buffer
 }
 
 bool xyHitTest(xyShape* a, xyShape* b) {

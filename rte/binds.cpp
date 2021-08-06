@@ -96,8 +96,8 @@ SQInteger sqSetWindowTitle(HSQUIRRELVM v) {
 };
 
 SQInteger sqGetFrames(HSQUIRRELVM v) {
-    sq_pushinteger(v, gvFrames);
-    return 1;
+	sq_pushinteger(v, gvFrames);
+	return 1;
 }
 
 //}
@@ -455,7 +455,7 @@ SQInteger sqDrawSprite(HSQUIRRELVM v) {
 
 SQInteger sqDrawSpriteEx(HSQUIRRELVM v) {
 	SQInteger i, f, x, y, a, l;
-	float sx, sy;
+	float sx, sy, p;
 
 	sq_getinteger(v, 2, &i);
 	sq_getinteger(v, 3, &f);
@@ -465,11 +465,12 @@ SQInteger sqDrawSpriteEx(HSQUIRRELVM v) {
 	sq_getinteger(v, 7, &l);
 	sq_getfloat(v, 8, &sx);
 	sq_getfloat(v, 9, &sy);
+	sq_getfloat(v, 10, &p);
 
 	if(vcSprites.size() <= i) return 0;
 	if(vcSprites[i] == 0) return 0;
 
-	vcSprites[i]->drawex(f, x, y, a, static_cast<SDL_RendererFlip>(l), sx, sy);
+	vcSprites[i]->drawex(f, x, y, a, static_cast<SDL_RendererFlip>(l), sx, sy, p);
 
 	return 0;
 };
@@ -486,11 +487,11 @@ SQInteger sqDeleteSprite(HSQUIRRELVM v) {
 };
 
 SQInteger sqSpriteW(HSQUIRRELVM v) {
-    SQInteger i;
+	SQInteger i;
 
-    sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 2, &i);
 
-    if(i >= vcSprites.size()) return 0;
+	if(i >= vcSprites.size()) return 0;
 	if(vcSprites[i] != 0) sq_pushinteger(v, vcSprites[i]->getw());
 	else sq_pushinteger(v, 0);
 
@@ -498,11 +499,11 @@ SQInteger sqSpriteW(HSQUIRRELVM v) {
 };
 
 SQInteger sqSpriteH(HSQUIRRELVM v) {
-    SQInteger i;
+	SQInteger i;
 
-    sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 2, &i);
 
-    if(i >= vcSprites.size()) return 0;
+	if(i >= vcSprites.size()) return 0;
 	if(vcSprites[i] != 0) sq_pushinteger(v, vcSprites[i]->geth());
 	else sq_pushinteger(v, 0);
 
@@ -924,15 +925,15 @@ SQInteger sqDrawText(HSQUIRRELVM v) {
 };
 
 SQInteger sqChint(HSQUIRRELVM v) {
-    SQInteger i;
+	SQInteger i;
 
-    sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 2, &i);
 
-    const char s = (const char)i;
+	const char s = (const char)i;
 
-    sq_pushstring(v, &s, 1);
+	sq_pushstring(v, &s, 1);
 
-    return 1;
+	return 1;
 }
 
 //}
@@ -1140,58 +1141,58 @@ SQInteger sqDrawLineWide(HSQUIRRELVM v) {
 ///////////{
 
 SQInteger sqLineLine(HSQUIRRELVM v) {
-    SQFloat x0, y0, x1, y1, x2, y2, x3, y3;
+	SQFloat x0, y0, x1, y1, x2, y2, x3, y3;
 
-    sq_getfloat(v, 2, &x0);
-    sq_getfloat(v, 3, &y0);
-    sq_getfloat(v, 4, &x1);
-    sq_getfloat(v, 5, &y1);
-    sq_getfloat(v, 6, &x2);
-    sq_getfloat(v, 7, &y2);
-    sq_getfloat(v, 8, &x3);
-    sq_getfloat(v, 9, &y3);
+	sq_getfloat(v, 2, &x0);
+	sq_getfloat(v, 3, &y0);
+	sq_getfloat(v, 4, &x1);
+	sq_getfloat(v, 5, &y1);
+	sq_getfloat(v, 6, &x2);
+	sq_getfloat(v, 7, &y2);
+	sq_getfloat(v, 8, &x3);
+	sq_getfloat(v, 9, &y3);
 
-    xyPnt a(x0, y0);
-    xyPnt b(x1, y1);
-    xyPnt c(x2, y2);
-    xyPnt d(x3, y3);
+	xyPnt a(x0, y0);
+	xyPnt b(x1, y1);
+	xyPnt c(x2, y2);
+	xyPnt d(x3, y3);
 
-    sq_pushbool(v, xyLineLine(&a, &b, &c, &d));
+	sq_pushbool(v, xyLineLine(&a, &b, &c, &d));
 
-    return 1;
+	return 1;
 }
 
 SQInteger sqLineCircle(HSQUIRRELVM v) {
-    SQFloat x0, y0, x1, y1, x2, y2, r;
+	SQFloat x0, y0, x1, y1, x2, y2, r;
 
-    sq_getfloat(v, 2, &x0);
-    sq_getfloat(v, 3, &y0);
-    sq_getfloat(v, 4, &x1);
-    sq_getfloat(v, 5, &y1);
-    sq_getfloat(v, 6, &x2);
-    sq_getfloat(v, 7, &y2);
-    sq_getfloat(v, 8, &r);
+	sq_getfloat(v, 2, &x0);
+	sq_getfloat(v, 3, &y0);
+	sq_getfloat(v, 4, &x1);
+	sq_getfloat(v, 5, &y1);
+	sq_getfloat(v, 6, &x2);
+	sq_getfloat(v, 7, &y2);
+	sq_getfloat(v, 8, &r);
 
-    xyPnt a(x0, y0);
-    xyPnt b(x1, y1);
-    xyPnt c(x2, y2);
+	xyPnt a(x0, y0);
+	xyPnt b(x1, y1);
+	xyPnt c(x2, y2);
 
-    sq_pushbool(v, xyLineCircle(&a, &b, &c, r));
+	sq_pushbool(v, xyLineCircle(&a, &b, &c, r));
 
 	return 1;
 }
 
 SQInteger sqLinePoint(HSQUIRRELVM v) {
-    SQFloat x0, y0, x1, y1, x2, y2;
+	SQFloat x0, y0, x1, y1, x2, y2;
 
-    sq_getfloat(v, 2, &x0);
-    sq_getfloat(v, 3, &y0);
-    sq_getfloat(v, 4, &x1);
-    sq_getfloat(v, 5, &y1);
-    sq_getfloat(v, 6, &x2);
-    sq_getfloat(v, 7, &y2);
+	sq_getfloat(v, 2, &x0);
+	sq_getfloat(v, 3, &y0);
+	sq_getfloat(v, 4, &x1);
+	sq_getfloat(v, 5, &y1);
+	sq_getfloat(v, 6, &x2);
+	sq_getfloat(v, 7, &y2);
 
-    sq_pushbool(v, xyLinePoint(x0, y0, x1, y1, x2, y2));
+	sq_pushbool(v, xyLinePoint(x0, y0, x1, y1, x2, y2));
 
 	return 1;
 }
