@@ -19,6 +19,8 @@ SQInteger sqSetWindowTitle(HSQUIRRELVM v);
 SQInteger sqGetFrames(HSQUIRRELVM v);
 SQInteger sqGetScreenW(HSQUIRRELVM v);
 SQInteger sqGetScreenH(HSQUIRRELVM v);
+SQInteger sqGetDisplayH(HSQUIRRELVM v);
+SQInteger sqGetDisplayW(HSQUIRRELVM v);
 
 //File IO
 SQInteger sqImport(HSQUIRRELVM v);

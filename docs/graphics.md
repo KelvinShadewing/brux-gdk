@@ -68,3 +68,19 @@
 * <a name="setResolution"></a>**`setResolution( width, height )`**
 
   Changes the base resolution of the window. In full screen, this may produce a letterbox if the aspect ratio does not match that of the monitor.
+
+* <a name="screenW"></a>**`screenW()`**
+
+  Returns the width of the game's internal resolution.
+
+  * <a name="screenH"></a>**`screenH()`**
+
+  Returns the height of the game's internal resolution.
+
+  * <a name="displayW"></a>**`displayW()`**
+
+  Returns the width of the hardware's display resolution.
+
+  * <a name="displayH"></a>**`displayH()`**
+
+  Returns the height of the hardware's display resolution.

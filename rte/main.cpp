@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
 			}
 		//Other arguments
 
-		if(curarg == "-f") SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		if(curarg == "-f" || curarg == "--fullscreen") SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		}
 	}
 
@@ -280,6 +280,8 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqGetFrames, "getFrames");
 	xyBindFunc(v, sqGetScreenW, "screenW");
 	xyBindFunc(v, sqGetScreenH, "screenH");
+	xyBindFunc(v, sqGetDisplayW, "displayW");
+	xyBindFunc(v, sqGetDisplayH, "displayH");
 
 	//Graphics
 	xyPrint(0, "Embedding graphics...");

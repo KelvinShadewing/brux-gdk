@@ -98,7 +98,25 @@ SQInteger sqSetWindowTitle(HSQUIRRELVM v) {
 SQInteger sqGetFrames(HSQUIRRELVM v) {
 	sq_pushinteger(v, gvFrames);
 	return 1;
-}
+};
+
+SQInteger sqGetDisplayH(HSQUIRRELVM v) {
+	SDL_DisplayMode DM;
+	SDL_GetCurrentDisplayMode(0, &DM);
+
+	sq_pushinteger(v, DM.h);
+
+	return 1;
+};
+
+SQInteger sqGetDisplayW(HSQUIRRELVM v) {
+	SDL_DisplayMode DM;
+	SDL_GetCurrentDisplayMode(0, &DM);
+
+	sq_pushinteger(v, DM.w);
+
+	return 1;
+};
 
 //}
 
