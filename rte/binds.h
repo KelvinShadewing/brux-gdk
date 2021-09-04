@@ -62,6 +62,7 @@ SQInteger sqSpriteH(HSQUIRRELVM v);
 SQInteger sqKeyPress(HSQUIRRELVM v);
 SQInteger sqKeyRelease(HSQUIRRELVM v);
 SQInteger sqKeyDown(HSQUIRRELVM v);
+SQInteger sqKeyPressAny(HSQUIRRELVM v);
 SQInteger sqResetDrawTarget(HSQUIRRELVM v);
 SQInteger sqLoadImage(HSQUIRRELVM v);
 SQInteger sqDrawImage(HSQUIRRELVM v);
@@ -87,6 +88,7 @@ SQInteger sqPadHatRelease(HSQUIRRELVM v);
 SQInteger sqPadButtonDown(HSQUIRRELVM v);
 SQInteger sqPadButtonPress(HSQUIRRELVM v);
 SQInteger sqPadButtonRelease(HSQUIRRELVM v);
+SQInteger sqPadButtonAny(HSQUIRRELVM v);
 
 //Maths
 SQInteger sqRandomFloat(HSQUIRRELVM v);

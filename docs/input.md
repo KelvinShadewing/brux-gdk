@@ -17,6 +17,10 @@
 
   Returns whether or not `key` was just released.
 
+* <a name="anyKeyPress"></a>**`anyKeyPress()`**
+
+  If any key was pressed on the current frame, this returns the first one detected, otherwise, it returns -1. Useful for remapping controls.
+
 * <a name="mouseX"></a>**`mouseX()`**
 
   Returns the X coordinate of the mouse.
@@ -100,3 +104,7 @@
 * <a name="joyButtonDown"></a>**`joyButtonDown( id, button )`**
 
   Returns if a gamepad's button numbered `button` is held.
+
+* <a name="anyJoyPress"></a>**`anyJoyPress( id )`**
+
+  If any button on the gamepad is pressed, it returns the number, otherwise, it returns -1.

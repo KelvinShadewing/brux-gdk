@@ -561,6 +561,20 @@ SQInteger sqKeyRelease(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqKeyPressAny(HSQUIRRELVM v) {
+	SQInteger a = -1;
+
+	for(int i = 0; i < 322; i++) {
+		if(xyKeyPress(i)) {
+			a = i;
+			break;
+		}
+	}
+
+	sq_pushinteger(v, a);
+	return 1;
+};
+
 SQInteger sqMouseDown(HSQUIRRELVM v) {
 	SQInteger i;
 
@@ -749,6 +763,24 @@ SQInteger sqPadButtonPress(HSQUIRRELVM v) {
 	sq_getinteger(v, 3, &b);
 
 	sq_pushinteger(v, (gvPadButton[i][b] && !gvPadLastButton[i][b]) );
+
+	return 1;
+};
+
+SQInteger sqPadButtonAny(HSQUIRRELVM v) {
+	int a = -1;
+	SQInteger p;
+
+	sq_getinteger(v, 2, &p);
+
+	for(int i = 0; i < 32; i++) {
+		if(gvPadButton[p][i] && !gvPadLastButton[p][i]) {
+			a = i;
+			break;
+		}
+	}
+
+	sq_pushinteger(v, a);
 
 	return 1;
 };

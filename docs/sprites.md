@@ -3,7 +3,7 @@
 
 
 
-&nbsp
+&nbsp;
 
 * <a name="newSprite"></a>**`newSprite( file, width, height, margin, padding, pivotX, pivotY )`**
 

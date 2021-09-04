@@ -321,6 +321,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqKeyPress, "keyPress", 2, ".n");
 	xyBindFunc(v, sqKeyRelease, "keyRelease", 2, ".n");
 	xyBindFunc(v, sqKeyDown, "keyDown", 2, ".n");
+	xyBindFunc(v, sqKeyPressAny, "anyKeyPress");
 	xyBindFunc(v, sqMouseDown, "mouseDown", 2, ".i");
 	xyBindFunc(v, sqMousePress, "mousePress", 2, ".i");
 	xyBindFunc(v, sqMouseRelease, "mouseRelease", 2, ".i");
@@ -343,6 +344,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqPadButtonDown, "joyButtonDown", 3, ".ii");
 	xyBindFunc(v, sqPadButtonPress, "joyButtonPress", 3, ".ii");
 	xyBindFunc(v, sqPadButtonRelease, "joyButtonRelease", 3, ".ii");
+	xyBindFunc(v, sqPadButtonAny, "anyJoyPress", 2, ".i");
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
