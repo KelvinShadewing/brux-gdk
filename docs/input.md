@@ -45,58 +45,58 @@
 
   Returns number of gamepads detected.
 
-* <a name="padX"></a>**`padX( id )`**
+* <a name="joyX"></a>**`joyX( id )`**
 
   Returns position of X axis on pad numbered `id`.
 
-* <a name="padY"></a>**`padY( id )`**
+* <a name="joyY"></a>**`joyY( id )`**
 
   Returns position of Y axis on pad numbered `id`.
 
-* <a name="padZ"></a>**`padZ( id )`**
+* <a name="joyZ"></a>**`joyZ( id )`**
 
   Returns position of Z axis on pad numbered `id`.
 
-* <a name="padH"></a>**`padH( id )`**
+* <a name="joyH"></a>**`joyH( id )`**
 
   Returns position of 'horizontal' axis on pad numbered `id`.
 
-* <a name="padV"></a>**`padV( id )`**
+* <a name="joyV"></a>**`joyV( id )`**
 
   Returns position of 'vertical' axis on pad numbered `id`.
 
-* <a name="padR"></a>**`padR( id )`**
+* <a name="joyR"></a>**`joyR( id )`**
 
   Returns position of right trigger on pad numbered `id`.
 
-* <a name="padL"></a>**`padL( id )`**
+* <a name="joyL"></a>**`joyL( id )`**
 
   Returns position of left trigger on pad numbered `id`.
 
-* <a name="padAxis"></a>**`padAxis( id, axis )`**
+* <a name="joyAxis"></a>**`joyAxis( id, axis )`**
 
   Returns position of axis numbered `axis` on pad numbered `id`.
 
-* <a name="padHatPress"></a>**`padHatPress( id, direction )`**
+* <a name="joyHatPress"></a>**`joyHatPress( id, direction )`**
 
   Returns whether a given direction on the gamepad's hat is pressed. See [constants](constants.md#joystick) for directions.
 
-* <a name="padHatRelease"></a>**`padHatRelease( id, direction )`**
+* <a name="joyHatRelease"></a>**`joyHatRelease( id, direction )`**
 
   Returns whether a given direction on the gamepad's hat is released. See [constants](constants.md#joystick) for directions.
 
-* <a name="padHatDown"></a>**`padHatDown( id, direction )`**
+* <a name="joyHatDown"></a>**`joyHatDown( id, direction )`**
 
   Returns whether a given direction on the gamepad's hat is being held. See [constants](constants.md#joystick) for directions.
 
-* <a name="padButtonPress"></a>**`padButtonPress( id, button )`**
+* <a name="joyButtonPress"></a>**`joyButtonPress( id, button )`**
 
   Returns if a gamepad's button numbered `button` is pressed.
 
-* <a name="padButtonRelease"></a>**`padButtonRelease( id, button )`**
+* <a name="joyButtonRelease"></a>**`joyButtonRelease( id, button )`**
 
   Returns if a gamepad's button numbered `button` is released.
 
-* <a name="padButtonDown"></a>**`padButtonDown( id, button )`**
+* <a name="joyButtonDown"></a>**`joyButtonDown( id, button )`**
 
   Returns if a gamepad's button numbered `button` is held.
