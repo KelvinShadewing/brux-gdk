@@ -32,3 +32,7 @@
 * <a name="wrap"></a>**`wrap( num, low, high )`**
 
   Takes `num` and wraps it around so that it is in between `low` and `high`, then returns it as a float.
+
+* <a name="pointAngle"></a>**`pointAngle( x1, y1, x2, y2 )`**
+
+  Returns the angle between two points in degrees.

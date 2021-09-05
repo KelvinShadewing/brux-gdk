@@ -806,7 +806,7 @@ SQInteger sqRandomFloat(HSQUIRRELVM v) {
 	float a;
 
 	sq_getfloat(v, 2, &a);
-	sq_pushinteger(v, xyRandomFloat(a));
+	sq_pushfloat(v, xyRandomFloat(a));
 
 	return 1;
 };
