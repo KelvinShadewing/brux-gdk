@@ -95,6 +95,19 @@ SQInteger sqSetWindowTitle(HSQUIRRELVM v) {
 	return 0;
 };
 
+SQInteger sqLoadWindowIcon(HSQUIRRELVM v) {
+	const char* t;
+
+	sq_getstring(v, 2, &t);
+	if(xyFileExists(t)) {
+		SDL_Surface* icon = IMG_Load(t);
+		SDL_SetWindowIcon(gvWindow, icon);
+		SDL_FreeSurface(icon);
+	}
+
+	return 0;
+};
+
 SQInteger sqGetFrames(HSQUIRRELVM v) {
 	sq_pushinteger(v, gvFrames);
 	return 1;
