@@ -64,12 +64,14 @@ void xyDeleteSound(Uint32 sound) {
 	if(sound >= vcSounds.size()) return;
 	if(vcSounds[sound] == 0) return;
 	Mix_FreeChunk(vcSounds[sound]);
+	vcSounds[sound] = 0;
 };
 
 void xyDeleteMusic(Uint32 music) {
 	if(music >= vcMusic.size()) return;
 	if(vcMusic[music] == 0) return;
 	Mix_FreeMusic(vcMusic[music]);
+	vcMusic[music] = 0;
 };
 
 int xyPlaySound(Uint32 sound, Uint32 loops) {

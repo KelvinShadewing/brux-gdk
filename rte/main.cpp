@@ -195,21 +195,26 @@ void xyEnd(){
 
 	//Cleanup all resources
 	xyPrint(0, "Cleaning up all resources...");
+	xyPrint(0, "Cleaning textures...");
 	for(int i = 0; i < vcTextures.size(); i++) {
 		xyDeleteImage(i);
 	}
 
+	xyPrint(0, "Cleaning sprites...");
 	for(int i = 0; i < vcSprites.size(); i++) {
 		delete vcSprites[i];
 	}
 
+	xyPrint(0, "Cleaning sounds...");
 	for(int i = 0; i < vcSounds.size(); i++) {
 		xyDeleteSound(i);
 	}
 
+	xyPrint(0, "Cleaning music...");
 	for(int i = 0; i < vcMusic.size(); i++) {
 		xyDeleteMusic(i);
 	}
+	xyPrint(0, "Finished cleanup.");
 
 	//Close Squirrel
 	xyPrint(0, "Closing Squirrel...");

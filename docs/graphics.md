@@ -65,6 +65,10 @@
 
   Changes the title of the window.
 
+* <a name="setWindowIcon"></a>**`setWindowIcon( icon )`**
+
+  Changes the icon of the window to an image file.
+
 * <a name="setResolution"></a>**`setResolution( width, height )`**
 
   Changes the base resolution of the window. In full screen, this may produce a letterbox if the aspect ratio does not match that of the monitor.
