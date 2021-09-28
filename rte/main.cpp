@@ -239,7 +239,7 @@ void xyEnd(){
 void xyPrint(HSQUIRRELVM v, const SQChar *s, ...) {
 	va_list argv;
 	va_start(argv, s);
-	SQChar buffer[1024] = _SC("");
+	SQChar buffer[1024*1024] = _SC("");
 	vsnprintf(buffer, sizeof(buffer), s, argv);
 	va_end(argv);
 	cout << buffer << endl;
