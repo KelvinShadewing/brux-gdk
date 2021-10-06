@@ -1,0 +1,1 @@
+These versions of the source code are the ones that were modified in hopes of adding Unicode support. That did not work. I've left these here for anyone who wants to try adding Unicode support to the engine to look at and hopefully find where I went wrong.
