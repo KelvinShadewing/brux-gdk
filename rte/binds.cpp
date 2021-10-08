@@ -12,6 +12,7 @@
 #include "audio.h"
 #include "sprite.h"
 #include "binds.h"
+#include "iconv.hpp"
 
 //////////
 // MAIN //
@@ -995,6 +996,29 @@ SQInteger sqChint(HSQUIRRELVM v) {
 	const char s = (const char)i;
 
 	sq_pushstring(v, &s, 1);
+
+	return 1;
+}
+
+SQInteger sqStringLen(HSQUIRRELVM v){
+	const SQChar* t;
+	SQInteger i;
+
+	sq_getstring(v, 2, &t);
+
+	std::string input = t;
+
+	//by default, squirrels "len()" function assumes that each string read in is in UTF-8. problem is that
+	//this will result in an over-count of special characters, due to the multi-byte representation in UTF-8.
+	//to remedy this, the string has to be converted to CP437, which will give the true number of characters in
+	//the string length.
+	iconvpp::converter conv("CP437", "UTF-8");
+	std::string output;
+	conv.convert(input, output);
+
+	i = output.size();
+
+	sq_pushinteger(v, i);
 
 	return 1;
 }

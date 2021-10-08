@@ -9,6 +9,7 @@
 #include "graphics.h"
 #include "sprite.h"
 #include "text.h"
+#include "iconv.hpp"
 
 //New bitmap font format to replace SDL_ttf.
 //
@@ -67,6 +68,7 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 	//Get frame number and x/width
 	cx.resize(source->getframes());
 	cw.resize(source->getframes());
+
 	if(true){//Monospace
 		if(cx.size() > 0) {
 			for(int i = 0; i < source->getframes(); i++) {
@@ -125,13 +127,28 @@ void xyFont::draw(int x, int y, string text) {
 	int dx = x, dy = y; //Set cursor start position
 	int c; //Current character by font index
 
+	// by default, characters are handled in UTF-8 in C++. in order to support CP437, each character in the string has
+	// to be converted to CP437 from UTF-8. so to do so, a converter using iconv.h is used. 
+	// without said converter, this would require all sorts of bit manipulation and table-lookups 
+	// to properly convert unicode stored in UTF-8 to the unicodes stored in CP437.
+	iconvpp::converter conv("CP437", "UTF-8");
+	std::string output;
+	conv.convert(text, output);
+
 	//Loop to end of string
-	for(int i = 0; i < text.length(); i++) {
-		if (text[i] == '\n') {
+	for(int i = 0; i < output.length(); i++) {
+		if (output[i] == '\n') {
 			dy += source->geth();
 			dx = x;
 		} else {
-			c = (int)text[i] - start; //Get current character and apply font offset
+			//each character should only be a byte long, hence uint8_t
+			uint8_t c = (uint8_t)output[i] - start;
+			// characters that exceed ASCII have the most significant bit set to 1, so XORing against that bit
+			// will give the proper index into a CP437 spritesheet.
+			if (c < 0){
+				c ^= 128;
+			}
+
 			if (c >= 0 && c < cw.size()){ //Is this character defined in the font?
 				source->draw(c, dx, dy);
 				dx += cw[c] + kern;
