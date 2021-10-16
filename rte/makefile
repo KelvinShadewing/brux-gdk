@@ -26,3 +26,6 @@ gcw0: $(DEPS)
 
 clean:
 	rm *.o
+
+debug: $(DEPS)
+	gcc -o bin/brux $(SRC) $(CFLAGS) -g

@@ -153,6 +153,8 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	SDL_SetTextureAlphaMod(vcTextures[tex], alpha * 255);
 	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
 	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
+
+	delete piv;
 };
 
 Uint32 xySprite::getnum() {

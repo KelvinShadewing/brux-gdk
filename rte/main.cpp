@@ -61,7 +61,9 @@ int main(int argc, char* argv[]) {
 						size_t found = xygapp.find_last_of("/\\");
 						gvWorkDir = xygapp.substr(0, found);
 						chdir(gvWorkDir.c_str());
-						xyPrint(0, "Working directory: %s", getcwd(0,0));
+						char* curdir = getcwd(0,0);
+						xyPrint(0, "Working directory: %s", curdir);
+						delete curdir;
 					}
 				}
 			}
