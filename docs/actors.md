@@ -5,9 +5,9 @@
 
 &nbsp;
 
-* <a name="newActor"></a>**`newActor( type, x, y )`**
+* <a name="newActor"></a>**`newActor( type, x, y, arr = null )`**
 
-  Creates a new instance of an actor class. `type` should be the name of a class that extends `Actor`. Returns the ID number of the new instance to use with `actor[id]` to address an instance.
+  Creates a new instance of an actor class. `type` should be the name of a class that extends `Actor`. Returns the ID number of the new instance to use with `actor[id]` to address an instance. `arr` is an optional argument that can contain a special argument for the actor. If you want multiple special arguments, include them in an array. The base actor class will not do anything with `arr`.
 
 * <a name="deleteActor"></a>**`deleteActor( id )`**
 
@@ -28,3 +28,7 @@
 ### Actor Members
 
 **NOTE** These functions are predefined within `Actor`, and are called by `Actor` instances or within derived `Actor` class methods.
+
+* <a name="run"></a>**`run()`**
+
+  The function called for all actors in the actor table by `runActors()`. This is where your actor's per-frame behavior should go.

@@ -27,7 +27,7 @@ void xyLoadActors() {
 		sprite = 0; \
 		frame = 0.0; \
 	 \
-		constructor(_x, _y){ \
+		constructor(_x, _y, _arr = null){ \
 			x = _x; \
 			y = _y; \
 		}; \
@@ -46,8 +46,8 @@ void xyLoadActors() {
 		}\
 	}; \
 	 \
-	::newActor <- function(type, x, y){\n\
-		local na = type(x, y);\n\tna.id = actlast;\n\
+	::newActor <- function(type, x, y, arr = null){\n\
+		local na = type(x, y, arr);\n\tna.id = actlast;\n\
 		actor[actlast] <- na;\n\
 		if(!actor.rawin(typeof na)) actor[typeof na] <- {};\n\
 		actor[typeof na][actlast] <- na;\n\
