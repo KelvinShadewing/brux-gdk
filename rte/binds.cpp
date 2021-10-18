@@ -999,6 +999,37 @@ SQInteger sqChint(HSQUIRRELVM v) {
 	return 1;
 }
 
+SQInteger sqStringLen(HSQUIRRELVM v) {
+  const char* s;
+  sq_getstring(v, 2, &s);
+
+  //convert to a string, only because it's easier to iterate through
+  std::string str = s;
+  int len = 0;
+
+  //to properly count the length of multi-byte characters, the same logic has to apply as in
+  //the draw function, where UTF-8 values have their most significant bits checked.
+  //this time it's a little easier though, as it's just a matter of iterating through the string
+  //and incrementing the counter appropriately
+  for(int i = 0; i < str.length(); i++){
+    //this process requires no shifting, so only each byte is needed
+    uint8_t c = str[i];
+
+    //if there are 3 bytes, then skip 2
+    if ((c & 0xE0) == 0xE0){
+      i += 2;
+      //if there are two bytes, then skip 1
+    }else if ((c & 0xC0) == 0xC0){
+      i += 1;
+    }
+
+    len += 1;
+  }
+
+  sq_pushinteger(v, len);
+  return 1;
+}
+
 //}
 
 ///////////
