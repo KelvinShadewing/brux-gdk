@@ -100,6 +100,7 @@ void xySprite::replaceSprite(const char* filename, Uint32 width, Uint32 height, 
 xySprite::~xySprite() {
 	//Remove from list
 	if(numero == vcSprites.size() - 1) vcSprites.pop_back(); else vcSprites[numero] = 0;
+	xyDeleteImage(tex);
 };
 
 void xySprite::draw(int f, int x, int y) {
