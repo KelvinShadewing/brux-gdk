@@ -311,6 +311,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqDrawPoint, "drawPoint", 3, ".nn");
 	xyBindFunc(v, sqDrawLine, "drawLine", 5, ".nnnn");
 	xyBindFunc(v, sqDrawLineWide, "drawLineWide", 6, ".nnnnn");
+	xyBindFunc(v, sqNewTexture, "newTexture", 3, ".nn");
 
 	//Sprites
 	xyPrint(0, "Embedding sprites...");

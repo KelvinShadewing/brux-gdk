@@ -47,6 +47,7 @@ SQInteger sqLoadImage(HSQUIRRELVM v);
 SQInteger sqLoadImageKeyed(HSQUIRRELVM v);
 SQInteger sqSetScalingFilter(HSQUIRRELVM v);
 SQInteger sqSetResolution(HSQUIRRELVM v);
+SQInteger sqNewTexture(HSQUIRRELVM v);
 
 //Sprites
 SQInteger sqSpriteName(HSQUIRRELVM v);

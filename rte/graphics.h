@@ -24,5 +24,6 @@ Uint8 xyGetRed(Uint32 color);
 Uint8 xyGetGreen(Uint32 color);
 Uint8 xyGetBlue(Uint32 color);
 Uint8 xyGetAlpha(Uint32 color);
+Uint32 xyNewTexture(Uint32 w, Uint32 h);
 
 #endif

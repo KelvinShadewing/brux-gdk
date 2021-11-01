@@ -409,6 +409,18 @@ SQInteger sqGetScreenH(HSQUIRRELVM v) {
 	return 1;
 }
 
+SQInteger sqNewTexture(HSQUIRRELVM v) {
+	SQInteger w, h;
+
+	sq_getinteger(v, 2, &w);
+	sq_getinteger(v, 3, &h);
+
+	SQInteger t = xyNewTexture(w, h);
+
+	sq_pushinteger(v, t);
+	return 1;
+};
+
 //}
 
 /////////////

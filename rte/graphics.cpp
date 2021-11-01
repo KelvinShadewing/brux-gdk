@@ -235,6 +235,31 @@ Uint32 xyGetFPS() {
 	else return 1000 / delay;
 };
 
+//Load a texture and assign it to a slot in the textures list
+Uint32 xyNewTexture(Uint32 w, Uint32 h) {
+	SDL_Texture* nimg = SDL_CreateTexture( gvRender, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w, h );
+
+	if(!nimg) {
+		xyPrint(0, "Unable to create texture!");
+		gvQuit = 1;
+	}
+
+	//Make sure vcTextures[0] == 0
+	if(vcTextures.size() == 1) vcTextures.push_back(0);
+
+	for(Uint32 i = 1; i < vcTextures.size(); i++) {
+		if(vcTextures[i] == 0) {
+			vcTextures[i] = nimg;
+			//Return the texture index
+			return i;
+		}
+	}
+
+	//Return the texture index
+	vcTextures.push_back(nimg);
+	return vcTextures.size() - 1;
+};
+
 //}
 
 //////////////
