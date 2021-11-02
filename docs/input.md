@@ -45,7 +45,7 @@
 
   Returns if the exit button on the window or the OS's exit shortcut has been pressed.
 
-* <a name="getPads"></a>**`getPads()`**
+* <a name="joyCount"></a>**`joyCount()`**
 
   Returns number of gamepads detected.
 
@@ -108,3 +108,7 @@
 * <a name="anyJoyPress"></a>**`anyJoyPress( id )`**
 
   If any button on the gamepad is pressed, it returns the number, otherwise, it returns -1.
+
+* <a name="joyName"></a>**`joyName( id )`**
+
+  Returns the name of the given joypad.

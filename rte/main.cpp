@@ -291,24 +291,24 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 
 	//Graphics
 	xyPrint(0, "Embedding graphics...");
-	xyBindFunc(v, sqSetDrawTarget, "setDrawTarget", 2, ".n");
-	xyBindFunc(v, sqClearScreen, "clearScreen");
+	xyBindFunc(v, sqSetDrawTarget, "setDrawTarget", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqClearScreen, "clearScreen"); //Doc'd
 	xyBindFunc(v, sqResetDrawTarget, "resetDrawTarget");
-	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".nnn");
-	xyBindFunc(v, sqSetDrawColor, "setDrawColor", 2, ".n");
-	xyBindFunc(v, sqLoadImage, "loadImage", 2, ".s");
-	xyBindFunc(v, sqLoadImageKeyed, "loadImageKey", 3, ".sn");
-	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".inn");
-	xyBindFunc(v, sqSetBackgroundColor, "setBackgroundColor", 2, ".n");
-	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".n|b");
-	xyBindFunc(v, sqSetResolution, "setResolution", 3, ".nn");
-	xyBindFunc(v, sqDrawCircle, "drawCircle", 5, ".nnnn|b");
-	xyBindFunc(v, sqDrawRect, "drawRec", 6, ".nnnnn|b");
-	xyBindFunc(v, sqDrawRect, "drawRect", 6, ".nnnnn|b");
-	xyBindFunc(v, sqDrawPoint, "drawPoint", 3, ".nn");
-	xyBindFunc(v, sqDrawLine, "drawLine", 5, ".nnnn");
-	xyBindFunc(v, sqDrawLineWide, "drawLineWide", 6, ".nnnnn");
-	xyBindFunc(v, sqNewTexture, "newTexture", 3, ".nn");
+	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".nnn"); //Doc'd
+	xyBindFunc(v, sqSetDrawColor, "setDrawColor", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqLoadImage, "loadImage", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqLoadImageKeyed, "loadImageKey", 3, ".sn"); //Doc'd
+	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".inn"); //Doc'd
+	xyBindFunc(v, sqSetBackgroundColor, "setBackgroundColor", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".n|b"); //Doc'd
+	xyBindFunc(v, sqSetResolution, "setResolution", 3, ".nn"); //Doc'd
+	xyBindFunc(v, sqDrawCircle, "drawCircle", 5, ".nnnn|b"); //Doc'd
+	xyBindFunc(v, sqDrawRect, "drawRec", 6, ".nnnnn|b"); //Doc'd
+	xyBindFunc(v, sqDrawRect, "drawRect", 6, ".nnnnn|b"); //Doc'd
+	xyBindFunc(v, sqDrawPoint, "drawPoint", 3, ".nn"); //Doc'd
+	xyBindFunc(v, sqDrawLine, "drawLine", 5, ".nnnn"); //Doc'd
+	xyBindFunc(v, sqDrawLineWide, "drawLineWide", 6, ".nnnnn"); //Doc'd
+	xyBindFunc(v, sqNewTexture, "newTexture", 3, ".nn"); //Doc'd
 	xyBindFunc(v, sqGetScreenW, "screenW"); //Doc'd
 	xyBindFunc(v, sqGetScreenH, "screenH"); //Doc'd
 	xyBindFunc(v, sqGetDisplayW, "displayW"); //Doc'd
@@ -327,33 +327,35 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 
 	//Input
 	xyPrint(0, "Embedding input...");
-	xyBindFunc(v, sqKeyPress, "keyPress", 2, ".n");
-	xyBindFunc(v, sqKeyRelease, "keyRelease", 2, ".n");
-	xyBindFunc(v, sqKeyDown, "keyDown", 2, ".n");
-	xyBindFunc(v, sqKeyPressAny, "anyKeyPress");
-	xyBindFunc(v, sqMouseDown, "mouseDown", 2, ".i");
-	xyBindFunc(v, sqMousePress, "mousePress", 2, ".i");
-	xyBindFunc(v, sqMouseRelease, "mouseRelease", 2, ".i");
-	xyBindFunc(v, sqMouseX, "mouseX");
-	xyBindFunc(v, sqMouseY, "mouseY");
-	xyBindFunc(v, sqGetQuit, "getQuit");
-	xyBindFunc(v, sqGetPads, "joyCount");
-	xyBindFunc(v, sqPadName, "joyName", 2, ".i");
-	xyBindFunc(v, sqPadX, "joyX", 2, ".i");
-	xyBindFunc(v, sqPadY, "joyY", 2, ".i");
-	xyBindFunc(v, sqPadZ, "joyZ", 2, ".i");
-	xyBindFunc(v, sqPadH, "joyH", 2, ".i");
-	xyBindFunc(v, sqPadV, "joyV", 2, ".i");
-	xyBindFunc(v, sqPadR, "joyR", 2, ".i");
-	xyBindFunc(v, sqPadL, "joyL", 2, ".i");
-	xyBindFunc(v, sqPadAxis, "joyAxis", 3, ".ii");
-	xyBindFunc(v, sqPadHatDown, "joyHatDown", 3, ".ii");
-	xyBindFunc(v, sqPadHatPress, "joyHatPress", 3, ".ii");
-	xyBindFunc(v, sqPadHatRelease, "joyHatRelease", 3, ".ii");
-	xyBindFunc(v, sqPadButtonDown, "joyButtonDown", 3, ".ii");
-	xyBindFunc(v, sqPadButtonPress, "joyButtonPress", 3, ".ii");
-	xyBindFunc(v, sqPadButtonRelease, "joyButtonRelease", 3, ".ii");
-	xyBindFunc(v, sqPadButtonAny, "anyJoyPress", 2, ".i");
+	xyBindFunc(v, sqKeyPress, "keyPress", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqKeyRelease, "keyRelease", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqKeyDown, "keyDown", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqKeyPressAny, "anyKeyPress"); //Doc'd
+	xyBindFunc(v, sqMouseDown, "mouseDown", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqMousePress, "mousePress", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqMouseRelease, "mouseRelease", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqMouseX, "mouseX"); //Doc'd
+	xyBindFunc(v, sqMouseY, "mouseY"); //Doc'd
+	xyBindFunc(v, sqGetQuit, "getQuit"); //Doc'd
+	xyBindFunc(v, sqGetPads, "joyCount"); //Doc'd
+	xyBindFunc(v, sqPadName, "joyName", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqPadAxis, "joyAxis", 3, ".ii"); //Doc'd
+	xyBindFunc(v, sqPadHatDown, "joyHatDown", 3, ".ii"); //Doc'd
+	xyBindFunc(v, sqPadHatPress, "joyHatPress", 3, ".ii"); //Doc'd
+	xyBindFunc(v, sqPadHatRelease, "joyHatRelease", 3, ".ii"); //Doc'd
+	xyBindFunc(v, sqPadButtonDown, "joyButtonDown", 3, ".ii"); //Doc'd
+	xyBindFunc(v, sqPadButtonPress, "joyButtonPress", 3, ".ii"); //Doc'd
+	xyBindFunc(v, sqPadButtonRelease, "joyButtonRelease", 3, ".ii"); //Doc'd
+	xyBindFunc(v, sqPadButtonAny, "anyJoyPress", 2, ".i"); //Doc'd
+	//These buttons assume and XInput controller, and may
+	//cause problems. They are best not depended on.
+	xyBindFunc(v, sqPadX, "joyX", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqPadY, "joyY", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqPadZ, "joyZ", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqPadH, "joyH", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqPadV, "joyV", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqPadR, "joyR", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqPadL, "joyL", 2, ".i"); //Doc'd
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
@@ -407,9 +409,9 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqMusicPaused, "musicPaused"); //Doc'd
 
 	//Shapes
-	xyBindFunc(v, sqLineLine, "hitLineLine", 9, ".nnnnnnnn");
-	xyBindFunc(v, sqLineCircle, "hitLineCircle", 8, ".nnnnnnn");
-	xyBindFunc(v, sqLinePoint, "hitLinePoint", 7, ".nnnnnn");
+	xyBindFunc(v, sqLineLine, "hitLineLine", 9, ".nnnnnnnn"); //Doc'd
+	xyBindFunc(v, sqLineCircle, "hitLineCircle", 8, ".nnnnnnn"); //Doc'd
+	xyBindFunc(v, sqLinePoint, "hitLinePoint", 7, ".nnnnnn"); //Doc'd
 };
 
 void xyUpdate() {
