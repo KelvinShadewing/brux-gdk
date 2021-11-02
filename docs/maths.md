@@ -36,3 +36,19 @@
 * <a name="pointAngle"></a>**`pointAngle( x1, y1, x2, y2 )`**
 
   Returns the angle between two points in degrees.
+
+* <a name="round"></a>**`round( num )`**
+
+  Returns `num` rounded to the nearest integer.
+
+* <a name="ceil"></a>**`ceil( num )`**
+
+  Returns `num` rounded to the higher integer.
+
+* <a name="floor"></a>**`floor( num )`**
+
+  Returns `num` rounded to the lower integer.
+
+* <a name="abs"></a>**`abs( num )`**
+
+  Returns the absolute value of `num`.

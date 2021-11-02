@@ -35,10 +35,18 @@
 
   Returns the current working directory as a string.
 
-* <a name="getdir"></a>**`chdir( string )`**
+* <a name="chdir"></a>**`chdir( string )`**
 
   Attempts to change the current working directory.
 
-* <a name="lsdir"></a>**`lsdir()`**
+* <a name="lsdir"></a>**`lsdir( string )`**
 
-  Returns a list of the current directory's contents as an array.
+  Returns a list of the directory `string`'s contents as an array.
+
+* <a name="isdir"></a>**`isdir( string )`**
+
+  Returns whether or not `string` is a directory.
+
+* <a name="dostr"></a>**`dostr( string )`**
+
+  Executes `string` as the contents of a function. Remember, this creates a new scope in the place it is called.

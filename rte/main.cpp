@@ -278,22 +278,19 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 
 	//Main
 	xyPrint(0, "Embedding main...");
-	xyBindFunc(v, sqUpdate, "update");
-	xyBindFunc(v, sqGetOS, "getOS");
-	xyBindFunc(v, sqGetTicks, "getTicks");
-	xyBindFunc(v, sqGetFPS, "getFPS");
-	xyBindFunc(v, sqSetFPS, "setFPS", 2, ".n");
-	xyBindFunc(v, sqSetWindowTitle, "setWindowTitle", 2, ".s");
-	xyBindFunc(v, sqLoadWindowIcon, "setWindowIcon", 2, ".s");
-	xyBindFunc(v, sqGetFrames, "getFrames");
-	xyBindFunc(v, sqGetScreenW, "screenW");
-	xyBindFunc(v, sqGetScreenH, "screenH");
-	xyBindFunc(v, sqGetDisplayW, "displayW");
-	xyBindFunc(v, sqGetDisplayH, "displayH");
+	xyBindFunc(v, sqUpdate, "update"); //Doc'd
+	xyBindFunc(v, sqGetOS, "getOS"); //Doc'd
+	xyBindFunc(v, sqWait, "wait", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqDoNut, "donut", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqGetTicks, "getTicks"); //Doc'd
+	xyBindFunc(v, sqGetFPS, "getFPS"); //Doc'd
+	xyBindFunc(v, sqSetFPS, "setFPS", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqSetWindowTitle, "setWindowTitle", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqLoadWindowIcon, "setWindowIcon", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqGetFrames, "getFrames"); //Doc'd
 
 	//Graphics
 	xyPrint(0, "Embedding graphics...");
-	xyBindFunc(v, sqWait, "wait", 2, ".n");
 	xyBindFunc(v, sqSetDrawTarget, "setDrawTarget", 2, ".n");
 	xyBindFunc(v, sqClearScreen, "clearScreen");
 	xyBindFunc(v, sqResetDrawTarget, "resetDrawTarget");
@@ -312,18 +309,21 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqDrawLine, "drawLine", 5, ".nnnn");
 	xyBindFunc(v, sqDrawLineWide, "drawLineWide", 6, ".nnnnn");
 	xyBindFunc(v, sqNewTexture, "newTexture", 3, ".nn");
+	xyBindFunc(v, sqGetScreenW, "screenW"); //Doc'd
+	xyBindFunc(v, sqGetScreenH, "screenH"); //Doc'd
+	xyBindFunc(v, sqGetDisplayW, "displayW"); //Doc'd
+	xyBindFunc(v, sqGetDisplayH, "displayH"); //Doc'd
 
 	//Sprites
 	xyPrint(0, "Embedding sprites...");
-	xyBindFunc(v, sqSpriteName, "spriteName", 2, ".n");
-	xyBindFunc(v, sqNewSprite, "newSprite", 8, ".siiiiii");
-	xyBindFunc(v, sqDrawSprite, "drawSprite", 5, ".innn");
-	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".innnninnn");
-	xyBindFunc(v, sqDeleteSprite, "deleteSprite", 2, ".i");
-	xyBindFunc(v, sqFindSprite, "findSprite", 2, ".s");
-	xyBindFunc(v, sqSpriteName, "spriteName");
-	xyBindFunc(v, sqSpriteW, "spriteW", 2, ".i");
-	xyBindFunc(v, sqSpriteH, "spriteH", 2, ".i");
+	xyBindFunc(v, sqSpriteName, "spriteName", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqNewSprite, "newSprite", 8, ".siiiiii"); //Doc'd
+	xyBindFunc(v, sqDrawSprite, "drawSprite", 5, ".innn"); //Doc'd
+	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".innnninnn"); //Doc'd
+	xyBindFunc(v, sqDeleteSprite, "deleteSprite", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqFindSprite, "findSprite", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqSpriteW, "spriteW", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqSpriteH, "spriteH", 2, ".i"); //Doc'd
 
 	//Input
 	xyPrint(0, "Embedding input...");
@@ -357,55 +357,54 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
-	xyBindFunc(v, sqRandomFloat, "randFloat", 2, ".n");
-	xyBindFunc(v, sqRandomInt, "randInt", 2, ".n");
-	xyBindFunc(v, sqDistance2, "distance2", 5, ".nnnn");
-	xyBindFunc(v, sqWrap, "wrap", 4, ".nnn");
-	xyBindFunc(v, sqRound, "round", 2, ".n");
-	xyBindFunc(v, sqCeil, "ceil", 2, ".n");
-	xyBindFunc(v, sqFloor, "floor", 2, ".n");
-	xyBindFunc(v, sqPointAngle, "pointAngle", 5, ".nnnn");
-	xyBindFunc(v, sqAbs, "abs", 2, ".n");
-	xyBindFunc(v, sqLenDirX, "lendirX", 3, ".nn");
-	xyBindFunc(v, sqLenDirY, "lendirY", 3, ".nn");
+	xyBindFunc(v, sqRandomFloat, "randFloat", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqRandomInt, "randInt", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqDistance2, "distance2", 5, ".nnnn"); //Doc'd
+	xyBindFunc(v, sqWrap, "wrap", 4, ".nnn"); //Doc'd
+	xyBindFunc(v, sqRound, "round", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqCeil, "ceil", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqFloor, "floor", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqPointAngle, "pointAngle", 5, ".nnnn"); //Doc'd
+	xyBindFunc(v, sqAbs, "abs", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqLenDirX, "lendirX", 3, ".nn"); //Doc'd
+	xyBindFunc(v, sqLenDirY, "lendirY", 3, ".nn"); //Doc'd
 
 	//Text
 	xyPrint(0, "Embedding text...");
-	xyBindFunc(v, sqNewFont, "newFont", 6, ".nnnnn");
-	xyBindFunc(v, sqDrawText, "drawText", 5, ".nnns");
-	xyBindFunc(v, sqChint, "chint", 2, ".i");
+	xyBindFunc(v, sqNewFont, "newFont", 6, ".nnnnn"); //Doc'd
+	xyBindFunc(v, sqDrawText, "drawText", 5, ".nnns"); //Doc'd
+	xyBindFunc(v, sqChint, "chint", 2, ".i"); //Doc'd
 
 	//File IO
 	xyPrint(0, "Embedding file I/O...");
-	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s");
+	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqImport, "import", 2, ".s");
-	xyBindFunc(v, sqDoNut, "donut", 2, ".s");
-	xyBindFunc(v, sqDoString, "dostr", 2, ".s");
-	xyBindFunc(v, sqDecodeJSON, "jsonRead", 2, ".s");
-	xyBindFunc(v, sqGetDir, "getdir");
-	xyBindFunc(v, sqSetDir, "chdir", 2, ".s");
-	xyBindFunc(v, sqLsDir, "lsdir", 2, ".s");
-	xyBindFunc(v, sqIsDir, "isdir", 2, ".s");
-	xyBindFunc(v, sqFileWrite, "fileWrite", 3, ".ss");
-	xyBindFunc(v, sqFileAppend, "fileAppend", 3, ".ss");
-	xyBindFunc(v, sqFileRead, "fileRead", 2, ".s");
+	xyBindFunc(v, sqDoString, "dostr", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqDecodeJSON, "jsonRead", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqGetDir, "getdir"); //Doc'd
+	xyBindFunc(v, sqSetDir, "chdir", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqLsDir, "lsdir", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqIsDir, "isdir", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqFileWrite, "fileWrite", 3, ".ss"); //Doc'd
+	xyBindFunc(v, sqFileAppend, "fileAppend", 3, ".ss"); //Doc'd
+	xyBindFunc(v, sqFileRead, "fileRead", 2, ".s"); //Doc'd
 
 	//Audio
 	xyPrint(0, "Embedding audio...");
-	xyBindFunc(v, sqLoadMusic, "loadMusic", 2, ".s");
-	xyBindFunc(v, sqLoadSound, "loadSound", 2, ".s");
-	xyBindFunc(v, sqPlaySound, "playSound", 3, ".nn");
-	xyBindFunc(v, sqPlayMusic, "playMusic", 3, ".nn");
-	xyBindFunc(v, sqDeleteSound, "deleteSound", 2, ".n");
-	xyBindFunc(v, sqDeleteMusic, "deleteMusic", 2, ".n");
-	xyBindFunc(v, sqStopSound, "stopSound", 2, ".n");
-	xyBindFunc(v, sqStopMusic, "stopMusic");
-	xyBindFunc(v, sqCheckMusic, "checkMusic");
-	xyBindFunc(v, sqCheckSound, "checkSound", 2, ".n");
-	xyBindFunc(v, sqSetMaxChannels, "setMaxChannels", 2, ".n");
-	xyBindFunc(v, sqPauseMusic, "pauseMusic");
-	xyBindFunc(v, sqResumeMusic, "resumeMusic");
-	xyBindFunc(v, sqMusicPaused, "musicPaused");
+	xyBindFunc(v, sqLoadMusic, "loadMusic", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqLoadSound, "loadSound", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqPlaySound, "playSound", 3, ".nn"); //Doc'd
+	xyBindFunc(v, sqPlayMusic, "playMusic", 3, ".nn"); //Doc'd
+	xyBindFunc(v, sqDeleteSound, "deleteSound", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqDeleteMusic, "deleteMusic", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqStopSound, "stopSound", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqStopMusic, "stopMusic"); //Doc'd
+	xyBindFunc(v, sqCheckMusic, "checkMusic"); //Doc'd
+	xyBindFunc(v, sqCheckSound, "checkSound", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqSetMaxChannels, "setMaxChannels", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqPauseMusic, "pauseMusic"); //Doc'd
+	xyBindFunc(v, sqResumeMusic, "resumeMusic"); //Doc'd
+	xyBindFunc(v, sqMusicPaused, "musicPaused"); //Doc'd
 
 	//Shapes
 	xyBindFunc(v, sqLineLine, "hitLineLine", 9, ".nnnnnnnn");

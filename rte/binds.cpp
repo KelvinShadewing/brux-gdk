@@ -138,6 +138,7 @@ SQInteger sqGetDisplayW(HSQUIRRELVM v) {
 ////////////{
 
 SQInteger sqImport(HSQUIRRELVM v) {
+	//I don't remember why I have this function when sqDoNut() basically does the same thing
 	const char* a;
 
 	sq_getstring(v, 2, &a);
