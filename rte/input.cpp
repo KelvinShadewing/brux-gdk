@@ -54,3 +54,27 @@ void xyInitInput() {
 	};
 	xyPrint(0, "Input initialized.");
 };
+
+int xyJoyAxisPress (int pad, int axis, int dz) {
+	if(pad >= 8 || pad < 0 || axis >= 10 || axis < 0) return 0;
+
+	//If the axis is further from 0 than the dead zone but wasn't before
+	//Return 1 if positive or -1 if negative
+	if(gvPadAxis[pad][axis] > dz && gvPadLastAxis[pad][axis] <= dz) return 1;
+	if(gvPadAxis[pad][axis] < -dz && gvPadLastAxis[pad][axis] >= -dz) return -1;
+
+	//Return 0 if axis has moved into deadzone
+	return 0;
+};
+
+int xyJoyAxisRelease (int pad, int axis, int dz) {
+	if(pad >= 8 || pad < 0 || axis >= 10 || axis < 0) return 0;
+
+	//If the axis has returned to the dead zone
+	//Return 1 if positive or -1 if negative
+	if(gvPadAxis[pad][axis] < dz && gvPadLastAxis[pad][axis] >= dz) return 1;
+	if(gvPadAxis[pad][axis] > -dz && gvPadLastAxis[pad][axis] <= -dz) return -1;
+
+	//Return 0 if axis has moved into deadzone
+	return 0;
+};

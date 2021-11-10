@@ -347,8 +347,6 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqPadButtonPress, "joyButtonPress", 3, ".ii"); //Doc'd
 	xyBindFunc(v, sqPadButtonRelease, "joyButtonRelease", 3, ".ii"); //Doc'd
 	xyBindFunc(v, sqPadButtonAny, "anyJoyPress", 2, ".i"); //Doc'd
-	//These buttons assume and XInput controller, and may
-	//cause problems. They are best not depended on.
 	xyBindFunc(v, sqPadX, "joyX", 2, ".i"); //Doc'd
 	xyBindFunc(v, sqPadY, "joyY", 2, ".i"); //Doc'd
 	xyBindFunc(v, sqPadZ, "joyZ", 2, ".i"); //Doc'd
@@ -356,6 +354,8 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqPadV, "joyV", 2, ".i"); //Doc'd
 	xyBindFunc(v, sqPadR, "joyR", 2, ".i"); //Doc'd
 	xyBindFunc(v, sqPadL, "joyL", 2, ".i"); //Doc'd
+	xyBindFunc(v, sqPadAxisPress, "joyAxisPress", 4, ".iii");
+	xyBindFunc(v, sqPadAxisRelease, "joyAxisRelease", 4, ".iii");
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
@@ -473,6 +473,7 @@ void xyUpdate() {
 			gvPadHatLast[i] = gvPadHat[i];
 			gvPadHat[i] = SDL_JoystickGetHat(gvGamepad[i], 0);
 			for(int j = 0; j < 10; j++){
+				gvPadLastAxis[i][j] = gvPadAxis[i][j];
 				gvPadAxis[i][j] = SDL_JoystickGetAxis(gvGamepad[i], j);
 			};
 			for(int j = 0; j < 32; j++){

@@ -822,6 +822,30 @@ SQInteger sqPadButtonRelease(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqPadAxisPress(HSQUIRRELVM v) {
+	SQInteger p, a, d;
+
+	sq_getinteger(v, 2, &p);
+	sq_getinteger(v, 3, &a);
+	sq_getinteger(v, 4, &d);
+
+	sq_pushinteger(v, xyJoyAxisPress(p, a, d));
+
+	return 1;
+};
+
+SQInteger sqPadAxisRelease(HSQUIRRELVM v) {
+	SQInteger p, a, d;
+
+	sq_getinteger(v, 2, &p);
+	sq_getinteger(v, 3, &a);
+	sq_getinteger(v, 4, &d);
+
+	sq_pushinteger(v, xyJoyAxisRelease(p, a, d));
+
+	return 1;
+};
+
 //}
 
 ///////////

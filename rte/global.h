@@ -59,6 +59,7 @@ extern int gvPadV[8];
 extern int gvPadR[8];
 extern int gvPadL[8];
 extern int gvPadAxis[8][10];
+extern int gvPadLastAxis[8][10];
 extern string gvPadName[8];
 extern int gvPadHat[8];
 extern int gvPadHatLast[8];
