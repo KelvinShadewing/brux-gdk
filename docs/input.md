@@ -112,3 +112,11 @@
 * <a name="joyName"></a>**`joyName( id )`**
 
   Returns the name of the given joypad.
+
+* <a name="joyAxisPress"></a>**`joyAxisPress( id, axis, deadzone )`**
+
+  Returns whether a given axis has been pushed beyond the `deadzone`. For instance, if an axis is pushed beyond 25%, use a deadzone of `js_max / 4`. The returned value will be `1` for a positive press, and `-1` for a negative press. For example, if checking the X axis, `1` would mean the stick was pressed right, and `-1` would mean it was pressed left.
+
+* <a name="joyAxisRelease"></a>**`joyAxisRelease( id, axis, deadzone )`**
+
+  Returns whether a given axis was moved into a deadzone. Return values are the same as with `joyAxisPress`. For example, with the X axis, `1` would mean the player stopped pressing right, and `-1` would mean they stopped pressing left.
