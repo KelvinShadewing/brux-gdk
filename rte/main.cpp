@@ -354,8 +354,9 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqPadV, "joyV", 2, ".i"); //Doc'd
 	xyBindFunc(v, sqPadR, "joyR", 2, ".i"); //Doc'd
 	xyBindFunc(v, sqPadL, "joyL", 2, ".i"); //Doc'd
-	xyBindFunc(v, sqPadAxisPress, "joyAxisPress", 4, ".iii");
-	xyBindFunc(v, sqPadAxisRelease, "joyAxisRelease", 4, ".iii");
+	xyBindFunc(v, sqPadAxisPress, "joyAxisPress", 4, ".iii"); //Doc'd
+	xyBindFunc(v, sqPadAxisRelease, "joyAxisRelease", 4, ".iii"); //Doc'd
+	xyBindFunc(v, sqKeyChar, "keyString"); //Doc'd
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
@@ -444,6 +445,10 @@ void xyUpdate() {
 			if(Event.button.button == SDL_BUTTON_RIGHT) buttonstate[2] = 0;
 			if(Event.button.button == SDL_BUTTON_X1) buttonstate[3] = 0;
 			if(Event.button.button == SDL_BUTTON_X2) buttonstate[4] = 0;
+		}
+
+		if(Event.type == SDL_TEXTINPUT) {
+			gvInputString = Event.text.text;
 		}
 	}
 

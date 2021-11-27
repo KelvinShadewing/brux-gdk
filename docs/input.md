@@ -120,3 +120,7 @@
 * <a name="joyAxisRelease"></a>**`joyAxisRelease( id, axis, deadzone )`**
 
   Returns whether a given axis was moved into a deadzone. Return values are the same as with `joyAxisPress`. For example, with the X axis, `1` would mean the player stopped pressing right, and `-1` would mean they stopped pressing left.
+
+* <a name="keyString"></a>**`keyString()`**
+
+  Returns the current text string from the keyboard.

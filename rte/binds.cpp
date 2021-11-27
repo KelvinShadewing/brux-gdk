@@ -846,6 +846,13 @@ SQInteger sqPadAxisRelease(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqKeyChar(HSQUIRRELVM v) {
+	sq_pushstring(v, gvInputString.c_str(), gvInputString.length());
+	gvInputString = ""; //Clean input
+
+	return 1;
+}
+
 //}
 
 ///////////

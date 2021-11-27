@@ -93,6 +93,7 @@ SQInteger sqPadButtonRelease(HSQUIRRELVM v);
 SQInteger sqPadButtonAny(HSQUIRRELVM v);
 SQInteger sqPadAxisPress(HSQUIRRELVM v);
 SQInteger sqPadAxisRelease(HSQUIRRELVM v);
+SQInteger sqKeyChar(HSQUIRRELVM v);
 
 //Maths
 SQInteger sqRandomFloat(HSQUIRRELVM v);

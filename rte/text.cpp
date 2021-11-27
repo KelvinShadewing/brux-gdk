@@ -90,6 +90,7 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 		//For each frame in the source sprite
 		for(int i = 0; i < source->getframes(); i++) {
 			//Render current frame
+			SDL_RenderClear(gvRender);
 			source->draw(i, 0, 0);
 
 			//For each column in source width
