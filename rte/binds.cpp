@@ -554,6 +554,27 @@ SQInteger sqSpriteH(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqReplaceSprite(HSQUIRRELVM v) {
+	const char* f;
+	SQInteger s, w, h, m, p, x, y;
+
+	sq_getinteger(v, 2, &s);
+	sq_getstring(v, 3, &f);
+	sq_getinteger(v, 4, &w);
+	sq_getinteger(v, 5, &h);
+	sq_getinteger(v, 6, &m);
+	sq_getinteger(v, 7, &p);
+	sq_getinteger(v, 8, &x);
+	sq_getinteger(v, 9, &y);
+
+	if(s > 0 && s < vcSprites.size()) {
+		if(vcSprites[s] != 0) vcSprites[s]->replaceSprite(f, w, h, m, p, x, y);
+		else vcSprites[s] = new xySprite(f, w, h, m, p, x, y);
+	}
+
+	return 0;
+}
+
 //}
 
 ///////////

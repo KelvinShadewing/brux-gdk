@@ -40,3 +40,7 @@
 * <a name="spriteH"></a>**`spriteH( id )`**
 
   Returns the frame height of a sprite. Returns 0 if the sprite does not exist.
+
+* <a name="replaceSprite"></a>**`replaceSprite( sprite, file, width, height, margin, padding, pivotX, pivotY )`**
+
+  Replaces `sprite` with a new file without having to create a new sprite index.
