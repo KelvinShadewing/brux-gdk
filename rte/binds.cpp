@@ -481,6 +481,23 @@ SQInteger sqNewSprite(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqNewSpriteFT(HSQUIRRELVM v) {
+	SQInteger t, w, h, m, p, px, py;
+
+	sq_getinteger(v, 2, &t);
+	sq_getinteger(v, 3, &w);
+	sq_getinteger(v, 4, &h);
+	sq_getinteger(v, 5, &m);
+	sq_getinteger(v, 6, &p);
+	sq_getinteger(v, 7, &px);
+	sq_getinteger(v, 8, &py);
+
+	xySprite* newSprite = new xySprite(t, w, h, m, p, px, py);
+
+	sq_pushinteger(v, newSprite->getnum());
+	return 1;
+};
+
 SQInteger sqDrawSprite(HSQUIRRELVM v) {
 	SQInteger i, f, x, y;
 

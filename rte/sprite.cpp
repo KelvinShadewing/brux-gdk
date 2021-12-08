@@ -19,7 +19,6 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	pvX = pivotX;
 	pvY = pivotY;
 	numero = 0;
-	frames = 0; //Obsolete, will untangle later
 	tex = xyLoadImage(filename);
 	name = filename;
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
@@ -27,6 +26,58 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	//Extract short file name
 	string::size_type slashnum = name.find_last_of("/");
 	if(slashnum != string::npos) name = name.substr(slashnum + 1, name.length() - 1);
+
+	//Add sprite to list
+
+	if(vcSprites.size() == 0) {
+		vcSprites.push_back(this);
+		numero = 0;
+	} else {
+		//Check for an open space in the list
+		for(int i = 1; i < vcSprites.size(); i++) {
+			if(vcSprites[i] == 0) {
+				vcSprites[i] = this;
+				numero = i;
+				break;
+			}
+		}
+
+		//If an open space wasn't found
+		if(numero == 0) {
+			vcSprites.push_back(this);
+			numero = vcSprites.size() - 1;
+		}
+	}
+
+	//Parse the image for rows and colums
+	int origW, origH;
+	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
+	origW -= mar;
+	origH -= mar;
+	col = floor((float)(origW / (w + pad)));
+	row = floor((float)(origH / (h + pad)));
+	if(col < 1) col = 1;
+	if(row < 1) row = 1;
+	if(frames == 0) frames = col * row;
+};
+
+xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) {
+	//Set variables
+	w = width;
+	h = height;
+	mar = margin;
+	pad = padding;
+	pvX = pivotX;
+	pvY = pivotY;
+	numero = 0;
+	name = "texture";
+	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
+
+	//Load texture
+	if(texture >= 0 && texture < vcTextures.size()) {
+		if(vcTextures[texture] != 0) tex = texture;
+		else tex = 0;
+	}
 
 	//Add sprite to list
 

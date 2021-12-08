@@ -7,7 +7,11 @@
 
 * <a name="newSprite"></a>**`newSprite( file, width, height, margin, padding, pivotX, pivotY )`**
 
-  Creates a new sprite from a grid of frames in an image file. The filename for a sprite is stored internally for use with TMX maps.
+  Creates a new sprite from a grid of frames in an image file. The filename for a sprite is stored internally for use with [Tiled](https://mapeditor.org) maps.
+
+* <a name="newSprite"></a>**`newSprite( texture, width, height, margin, padding, pivotX, pivotY )`**
+
+  Creates a new sprite, but instead of loading an image file, it uses a previously created texture. This allows you to make sprites you can draw on and edit.
 
   `margin` is the distance between the frames and edges of the image, and `padding` is the space between frames. If [`setScalingFilter()`](graphics.md#setScalingFilter) has been set to true, a margin and padding of at least 1 should be used to prevent frame bleeding.
 

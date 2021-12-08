@@ -52,6 +52,7 @@ SQInteger sqNewTexture(HSQUIRRELVM v);
 //Sprites
 SQInteger sqSpriteName(HSQUIRRELVM v);
 SQInteger sqNewSprite(HSQUIRRELVM v);
+SQInteger sqNewSpriteFT(HSQUIRRELVM v);
 SQInteger sqDrawSprite(HSQUIRRELVM v);
 SQInteger sqDrawSpriteEx(HSQUIRRELVM v);
 SQInteger sqDeleteSprite(HSQUIRRELVM v);
