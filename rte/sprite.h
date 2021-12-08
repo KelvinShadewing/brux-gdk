@@ -8,7 +8,7 @@
 class xySprite
 {
 private:
-	Uint32 numero, mar, pad, w, h, tex, col, row, frames;
+	Uint32 numero, mar, pad, w, h, tex, col, row, frames = 0;
 	bool didLoad;
 	int osX, osY;
 	float pvX, pvY;

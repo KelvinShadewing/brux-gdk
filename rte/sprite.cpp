@@ -58,7 +58,7 @@ xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 mar
 	row = floor((float)(origH / (h + pad)));
 	if(col < 1) col = 1;
 	if(row < 1) row = 1;
-	if(frames == 0) frames = col * row;
+	frames = col * row;
 };
 
 xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) {
@@ -110,7 +110,7 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 	row = floor((float)(origH / (h + pad)));
 	if(col < 1) col = 1;
 	if(row < 1) row = 1;
-	if(frames == 0) frames = col * row;
+	frames = col * row;
 };
 
 void xySprite::replaceSprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) {
@@ -145,7 +145,7 @@ void xySprite::replaceSprite(const char* filename, Uint32 width, Uint32 height, 
 	row = floor((float)(origH / (h + pad)));
 	if(col < 1) col = 1;
 	if(row < 1) row = 1;
-	if(frames == 0) frames = col * row;
+	frames = col * row;
 };
 
 xySprite::~xySprite() {
