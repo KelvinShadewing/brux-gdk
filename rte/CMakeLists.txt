@@ -23,6 +23,7 @@ if (MINGW)
 endif ()
 SET(brux_gtk_sources
         audio.cpp
+        actors.cpp
         binds.cpp
         cJSON.c
         core.cpp
@@ -35,10 +36,7 @@ SET(brux_gtk_sources
         shapes.cpp
         sprite.cpp
         text.cpp
-        tile.cpp
-        tinyxml2.cpp
-        tmap.cpp
-         Phyisics.cpp)
+        physics.cpp)
 
 add_executable(brux-gdk ${brux_gtk_sources})
 if (NOT WIN32)
