@@ -66,3 +66,28 @@ int Phyisics::ChipMonkHelloWorld() {
 
     return 0;
 }
+
+Phyisics::Phyisics () {
+    space = cpSpaceNew();
+    gravity = cpv(0, -100);
+    // Now that it's all set up, we simulate all the objects in the space by
+    // stepping forward through time in small increments called steps.
+    // It is *highly* recommended to use a fixed size time step.
+    cpFloat timeStep = 1.0/60.0;
+}
+Phyisics::~Phyisics() {
+    for (size_t i = 0; i < bodylist.size(); i++)
+    {
+        cpBodyFree(bodylist[i]);
+    }
+    bodylist.clear();
+    for (size_t i = 0; i < shapelist.size(); i++)
+    {
+        cpShapeFree(shapelist[i]);
+    }
+    shapelist.clear();
+    cpSpaceFree(space);
+}
+void Phyisics::sceneStep(){
+    cpSpaceStep(space, timeStep);
+}
