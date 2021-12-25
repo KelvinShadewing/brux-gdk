@@ -101,6 +101,8 @@ cpBody *Phyisics::AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass,c
     shapelist.push_back(ballShape);
     cpShapeSetFriction(ballShape, 0.7);
     cpBodySetUserData(ballBody, userData);
+    cpSpaceAddBody(space, ballBody);
+    cpSpaceAddShape(space, ballShape);
     return ballBody;
 }
 cpBody *Phyisics::AddSimpleBox(void * userData, cpFloat width, cpFloat height, cpFloat mass, cpVect pos) {
@@ -112,5 +114,13 @@ cpBody *Phyisics::AddSimpleBox(void * userData, cpFloat width, cpFloat height, c
     shapelist.push_back(ballShape);
     cpShapeSetFriction(ballShape, 0.7);
     cpBodySetUserData(boxBody, userData);
+    cpSpaceAddBody(space, boxBody);
+    cpSpaceAddShape(space, ballShape);
     return boxBody;
+}
+void Phyisics::AddLineSegment(cpVect start, cpVect end) {
+    cpShape *segmentBody = cpSegmentShapeNew(cpSpaceGetStaticBody(space), start, end, 0);
+    cpSpaceAddShape(space, segmentBody);
+    shapelist.push_back(segmentBody);
+    cpShapeSetFriction(segmentBody, 1);
 }
