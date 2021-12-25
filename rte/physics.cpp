@@ -92,7 +92,6 @@ void Phyisics::sceneStep(){
     cpSpaceStep(space, timeStep);
 }
 cpBody *Phyisics::AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass,cpVect pos) {
-    cpFloat mass = 1;
     cpFloat moment = cpMomentForCircle(mass, 0, radius, cpvzero);
     cpBody *ballBody = cpSpaceAddBody(space, cpBodyNew(mass, moment));
     bodylist.push_back(ballBody);
