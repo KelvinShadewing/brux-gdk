@@ -70,6 +70,7 @@ int Phyisics::ChipMonkHelloWorld() {
 Phyisics::Phyisics () {
     space = cpSpaceNew();
     gravity = cpv(0, -100);
+    cpSpaceSetGravity(space, gravity);
     // Now that it's all set up, we simulate all the objects in the space by
     // stepping forward through time in small increments called steps.
     // It is *highly* recommended to use a fixed size time step.
