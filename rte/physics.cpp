@@ -91,3 +91,15 @@ Phyisics::~Phyisics() {
 void Phyisics::sceneStep(){
     cpSpaceStep(space, timeStep);
 }
+cpBody *Phyisics::AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass,cpVect pos) {
+    cpFloat mass = 1;
+    cpFloat moment = cpMomentForCircle(mass, 0, radius, cpvzero);
+    cpBody *ballBody = cpSpaceAddBody(space, cpBodyNew(mass, moment));
+    bodylist.push_back(ballBody);
+    cpBodySetPosition(ballBody, cpv(0, 15));
+    cpShape *ballShape = cpSpaceAddShape(space, cpCircleShapeNew(ballBody, radius, cpvzero));
+    shapelist.push_back(ballShape);
+    cpShapeSetFriction(ballShape, 0.7);
+    cpBodySetUserData(ballBody, userData);
+    return ballBody;
+}

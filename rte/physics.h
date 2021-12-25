@@ -14,6 +14,7 @@ public:
 	static int ChipMonkHelloWorld();
 	void sceneStep();
 	~Phyisics();
+	cpBody *AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass, cpVect pos);
 private:
 	cpVect gravity;
 	cpSpace *space;
