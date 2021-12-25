@@ -66,3 +66,61 @@ int Phyisics::ChipMonkHelloWorld() {
 
     return 0;
 }
+
+Phyisics::Phyisics () {
+    space = cpSpaceNew();
+    gravity = cpv(0, -100);
+    cpSpaceSetGravity(space, gravity);
+    // Now that it's all set up, we simulate all the objects in the space by
+    // stepping forward through time in small increments called steps.
+    // It is *highly* recommended to use a fixed size time step.
+    cpFloat timeStep = 1.0/60.0;
+}
+Phyisics::~Phyisics() {
+    for (size_t i = 0; i < bodylist.size(); i++)
+    {
+        cpBodyFree(bodylist[i]);
+    }
+    bodylist.clear();
+    for (size_t i = 0; i < shapelist.size(); i++)
+    {
+        cpShapeFree(shapelist[i]);
+    }
+    shapelist.clear();
+    cpSpaceFree(space);
+}
+void Phyisics::sceneStep(){
+    cpSpaceStep(space, timeStep);
+}
+cpBody *Phyisics::AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass,cpVect pos) {
+    cpFloat moment = cpMomentForCircle(mass, 0, radius, cpvzero);
+    cpBody *ballBody = cpSpaceAddBody(space, cpBodyNew(mass, moment));
+    bodylist.push_back(ballBody);
+    cpBodySetPosition(ballBody, pos);
+    cpShape *ballShape = cpSpaceAddShape(space, cpCircleShapeNew(ballBody, radius, cpvzero));
+    shapelist.push_back(ballShape);
+    cpShapeSetFriction(ballShape, 0.7);
+    cpBodySetUserData(ballBody, userData);
+    cpSpaceAddBody(space, ballBody);
+    cpSpaceAddShape(space, ballShape);
+    return ballBody;
+}
+cpBody *Phyisics::AddSimpleBox(void * userData, cpFloat width, cpFloat height, cpFloat mass, cpVect pos) {
+    cpFloat moment = cpMomentForBox(mass, width, height);
+    cpBody *boxBody = cpSpaceAddBody(space, cpBodyNew(mass, moment));
+    bodylist.push_back(boxBody);
+    cpBodySetPosition(boxBody, pos);
+    cpShape *ballShape = cpSpaceAddShape(space, cpBoxShapeNew(boxBody, width, height, 0));
+    shapelist.push_back(ballShape);
+    cpShapeSetFriction(ballShape, 0.7);
+    cpBodySetUserData(boxBody, userData);
+    cpSpaceAddBody(space, boxBody);
+    cpSpaceAddShape(space, ballShape);
+    return boxBody;
+}
+void Phyisics::AddLineSegment(cpVect start, cpVect end) {
+    cpShape *segmentBody = cpSegmentShapeNew(cpSpaceGetStaticBody(space), start, end, 0);
+    cpSpaceAddShape(space, segmentBody);
+    shapelist.push_back(segmentBody);
+    cpShapeSetFriction(segmentBody, 1);
+}
