@@ -96,10 +96,21 @@ cpBody *Phyisics::AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass,c
     cpFloat moment = cpMomentForCircle(mass, 0, radius, cpvzero);
     cpBody *ballBody = cpSpaceAddBody(space, cpBodyNew(mass, moment));
     bodylist.push_back(ballBody);
-    cpBodySetPosition(ballBody, cpv(0, 15));
+    cpBodySetPosition(ballBody, pos);
     cpShape *ballShape = cpSpaceAddShape(space, cpCircleShapeNew(ballBody, radius, cpvzero));
     shapelist.push_back(ballShape);
     cpShapeSetFriction(ballShape, 0.7);
     cpBodySetUserData(ballBody, userData);
     return ballBody;
+}
+cpBody *Phyisics::AddSimpleBox(void * userData, cpFloat width, cpFloat height, cpFloat mass, cpVect pos) {
+    cpFloat moment = cpMomentForBox(mass, width, height);
+    cpBody *boxBody = cpSpaceAddBody(space, cpBodyNew(mass, moment));
+    bodylist.push_back(boxBody);
+    cpBodySetPosition(boxBody, pos);
+    cpShape *ballShape = cpSpaceAddShape(space, cpBoxShapeNew(boxBody, width, height, 0));
+    shapelist.push_back(ballShape);
+    cpShapeSetFriction(ballShape, 0.7);
+    cpBodySetUserData(boxBody, userData);
+    return boxBody;
 }

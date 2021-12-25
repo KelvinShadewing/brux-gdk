@@ -15,6 +15,7 @@ public:
 	void sceneStep();
 	~Phyisics();
 	cpBody *AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass, cpVect pos);
+	cpBody *AddSimpleBox(void * userData, cpFloat width, cpFloat height, cpFloat mass, cpVect pos);
 private:
 	cpVect gravity;
 	cpSpace *space;
