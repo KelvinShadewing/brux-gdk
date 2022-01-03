@@ -77,14 +77,14 @@ Phyisics::Phyisics () {
     timeStep = 1.0/60.0;
 }
 Phyisics::~Phyisics() {
-    for (size_t i = 0; i < bodylist.size(); i++)
+    for (auto & i : bodylist)
     {
-        cpBodyFree(bodylist[i]);
+        cpBodyFree(i);
     }
     bodylist.clear();
-    for (size_t i = 0; i < shapelist.size(); i++)
+    for (auto & i : shapelist)
     {
-        cpShapeFree(shapelist[i]);
+        cpShapeFree(i);
     }
     shapelist.clear();
     cpSpaceFree(space);
