@@ -50,6 +50,10 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.2.1**
+  * Fix frame timer
+  * Many changes (I've been terrible at keeping track. Sorry.)
+
 * **0.0.10**
   * Added sprite alpha blending (Why did this take so long?)
   * Removed unnecessary argument from `newSprite()`
