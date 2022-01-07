@@ -1118,6 +1118,20 @@ SQInteger sqPlaySound(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqPlaySoundChannel(HSQUIRRELVM v){
+	SQInteger s, l, c;
+
+	sq_getinteger(v, 2, &s);
+	sq_getinteger(v, 3, &l);
+	sq_getinteger(v, 4, &c);
+
+	int i = Mix_PlayChannel(c, vcSounds[s], l);
+	if(i == -1) xyPrint(0, "Error playing sound! SDL_Mixer Error: %s\n", Mix_GetError());
+	sq_pushinteger(v, i);
+
+	return 1;
+};
+
 SQInteger sqPlayMusic(HSQUIRRELVM v) {
 	SQInteger m, l;
 

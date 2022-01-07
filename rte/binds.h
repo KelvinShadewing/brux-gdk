@@ -119,6 +119,7 @@ SQInteger sqChint(HSQUIRRELVM v);
 SQInteger sqLoadSound(HSQUIRRELVM v);
 SQInteger sqLoadMusic(HSQUIRRELVM v);
 SQInteger sqPlaySound(HSQUIRRELVM v);
+SQInteger sqPlaySoundChannel(HSQUIRRELVM v);
 SQInteger sqPlayMusic(HSQUIRRELVM v);
 SQInteger sqDeleteSound(HSQUIRRELVM v);
 SQInteger sqDeleteMusic(HSQUIRRELVM v);

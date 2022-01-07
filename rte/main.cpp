@@ -399,6 +399,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqLoadMusic, "loadMusic", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqLoadSound, "loadSound", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqPlaySound, "playSound", 3, ".nn"); //Doc'd
+	xyBindFunc(v, sqPlaySoundChannel, "playSoundChannel", 4, ".nnn");
 	xyBindFunc(v, sqPlayMusic, "playMusic", 3, ".nn"); //Doc'd
 	xyBindFunc(v, sqDeleteSound, "deleteSound", 2, ".n"); //Doc'd
 	xyBindFunc(v, sqDeleteMusic, "deleteMusic", 2, ".n"); //Doc'd

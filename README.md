@@ -52,6 +52,7 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 * **0.2.1**
   * Fix frame timer
+  * Add `playSoundChannel()`
   * Many changes (I've been terrible at keeping track. Sorry.)
 
 * **0.0.10**
