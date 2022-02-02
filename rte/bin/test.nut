@@ -8,11 +8,11 @@
 
 //Misc
 local brxQuit = false
-::fntW <- newFont(newSprite("cp437w.png", 8, 8, 0, 0, 0, 0), 0, 0, 1, 0)
-::fntR <- newFont(newSprite("cp437r.png", 8, 8, 0, 0, 0, 0), 0, 0, 1, 0)
-::fntG <- newFont(newSprite("cp437g.png", 8, 8, 0, 0, 0, 0), 0, 0, 1, 0)
-::fntB <- newFont(newSprite("cp437b.png", 8, 8, 0, 0, 0, 0), 0, 0, 1, 0)
-::fntE <- newFont(newSprite("cp437e.png", 8, 8, 0, 0, 0, 0), 0, 0, 1, 0)
+::fntW <- newFont(newSprite("cp437w.png", 8, 8, 0, 0, 0, 0), 0, 0, true, 0)
+::fntR <- newFont(newSprite("cp437r.png", 8, 8, 0, 0, 0, 0), 0, 0, true, 0)
+::fntG <- newFont(newSprite("cp437g.png", 8, 8, 0, 0, 0, 0), 0, 0, true, 0)
+::fntB <- newFont(newSprite("cp437b.png", 8, 8, 0, 0, 0, 0), 0, 0, true, 0)
+::fntE <- newFont(newSprite("cp437e.png", 8, 8, 0, 0, 0, 0), 0, 0, true, 0)
 
 print("fntE = " + findSprite("cp437e.png"))
 
