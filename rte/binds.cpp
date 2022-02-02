@@ -916,29 +916,29 @@ SQInteger sqRandomInt(HSQUIRRELVM v) {
 };
 
 SQInteger sqDistance2(HSQUIRRELVM v) {
-	SQInteger x1, y1, x2, y2;
+	SQFloat x1, y1, x2, y2;
 
-	sq_getinteger(v, 2, &x1);
-	sq_getinteger(v, 3, &y1);
-	sq_getinteger(v, 4, &x2);
-	sq_getinteger(v, 5, &y2);
+	sq_getfloat(v, 2, &x1);
+	sq_getfloat(v, 3, &y1);
+	sq_getfloat(v, 4, &x2);
+	sq_getfloat(v, 5, &y2);
 
-	sq_pushinteger(v, xyDistance(x1, y1, x2, y2));
+	sq_pushfloat(v, xyDistance(x1, y1, x2, y2));
 
 	return 1;
 };
 
 SQInteger sqDistance3(HSQUIRRELVM v) {
-	SQInteger x1, y1, z1, x2, y2, z2;
+	SQFloat x1, y1, z1, x2, y2, z2;
 
-	sq_getinteger(v, 2, &x1);
-	sq_getinteger(v, 3, &y1);
-	sq_getinteger(v, 4, &z1);
-	sq_getinteger(v, 5, &x2);
-	sq_getinteger(v, 6, &y2);
-	sq_getinteger(v, 7, &z2);
+	sq_getfloat(v, 2, &x1);
+	sq_getfloat(v, 3, &y1);
+	sq_getfloat(v, 4, &z1);
+	sq_getfloat(v, 5, &x2);
+	sq_getfloat(v, 6, &y2);
+	sq_getfloat(v, 7, &z2);
 
-	sq_pushinteger(v, xyDistance3(x1, y1, z1, x2, y2, z2));
+	sq_pushfloat(v, xyDistance3(x1, y1, z1, x2, y2, z2));
 
 	return 1;
 };
