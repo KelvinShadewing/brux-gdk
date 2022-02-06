@@ -1168,6 +1168,16 @@ SQInteger sqStopSound(HSQUIRRELVM v) {
 
 	sq_getinteger(v, 2, &c);
 
+	xyStopSound(c);
+
+	return 0;
+};
+
+SQInteger sqStopChannel(HSQUIRRELVM v) {
+	SQInteger c;
+
+	sq_getinteger(v, 2, &c);
+
 	Mix_HaltChannel(c);
 
 	return 0;

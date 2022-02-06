@@ -144,10 +144,13 @@ int xyInit() {
 	}
 
 	//Initialize audio
-	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 8, 2048) < 0) {
 		xyPrint(0, "SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
 		return 0;
 	}
+
+	//Get channel count
+	gvMixChannels = Mix_AllocateChannels(-8);
 
 	//Initialize input
 	xyInitInput();
@@ -404,6 +407,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqDeleteSound, "deleteSound", 2, ".n"); //Doc'd
 	xyBindFunc(v, sqDeleteMusic, "deleteMusic", 2, ".n"); //Doc'd
 	xyBindFunc(v, sqStopSound, "stopSound", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqStopChannel, "stopChannel", 2, ".n"); //Doc'd
 	xyBindFunc(v, sqStopMusic, "stopMusic"); //Doc'd
 	xyBindFunc(v, sqCheckMusic, "checkMusic"); //Doc'd
 	xyBindFunc(v, sqCheckSound, "checkSound", 2, ".n"); //Doc'd

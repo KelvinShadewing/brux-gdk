@@ -47,6 +47,7 @@ extern Uint32 buttonlast[5];
 extern Uint8 fileMax;
 extern vector<xyShape*> gvShape;
 extern string gvInputString;
+extern int gvMixChannels;
 
 //Gamepad
 extern SDL_Joystick* gvGamepad[8];

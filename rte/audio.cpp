@@ -85,3 +85,12 @@ int xyPlayMusic(Uint32 music, Uint32 loops) {
 	if(i == -1) xyPrint(0, "Error playing music! SDL_Mixer Error: %s\n", Mix_GetError());
 	return i;
 };
+
+void xyStopSound(Uint32 sound) {
+	if(sound < 0 || sound >= vcSounds.size()) return;
+	if(vcSounds[sound] == 0) return;
+
+	for(int i = 0; i < gvMixChannels; i++) {
+		if(Mix_GetChunk(i) == vcSounds[sound]) Mix_HaltChannel(i);
+	}
+};

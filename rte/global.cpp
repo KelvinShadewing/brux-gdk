@@ -46,6 +46,7 @@ Uint32 buttonlast[5];
 Uint8 fileMax = 128;
 vector<xyShape*> gvShape;
 string gvInputString;
+int gvMixChannels;
 
 //Gamepad
 SDL_Joystick* gvGamepad[8] = {0};
