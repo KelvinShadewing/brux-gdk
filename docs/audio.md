@@ -37,7 +37,11 @@
 
   Checks if music is currently playing.
 
-* <a name="stopsound"></a>**`stopSound( channel )`**
+* <a name="stopsound"></a>**`stopSound( sound )`**
+
+  Stops the audio playing with a given ID.
+
+* <a name="stopchannel"></a>**`stopChannel( channel )`**
 
   Stops the audio playing on a given channel. Use `-1` to stop all channels.
 
