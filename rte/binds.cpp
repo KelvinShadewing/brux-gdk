@@ -1228,6 +1228,16 @@ SQInteger sqMusicPaused(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqFadeMusic(HSQUIRRELVM v) {
+	SQFloat f;
+
+	sq_getfloat(v, 2, &f);
+
+	Mix_FadeOutMusic(f * 1000.0);
+
+	return 1;
+};
+
 //}
 
 /////////////

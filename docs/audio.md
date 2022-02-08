@@ -64,3 +64,7 @@
 * <a name="musicpaused"></a>**`musicPaused()`**
 
   Checks whether the music is paused.
+
+* <a name="fademusic"></a>**`fadeMusic( time )`**
+
+  Fades out the currently playing mysic over `time` number of seconds.

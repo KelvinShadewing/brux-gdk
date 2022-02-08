@@ -82,6 +82,7 @@ int main(int argc, char* argv[]) {
 		sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
 	} else {
 		if(xyFileExists("test.nut")) sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
+		else if(xyFileExists("game.brx")) sqstd_dofile(gvSquirrel, "game.brx", 0, 1);
 	}
 
 	//End game
@@ -415,6 +416,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqPauseMusic, "pauseMusic"); //Doc'd
 	xyBindFunc(v, sqResumeMusic, "resumeMusic"); //Doc'd
 	xyBindFunc(v, sqMusicPaused, "musicPaused"); //Doc'd
+	xyBindFunc(v, sqFadeMusic, "fadeMusic", 2, ".n");
 
 	//Shapes
 	xyBindFunc(v, sqLineLine, "hitLineLine", 9, ".nnnnnnnn"); //Doc'd

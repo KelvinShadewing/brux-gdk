@@ -132,6 +132,7 @@ SQInteger sqSetMaxChannels(HSQUIRRELVM v);
 SQInteger sqPauseMusic(HSQUIRRELVM v);
 SQInteger sqResumeMusic(HSQUIRRELVM v);
 SQInteger sqMusicPaused(HSQUIRRELVM v);
+SQInteger sqFadeMusic(HSQUIRRELVM v);
 
 //SDL_gfx
 SQInteger sqDrawCircle(HSQUIRRELVM v);
