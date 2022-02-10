@@ -364,10 +364,11 @@ void xyLoadCore() {
 	const va_center = 1; \n\
 	const va_bottom = 2; \n\
 	 \n\
-	const bm_norm = 0; \n\
-	const bm_add = 1; \n\
-	const bm_sub = 2; \n\
-	const bm_mult = 3; \n\
+	const bm_none = 0; \n\
+	const bm_blend = 1; \n\
+	const bm_add = 2; \n\
+	const bm_sub = 3; \n\
+	const bm_mod = 4; \n\
 	 \n\
 	const os_windows = 0; \n\
 	const os_linux = 1; \n\

@@ -422,6 +422,48 @@ SQInteger sqNewTexture(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqTextureSetBlendMode(HSQUIRRELVM v) {
+	SQInteger t, b;
+	SDL_BlendMode m;
+
+	sq_getinteger(v, 2, &t);
+	sq_getinteger(v, 3, &b);
+
+	if(t < 0) {
+		xyPrint(0, "Invalid texture ID. Cannot set blend mode.");
+		return 0;
+	};
+
+	if(t > vcTextures.size() - 1) {
+		xyPrint(0, "Invalid texture ID. Cannot set blend mode.");
+		return 0;
+	};
+
+	switch(b) {
+		case 0:
+			m = SDL_BLENDMODE_NONE;
+			break;
+		case 1:
+			m = SDL_BLENDMODE_BLEND;
+			break;
+		case 2:
+			m = SDL_BLENDMODE_ADD;
+			break;
+		case 3:
+			m = SDL_ComposeCustomBlendMode(SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT, SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT);
+		case 4:
+			m = SDL_BLENDMODE_MOD;
+			break;
+		default:
+			m = SDL_BLENDMODE_NONE;
+			break;
+	};
+
+	SDL_SetTextureBlendMode(vcTextures[t], m);
+
+	return 0;
+};
+
 //}
 
 /////////////
@@ -444,7 +486,7 @@ SQInteger sqFindSprite(HSQUIRRELVM v) {
 	const char* n;
 	sq_getstring(v, 2, &n);
 	string nn = n;
-	//xyPrint(0, "Searching for sprite: %s", n);
+	//Print(0, "Searching for sprite: %s", n);
 	//xyPrint(0, "Number of sprites to search: %i", vcSprites.size());
 
 	for(size_t i = 0; i < vcSprites.size(); i++) {
@@ -590,7 +632,51 @@ SQInteger sqReplaceSprite(HSQUIRRELVM v) {
 	}
 
 	return 0;
-}
+};
+
+SQInteger sqSpriteSetBlendMode(HSQUIRRELVM v) {
+	SQInteger t, s, b;
+	SDL_BlendMode m;
+
+	sq_getinteger(v, 2, &s);
+	sq_getinteger(v, 3, &b);
+
+	if(s < 0) {
+		xyPrint(0, "Invalid sprite ID. Cannot set blend mode.");
+		return 0;
+	};
+
+	if(s > vcSprites.size() - 1) {
+		xyPrint(0, "Invalid sprite ID. Cannot set blend mode.");
+		return 0;
+	};
+
+	t = vcSprites[s]->gettex();
+
+	switch(b) {
+		case 0:
+			m = SDL_BLENDMODE_NONE;
+			break;
+		case 1:
+			m = SDL_BLENDMODE_BLEND;
+			break;
+		case 2:
+			m = SDL_BLENDMODE_ADD;
+			break;
+		case 3:
+			m = SDL_ComposeCustomBlendMode(SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT, SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT);
+		case 4:
+			m = SDL_BLENDMODE_MOD;
+			break;
+		default:
+			m = SDL_BLENDMODE_NONE;
+			break;
+	};
+
+	SDL_SetTextureBlendMode(vcTextures[t], m);
+
+	return 0;
+};
 
 //}
 

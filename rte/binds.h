@@ -48,6 +48,7 @@ SQInteger sqLoadImageKeyed(HSQUIRRELVM v);
 SQInteger sqSetScalingFilter(HSQUIRRELVM v);
 SQInteger sqSetResolution(HSQUIRRELVM v);
 SQInteger sqNewTexture(HSQUIRRELVM v);
+SQInteger sqTextureSetBlendMode(HSQUIRRELVM v);
 
 //Sprites
 SQInteger sqSpriteName(HSQUIRRELVM v);
@@ -61,6 +62,7 @@ SQInteger sqSpriteName(HSQUIRRELVM v);
 SQInteger sqSpriteW(HSQUIRRELVM v);
 SQInteger sqSpriteH(HSQUIRRELVM v);
 SQInteger sqReplaceSprite(HSQUIRRELVM v);
+SQInteger sqSpriteSetBlendMode(HSQUIRRELVM v);
 
 //Input
 SQInteger sqKeyPress(HSQUIRRELVM v);
