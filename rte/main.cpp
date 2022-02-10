@@ -317,7 +317,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqGetScreenH, "screenH"); //Doc'd
 	xyBindFunc(v, sqGetDisplayW, "displayW"); //Doc'd
 	xyBindFunc(v, sqGetDisplayH, "displayH"); //Doc'd
-	xyBindFunc(v, sqTextureSetBlendMode, "textureSetBlendMode", 3, ".nn");
+	xyBindFunc(v, sqTextureSetBlendMode, "textureSetBlendMode", 3, ".nn"); //Doc'd
 
 	//Sprites
 	xyPrint(0, "Embedding sprites...");
@@ -331,7 +331,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqSpriteW, "spriteW", 2, ".i"); //Doc'd
 	xyBindFunc(v, sqSpriteH, "spriteH", 2, ".i"); //Doc'd
 	xyBindFunc(v, sqReplaceSprite, "replaceSprite", 9, ".isiiiiii");
-	xyBindFunc(v, sqSpriteSetBlendMode, "spriteSetBlendMode", 3, ".nn");
+	xyBindFunc(v, sqSpriteSetBlendMode, "spriteSetBlendMode", 3, ".nn"); //Doc'd
 
 	//Input
 	xyPrint(0, "Embedding input...");

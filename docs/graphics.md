@@ -45,10 +45,6 @@
 
   If set to true, pixels will be softened when the window is stretched, otherwise, they will remain sharp. This must be set AT THE BEGINNING in order to work properly, as it takes effect when textures are created, not rendered. Padding should also be used in sprites to avoid artifacting.
 
-* >><a name="setBlendMode"></a>**`setBlendMode( mode )`**
-
-  Changes how images are blended when drawing. The default is `bm_norm`, which draws things normally. `bm_add` will add an images pixel color values to where it is drawn, and `bm_sub` will do the opposite. `bm_mult` will multiply the value of a color, with 128 causing no change, 255 bringing any value to full brightness, and 0 bringing any value to black.
-
 * <a name="setResolution"></a>**`setResolution( width, height )`**
 
   Changes the base resolution of the window. In full screen, this may produce a letterbox if the aspect ratio does not match that of the monitor.
@@ -88,3 +84,7 @@
 * <a name="resetDrawTarget"></a>**`resetDrawTarget()`**
 
   Resets the drawing target to the screen.
+
+* <a name="textureSetBlendMode"></a>**`textureSetBlendMode( texture, mode )`**
+
+  Sets the blend mode for a texture. Supported modes differ by hardware, and fallbacks are determined by SDL.

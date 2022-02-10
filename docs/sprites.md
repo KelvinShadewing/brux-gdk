@@ -48,3 +48,7 @@
 * <a name="replaceSprite"></a>**`replaceSprite( sprite, file, width, height, margin, padding, pivotX, pivotY )`**
 
   Replaces `sprite` with a new file without having to create a new sprite index.
+
+* <a name="spriteSetBlendMode"></a>**`spriteSetBlendMode( sprite, mode )`**
+
+  Sets the blend mode for a sprite. Supported modes differ by hardware, and fallbacks are determined by SDL.
