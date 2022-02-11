@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
 			//If the file is long enough
 			if(curarg.length() > 4) {
 				//If the input is a Squirrel file
-				if(curarg.substr(curarg.find_last_of(".")) == ".sq" || curarg.substr(curarg.find_last_of(".")) == ".nut" || curarg.substr(curarg.find_last_of(".")) == ".brx"){
+				if(curarg.substr(curarg.find_last_of('.')) == ".sq" || curarg.substr(curarg.find_last_of('.')) == ".nut" || curarg.substr(curarg.find_last_of('.')) == ".brx"){
 					//Check that the file really exists
 					if(xyFileExists(curarg.c_str())) {
 						//All checks pass, assign the file

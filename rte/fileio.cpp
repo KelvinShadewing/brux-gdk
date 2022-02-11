@@ -102,11 +102,13 @@ SQInteger sqLsDir(HSQUIRRELVM v) {
 		return 1;
 	} else {
 		sq_newarray(v, 0);
-		while(entry = readdir(folder)) {
+        entry = readdir(folder);
+        while(entry) {
 			s_entry = entry->d_name;
 			sq_pushstring(v, s_entry.c_str(), s_entry.length());
 			sq_arrayappend(v, -2);
-		}
+            entry = readdir(folder);
+        }
 	}
 
 	closedir(folder);

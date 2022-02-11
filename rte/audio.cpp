@@ -14,7 +14,7 @@ Uint32 xyLoadSound(const char* filename) {
 	}
 
 	//Add the file to the list
-	if(vcSounds.size() == 0){
+	if(vcSounds.empty()){
 		vcSounds.push_back(newSnd);
 		return 0;
 	} else {
@@ -41,7 +41,7 @@ Uint32 xyLoadMusic(const char* filename) {
 	}
 
 	//Add the file to the list
-	if(vcMusic.size() == 0) {
+	if(vcMusic.empty()) {
 		vcMusic.push_back(newMsc);
 		return 0;
 	} else {
