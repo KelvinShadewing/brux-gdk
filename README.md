@@ -43,12 +43,21 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 **Fixes needed:**
 
 - [ ] Sprites do not pivot correctly when scaled and rotated at the same time
+- [ ] Deleting sprites appears to have a chance of deleting the wrong sprite
 
 ### To Do (Editor)
 
 * Everything (I haven't planned everything needed yet. I'll wait until the RE grows some more.)
 
 ### Change Log
+
+* **0.2.2**
+  * Add texture and sprite blend modes
+  * Add music fadeout
+  * Add sound channel controls
+  * Fix `pointAngle()` and `lendirX/Y()` math
+  * Code cleanup
+  * Add version number function
 
 * **0.2.1**
   * Fix frame timer

@@ -44,3 +44,7 @@
 * <a name="setWindowIcon"></a>**`setWindowIcon( filename )`**
 
   Changes the window icon to the specified file. It does not need to be preloaded as a sprite or texture.
+
+* <a name="bruxVersion"></a>**`bruxVersion()`**
+
+  Returns the current runtime version as a string.

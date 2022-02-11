@@ -22,6 +22,7 @@ SQInteger sqGetScreenW(HSQUIRRELVM v);
 SQInteger sqGetScreenH(HSQUIRRELVM v);
 SQInteger sqGetDisplayH(HSQUIRRELVM v);
 SQInteger sqGetDisplayW(HSQUIRRELVM v);
+SQInteger sqBruxVersion(HSQUIRRELVM v);
 
 //File IO
 SQInteger sqImport(HSQUIRRELVM v);

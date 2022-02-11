@@ -131,6 +131,11 @@ SQInteger sqGetDisplayW(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqBruxVersion(HSQUIRRELVM v) {
+	sq_pushstring(v, gvVNo, strlen(gvVNo));
+	return 1;
+};
+
 //}
 
 /////////////
