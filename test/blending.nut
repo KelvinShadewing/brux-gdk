@@ -9,7 +9,7 @@ spriteSetBlendMode(sprLight, bm_add)
 
 textureSetBlendMode(texAmbient, bm_sub)
 
-setDrawColor(0xff40ffff)
+setDrawColor(0x204080ff)
 
 while(!keyPress(k_escape) && !getQuit()) {
 	setDrawTarget(texAmbient)
