@@ -51,6 +51,10 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.2.3**
+  * Add `min()` and `max()` (Yes, Squirrel was missing these in my tests)
+
+
 * **0.2.2**
   * Add texture and sprite blend modes
   * Add music fadeout

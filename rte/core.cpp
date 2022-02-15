@@ -432,6 +432,15 @@ void xyLoadCore() {
 		} \n\
 	} \n\
 	 \n\
+	::min <- function(a, b) { \n\
+		if(a < b) return a \n\
+		else return b \n\
+	} \n\
+	 \n\
+	::max <- function(a, b) { \n\
+		if(a > b) return a \n\
+		else return b \n\
+	} \n\
 	print(\"Imported core lib.\");";
 
 	SQInteger oldtop = sq_gettop(gvSquirrel);
