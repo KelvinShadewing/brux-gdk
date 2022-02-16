@@ -209,6 +209,77 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	delete piv;
 };
 
+void xySprite::drawmod(int f, int x, int y, Uint32 color) {
+	int fd = xyWrap(f, 0, frames - 1);
+
+	SDL_Rect rec;
+	SDL_Rect des;
+
+	des.x = x - pvX;
+	des.y = y - pvY;
+	des.w = w;
+	des.h = h;
+
+	int fx = fd % col;
+	int fy = (fd - fx) / col;
+
+	rec.x = mar + (fx * w) + (pad * fx);
+	rec.y = mar + (fy * h) + (pad * fy);
+	rec.w = w;
+	rec.h = h;
+
+	//Break color into 8-bit versions
+	Uint8 r, g, b;
+	r = (color >> 24) & 0xFF;
+	g = (color >> 16) & 0xFF;
+	b = (color >> 8) & 0xFF;
+
+	SDL_SetTextureColorMod(vcTextures[tex], r, g, b);
+	SDL_RenderCopy(gvRender, vcTextures[tex], &rec, &des);
+	SDL_SetTextureColorMod(vcTextures[tex], 255, 255, 255);
+};
+
+void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha, Uint32 color) {
+	//Do nothing if scaling is set to 0 on either dimension
+	if(xscale == 0 || yscale == 0) return;
+
+	int fd = xyWrap(f, 0, frames - 1);
+
+	SDL_Rect rec;
+	SDL_Rect des;
+
+	des.x = x - (pvX * xscale);
+	des.y = y - (pvY * yscale);
+	des.w = w * xscale;
+	des.h = h * yscale;
+
+	int fx = fd % col;
+	int fy = (fd - fx) / col;
+
+	rec.x = mar + (fx * w) + (pad * fx);
+	rec.y = mar + (fy * h) + (pad * fy);
+	rec.w = w;
+	rec.h = h;
+
+	SDL_Point *piv = new SDL_Point;
+	piv->x = pvX * xscale;
+	piv->y = pvY * yscale;
+
+	//Break color into 8-bit versions
+	Uint8 r, g, b;
+	r = (color >> 24) & 0xFF;
+	g = (color >> 16) & 0xFF;
+	b = (color >> 8) & 0xFF;
+
+	SDL_SetTextureColorMod(vcTextures[tex], r, g, b);
+	SDL_SetTextureAlphaMod(vcTextures[tex], alpha * 255);
+	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
+	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
+	SDL_SetTextureColorMod(vcTextures[tex], 255, 255, 255);
+
+	delete piv;
+};
+
 Uint32 xySprite::getnum() {
 	return numero;
 };

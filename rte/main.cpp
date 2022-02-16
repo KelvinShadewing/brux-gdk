@@ -327,6 +327,8 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqNewSpriteFT, "newSpriteFT", 8, ".iiiiiii");
 	xyBindFunc(v, sqDrawSprite, "drawSprite", 5, ".innn"); //Doc'd
 	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".innnninnn"); //Doc'd
+	xyBindFunc(v, sqDrawSpriteMod, "drawSpriteMod", 6, ".innnnn"); //Doc'd
+	xyBindFunc(v, sqDrawSpriteExMod, "drawSpriteExMod", 11, ".innnninnnn"); //Doc'd
 	xyBindFunc(v, sqDeleteSprite, "deleteSprite", 2, ".i"); //Doc'd
 	xyBindFunc(v, sqFindSprite, "findSprite", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqSpriteW, "spriteW", 2, ".i"); //Doc'd

@@ -25,6 +25,14 @@
 
   Draws a sprite that is also transformed and blended with the given `alpha` value. `alpha` should be a float between `0.0` and `1.0`.
 
+* <a name="drawSpriteMod"></a>**`drawSpriteMod( sprite, frame, x, y, color )`**
+
+  Draws a sprite with color modulation. Color value format is `0xRRGGBBAA`.
+
+* <a name="drawSpriteExMod"></a>**`drawSpriteExMod( sprite, frame, x, y, angle, flip, xscale, yscale, alpha, color)`**
+
+  Mix of the previous two.
+
 * <a name="deleteSprite"></a>**`deleteSprite( sprite )`**
 
   Deletes a sprite from memory. If a new sprite is made afterwards, the index of a deleted sprite will be recycled to save memory. Be careful when creating new sprites, as any pointers to the deleted sprite will now point to that one.

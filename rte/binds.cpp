@@ -583,6 +583,46 @@ SQInteger sqDrawSpriteEx(HSQUIRRELVM v) {
 	return 0;
 };
 
+SQInteger sqDrawSpriteMod(HSQUIRRELVM v) {
+	SQInteger i, f, x, y, c;
+
+	sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 3, &f);
+	sq_getinteger(v, 4, &x);
+	sq_getinteger(v, 5, &y);
+	sq_getinteger(v, 6, &c);
+
+	if(vcSprites.size() <= i) return 0;
+	if(vcSprites[i] == 0) return 0;
+
+	vcSprites[i]->drawmod(f, x, y, c);
+
+	return 0;
+};
+
+SQInteger sqDrawSpriteExMod(HSQUIRRELVM v) {
+	SQInteger i, f, x, y, a, l, c;
+	float sx, sy, p;
+
+	sq_getinteger(v, 2, &i);
+	sq_getinteger(v, 3, &f);
+	sq_getinteger(v, 4, &x);
+	sq_getinteger(v, 5, &y);
+	sq_getinteger(v, 6, &a);
+	sq_getinteger(v, 7, &l);
+	sq_getfloat(v, 8, &sx);
+	sq_getfloat(v, 9, &sy);
+	sq_getfloat(v, 10, &p);
+	sq_getinteger(v, 11, &c);
+
+	if(vcSprites.size() <= i) return 0;
+	if(vcSprites[i] == 0) return 0;
+
+	vcSprites[i]->drawexmod(f, x, y, a, static_cast<SDL_RendererFlip>(l), sx, sy, p, c);
+
+	return 0;
+};
+
 SQInteger sqDeleteSprite(HSQUIRRELVM v) {
 	SQInteger i;
 
