@@ -29,6 +29,14 @@
 
   Returns the distance between two points in three-dimensional space.
 
+* <a name="inDistance2"></a>**`inDistance2( x1, y1, x2, y2, distance )`**
+
+  Checks if the distance between two points is less than or equal to the given distance. Faster than `distance2()`, since it does not need to return the actual distance, so it can find it without using square root.
+
+* <a name="distance3"></a>**`distance3( x1, y1, z1, x2, y2, z2 )`**
+
+  Returns the distance between two points in three-dimensional space.
+
 * <a name="wrap"></a>**`wrap( num, low, high )`**
 
   Takes `num` and wraps it around so that it is in between `low` and `high`, then returns it as a float.
