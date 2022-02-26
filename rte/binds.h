@@ -106,6 +106,8 @@ SQInteger sqKeyChar(HSQUIRRELVM v);
 SQInteger sqRandomFloat(HSQUIRRELVM v);
 SQInteger sqRandomInt(HSQUIRRELVM v);
 SQInteger sqDistance2(HSQUIRRELVM v);
+SQInteger sqDistance3(HSQUIRRELVM v);
+SQInteger sqInDistance2(HSQUIRRELVM v);
 SQInteger sqWrap(HSQUIRRELVM v);
 SQInteger sqRound(HSQUIRRELVM v);
 SQInteger sqCeil(HSQUIRRELVM v);

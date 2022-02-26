@@ -23,6 +23,12 @@ float xyDistance3(float x1, float y1, float z1, float x2, float y2, float z2) {
 	return sqrt((xd * xd) + (yd * yd) + (zd * zd));
 };
 
+bool xyInDistance2(float x1, float y1, float x2, float y2, float distance) {
+	//Faster than xyDistance for checking within range
+	//xyDistance is better for when the actual distance needs to be shown
+	return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) <= distance * distance;
+};
+
 int xyRandomInt(int mx) {
 	int numb = rand();
 	numb %= mx;

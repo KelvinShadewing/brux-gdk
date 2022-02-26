@@ -1059,6 +1059,20 @@ SQInteger sqDistance2(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqInDistance2(HSQUIRRELVM v) {
+	SQFloat x1, y1, x2, y2, d;
+
+	sq_getfloat(v, 2, &x1);
+	sq_getfloat(v, 3, &y1);
+	sq_getfloat(v, 4, &x2);
+	sq_getfloat(v, 5, &y2);
+	sq_getfloat(v, 6, &d);
+
+	sq_pushbool(v, xyInDistance2(x1, y1, x2, y2, d));
+
+	return 1;
+};
+
 SQInteger sqDistance3(HSQUIRRELVM v) {
 	SQFloat x1, y1, z1, x2, y2, z2;
 

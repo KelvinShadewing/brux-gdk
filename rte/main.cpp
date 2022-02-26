@@ -374,6 +374,8 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqRandomFloat, "randFloat", 2, ".n"); //Doc'd
 	xyBindFunc(v, sqRandomInt, "randInt", 2, ".n"); //Doc'd
 	xyBindFunc(v, sqDistance2, "distance2", 5, ".nnnn"); //Doc'd
+	xyBindFunc(v, sqDistance3, "distance3", 7, ".nnnnnn");
+	xyBindFunc(v, sqInDistance2, "inDistance2", 6, ".nnnnn");
 	xyBindFunc(v, sqWrap, "wrap", 4, ".nnn"); //Doc'd
 	xyBindFunc(v, sqRound, "round", 2, ".n"); //Doc'd
 	xyBindFunc(v, sqCeil, "ceil", 2, ".n"); //Doc'd
