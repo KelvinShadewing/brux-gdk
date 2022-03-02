@@ -48,3 +48,7 @@
 * <a name="bruxVersion"></a>**`bruxVersion()`**
 
   Returns the current runtime version as a string.
+
+* <a name="toggleFullscreen"></a>**`toggleFullscreen()`**
+
+  Switches between fullscreen and window mode.

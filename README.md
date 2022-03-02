@@ -51,6 +51,11 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.2.5**
+  * Add `toggleFullscreen()`
+  * Add `inDistance2()`, which skips use of square root for faster distance checking
+  * Anything else from 0.2.4, which I forgot to log. :/
+
 * **0.2.3**
   * Add `min()` and `max()` (Yes, Squirrel was missing these in my tests)
 

@@ -136,6 +136,12 @@ SQInteger sqBruxVersion(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqToggleFullscreen(HSQUIRRELVM v) {
+	SDL_SetWindowFullscreen(gvWindow, (SDL_GetWindowFlags(gvWindow) & SDL_WINDOW_FULLSCREEN_DESKTOP) ? 0 : SDL_WINDOW_FULLSCREEN_DESKTOP);
+
+	return 0;
+};
+
 //}
 
 /////////////

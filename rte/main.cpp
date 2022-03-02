@@ -293,6 +293,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqLoadWindowIcon, "setWindowIcon", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqGetFrames, "getFrames"); //Doc'd
 	xyBindFunc(v, sqBruxVersion, "bruxVersion"); //Doc'd
+	xyBindFunc(v, sqToggleFullscreen, "toggleFullscreen"); //Doc'd
 
 	//Graphics
 	xyPrint(0, "Embedding graphics...");
