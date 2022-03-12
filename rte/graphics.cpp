@@ -170,14 +170,6 @@ Uint32 xyLoadImage(const char* path) {
 	//Make sure vcTextures[0] == 0
 	if(vcTextures.size() == 1) vcTextures.push_back(0);
 
-	for(Uint32 i = 1; i < vcTextures.size(); i++) {
-		if(vcTextures[i] == 0) {
-			vcTextures[i] = nimg;
-			//Return the texture index
-			return i;
-		}
-	}
-
 	//Return the texture index
 	vcTextures.push_back(nimg);
 	return vcTextures.size() - 1;
@@ -223,9 +215,7 @@ void xyDeleteImage(Uint32 tex) {
 	if(tex > vcSprites.size()) return;
 
 	SDL_DestroyTexture(vcTextures[tex]);
-
-	if(tex < vcSprites.size() - 1) vcSprites[tex] = 0; //Set the texture address to zero instead of removing it so other textures are not shifted over
-	else vcSprites.pop_back(); //If it's the last one, then remove it to save memory
+	vcSprites[tex] = 0;
 };
 
 //Get FPS

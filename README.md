@@ -51,6 +51,9 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.2.5.6**
+  * Fix `replaceSprite()`
+
 * **0.2.5**
   * Add `toggleFullscreen()`
   * Add `inDistance2()`, which skips use of square root for faster distance checking
