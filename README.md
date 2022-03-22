@@ -42,7 +42,6 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 **Fixes needed:**
 
-- [ ] Sprites do not pivot correctly when scaled and rotated at the same time
 - [ ] Deleting sprites appears to have a chance of deleting the wrong sprite
 
 ### To Do (Editor)

@@ -34,29 +34,9 @@ SQInteger sqUpdate(HSQUIRRELVM v) {
 };
 
 SQInteger sqGetOS(HSQUIRRELVM v) {
-	switch(xyGetOS()) {
-		case 0:
-			sq_pushstring(v, "windows", 7);
-			break;
-		case 1:
-			sq_pushstring(v, "mac", 3);
-			break;
-		case 2:
-			sq_pushstring(v, "linux", 5);
-			break;
-		case 3:
-			sq_pushstring(v, "gcwz", 4);
-			break;
-		case 4:
-			sq_pushstring(v, "pandora", 7);
-			break;
-		case 5:
-			sq_pushstring(v, "android", 7);
-			break;
-		case 6:
-			sq_pushstring(v, "ios", 7);
-			break;
-	}
+	const char* os = SDL_GetPlatform();
+
+	sq_pushstring(v, os, -1);
 
 	return 1;
 };
