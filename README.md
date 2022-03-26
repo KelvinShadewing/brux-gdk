@@ -50,7 +50,10 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
-* **0.2.5.6**
+* **0.2.7**
+  * Fix sprite flipping
+
+* **0.2.6**
   * Fix `replaceSprite()`
 
 * **0.2.5**

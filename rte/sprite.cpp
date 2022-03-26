@@ -185,8 +185,19 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	SDL_Rect rec;
 	SDL_Rect des;
 
-	des.x = x - (pvX * xscale);
-	des.y = y - (pvY * yscale);
+	//Temporary new pivots to be changed based on fliip
+	float npvX = pvX;
+	float npvY = pvY;
+
+	if(flip & SDL_FLIP_HORIZONTAL) {
+		npvX = w - pvX;
+	}
+	if(flip & SDL_FLIP_VERTICAL) {
+		npvY = h - pvY;
+	}
+
+	des.x = x - (npvX * xscale);
+	des.y = y - (npvY * yscale);
 	des.w = w * xscale;
 	des.h = h * yscale;
 
@@ -199,8 +210,8 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	rec.h = h;
 
 	SDL_Point *piv = new SDL_Point;
-	piv->x = pvX * xscale;
-	piv->y = pvY * yscale;
+	piv->x = npvX * xscale;
+	piv->y = npvY * yscale;
 
 	SDL_SetTextureAlphaMod(vcTextures[tex], alpha * 255);
 	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
@@ -245,11 +256,22 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 
 	int fd = xyWrap(f, 0, frames - 1);
 
+	//Temporary new pivots to be changed based on fliip
+	float npvX = pvX;
+	float npvY = pvY;
+
+	if(flip & SDL_FLIP_HORIZONTAL) {
+		npvX = w - pvX;
+	}
+	if(flip & SDL_FLIP_VERTICAL) {
+		npvY = h - pvY;
+	}
+
 	SDL_Rect rec;
 	SDL_Rect des;
 
-	des.x = x - (pvX * xscale);
-	des.y = y - (pvY * yscale);
+	des.x = x - (npvX * xscale);
+	des.y = y - (npvY * yscale);
 	des.w = w * xscale;
 	des.h = h * yscale;
 
@@ -262,8 +284,8 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	rec.h = h;
 
 	SDL_Point *piv = new SDL_Point;
-	piv->x = pvX * xscale;
-	piv->y = pvY * yscale;
+	piv->x = npvX * xscale;
+	piv->y = npvY * yscale;
 
 	//Break color into 8-bit versions
 	Uint8 r, g, b;
