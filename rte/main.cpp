@@ -441,6 +441,9 @@ void xyUpdate() {
 		buttonlast[i] = buttonstate[i];
 	};
 
+	mouseWheelX = 0;
+	mouseWheelY = 0;
+
 	//Reset event-related globals
 	gvQuit = 0;
 
