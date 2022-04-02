@@ -44,6 +44,8 @@ extern vector<Uint8> keystate;
 extern vector<Uint8> keylast;
 extern Uint32 buttonstate[5];
 extern Uint32 buttonlast[5];
+extern Sint32 mouseWheelX;
+extern Sint32 mouseWheelY;
 extern Uint8 fileMax;
 extern vector<xyShape*> gvShape;
 extern string gvInputString;

@@ -369,6 +369,8 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqPadAxisPress, "joyAxisPress", 4, ".iii"); //Doc'd
 	xyBindFunc(v, sqPadAxisRelease, "joyAxisRelease", 4, ".iii"); //Doc'd
 	xyBindFunc(v, sqKeyChar, "keyString"); //Doc'd
+	xyBindFunc(v, sqMouseWheelX, "mouseWheelX"); //Doc'd
+	xyBindFunc(v, sqMouseWheelY, "mouseWheelY"); //Doc'd
 
 	//Maths
 	xyPrint(0, "Embedding maths...");
@@ -462,6 +464,11 @@ void xyUpdate() {
 			if(Event.button.button == SDL_BUTTON_RIGHT) buttonstate[2] = 0;
 			if(Event.button.button == SDL_BUTTON_X1) buttonstate[3] = 0;
 			if(Event.button.button == SDL_BUTTON_X2) buttonstate[4] = 0;
+		}
+
+		if(Event.type == SDL_MOUSEWHEEL) {
+			mouseWheelX = Event.wheel.x;
+			mouseWheelY = Event.wheel.y;
 		}
 
 		if(Event.type == SDL_TEXTINPUT) {

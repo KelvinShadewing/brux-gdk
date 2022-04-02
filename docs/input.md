@@ -124,3 +124,11 @@
 * <a name="keyString"></a>**`keyString()`**
 
   Returns the current text string from the keyboard.
+
+* <a name="mouseWheelX"></a>**`mouseWheelX()`**
+
+  Returns the amount of movement on the X axis of the mouse wheel.
+
+* <a name="mouseWheelY"></a>**`mouseWheelY()`**
+
+  Returns the amount of movement on the Y axis of the mouse wheel.

@@ -43,6 +43,8 @@ vector<Uint8> keystate(322);
 vector<Uint8> keylast(322);
 Uint32 buttonstate[5];
 Uint32 buttonlast[5];
+Sint32 mouseWheelX = 0;
+Sint32 mouseWheelY = 0;
 Uint8 fileMax = 128;
 vector<xyShape*> gvShape;
 string gvInputString;

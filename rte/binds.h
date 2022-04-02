@@ -102,6 +102,8 @@ SQInteger sqPadButtonAny(HSQUIRRELVM v);
 SQInteger sqPadAxisPress(HSQUIRRELVM v);
 SQInteger sqPadAxisRelease(HSQUIRRELVM v);
 SQInteger sqKeyChar(HSQUIRRELVM v);
+SQInteger sqMouseWheelX(HSQUIRRELVM v);
+SQInteger sqMouseWheelY(HSQUIRRELVM v);
 
 //Maths
 SQInteger sqRandomFloat(HSQUIRRELVM v);

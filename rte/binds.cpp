@@ -1008,6 +1008,20 @@ SQInteger sqKeyChar(HSQUIRRELVM v) {
 	return 1;
 }
 
+SQInteger sqMouseWheelX(HSQUIRRELVM v) {
+	sq_pushinteger(v, mouseWheelX);
+	mouseWheelX = 0;
+
+	return 1;
+}
+
+SQInteger sqMouseWheelY(HSQUIRRELVM v) {
+	sq_pushinteger(v, mouseWheelY);
+	mouseWheelY = 0;
+
+	return 1;
+}
+
 //}
 
 ///////////
