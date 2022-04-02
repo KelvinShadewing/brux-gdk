@@ -50,6 +50,9 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.2.8**
+  * Add mouse wheel detection
+
 * **0.2.7**
   * Fix sprite flipping
 
