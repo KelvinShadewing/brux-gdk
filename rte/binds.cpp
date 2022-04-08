@@ -1256,7 +1256,9 @@ SQInteger sqPlaySound(HSQUIRRELVM v) {
 	sq_getinteger(v, 2, &s);
 	sq_getinteger(v, 3, &l);
 
-	sq_pushinteger(v, xyPlaySound(s, l));
+	SQInteger ret = xyPlaySound(s, l);
+	if(ret != -1) Mix_Volume(ret, gvVolumeSound);
+	sq_pushinteger(v, ret);
 
 	return 1;
 };
@@ -1270,6 +1272,7 @@ SQInteger sqPlaySoundChannel(HSQUIRRELVM v){
 
 	int i = Mix_PlayChannel(c, vcSounds[s], l);
 	if(i == -1) xyPrint(0, "Error playing sound! SDL_Mixer Error: %s\n", Mix_GetError());
+	else Mix_Volume(i, gvVolumeSound);
 	sq_pushinteger(v, i);
 
 	return 1;
@@ -1282,6 +1285,7 @@ SQInteger sqPlayMusic(HSQUIRRELVM v) {
 	sq_getinteger(v, 3, &l);
 
 	xyPlayMusic(m, l);
+	Mix_VolumeMusic(gvVolumeMusic);
 
 	return 0;
 };
@@ -1378,6 +1382,35 @@ SQInteger sqFadeMusic(HSQUIRRELVM v) {
 
 	Mix_FadeOutMusic(f * 1000.0);
 
+	return 1;
+};
+
+SQInteger sqSetMusicVolume(HSQUIRRELVM v) {
+	SQInteger vol;
+
+	sq_getinteger(v, 2, &vol);
+	gvVolumeMusic = vol;
+	Mix_VolumeMusic(vol);
+
+	return 0;
+};
+
+SQInteger sqSetSoundVolume(HSQUIRRELVM v) {
+	SQInteger vol;
+
+	sq_getinteger(v, 2, &vol);
+	gvVolumeSound = vol;
+
+	return 0;
+};
+
+SQInteger sqGetMusicVolume(HSQUIRRELVM v) {
+	sq_pushinteger(v, gvVolumeMusic);
+	return 1;
+};
+
+SQInteger sqGetSoundVolume(HSQUIRRELVM v) {
+	sq_pushinteger(v, gvVolumeSound);
 	return 1;
 };
 

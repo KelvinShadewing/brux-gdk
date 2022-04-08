@@ -50,6 +50,8 @@ extern Uint8 fileMax;
 extern vector<xyShape*> gvShape;
 extern string gvInputString;
 extern int gvMixChannels;
+extern int gvVolumeMusic;
+extern int gvVolumeSound;
 
 //Gamepad
 extern SDL_Joystick* gvGamepad[8];

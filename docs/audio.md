@@ -68,3 +68,19 @@
 * <a name="fademusic"></a>**`fadeMusic( time )`**
 
   Fades out the currently playing mysic over `time` number of seconds.
+
+* <a name="setMusicVolume"></a>**`setMusicVolume( volume )`**
+
+  Sets the volume for music. Volume is an integer between 0 and 128.
+
+* <a name="setSoundVolume"></a>**`setSoundVolume( volume )`**
+
+  Sets the volume for sounds. Volume is an integer between 0 and 128.
+
+* <a name="getMusicVolume"></a>**`getMusicVolume()`**
+
+  Returns the current music volume with an integer between 0 and 128.
+
+* <a name="getSoundVolume"></a>**`getSoundVolume()`**
+
+  Returns the current sound volume with an integer between 0 and 128.

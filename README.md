@@ -50,6 +50,9 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.2.9**
+  * Add volume controls
+
 * **0.2.8**
   * Add mouse wheel detection
 
