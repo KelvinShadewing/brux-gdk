@@ -14,7 +14,7 @@ private:
 	float pvX, pvY;
 	Uint32 *format;
 public:
-	string name;
+	std::string name;
 	xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY);
 	xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY);
 	~xySprite();

@@ -9,8 +9,8 @@ class xyFont
 {
 private:
 	xySprite* source;
-	vector<int> cx;
-	vector<int> cw;
+	std::vector<int> cx;
+	std::vector<int> cw;
 	Uint32 start;
 	Uint32 numero;
 	bool mono;
@@ -19,7 +19,7 @@ private:
 public:
 	xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, int _kern);
 	Uint32 getnum();
-	void draw(int x, int y, string text);
+	void draw(int x, int y, std::string text);
 };
 
 #endif

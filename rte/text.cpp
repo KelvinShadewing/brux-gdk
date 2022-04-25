@@ -122,11 +122,11 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 	kern = _kern;
 };
 
-void xyFont::draw(int x, int y, string text) {
+void xyFont::draw(int x, int y, std::string text) {
 	int dx = x, dy = y; //Set cursor start position
 	int c; //Current character by font index
 
-	//Loop to end of string
+	//Loop to end of std::string
 	for(int i = 0; i < text.length(); i++) {
 		if (text[i] == '\n') {
 			dy += source->geth();

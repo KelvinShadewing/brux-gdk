@@ -50,6 +50,10 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.2.10**
+  * Remove std namespace
+  * Fix image removal mistake
+
 * **0.2.9**
   * Add volume controls
 

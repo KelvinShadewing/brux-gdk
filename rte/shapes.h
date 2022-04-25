@@ -79,7 +79,7 @@ public:
 
 	xyShape(float _x, float _y, float _a, int _type);
 
-	vector<xyPnt*> pnt, pbase;
+	std::vector<xyPnt*> pnt, pbase;
 	/**
 	pbase is used to store the positions of the vertices as they
 	are first created, basically a copy of the shape were it kept

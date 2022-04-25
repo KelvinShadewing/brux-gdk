@@ -15,7 +15,7 @@ extern int gvMouseX, gvMouseY;		//Mouse coordinates
 extern Uint32 gvScrW, gvScrH;		//Screen resolution
 extern Uint32 gvWinW, gvWinH;		//Window resolution
 extern HSQUIRRELVM gvSquirrel;		//Squirrel VM
-extern ofstream gvLog;				//Output log
+extern std::ofstream gvLog;				//Output log
 extern SDL_Window *gvWindow;		//Main window
 extern SDL_Renderer *gvRender;		//Main renderer
 extern SDL_Texture *gvScreen;		//Main screen texture
@@ -29,26 +29,26 @@ extern const char *gvVNo;			//XYRE version number
 extern const float pi;				//Pi
 extern bool gvClearScreen;			//Whether to clear the screen on update
 extern SDL_Event Event;				//Used for event handling
-extern vector<SDL_Texture*> vcTextures;		//Keeps track of user-created textures
+extern std::vector<SDL_Texture*> vcTextures;		//Keeps track of user-created textures
 extern bool gvDebug;				//Controls whether or not debug output is printed
-extern vector<xySprite*> vcSprites;	//Vector containing all sprite pointers
+extern std::vector<xySprite*> vcSprites;	//std::vector containing all sprite pointers
 extern Uint32 gvBackColor;			//Background color
 extern Uint32 gvDrawColor;			//Renderer color
-extern vector<xyFont*> vcFonts;	//Container for fonts
-extern vector<Mix_Chunk*> vcSounds;	//Container for sounds
-extern vector<Mix_Music*> vcMusic;	//Container for music
-extern string gvAppDir;				//Directory Brux is running from
-extern string gvWorkDir;			//Working directory, default is the game directory
+extern std::vector<xyFont*> vcFonts;	//Container for fonts
+extern std::vector<Mix_Chunk*> vcSounds;	//Container for sounds
+extern std::vector<Mix_Music*> vcMusic;	//Container for music
+extern std::string gvAppDir;				//Directory Brux is running from
+extern std::string gvWorkDir;			//Working directory, default is the game directory
 extern const Uint8 *sdlKeys;
-extern vector<Uint8> keystate;
-extern vector<Uint8> keylast;
+extern std::vector<Uint8> keystate;
+extern std::vector<Uint8> keylast;
 extern Uint32 buttonstate[5];
 extern Uint32 buttonlast[5];
 extern Sint32 mouseWheelX;
 extern Sint32 mouseWheelY;
 extern Uint8 fileMax;
-extern vector<xyShape*> gvShape;
-extern string gvInputString;
+extern std::vector<xyShape*> gvShape;
+extern std::string gvInputString;
 extern int gvMixChannels;
 extern int gvVolumeMusic;
 extern int gvVolumeSound;
@@ -66,7 +66,7 @@ extern int gvPadR[8];
 extern int gvPadL[8];
 extern int gvPadAxis[8][10];
 extern int gvPadLastAxis[8][10];
-extern string gvPadName[8];
+extern std::string gvPadName[8];
 extern int gvPadHat[8];
 extern int gvPadHatLast[8];
 

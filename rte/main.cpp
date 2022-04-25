@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	//Process arguments
-	string xygapp = "";
-	string curarg = "";
+	std::string xygapp = "";
+	std::string curarg = "";
 	for(int i = 0; i < argc; i++) {
 		//Print each argument and process them
 		curarg = argv[i];

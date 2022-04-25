@@ -22,8 +22,8 @@ void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item) {
 	if(!Item)
 		return;
 	while(Item) {
-		if(Item->string)
-			sq_pushstring(v, Item->string, -1);
+		if(Item->str)
+			sq_pushstring(v, Item->str, -1);
 		switch(Item->type) {
 			case cJSON_False:
 				sq_pushbool(v, SQFalse);
@@ -52,7 +52,7 @@ void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item) {
 				sqDecodeJSONTable(v, Item->child);
 				break;
 		}
-		if(Item->string)
+		if(Item->str)
 			sq_newslot(v,-3,SQFalse);
 		else
 			sq_arrayappend(v, -2);
@@ -93,7 +93,7 @@ SQInteger sqLsDir(HSQUIRRELVM v) {
 	//Get the current directory
 	DIR *folder;
 	struct dirent *entry;
-	string s_entry;
+	std::string s_entry;
 
 	folder = opendir(dir);
 	if(folder == NULL) {

@@ -134,7 +134,7 @@ SQInteger sqImport(HSQUIRRELVM v) {
 
 	sq_getstring(v, 2, &a);
 
-	string b = gvAppDir;
+	std::string b = gvAppDir;
 	b += "xylib/";
 	b += a;
 	b += ".nut";
@@ -150,7 +150,7 @@ SQInteger sqDoNut(HSQUIRRELVM v) {
 	sq_getstring(v, 2, &a);
 
 	/*
-	string b = "";
+	std::string b = "";
 	char c[256];
 	if(getcwd(c, sizeof(c)) == 0) return 0;
 	b += c;
@@ -169,7 +169,7 @@ SQInteger sqDoString(HSQUIRRELVM v) {
 	sq_getstring(v, 2, &a);
 
 	SQInteger oldtop = sq_gettop(gvSquirrel);
-	sq_compilebuffer(gvSquirrel, a, (int)strlen(a) * sizeof(SQChar), "string", 1);
+	sq_compilebuffer(gvSquirrel, a, (int)strlen(a) * sizeof(SQChar), "std::string", 1);
 	sq_pushroottable(gvSquirrel);
 	sq_call(gvSquirrel, 1, SQFalse, SQTrue);
 	sq_settop(gvSquirrel, oldtop);
@@ -207,7 +207,7 @@ SQInteger sqFileWrite(HSQUIRRELVM v) {
 	sq_getstring(v, 2, &f);
 	sq_getstring(v, 3, &s);
 
-	ofstream fi;
+	std::ofstream fi;
 	fi.open(f, ios::out);
 	fi << s;
 	fi.close();
@@ -222,7 +222,7 @@ SQInteger sqFileAppend(HSQUIRRELVM v) {
 	sq_getstring(v, 2, &f);
 	sq_getstring(v, 3, &s);
 
-	ofstream fi;
+	std::ofstream fi;
 	fi.open(f, ios::out | ios::app);
 	fi << s;
 	fi.close();
@@ -233,7 +233,7 @@ SQInteger sqFileAppend(HSQUIRRELVM v) {
 SQInteger sqFileRead(HSQUIRRELVM v) {
 	const char* f;
 	int l;
-	ifstream t;
+	std::ifstream t;
 
 	sq_getstring(v, 2, &f);
 
@@ -343,7 +343,7 @@ SQInteger sqSetScalingFilter(HSQUIRRELVM v) {
 	if(hint > 2) hint = 2;
 	if(hint < 0) hint = 0;
 
-	string strHint;
+	std::string strHint;
 	switch(hint) {
 		case 0:
 			strHint = "0";
@@ -476,7 +476,7 @@ SQInteger sqSpriteName(HSQUIRRELVM v) {
 SQInteger sqFindSprite(HSQUIRRELVM v) {
 	const char* n;
 	sq_getstring(v, 2, &n);
-	string nn = n;
+	std::string nn = n;
 	//Print(0, "Searching for sprite: %s", n);
 	//xyPrint(0, "Number of sprites to search: %i", vcSprites.size());
 
