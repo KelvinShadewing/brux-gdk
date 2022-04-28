@@ -403,7 +403,7 @@ void xyLoadCore() {
 				case \"table\": \n\
 				case \"array\": \n\
 					return jsonWrite(Item); \n\
-				case \"std::string\": \n\
+				case \"string\": \n\
 					local Len = Item.len(); \n\
 					local Str = \"\"; \n\
 					for(local i=0;i<Len;i++) { \n\
