@@ -441,6 +441,7 @@ void xyLoadCore() {
 		if(a > b) return a \n\
 		else return b \n\
 	} \n\
+	function system(var) { print(\"I can't let you do that, Dave.\") } \n\
 	print(\"Imported core lib.\");";
 
 	SQInteger oldtop = sq_gettop(gvSquirrel);
