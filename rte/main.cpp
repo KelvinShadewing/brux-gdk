@@ -294,6 +294,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqGetFrames, "getFrames"); //Doc'd
 	xyBindFunc(v, sqBruxVersion, "bruxVersion"); //Doc'd
 	xyBindFunc(v, sqToggleFullscreen, "toggleFullscreen"); //Doc'd
+	xyBindFunc(v, sqHiff, "hiff");
 
 	//Graphics
 	xyPrint(0, "Embedding graphics...");

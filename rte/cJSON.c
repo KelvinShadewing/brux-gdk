@@ -23,8 +23,8 @@
 /* cJSON */
 /* JSON parser in C. */
 
-#include <string>
-#include <cstring>
+#include <string.h>
+//#include <cstring.h>
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -47,21 +47,21 @@ static void *(*cJSON_malloc)(size_t sz) = malloc;
 static void (*cJSON_free)(void *ptr) = free;
 
 static char* cJSON_strdup(const char* str) {
-      size_t len;
-      char* copy;
+	size_t len;
+	char* copy;
 
-      len = strlen(str) + 1;
-      if (!(copy = (char*)cJSON_malloc(len))) return 0;
-      memcpy(copy,str,len);
-      return copy;
+	len = strlen(str) + 1;
+	if (!(copy = (char*)cJSON_malloc(len))) return 0;
+	memcpy(copy,str,len);
+	return copy;
 }
 
 void cJSON_InitHooks(cJSON_Hooks* hooks) {
-    if (!hooks) { /* Reset hooks */
-        cJSON_malloc = malloc;
-        cJSON_free = free;
-        return;
-    }
+	if (!hooks) { /* Reset hooks */
+		cJSON_malloc = malloc;
+		cJSON_free = free;
+		return;
+	}
 
 	cJSON_malloc = (hooks->malloc_fn)?hooks->malloc_fn:malloc;
 	cJSON_free	 = (hooks->free_fn)?hooks->free_fn:free;
@@ -244,7 +244,7 @@ cJSON *cJSON_ParseWithOpts(const char *value,const char **return_parse_end,int r
 	const char *end=0;
 	cJSON *c=cJSON_New_Item();
 	ep=0;
-	if (!c) return 0;       /* memory fail */
+	if (!c) return 0; /* memory fail */
 
 	end=parse_value(c,skip(value));
 	if (!end)	{cJSON_Delete(c);return 0;}	/* parse failure. ep is set. */
@@ -468,7 +468,7 @@ static char *print_object(cJSON *item,int depth,int fmt) {
 }
 
 /* Get Array size/item / object item. */
-int    cJSON_GetArraySize(cJSON *array)							{cJSON *c=array->child;int i=0;while(c)i++,c=c->next;return i;}
+int	cJSON_GetArraySize(cJSON *array)							{cJSON *c=array->child;int i=0;while(c)i++,c=c->next;return i;}
 cJSON *cJSON_GetArrayItem(cJSON *array,int item)				{cJSON *c=array->child;  while (c && item>0) item--,c=c->next; return c;}
 cJSON *cJSON_GetObjectItem(cJSON *object,const char *str)	{cJSON *c=object->child; while (c && cJSON_strcasecmp(c->str,str)) c=c->next; return c;}
 
