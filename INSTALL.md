@@ -10,6 +10,8 @@ Download the [Squirrel library](https://squirrel-lang.org)  and compile using Ma
 
 If you're building for Windows, make sure you have SDL2 configured for MinGW, and use MinGW to build Squirrel, not standard GCC.
 
+If you're building for macOS, place the generated `.a` files into `/Library/Developer/CommandLineTools/usr/lib`. You will need administrator privileges for this. Place the `.h` files into `/Library/Developer/CommandLineTools/usr/include`. Again, you will also need administator privileges for this.
+
 Go to the `rte` folder and run `make` or `make linux`. The file `brux` should appear in `rte/bin`. To build for Windows, run `make windows`, which should produce `brux.exe` in `rte/bin`. For a MIPS Linux system, use `make gcw0`, provided you have the GCW-Zero toolchain configured. You will need to build Squirrel for that as well.
 
 ## Installing From Binary
@@ -27,3 +29,4 @@ Place `brux.exe` anywhere and associate `.brx` files with it.
 ### Mac
 
 You're on your own, buddy.
+azreigh-todo: add macOS instructions for installing from binary
