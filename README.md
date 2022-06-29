@@ -50,6 +50,10 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Change Log
 
+* **0.2.11**
+  * Added `hiff()`
+  * Removed support for `system()` calls (This appears to be built into Squirrel by default and could cause malicious code in game mods)
+
 * **0.2.10**
   * Remove std namespace
   * Fix image removal mistake
