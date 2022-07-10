@@ -20,6 +20,7 @@
 #include <sys/stat.h>
 #include <limits>
 #include <sys/stat.h>
+#include <bitset>
 
 
 //If running on Windows, use Windows

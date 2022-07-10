@@ -120,6 +120,7 @@ SQInteger sqPointAngle(HSQUIRRELVM v);
 SQInteger sqAbs(HSQUIRRELVM v);
 SQInteger sqLenDirX(HSQUIRRELVM v);
 SQInteger sqLenDirY(HSQUIRRELVM v);
+SQInteger sqBinStr(HSQUIRRELVM v);
 
 //Text
 SQInteger sqNewFont(HSQUIRRELVM v);

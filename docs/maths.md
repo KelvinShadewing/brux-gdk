@@ -60,3 +60,7 @@
 * <a name="abs"></a>**`abs( num )`**
 
   Returns the absolute value of `num`.
+
+* <a name="binstr"></a>**`binstr( num )`**
+
+  Returns `num` in binary notation as a string.

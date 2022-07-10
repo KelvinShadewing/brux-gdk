@@ -388,6 +388,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqAbs, "abs", 2, ".n"); //Doc'd
 	xyBindFunc(v, sqLenDirX, "lendirX", 3, ".nn"); //Doc'd
 	xyBindFunc(v, sqLenDirY, "lendirY", 3, ".nn"); //Doc'd
+	xyBindFunc(v, sqBinStr, "binstr", 2, ".n"); //Doc'd
 
 	//Text
 	xyPrint(0, "Embedding text...");
