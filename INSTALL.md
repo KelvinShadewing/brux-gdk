@@ -29,5 +29,4 @@ Place `brux.exe` anywhere and associate `.brx` files with it.
 
 ### Mac
 
-You're on your own, buddy.
-azreigh-todo: add macOS instructions for installing from binary
+Place `brux` into `/Library/Developer/CommandLineTools/bin` or `/Library/Developer/CommandLineTools/usr/bin` so you can use Brux via the command line.
