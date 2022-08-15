@@ -10,7 +10,7 @@
 
 //////////
 //SYSTEM//
-/////////{
+//////////
 
 //Clear screen
 void xyClearScreen() {
@@ -107,11 +107,11 @@ void xyResetDrawTarget() {
 	SDL_SetRenderTarget(gvRender, 0);
 };
 
-//}
+
 
 //////////
 //IMAGES//
-/////////{
+//////////
 
 //Load image
 SDL_Texture* xyLoadTexture(const char* path) {
@@ -250,10 +250,12 @@ Uint32 xyNewTexture(Uint32 w, Uint32 h) {
 	return vcTextures.size() - 1;
 };
 
-//}
+
 
 //////////////
 // GEOMETRY //
-/////////////{
+//////////////
 
-//}
+
+
+

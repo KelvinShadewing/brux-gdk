@@ -41,6 +41,10 @@
 
   Same as above, but if an image does not have a transparent background, this can be used to set a color to be made transparent.
 
+* <a name="setScaling"></a>**`setScaling( scale )`**
+
+  Changes the renderer magnification. Use after calling [setResolution()](#setResolution).
+
 * <a name="setScalingFilter"></a>**`setScalingFilter( bool )`**
 
   If set to true, pixels will be softened when the window is stretched, otherwise, they will remain sharp. This must be set AT THE BEGINNING in order to work properly, as it takes effect when textures are created, not rendered. Padding should also be used in sprites to avoid artifacting.
@@ -64,6 +68,14 @@
 * <a name="displayH"></a>**`displayH()`**
 
   Returns the height of the hardware's display resolution.
+
+* <a name="windowW"></a>**`windowW()`**
+
+  Returns the width of the window as it appears on the display.
+
+* <a name="windowH"></a>**`windowH()`**
+
+  Returns the height of the window as it appears on the display.
 
 * <a name="newTexture"></a>**`newTexture( width, height )`**
 

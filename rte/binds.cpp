@@ -15,7 +15,7 @@
 
 //////////
 // MAIN //
-/////////{
+//////////
 
 SQInteger sqWait(HSQUIRRELVM v) {
 	SQInteger a;
@@ -127,11 +127,11 @@ SQInteger sqHiff(HSQUIRRELVM v) {
 	xyEnd();
 };
 
-//}
+
 
 /////////////
 // FILE IO //
-////////////{
+/////////////
 
 SQInteger sqImport(HSQUIRRELVM v) {
 	//I don't remember why I have this function when sqDoNut() basically does the same thing
@@ -259,11 +259,11 @@ SQInteger sqFileRead(HSQUIRRELVM v) {
 	}
 };
 
-//}
+
 
 //////////////
 // GRAPHICS //
-/////////////{
+//////////////
 
 SQInteger sqClearScreen(HSQUIRRELVM v) {
 	SDL_RenderClear(gvRender);
@@ -341,6 +341,16 @@ SQInteger sqSetBackgroundColor(HSQUIRRELVM v) {
 	return 0;
 };
 
+SQInteger sqSetScaling(HSQUIRRELVM v) {
+	SQFloat scale;
+
+	sq_getfloat(v, 2, &scale);
+
+	if(scale > 0) SDL_RenderSetScale(gvRender, scale, scale);
+
+	return 0;
+};
+
 SQInteger sqSetScalingFilter(HSQUIRRELVM v) {
 	SQInteger hint;
 
@@ -406,6 +416,24 @@ SQInteger sqGetScreenH(HSQUIRRELVM v) {
 	return 1;
 }
 
+SQInteger sqGetWindowW(HSQUIRRELVM v) {
+	int w;
+
+	SDL_GetWindowSize(gvWindow, &w, 0);
+	sq_pushinteger(v, w);
+
+	return 1;
+}
+
+SQInteger sqGetWindowH(HSQUIRRELVM v) {
+	int h;
+
+	SDL_GetWindowSize(gvWindow, 0, &h);
+	sq_pushinteger(v, h);
+
+	return 1;
+}
+
 SQInteger sqNewTexture(HSQUIRRELVM v) {
 	SQInteger w, h;
 
@@ -460,11 +488,11 @@ SQInteger sqTextureSetBlendMode(HSQUIRRELVM v) {
 	return 0;
 };
 
-//}
+
 
 /////////////
 // SPRITES //
-////////////{
+/////////////
 
 SQInteger sqSpriteName(HSQUIRRELVM v) {
 	SQInteger s;
@@ -714,11 +742,11 @@ SQInteger sqSpriteSetBlendMode(HSQUIRRELVM v) {
 	return 0;
 };
 
-//}
+
 
 ///////////
 // INPUT //
-//////////{
+///////////
 
 SQInteger sqKeyPress(HSQUIRRELVM v) {
 	SQInteger a;
@@ -1025,11 +1053,11 @@ SQInteger sqMouseWheelY(HSQUIRRELVM v) {
 	return 1;
 }
 
-//}
+
 
 ///////////
 // MATHS //
-//////////{
+///////////
 
 SQInteger sqRandomFloat(HSQUIRRELVM v) {
 	float a;
@@ -1290,11 +1318,11 @@ SQInteger sqBinStr(HSQUIRRELVM v) {
 	return 1;
 };
 
-//}
+
 
 //////////
 // TEXT //
-/////////{
+//////////
 
 SQInteger sqNewFont(HSQUIRRELVM v) {
 	SQInteger i, c, t, k;
@@ -1347,11 +1375,11 @@ SQInteger sqChint(HSQUIRRELVM v) {
 	return 1;
 }
 
-//}
+
 
 ///////////
 // AUDIO //
-//////////{
+///////////
 
 SQInteger sqLoadSound(HSQUIRRELVM v) {
 	const char* s;
@@ -1537,11 +1565,11 @@ SQInteger sqGetSoundVolume(HSQUIRRELVM v) {
 	return 1;
 };
 
-//}
+
 
 /////////////
 // SDL_GFX //
-////////////{
+/////////////
 
 SQInteger sqDrawCircle(HSQUIRRELVM v) {
 	SQInteger x, y, r;
@@ -1612,11 +1640,11 @@ SQInteger sqDrawLineWide(HSQUIRRELVM v) {
 	return 0;
 };
 
-//}
+
 
 ////////////
 // SHAPES //
-///////////{
+////////////
 
 SQInteger sqLineLine(HSQUIRRELVM v) {
 	SQFloat x0, y0, x1, y1, x2, y2, x3, y3;
@@ -1675,4 +1703,4 @@ SQInteger sqLinePoint(HSQUIRRELVM v) {
 	return 1;
 }
 
-//}
+

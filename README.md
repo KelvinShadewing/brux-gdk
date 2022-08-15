@@ -54,6 +54,8 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
   * Added `hiff()`
   * Removed support for `system()` calls (This appears to be built into Squirrel by default and could cause malicious code in game mods)
   * Added `binstr()`
+  * Added `windowW()` and `windowH()`
+  * Added `setScaling()`
 
 * **0.2.10**
   * Remove std namespace

@@ -307,6 +307,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqLoadImageKeyed, "loadImageKey", 3, ".sn"); //Doc'd
 	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".inn"); //Doc'd
 	xyBindFunc(v, sqSetBackgroundColor, "setBackgroundColor", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqSetScaling, "setScaling", 2, ".n");
 	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".n|b"); //Doc'd
 	xyBindFunc(v, sqSetResolution, "setResolution", 3, ".nn"); //Doc'd
 	xyBindFunc(v, sqDrawCircle, "drawCircle", 5, ".nnnn|b"); //Doc'd
@@ -318,6 +319,8 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqNewTexture, "newTexture", 3, ".nn"); //Doc'd
 	xyBindFunc(v, sqGetScreenW, "screenW"); //Doc'd
 	xyBindFunc(v, sqGetScreenH, "screenH"); //Doc'd
+	xyBindFunc(v, sqGetWindowW, "windowW");
+	xyBindFunc(v, sqGetWindowH, "windowH");
 	xyBindFunc(v, sqGetDisplayW, "displayW"); //Doc'd
 	xyBindFunc(v, sqGetDisplayH, "displayH"); //Doc'd
 	xyBindFunc(v, sqTextureSetBlendMode, "textureSetBlendMode", 3, ".nn"); //Doc'd
@@ -392,7 +395,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 
 	//Text
 	xyPrint(0, "Embedding text...");
-	xyBindFunc(v, sqNewFont, "newFont", 6, ".nnnbn"); //Doc'd
+	xyBindFunc(v, sqNewFont, "newFont", 6, ".nnnb|nn"); //Doc'd
 	xyBindFunc(v, sqDrawText, "drawText", 5, ".nnns"); //Doc'd
 	xyBindFunc(v, sqChint, "chint", 2, ".i"); //Doc'd
 
