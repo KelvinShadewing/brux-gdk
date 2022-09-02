@@ -92,7 +92,9 @@ void xyLoadActors() {
 	}
 
 	::checkActor <- function(id) {
-		return actor.rawin(id) && actor[id].len() > 0
+		if(typeof id == "string") return actor.rawin(id) && actor[id].len() > 0
+		if(typeof id == "integer") return actor.rawin(id)
+
 	}
 
 	print("Imported actors lib."))rew";
