@@ -23,4 +23,5 @@ Next, go to the application tab on the properties for the new link and set the c
 Example (with brux in Downloads and with SuperTux Advance (Unstable Branch) in Documents/supertux-advance): `/home/deck/Downloads/brux /home/deck/Documents/supertux-advance/game.brx` <br>
 Following this, go into the permissions tab and check `Is Executable` to allow the link to be run. Press OK to save the link. <br>
 Now, go into the desktop client for Steam and press `Add A Game > Add a Non-Steam Game` then click browse. Find your link to an application, click open and click Add Selected Program. <br>
-Now you can return to gaming mode and play games made in brux.
+Repeat for all games you have downloaded that are made using brux. <br>
+Now you can return to gaming mode and play them.
