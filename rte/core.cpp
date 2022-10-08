@@ -431,7 +431,8 @@ void xyLoadCore() {
 					}
 					return "\""+Str+"\""
 				default:
-					return Item.tostring()
+					if("tostring" in Item) return Item.tostring()
+					else return Item
 			}
 		}
 		if(typeof(Table) == "table") {
