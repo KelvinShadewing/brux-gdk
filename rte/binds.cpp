@@ -122,11 +122,6 @@ SQInteger sqToggleFullscreen(HSQUIRRELVM v) {
 	return 0;
 };
 
-SQInteger sqHiff(HSQUIRRELVM v) {
-	xyPrint(0, "Hiff!");
-	xyEnd();
-};
-
 
 
 /////////////

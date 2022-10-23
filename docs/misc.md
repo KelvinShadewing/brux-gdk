@@ -5,6 +5,7 @@
 
 &nbsp;
 
-* <a name="arraySort"></a>**`arraySort( array )`**
+* <a name="choose"></a>**`choose( array )`**
 
-  Takes an array and attempts to sort it. If a wrong value is passed, it will return that value unchanged.
+  Takes an array and returns a random element from it. If any other type is passed, it is returned unchanged.
+

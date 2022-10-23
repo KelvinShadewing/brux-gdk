@@ -26,7 +26,6 @@ SQInteger sqGetDisplayH(HSQUIRRELVM v);
 SQInteger sqGetDisplayW(HSQUIRRELVM v);
 SQInteger sqBruxVersion(HSQUIRRELVM v);
 SQInteger sqToggleFullscreen(HSQUIRRELVM v);
-SQInteger sqHiff(HSQUIRRELVM v);
 
 //File IO
 SQInteger sqImport(HSQUIRRELVM v);

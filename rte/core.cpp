@@ -461,6 +461,11 @@ void xyLoadCore() {
 		else return b
 	}
 
+	::choose <- function(options) {
+		if(typeof options != "array") return options
+		return options[randInt(options.len())]
+	}
+
 	function system(var) { print("I can't let you do that, Dave.") }
 	print("Imported core lib.");)rew";
 
