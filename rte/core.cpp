@@ -466,7 +466,14 @@ void xyLoadCore() {
 		return options[randInt(options.len())]
 	}
 
-	function system(var) { print("I can't let you do that, Dave.") }
+	::system <- function(var) { print("I can't let you do that, Dave.") }
+
+	::int <- function(var) { return var.tointeger() }
+	::float <- function(var) { return var.tofloat() }
+	::str <- function(var) { return var.tostring() }
+	::char <- function(var) { return var.tochar() }
+	::bool <- function(var) { return (var && true) }
+
 	print("Imported core lib.");)rew";
 
 	SQInteger oldtop = sq_gettop(gvSquirrel);
