@@ -22,7 +22,7 @@ performance reasons.
 
 ///////////
 // POINT //
-//////////{
+///////////
 
 //Constructors
 xyPnt::xyPnt() {
@@ -165,11 +165,11 @@ float xyPnt::dot(xyPnt* p) {
 	return (x * p->x) + (y * p->y);
 }
 
-//}
+
 
 ///////////
 // SHAPE //
-//////////{
+///////////
 
 xyShape::xyShape(float _x, float _y, float _a, int _type) {
 	x = _x;
@@ -178,7 +178,7 @@ xyShape::xyShape(float _x, float _y, float _a, int _type) {
 	type = _type;
 };
 
-//}
+
 
 bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d) {
 	float denom = ((b->x - a->x) * (d->y - c->y)) - ((b->y - a->y) * (d->x - c->x));

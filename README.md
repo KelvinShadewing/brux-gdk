@@ -4,7 +4,7 @@
 
 ## **License**
 
-All code is available under the GNU General [Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+All code is available under the [GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl-3.0.en.html).
 
 ### **Introduction**
 
@@ -38,7 +38,7 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 - [X] JSON map loading and rendering
 - [ ] Collision geometry (Currently implemented in Squirrel)
 - [ ] Chipmunk physics engine
-- [ ] Create compiled format to contain multiple source files in one (will also be included in squake)
+- [ ] Networking (details TBD)
 
 **Fixes needed:**
 
@@ -51,9 +51,13 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 ### Change Log
 
 * **0.2.11**
-  * Added `hiff()`
   * Removed support for `system()` calls (This appears to be built into Squirrel by default and could cause malicious code in game mods)
   * Added `binstr()`
+  * Added `windowW()` and `windowH()`
+  * Added `setScaling()`
+  * Fixed chance of non-string-convertable type being passed incorrectly in `jsonWrite()`
+  * Added `choose()`
+  * Added pseudo typecasting functions `int()`, `float()`, `str()`, `char()`, and `bool()`
 
 * **0.2.10**
   * Remove std namespace
