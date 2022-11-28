@@ -298,6 +298,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	//Graphics
 	xyPrint(0, "Embedding graphics...");
 	xyBindFunc(v, sqSetDrawTarget, "setDrawTarget", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqGetDrawTarget, "getDrawTarget"); //Doc'd
 	xyBindFunc(v, sqClearScreen, "clearScreen"); //Doc'd
 	xyBindFunc(v, sqResetDrawTarget, "resetDrawTarget");
 	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".n|bn|bn|b"); //Doc'd

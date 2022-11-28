@@ -272,8 +272,15 @@ SQInteger sqSetDrawTarget(HSQUIRRELVM v) {
 	sq_getinteger(v, 2, &tex);
 
 	xySetDrawTarget(tex);
+	gvDrawTarget = tex;
 
 	return 0;
+};
+
+SQInteger sqGetDrawTarget(HSQUIRRELVM v) {
+	sq_pushinteger(v, gvDrawTarget);
+
+	return 1;
 };
 
 SQInteger sqResetDrawTarget(HSQUIRRELVM v) {

@@ -58,6 +58,7 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
   * Fixed chance of non-string-convertable type being passed incorrectly in `jsonWrite()`
   * Added `choose()`
   * Added pseudo typecasting functions `int()`, `float()`, `str()`, `char()`, and `bool()`
+  * Added `getDrawTarget()`
 
 * **0.2.10**
   * Remove std namespace
