@@ -52,6 +52,7 @@ extern std::string gvInputString;
 extern int gvMixChannels;
 extern int gvVolumeMusic;
 extern int gvVolumeSound;
+extern int gvDrawTarget;
 
 //Gamepad
 extern SDL_Joystick* gvGamepad[8];

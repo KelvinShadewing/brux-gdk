@@ -51,6 +51,7 @@ std::string gvInputString;
 int gvMixChannels;
 int gvVolumeMusic = 128;
 int gvVolumeSound = 128;
+int gvDrawTarget = 0;
 
 //Gamepad
 SDL_Joystick* gvGamepad[8] = {0};

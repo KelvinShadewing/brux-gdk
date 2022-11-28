@@ -13,6 +13,10 @@
 
   Set an image to be drawn to when using drawing functions. When set to 0, it draws directly to the screen. It can be loaded with `loadImage` or created with `newTexture`.
 
+* <a name="getDrawTarget"></a>**`getDrawTarget()`**
+
+  Returns the ID of the current texture being drawn to; 0 if drawing directly to the screen.
+
 * <a name="drawImage"></a>**`drawImage( image, x, y )`**
 
   Draws a full image at `x`,`y`.
