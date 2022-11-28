@@ -28,7 +28,17 @@
 /////////////////
 //MAIN FUNCTION//
 /////////////////
+#ifdef __EMSCRIPTEN__
+EMSCRIPTEN_KEEPALIVE
+#endif
 int main(int argc, char* argv[]) {
+#ifdef __EMSCRIPTEN__
+	EM_ASM(
+		console.log(FS.readdir("/"));
+		console.log(FS.readdir("/bin"));
+		FS.chdir('/bin');
+	);
+#endif
 	//Initiate everything
 	if(xyInit() == 0) {
 		xyPrint(0, "Failed to initiate Brux!");
@@ -75,7 +85,6 @@ int main(int argc, char* argv[]) {
 
 	SDL_ShowCursor(0);
 
-
 	//Run app
 	if(xygapp != "") {
 		xyPrint(0, "Running %s...", xygapp.c_str());
@@ -107,7 +116,11 @@ int xyInit() {
 
 	//Initiate SDL
 	SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
+#ifdef __EMSCRIPTEN__
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS) < 0) {
+#else
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+#endif
 		xyPrint(0, "Failed to initialize! %s", SDL_GetError());
 		return 0;
 	}
