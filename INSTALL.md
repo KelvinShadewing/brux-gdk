@@ -16,6 +16,7 @@ If you're building for macOS, compile Squirrel using make then place the generat
 Go to the `rte` folder and run `make` or `make linux`. The file `brux` should appear in `rte/bin`. To build for Windows, run `make windows`, which should produce `brux.exe` in `rte/bin`. For a MIPS Linux system, use `make gcw0`, provided you have the GCW-Zero toolchain configured. You will need to build Squirrel for that as well.
 
 ### Web (Emscripten)
+#### Brux
 To compile brux for the web, you'll need the [Emscripten SDK](https://emscripten.org/docs/getting_started/downloads.html). <br>
 Next, you'll need to compile Squirrel from source using Emscripten.
 ```bash
@@ -25,6 +26,9 @@ emmake make
 ```
 Following this, place the static library (.a file extension for Linux) and headers somewhere you will remember e.g. `~/.local/include/squirrel3` and `~/.local/lib/squirrel3`. Now entering Brux's `rte` folder, run `emmake make web`. <br>
 By default, the makefile will include `$HOME/.local/include/squirrel3` and link static libraries from `~/.local/lib/squirrel3` but this can be overriden by adding `EMCINCLUDE="-I(HEADERPATH)" EMCLIBS="(SQUIRREL_LIB_PATH) (SQUIRREL_STD_LIB_PATH)"` after `emmake make web`.
+#### Packaging applications
+To package applications into a `.data` file, use file_packager from the Emscripten SDK. <br>
+Example command: `file_packager brux.data --exclude \*.data --exclude \*.sh --preload .@/bin > game.js`
 
 ## Installing From Binary
 
