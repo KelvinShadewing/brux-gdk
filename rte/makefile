@@ -1,6 +1,6 @@
 CFLAGS = -I. -lstdc++ -lSDL2main -lSDL2 -lSDL2_image -lSDL2_gfx -lSDL2_mixer -lSDL2_net -lsquirrel -lsqstdlib -lm --std=c++17
 
-EMCFLAGS = -O3 -I/usr/include/squirrel3 -I~/.local/lib/squirrel3/ -I. -lstdc++ -lm --std=c++17
+EMCFLAGS = -O3 -I. -lstdc++ -lm --std=c++17
 
 EMPORTFLAGS = -sWASM=1 -sSINGLE_FILE -sFORCE_FILESYSTEM -sASYNCIFY -sALLOW_MEMORY_GROWTH -sUSE_SDL=2 -sUSE_SDL_GFX=2 -sUSE_SDL_IMAGE=2 -sUSE_SDL_NET=2 -sUSE_SDL_MIXER=2 -sSDL2_IMAGE_FORMATS='["bmp","png","xpm"]'
 
@@ -14,7 +14,19 @@ DEPS = audio.h binds.h cJSON.h core.h fileio.h global.h graphics.h input.h main.
 
 OBJ = audio.o actors.o binds.o cJSON.o core.o fileio.o global.o graphics.o input.o main.o maths.o shapes.o sprite.o text.o
 
+ifndef EMCINCLUDE
+$(warning "EMCINCLUDE not provided, setting default value")
+EMCINCLUDE = -I$$HOME/.local/include/squirrel3
+endif
 
+ifndef EMCLIBS
+$(warning "EMCLIBS not provided, setting default value")
+EMCLIBS = ~/.local/lib/squirrel3/libsquirrel.a ~/.local/lib/squirrel3/libsqstdlib.a
+endif
+
+ifndef EMSHELL
+EMSHELL = emscripten-minimal.html
+endif
 
 %.o: %.cpp $(DEPS)
 	g++ -c -o $@ $< $(CFLAGS)
@@ -29,7 +41,7 @@ gcw0: $(DEPS)
 	mipsel-gcw0-linux-uclibc-g++ -o bin/brux.dge $(SRC) -mips32 -D_DINGUX -I/opt/gcw0-toolchain/usr/include $(CFLAGS) -L/opt/gcw0-toolchain/usr/lib -L/opt/gcw0-toolchain/usr/lib/gcc/mipsel-gcw0-linux-uclibc/4.9.1 -O2
 
 web: $(DEPS)
-	em++ -o bin/brux.html $(SRC) ~/.local/lib/squirrel3/libsquirrel.a ~/.local/lib/squirrel3/libsqstdlib.a $(EMCFLAGS) $(EMPORTFLAGS) --exclude-file bin/brux --exclude-file bin/brux.html --exclude-file bin/brux.data --preload-file bin@/bin  # What the hiff is this????
+	em++ -o bin/brux.html $(SRC) $(EMCLIBS) $(EMCINCLUDE) $(EMCFLAGS) $(EMPORTFLAGS) --exclude-file bin/brux --exclude-file bin/brux.html --exclude-file bin/brux.data --preload-file bin@/bin --shell-file $(EMSHELL)  # What the hiff is this????
 
 clean:
 	rm *.o
