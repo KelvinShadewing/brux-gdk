@@ -6,6 +6,7 @@ rte/XYG_Runtime.layout
 rte/XYG_Runtime.depend
 rte/bin/brux
 rte/bin/brux.*
+rte/bin/game.js
 *.exe
 rte/bin/release/*
 rte/bin/count.txt

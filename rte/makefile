@@ -41,7 +41,8 @@ gcw0: $(DEPS)
 	mipsel-gcw0-linux-uclibc-g++ -o bin/brux.dge $(SRC) -mips32 -D_DINGUX -I/opt/gcw0-toolchain/usr/include $(CFLAGS) -L/opt/gcw0-toolchain/usr/lib -L/opt/gcw0-toolchain/usr/lib/gcc/mipsel-gcw0-linux-uclibc/4.9.1 -O2
 
 web: $(DEPS)
-	em++ -o bin/brux.html $(SRC) $(EMCLIBS) $(EMCINCLUDE) $(EMCFLAGS) $(EMPORTFLAGS) --exclude-file bin/brux --exclude-file bin/brux.html --exclude-file bin/brux.data --preload-file bin@/bin --shell-file $(EMSHELL)  # What the hiff is this????
+	file_packager bin/brux.data --exclude bin/brux --exclude bin/brux.html --exclude bin/brux.data --exclude bin/game.js --exclude bin/\*.sh --preload bin@/bin > bin/game.js
+	em++ -o bin/brux.html $(SRC) $(EMCLIBS) $(EMCINCLUDE) $(EMCFLAGS) $(EMPORTFLAGS) --shell-file $(EMSHELL) # What the hiff is this????
 
 clean:
 	rm *.o
