@@ -413,6 +413,7 @@ void xyLoadCore() {
 	}
 
 	::jsonWrite <- function(Table) {
+		if(typeof Table == "null") return "null"
 		if(typeof(Table)!="array" && typeof(Table)!="table")
 			return Table.tostring()
 		local Out = ""
@@ -430,6 +431,8 @@ void xyLoadCore() {
 						Str+=Item.slice(i, i+1)
 					}
 					return "\""+Str+"\""
+				case "null":
+					return "null"
 				default:
 					if("tostring" in Item) return Item.tostring()
 					else return Item
