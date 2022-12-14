@@ -50,6 +50,8 @@ Place `brux.exe` anywhere and associate `.brx` files with it.
 Place `brux` into `/Library/Developer/CommandLineTools/bin` or `/Library/Developer/CommandLineTools/usr/bin` so you can use Brux via the command line.
 
 ### Web
-
+#### Local
+Run `brux.html` using `emrun` from the Emscripten SDK when you need to use it.
+#### Server
 Simply have your server run in the same directory as Brux's HTML file. <br>
 You may want to rename `brux.html` to `index.html` so the server automatically points to it.
