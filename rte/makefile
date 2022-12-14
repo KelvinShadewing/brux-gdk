@@ -14,13 +14,14 @@ DEPS = audio.h binds.h cJSON.h core.h fileio.h global.h graphics.h input.h main.
 
 OBJ = audio.o actors.o binds.o cJSON.o core.o fileio.o global.o graphics.o input.o main.o maths.o shapes.o sprite.o text.o
 
+# TODO: Find a way to make this only run when rule passed in is web
 ifndef EMCINCLUDE
-$(warning "EMCINCLUDE not provided, setting default value")
+#$(warning "EMCINCLUDE not provided, setting default value")
 EMCINCLUDE = -I$$HOME/.local/include/squirrel3
 endif
 
 ifndef EMCLIBS
-$(warning "EMCLIBS not provided, setting default value")
+#$(warning "EMCLIBS not provided, setting default value")
 EMCLIBS = ~/.local/lib/squirrel3/libsquirrel.a ~/.local/lib/squirrel3/libsqstdlib.a
 endif
 
@@ -42,7 +43,7 @@ gcw0: $(DEPS)
 
 web: $(DEPS)
 	file_packager bin/brux.data --exclude bin/brux --exclude bin/brux.html --exclude bin/brux.data --exclude bin/game.js --exclude bin/\*.sh --preload bin@/bin > bin/game.js
-	em++ -o bin/brux.html $(SRC) $(EMCLIBS) $(EMCINCLUDE) $(EMCFLAGS) $(EMPORTFLAGS) --shell-file $(EMSHELL) # What the hiff is this????
+	em++ -o bin/brux.html $(SRC) $(EMCLIBS) $(EMCINCLUDE) $(EMCFLAGS) $(EMPORTFLAGS) --shell-file $(EMSHELL)
 
 clean:
 	rm *.o
