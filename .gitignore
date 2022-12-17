@@ -1,5 +1,7 @@
 # Directories
 .vscode/
+ide/.kdev4/*
+ide/build/*
 rte/bin/xyg
 rte/bin/release/*
 rte/obj/*
@@ -7,6 +9,7 @@ rte/obj/*
 *.o
 *.dll
 *.exe
+*.kdev4
 */log.txt
 log.txt
 rte/*.layout
