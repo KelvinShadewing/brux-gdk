@@ -1,18 +1,20 @@
-rte/obj/*
-*.o
+# Directories
+.vscode/
 rte/bin/xyg
+rte/bin/release/*
+rte/obj/*
+# Files
+*.o
+*.dll
+*.exe
+*/log.txt
+log.txt
+rte/*.layout
+rte/bin/brux
+rte/bin/brux.*
+rte/bin/count.txt
+rte/bin/game.js
 rte/bin/log.txt
 rte/XYG_Runtime.layout
 rte/XYG_Runtime.depend
-rte/bin/brux
-rte/bin/brux.*
-*.exe
-rte/bin/release/*
-rte/bin/count.txt
-rte/*.layout
-rte/brux
 test/log.txt
-*.dll
-log.txt
-*/log.txt
-build/
