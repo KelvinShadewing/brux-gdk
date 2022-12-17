@@ -12,6 +12,7 @@ rte/obj/*
 *.kdev4
 */log.txt
 log.txt
+ide/meson.build.user
 rte/*.layout
 rte/bin/brux
 rte/bin/brux.*
