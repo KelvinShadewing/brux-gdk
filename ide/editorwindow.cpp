@@ -24,14 +24,8 @@ EditorWindow::EditorWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::Ed
 	connect(TreeView, &QTreeView::doubleClicked, this, &EditorWindow::handleDoubleClick);
 
 	TextEditorInstance = KTextEditor::Editor::instance();
-	Document = TextEditorInstance->createDocument(this);
-	auto ScriptTab = ui->centralwidget->findChild<QWidget*>("scripting");
-
-	// kde how the hell does this work???
-	DocumentView = Document->createView(nullptr);
-	ScriptTab->layout()->addWidget(DocumentView);
-	DocumentView->updateGeometry();
-	ScriptTab->updateGeometry();
+	openFile("", true);
+	openFile("", true);
 }
 
 EditorWindow::~EditorWindow() {
@@ -39,7 +33,11 @@ EditorWindow::~EditorWindow() {
 }
 
 void EditorWindow::handleDoubleClick(QModelIndex index) {
-
+	// Always get column 0 (name)
+	index = index.siblingAtColumn(0);
+	QTreeView* treeView = ui->centralwidget->findChild<QTreeView*>("treeView");
+	QString item = treeView->model()->data(index).toString();
+	std::cout << Directory.toStdString() << "/" << item.toStdString() << std::endl;
 }
 
 bool EditorWindow::isFile(QString path) {
@@ -57,16 +55,50 @@ bool EditorWindow::isTilemap(QString path) {
 
 	std::ifstream file;
 	file.open(path.toStdString(), std::ifstream::in);
+
 	file.seekg(0, file.end);
 	int Length = file.tellg();
 	file.seekg(0, file.beg);
+
 	char* buffer = new char[Length];
+
 	file.read(buffer, Length);
+
 	QString contents = buffer;
+
 	delete[] buffer;
 
 	if (contents.contains("\"tiledversion\"")) return true;
 	return false;
 }
 
-void EditorWindow::openFile(QString path) {}
+void EditorWindow::openFile(QString path, bool newFile) {
+	int vecSize = Documents.size();
+	// New file logic
+	if (newFile) {
+		Documents.push_back(TextEditorInstance->createDocument(this));
+		DocumentViews.push_back(Documents[vecSize]->createView(nullptr));
+		createTab("New File", vecSize);
+		return;
+	}
+
+	// Existing file logic
+	if (!isFile(path)) return; // No thanks!
+	if (isTilemap(path)) {
+		return; // Do this later
+	}
+}
+
+void EditorWindow::createTab(QString name, int documentIndex) {
+	// Create the new tab
+	QTabWidget* tabWidget = ui->centralwidget->findChild<QTabWidget*>("fileTabs");
+	QWidget* newTab = new QWidget(tabWidget);
+	QHBoxLayout* newTabLayout = new QHBoxLayout;
+	newTab->setLayout(newTabLayout);
+	if (tabWidget->count() != 0) tabWidget->addTab(newTab, name);
+	else tabWidget->insertTab(0, newTab, name);
+
+	// Create a new document view for the new tab
+	DocumentTitles.push_back(name);
+	newTabLayout->addWidget(DocumentViews[documentIndex]);
+}

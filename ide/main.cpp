@@ -24,9 +24,8 @@ int main(int argc, char *argv[]) {
 		// The license this code is released under.
 		KAboutLicense::File,
 		// Copyright Statement.
-		i18n("(c) 2022"));
-	std::cout << VERSION << std::endl;
-	aboutData.setLicenseTextFile("qrc:/license");
+		"");
+	aboutData.setLicenseTextFile(":/LICENSE");
 	aboutData.setDesktopFileName("ide");
 	aboutData.addAuthor(i18nc("@info:credit", "Kelvin Shadewing"), i18nc("@info:credit", "Brux Developer"), QStringLiteral(""), QStringLiteral("https://kelvinshadewing.net"));
 	aboutData.addAuthor(i18nc("@info:credit", "Tulip"), i18nc("@info:credit", "IDE Creator"), QStringLiteral(""), QStringLiteral("https://tulip-sudo.github.io"));

@@ -28,12 +28,20 @@ public:
 
 	bool isTilemap(QString path);
 
-	void openFile(QString path);
+	void openFile(QString path, bool newFile = false);
+
+	void closeFile(QModelIndex index);
+
+	void createTab(QString name, int documentIndex);
+
+	void closeTab(int index);
 private:
 	Ui::EditorWindow *ui;
 	KTextEditor::Editor* TextEditorInstance;
 	KTextEditor::Document* Document;
 	KTextEditor::View* DocumentView;
+	std::vector<KTextEditor::Document*> Documents;
+	std::vector<KTextEditor::View*> DocumentViews;
 	QStringList DocumentTitles;
 	std::vector<Tiled::MapRenderer> Renderers;
 	QString Directory = getenv("PWD");
