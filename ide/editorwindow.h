@@ -18,7 +18,8 @@
 class EditorWindow : public QMainWindow
 {
 	Q_OBJECT
-
+public slots:
+	void handleDoubleClick(QModelIndex index);
 public:
 	EditorWindow(QWidget *parent = nullptr);
 	~EditorWindow();
