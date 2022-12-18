@@ -20,11 +20,8 @@ EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWin
 	ui->menubar->addMenu(Help->menu());
 
 	DirectoryView.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
-	DirectoryView.setRootPath(Directory);
 
 	auto TreeView = ui->centralwidget->findChild<QTreeView*>("treeView");
-	TreeView->setModel(&DirectoryView);
-	TreeView->setRootIndex(DirectoryView.index(Directory));
 	connect(ui->centralwidget->findChild<QTabWidget*>("fileTabs"), &QTabWidget::tabCloseRequested, this, &EditorWindow::closeFile);
 	connect(TreeView, &QTreeView::doubleClicked, this, &EditorWindow::handleDoubleClick);
 
@@ -49,6 +46,12 @@ void EditorWindow::openDirectory(bool checked) {
 	QString newDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), getenv("HOME"), QFileDialog::ShowDirsOnly);
 
 	if (!newDir.isEmpty()) {
+		int remainingFiles = Documents.size();
+
+		while (remainingFiles != 0) {
+			closeFile(0);
+			remainingFiles--;
+		}
 		Directory = newDir;
 		DirectoryView.setRootPath(Directory);
 
@@ -121,8 +124,6 @@ void EditorWindow::openFile(QString path, QString name, bool newFile) {
 void EditorWindow::closeFile(int index) {
 	DocumentViews[index]->close();
 	Documents[index]->closeStream();
-	delete DocumentViews[index];
-	delete Documents[index];
 	closeTab(index);
 	OpenFiles.erase(OpenFiles.begin() + index);
 }
