@@ -24,8 +24,6 @@ EditorWindow::EditorWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::Ed
 	connect(TreeView, &QTreeView::doubleClicked, this, &EditorWindow::handleDoubleClick);
 
 	TextEditorInstance = KTextEditor::Editor::instance();
-	openFile("", true);
-	openFile("", true);
 }
 
 EditorWindow::~EditorWindow() {
@@ -35,14 +33,16 @@ EditorWindow::~EditorWindow() {
 void EditorWindow::handleDoubleClick(QModelIndex index) {
 	// Always get column 0 (name)
 	index = index.siblingAtColumn(0);
+
 	QTreeView* treeView = ui->centralwidget->findChild<QTreeView*>("treeView");
 	QString item = treeView->model()->data(index).toString();
-	std::cout << Directory.toStdString() << "/" << item.toStdString() << std::endl;
+
+	openFile(DirectoryView.filePath(index), item);
 }
 
 bool EditorWindow::isFile(QString path) {
-	QDir FileCheck{path};
-	FileCheck.setFilter(QDir::Files);
+	QFile FileCheck{path};
+	std::cout << path.toStdString() << ": " << FileCheck.exists() << std::endl;
 	return FileCheck.exists();
 }
 
@@ -72,8 +72,9 @@ bool EditorWindow::isTilemap(QString path) {
 	return false;
 }
 
-void EditorWindow::openFile(QString path, bool newFile) {
+void EditorWindow::openFile(QString path, QString name, bool newFile) {
 	int vecSize = Documents.size();
+	std::cout << path.toStdString() << std::endl;
 	// New file logic
 	if (newFile) {
 		Documents.push_back(TextEditorInstance->createDocument(this));
@@ -87,6 +88,15 @@ void EditorWindow::openFile(QString path, bool newFile) {
 	if (isTilemap(path)) {
 		return; // Do this later
 	}
+
+	QFile fileExistsCheck{path};
+	QDir dirExistsCheck{path};
+	if (fileExistsCheck.exists() && !dirExistsCheck.exists()) {
+		Documents.push_back(TextEditorInstance->createDocument(this));
+		Documents[vecSize]->openUrl(QUrl("file://" + path));
+		DocumentViews.push_back(Documents[vecSize]->createView(nullptr));
+		createTab(name, vecSize);
+	}
 }
 
 void EditorWindow::createTab(QString name, int documentIndex) {
@@ -99,6 +109,5 @@ void EditorWindow::createTab(QString name, int documentIndex) {
 	else tabWidget->insertTab(0, newTab, name);
 
 	// Create a new document view for the new tab
-	DocumentTitles.push_back(name);
 	newTabLayout->addWidget(DocumentViews[documentIndex]);
 }

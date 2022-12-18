@@ -8,11 +8,12 @@ kf5xmldep = meson.get_compiler('cpp').find_library('KF5XmlGui')
 kf5translatedep = meson.get_compiler('cpp').find_library('KF5I18n')
 kf5syntaxdep = meson.get_compiler('cpp').find_library('KF5SyntaxHighlighting')
 kf5textdep = meson.get_compiler('cpp').find_library('KF5TextEditor')
+kf5partdep = meson.get_compiler('cpp').find_library('KF5Parts')
 tileddep = meson.get_compiler('cpp').find_library('tiled')
 tilededitordep = meson.get_compiler('cpp').find_library('tilededitor')
 
 included_directories = ['/usr/include/KF5/KCoreAddons', '/usr/include/KF5/KI18n', '/usr/include/KF5/KXmlGui', '/usr/include/KF5/KParts', '/usr/include/KF5/KSyntaxHighlighting', '/usr/include/KF5/KTextEditor', '/usr/include/tiled']
-deparr = [qt5dep, kf5dep, kf5xmldep, kf5translatedep, kf5syntaxdep, kf5textdep, tileddep, tilededitordep]
+deparr = [qt5dep, kf5dep, kf5xmldep, kf5translatedep, kf5syntaxdep, kf5textdep, kf5partdep, tileddep, tilededitordep]
 
 translations = qt5.compile_translations(ts_files : ['translations/ide_en_US.ts'], build_by_default : true)
 

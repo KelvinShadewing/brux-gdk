@@ -28,7 +28,7 @@ public:
 
 	bool isTilemap(QString path);
 
-	void openFile(QString path, bool newFile = false);
+	void openFile(QString path, QString name = "", bool newFile = false);
 
 	void closeFile(QModelIndex index);
 
@@ -42,9 +42,8 @@ private:
 	KTextEditor::View* DocumentView;
 	std::vector<KTextEditor::Document*> Documents;
 	std::vector<KTextEditor::View*> DocumentViews;
-	QStringList DocumentTitles;
 	std::vector<Tiled::MapRenderer> Renderers;
-	QString Directory = getenv("PWD");
+	QString Directory = getenv("HOME");
 	QFileSystemModel DirectoryView;
 };
 #endif // EDITORWINDOW_H
