@@ -20,8 +20,10 @@ class EditorWindow : public QMainWindow
 	Q_OBJECT
 public slots:
 	void handleDoubleClick(QModelIndex index);
+
+	void openDirectory(bool checked = false);
 public:
-	EditorWindow(QWidget *parent = nullptr);
+	EditorWindow(QWidget *parent = nullptr, QString projectDirectory = getenv("HOME"));
 	~EditorWindow();
 
 	bool isFile(QString path);
@@ -38,12 +40,10 @@ public:
 private:
 	Ui::EditorWindow *ui;
 	KTextEditor::Editor* TextEditorInstance;
-	KTextEditor::Document* Document;
-	KTextEditor::View* DocumentView;
 	std::vector<KTextEditor::Document*> Documents;
 	std::vector<KTextEditor::View*> DocumentViews;
 	std::vector<Tiled::MapRenderer> Renderers;
-	QString Directory = getenv("HOME");
+	QString Directory;
 	QFileSystemModel DirectoryView;
 };
 #endif // EDITORWINDOW_H

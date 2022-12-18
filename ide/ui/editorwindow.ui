@@ -114,6 +114,11 @@
     <string>About</string>
    </property>
   </action>
+  <action name="actionOpen_Directory">
+   <property name="text">
+    <string>Open Directory</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

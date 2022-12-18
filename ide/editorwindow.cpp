@@ -3,24 +3,27 @@
 
 #include <iostream>
 #include <fstream>
+
 #include <QDir>
+#include <QFileDialog>
 
 #include <KHelpMenu>
 #include <KAboutData>
 
-EditorWindow::EditorWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::EditorWindow) {
+EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWindow(parent), ui(new Ui::EditorWindow), Directory(projectDirectory) {
 	ui->setupUi(this);
+	QMenu* newMenu = new QMenu("File");
+	connect(newMenu->addAction("Open Folder"), SIGNAL(triggered()) , this, SLOT(openDirectory()));
 	KHelpMenu* Help = new KHelpMenu(this, KAboutData::applicationData());
+	ui->menubar->addMenu(newMenu);
 	ui->menubar->addMenu(Help->menu());
 
-	std::cout << Directory.toStdString() << std::endl;
 	DirectoryView.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
 	DirectoryView.setRootPath(Directory);
 
 	auto TreeView = ui->centralwidget->findChild<QTreeView*>("treeView");
 	TreeView->setModel(&DirectoryView);
 	TreeView->setRootIndex(DirectoryView.index(Directory));
-
 	connect(TreeView, &QTreeView::doubleClicked, this, &EditorWindow::handleDoubleClick);
 
 	TextEditorInstance = KTextEditor::Editor::instance();
@@ -38,6 +41,21 @@ void EditorWindow::handleDoubleClick(QModelIndex index) {
 	QString item = treeView->model()->data(index).toString();
 
 	openFile(DirectoryView.filePath(index), item);
+}
+
+void EditorWindow::openDirectory(bool checked) {
+	std::cout << "dirtime" << std::endl;
+	std::cout << checked << std::endl;
+	QString newDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), getenv("HOME"), QFileDialog::ShowDirsOnly);
+
+	if (!newDir.isEmpty()) {
+		Directory = newDir;
+		DirectoryView.setRootPath(Directory);
+
+		auto TreeView = ui->centralwidget->findChild<QTreeView*>("treeView");
+		TreeView->setModel(&DirectoryView);
+		TreeView->setRootIndex(DirectoryView.index(Directory));
+	}
 }
 
 bool EditorWindow::isFile(QString path) {
