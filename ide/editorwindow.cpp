@@ -29,6 +29,13 @@ EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWin
 }
 
 EditorWindow::~EditorWindow() {
+	int remainingFiles = Documents.size();
+
+	while (remainingFiles != 0) {
+		closeFile(0);
+		remainingFiles--;
+	}
+
 	delete ui;
 }
 
@@ -52,6 +59,7 @@ void EditorWindow::openDirectory(bool checked) {
 			closeFile(0);
 			remainingFiles--;
 		}
+
 		Directory = newDir;
 		DirectoryView.setRootPath(Directory);
 
