@@ -32,6 +32,8 @@ EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWin
 EditorWindow::~EditorWindow() {
 	int remainingFiles = Documents.size();
 
+	OpenFiles.clear();
+
 	while (remainingFiles != 0) {
 		closeFile(0);
 		remainingFiles--;
@@ -55,6 +57,8 @@ void EditorWindow::openDirectory(bool checked) {
 
 	if (!newDir.isEmpty()) {
 		int remainingFiles = Documents.size();
+
+		OpenFiles.clear();
 
 		while (remainingFiles != 0) {
 			closeFile(0);
@@ -138,6 +142,7 @@ void EditorWindow::closeFile(int index) {
 	DocumentViews[index]->close();
 	Documents[index]->closeStream();
 	closeTab(index);
+	if (OpenFiles.size() == 0) return; // We manually cleared this so don't erase from OpenFiles.
 	OpenFiles.erase(OpenFiles.begin() + index);
 }
 
