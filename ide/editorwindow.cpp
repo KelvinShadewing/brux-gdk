@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 #include <QDir>
 #include <QFileDialog>
@@ -24,6 +25,7 @@ EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWin
 	auto TreeView = ui->centralwidget->findChild<QTreeView*>("treeView");
 	TreeView->setModel(&DirectoryView);
 	TreeView->setRootIndex(DirectoryView.index(Directory));
+	connect(ui->centralwidget->findChild<QTabWidget*>("fileTabs"), &QTabWidget::tabCloseRequested, this, &EditorWindow::closeFile);
 	connect(TreeView, &QTreeView::doubleClicked, this, &EditorWindow::handleDoubleClick);
 
 	TextEditorInstance = KTextEditor::Editor::instance();
@@ -44,8 +46,6 @@ void EditorWindow::handleDoubleClick(QModelIndex index) {
 }
 
 void EditorWindow::openDirectory(bool checked) {
-	std::cout << "dirtime" << std::endl;
-	std::cout << checked << std::endl;
 	QString newDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), getenv("HOME"), QFileDialog::ShowDirsOnly);
 
 	if (!newDir.isEmpty()) {
@@ -60,7 +60,6 @@ void EditorWindow::openDirectory(bool checked) {
 
 bool EditorWindow::isFile(QString path) {
 	QFile FileCheck{path};
-	std::cout << path.toStdString() << ": " << FileCheck.exists() << std::endl;
 	return FileCheck.exists();
 }
 
@@ -92,7 +91,6 @@ bool EditorWindow::isTilemap(QString path) {
 
 void EditorWindow::openFile(QString path, QString name, bool newFile) {
 	int vecSize = Documents.size();
-	std::cout << path.toStdString() << std::endl;
 	// New file logic
 	if (newFile) {
 		Documents.push_back(TextEditorInstance->createDocument(this));
@@ -107,6 +105,8 @@ void EditorWindow::openFile(QString path, QString name, bool newFile) {
 		return; // Do this later
 	}
 
+	if(std::find(OpenFiles.begin(), OpenFiles.end(), path) != OpenFiles.end()) return;
+
 	QFile fileExistsCheck{path};
 	QDir dirExistsCheck{path};
 	if (fileExistsCheck.exists() && !dirExistsCheck.exists()) {
@@ -114,7 +114,17 @@ void EditorWindow::openFile(QString path, QString name, bool newFile) {
 		Documents[vecSize]->openUrl(QUrl("file://" + path));
 		DocumentViews.push_back(Documents[vecSize]->createView(nullptr));
 		createTab(name, vecSize);
+		OpenFiles.push_back(path);
 	}
+}
+
+void EditorWindow::closeFile(int index) {
+	DocumentViews[index]->close();
+	Documents[index]->closeStream();
+	delete DocumentViews[index];
+	delete Documents[index];
+	closeTab(index);
+	OpenFiles.erase(OpenFiles.begin() + index);
 }
 
 void EditorWindow::createTab(QString name, int documentIndex) {
@@ -128,4 +138,9 @@ void EditorWindow::createTab(QString name, int documentIndex) {
 
 	// Create a new document view for the new tab
 	newTabLayout->addWidget(DocumentViews[documentIndex]);
+}
+
+void EditorWindow::closeTab(int index) {
+	QTabWidget* tabWidget = ui->centralwidget->findChild<QTabWidget*>("fileTabs");
+	tabWidget->removeTab(index);
 }

@@ -67,7 +67,7 @@
              <bool>true</bool>
             </property>
             <property name="tabsClosable">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="tabBarAutoHide">
              <bool>true</bool>

@@ -32,7 +32,7 @@ public:
 
 	void openFile(QString path, QString name = "", bool newFile = false);
 
-	void closeFile(QModelIndex index);
+	void closeFile(int index);
 
 	void createTab(QString name, int documentIndex);
 
@@ -42,6 +42,7 @@ private:
 	KTextEditor::Editor* TextEditorInstance;
 	std::vector<KTextEditor::Document*> Documents;
 	std::vector<KTextEditor::View*> DocumentViews;
+	std::vector<QString> OpenFiles;
 	std::vector<Tiled::MapRenderer> Renderers;
 	QString Directory;
 	QFileSystemModel DirectoryView;
