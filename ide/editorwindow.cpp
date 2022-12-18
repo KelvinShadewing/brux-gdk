@@ -13,6 +13,7 @@
 
 EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWindow(parent), ui(new Ui::EditorWindow), Directory(projectDirectory) {
 	ui->setupUi(this);
+	setWindowTitle("BRUX IDE");
 	QMenu* newMenu = new QMenu("File");
 	connect(newMenu->addAction("Open Folder"), SIGNAL(triggered()) , this, SLOT(openDirectory()));
 	KHelpMenu* Help = new KHelpMenu(this, KAboutData::applicationData());
@@ -59,6 +60,10 @@ void EditorWindow::openDirectory(bool checked) {
 			closeFile(0);
 			remainingFiles--;
 		}
+
+		QString shortDir = newDir.split("/").last();
+
+		setWindowTitle(shortDir + " - BRUX IDE");
 
 		Directory = newDir;
 		DirectoryView.setRootPath(Directory);
