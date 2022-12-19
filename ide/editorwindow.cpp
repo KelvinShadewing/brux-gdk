@@ -2,7 +2,6 @@
 #include "ui_editorwindow.h"
 
 #include <iostream>
-#include <fstream>
 #include <algorithm>
 
 #include <QDir>
