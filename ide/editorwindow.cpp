@@ -79,33 +79,20 @@ void EditorWindow::openDirectory(bool checked) {
 }
 
 bool EditorWindow::isFile(QString path) {
-	QFile FileCheck{path};
-	return FileCheck.exists();
+	QFile fileCheck{path};
+	return fileCheck.exists();
 }
 
 bool EditorWindow::isTilemap(QString path) {
-	// Behold, suffering
-	bool fileExists = isFile(path);
-	if (!fileExists) return false;
+	QFile fileCheck{path};
+	if (!fileCheck.exists()) return false;
 
 	if (!path.endsWith(".json")) return false;
+	if (!path.endsWith(".tmx")) return true;
 
-	std::ifstream file;
-	file.open(path.toStdString(), std::ifstream::in);
+	QString fileContents = fileCheck.readAll();
 
-	file.seekg(0, file.end);
-	int Length = file.tellg();
-	file.seekg(0, file.beg);
-
-	char* buffer = new char[Length];
-
-	file.read(buffer, Length);
-
-	QString contents = buffer;
-
-	delete[] buffer;
-
-	if (contents.contains("\"tiledversion\"")) return true;
+	if (fileContents.contains("\"tiledversion\"")) return true;
 	return false;
 }
 
