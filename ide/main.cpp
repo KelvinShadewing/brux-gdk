@@ -5,6 +5,7 @@
 #include <QTranslator>
 #include <QCommandLineParser>
 #include <QFile>
+#include <QCryptographicHash>
 
 #include <KLocalizedContext>
 #include <KLocalizedString>
@@ -13,20 +14,37 @@
 
 #include <iostream>
 
+// Thanks StackOverflow, very cool!
+QByteArray fileChecksum(QFile* file, QCryptographicHash::Algorithm hashAlgorithm) {
+	if (file->exists() && file->open(QFile::ReadOnly)) {
+		QCryptographicHash hash(hashAlgorithm);
+		if (hash.addData(file)) {
+			return hash.result();
+		}
+	}
+	return QByteArray();
+}
+
 int main(int argc, char *argv[]) {
 	QApplication a(argc, argv);
 	QString syntaxPath = getenv("HOME");
 	syntaxPath += "/.local/share/org.kde.syntax-highlighting/syntax/brux.xml";
 	QFile syntaxCheck{syntaxPath};
+	QFile syntaxDefinition{":/brux.xml"};
+	QByteArray syntaxUserDefinitionChecksum = fileChecksum(&syntaxCheck, QCryptographicHash::Algorithm::Sha512);
+	QByteArray syntaxDefinitionChecksum = fileChecksum(&syntaxDefinition, QCryptographicHash::Algorithm::Sha512);
 
-	if (!syntaxCheck.exists()) {
-		KGuiItem yesButton("Yes", QString(), "Creates a syntax highlighting definition and continues to the IDE", "Clicking this will create the file \"$HOME/.local/share/org.kde.syntax-highlighting/syntax/brux.xml\".");
-		KGuiItem noButton("No", QString(), "Continues to the IDE without syntax highlighting", "Clicking this will not create a syntax highlighting definition for BRUX.");
+	QString word = "";
+	if (!syntaxCheck.exists()) word = "Generate";
+	else if (syntaxUserDefinitionChecksum != syntaxDefinitionChecksum) word = "Update";
 
-		auto genSyntaxDefinition = KMessageBox::questionTwoActions(0, "Generate syntax highlighting definitions?\n\nThis will cover the following file extensions:\n*.nut\n*.brx", "Syntax Highlighting", yesButton, noButton);
+	if (word != "") {
+		KGuiItem yesButton("Yes", QString(), word + "s the syntax highlighting definition and continues to the IDE", "Clicking this will create the file \"$HOME/.local/share/org.kde.syntax-highlighting/syntax/brux.xml\".");
+		KGuiItem noButton("No", QString(), "Continues to the IDE without changes to syntax highlighting", "Clicking this will not change the syntax highlighting definition for BRUX.");
+
+		auto genSyntaxDefinition = KMessageBox::questionTwoActions(0, word + " syntax highlighting definitions?\n\nThis will cover the following file extensions:\n*.nut\n*.brx", "Syntax Highlighting", yesButton, noButton);
 
 		if (genSyntaxDefinition == KMessageBox::PrimaryAction) {
-			QFile syntaxDefinition{":/brux.xml"};
 			if (!syntaxDefinition.exists()) KMessageBox::error(0, "Couldn't locate the syntax definition.", "ERROR: Missing file");
 			else if (!QFile::copy(":/brux.xml", syntaxPath)) KMessageBox::error(0, "Couldn't copy the syntax definition.", "ERROR: Copy fail");
 		}
