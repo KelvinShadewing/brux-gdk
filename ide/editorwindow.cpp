@@ -26,12 +26,13 @@ EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWin
 	connect(TreeView, &QTreeView::doubleClicked, this, &EditorWindow::handleDoubleClick);
 
 	TextEditorInstance = KTextEditor::Editor::instance();
+
 }
 
 EditorWindow::~EditorWindow() {
 	int remainingFiles = Documents.size();
 
-	OpenFiles.clear();
+	OpenSourceFiles.clear();
 
 	while (remainingFiles != 0) {
 		closeFile(0);
@@ -57,7 +58,7 @@ void EditorWindow::openDirectory(bool checked) {
 	if (!newDir.isEmpty()) {
 		int remainingFiles = Documents.size();
 
-		OpenFiles.clear();
+		OpenSourceFiles.clear();
 
 		while (remainingFiles != 0) {
 			closeFile(0);
@@ -111,16 +112,15 @@ void EditorWindow::openFile(QString path, QString name, bool newFile) {
 		return; // Do this later
 	}
 
-	if(std::find(OpenFiles.begin(), OpenFiles.end(), path) != OpenFiles.end()) return;
+	if(std::find(OpenSourceFiles.begin(), OpenSourceFiles.end(), path) != OpenSourceFiles.end()) return;
 
-	QFile fileExistsCheck{path};
 	QDir dirExistsCheck{path};
-	if (fileExistsCheck.exists() && !dirExistsCheck.exists()) {
+	if (!dirExistsCheck.exists()) {
 		Documents.push_back(TextEditorInstance->createDocument(this));
 		Documents[vecSize]->openUrl(QUrl("file://" + path));
 		DocumentViews.push_back(Documents[vecSize]->createView(nullptr));
 		createTab(name, vecSize);
-		OpenFiles.push_back(path);
+		OpenSourceFiles.push_back(path);
 	}
 }
 
@@ -128,8 +128,8 @@ void EditorWindow::closeFile(int index) {
 	DocumentViews[index]->close();
 	Documents[index]->closeStream();
 	closeTab(index);
-	if (OpenFiles.size() == 0) return; // We manually cleared this so don't erase from OpenFiles.
-	OpenFiles.erase(OpenFiles.begin() + index);
+	if (OpenSourceFiles.size() == 0) return; // We manually cleared this so don't erase from OpenSourceFiles.
+	OpenSourceFiles.erase(OpenSourceFiles.begin() + index);
 }
 
 void EditorWindow::createTab(QString name, int documentIndex) {
