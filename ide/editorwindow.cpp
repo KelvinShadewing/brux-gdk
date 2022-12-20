@@ -75,6 +75,11 @@ void EditorWindow::openDirectory(bool checked) {
 		auto TreeView = ui->centralwidget->findChild<QTreeView*>("treeView");
 		TreeView->setModel(&DirectoryView);
 		TreeView->setRootIndex(DirectoryView.index(Directory));
+		TreeView->hideColumn(3);
+		int sizeOfColumn = TreeView->maximumWidth() / 4;
+		TreeView->setColumnWidth(0, sizeOfColumn * 2.5f);
+		TreeView->setColumnWidth(1, sizeOfColumn * 0.75f);
+		TreeView->setColumnWidth(2, sizeOfColumn * 0.5f);
 	}
 }
 
@@ -116,7 +121,6 @@ void EditorWindow::openFile(QString path, QString name, bool newFile) {
 
 	QDir dirExistsCheck{path};
 	if (!dirExistsCheck.exists()) {
-		std::cout << "file://" + path.toStdString() << std::endl;
 		Documents.push_back(TextEditorInstance->createDocument(this));
 		Documents[vecSize]->openUrl(QUrl("file://" + path));
 		DocumentViews.push_back(Documents[vecSize]->createView(nullptr));
