@@ -27,7 +27,7 @@
        <widget class="QTreeView" name="treeView">
         <property name="maximumSize">
          <size>
-          <width>300</width>
+          <width>400</width>
           <height>16777215</height>
          </size>
         </property>
@@ -89,7 +89,27 @@
          <attribute name="title">
           <string>Tiling</string>
          </attribute>
-         <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QTabWidget" name="tileTabs">
+            <property name="currentIndex">
+             <number>-1</number>
+            </property>
+            <property name="usesScrollButtons">
+             <bool>false</bool>
+            </property>
+            <property name="documentMode">
+             <bool>false</bool>
+            </property>
+            <property name="tabsClosable">
+             <bool>true</bool>
+            </property>
+            <property name="tabBarAutoHide">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
@@ -103,7 +123,7 @@
      <x>0</x>
      <y>0</y>
      <width>1080</width>
-     <height>19</height>
+     <height>30</height>
     </rect>
    </property>
   </widget>
