@@ -6,6 +6,7 @@
 #include <KTextEditor/Document>
 #include <KTextEditor/Editor>
 #include <KTextEditor/View>
+#include <KSyntaxHighlighting/Repository>
 
 #include <tiled/map.h>
 #include <tiled/maprenderer.h>
@@ -42,8 +43,9 @@ private:
 	KTextEditor::Editor* TextEditorInstance;
 	std::vector<KTextEditor::Document*> Documents;
 	std::vector<KTextEditor::View*> DocumentViews;
-	std::vector<QString> OpenFiles;
 	std::vector<Tiled::MapRenderer> Renderers;
+	std::vector<QString> OpenSourceFiles;
+	std::vector<QString> OpenTilemapFiles;
 	QString Directory;
 	QFileSystemModel DirectoryView;
 };

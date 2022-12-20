@@ -116,6 +116,7 @@ void EditorWindow::openFile(QString path, QString name, bool newFile) {
 
 	QDir dirExistsCheck{path};
 	if (!dirExistsCheck.exists()) {
+		std::cout << "file://" + path.toStdString() << std::endl;
 		Documents.push_back(TextEditorInstance->createDocument(this));
 		Documents[vecSize]->openUrl(QUrl("file://" + path));
 		DocumentViews.push_back(Documents[vecSize]->createView(nullptr));

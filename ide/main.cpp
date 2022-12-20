@@ -4,13 +4,33 @@
 #include <QLocale>
 #include <QTranslator>
 #include <QCommandLineParser>
+#include <QFile>
 
 #include <KLocalizedContext>
 #include <KLocalizedString>
 #include <KAboutData>
+#include <KMessageBox>
+
+#include <iostream>
 
 int main(int argc, char *argv[]) {
 	QApplication a(argc, argv);
+	QString syntaxPath = getenv("HOME");
+	syntaxPath += "/.local/share/org.kde.syntax-highlighting/syntax/brux.xml";
+	QFile syntaxCheck{syntaxPath};
+
+	if (!syntaxCheck.exists()) {
+		KGuiItem yesButton("Yes", QString(), "yes.tooltip", "Clicking this will create the file \"$HOME/.local/share/org.kde.syntax-highlighting/syntax/brux.xml\".");
+		KGuiItem noButton("No", QString(), "no.tooltip", "Clicking this will not create a syntax highlighting definition for BRUX.");
+
+		auto genSyntaxDefinition = KMessageBox::questionTwoActions(0, "Generate syntax highlighting definitions?", "Syntax Highlighting", yesButton, noButton);
+
+		if (genSyntaxDefinition == KMessageBox::PrimaryAction) {
+			QFile syntaxDefinition{":/brux.xml"};
+			if (!syntaxDefinition.exists()) KMessageBox::error(0, "Couldn't locate the syntax definition.", "ERROR: Missing file");
+			else if (!QFile::copy(":/brux.xml", syntaxPath)) KMessageBox::error(0, "Couldn't copy the syntax definition.", "ERROR: Copy fail");
+		}
+	}
 
 	KAboutData aboutData(
 		// The program name used internally.

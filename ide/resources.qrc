@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="LICENSE">LICENSE</file>
+		<file alias="LICENSE">LICENSE</file>
+		<file alias="brux.xml">syntax/brux.xml</file>
     </qresource>
 </RCC>
