@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
 		auto genSyntaxDefinition = KMessageBox::questionTwoActions(0, word + " syntax highlighting definitions?\n\nThis will cover the following file extensions:\n*.nut\n*.brx", "Syntax Highlighting", yesButton, noButton);
 
 		if (genSyntaxDefinition == KMessageBox::PrimaryAction) {
+			QFile::remove(syntaxPath);
 			if (!syntaxDefinition.exists()) KMessageBox::error(0, "Couldn't locate the syntax definition.", "ERROR: Missing file");
 			else if (!QFile::copy(":/brux.xml", syntaxPath)) KMessageBox::error(0, "Couldn't copy the syntax definition.", "ERROR: Copy fail");
 		}
