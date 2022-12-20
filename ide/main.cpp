@@ -20,10 +20,10 @@ int main(int argc, char *argv[]) {
 	QFile syntaxCheck{syntaxPath};
 
 	if (!syntaxCheck.exists()) {
-		KGuiItem yesButton("Yes", QString(), "yes.tooltip", "Clicking this will create the file \"$HOME/.local/share/org.kde.syntax-highlighting/syntax/brux.xml\".");
-		KGuiItem noButton("No", QString(), "no.tooltip", "Clicking this will not create a syntax highlighting definition for BRUX.");
+		KGuiItem yesButton("Yes", QString(), "Creates a syntax highlighting definition and continues to the IDE", "Clicking this will create the file \"$HOME/.local/share/org.kde.syntax-highlighting/syntax/brux.xml\".");
+		KGuiItem noButton("No", QString(), "Continues to the IDE without syntax highlighting", "Clicking this will not create a syntax highlighting definition for BRUX.");
 
-		auto genSyntaxDefinition = KMessageBox::questionTwoActions(0, "Generate syntax highlighting definitions?", "Syntax Highlighting", yesButton, noButton);
+		auto genSyntaxDefinition = KMessageBox::questionTwoActions(0, "Generate syntax highlighting definitions?\n\nThis will cover the following file extensions:\n*.nut\n*.brx", "Syntax Highlighting", yesButton, noButton);
 
 		if (genSyntaxDefinition == KMessageBox::PrimaryAction) {
 			QFile syntaxDefinition{":/brux.xml"};
