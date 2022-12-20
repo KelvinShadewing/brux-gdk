@@ -224,7 +224,7 @@
 				<HlCOct attribute="Octal" context="#stay"/>
 				<HlCHex attribute="Hex" context="#stay"/>
 				<Int attribute="Decimal" context="#stay"/>
-				<Detect2Chars attribute="Global Scope" context="Global" char=":" char1=":" beginRegion="Global Scope"/>
+				<Detect2Chars attribute="Global Scope" context="Global" char=":" char1=":"/>
 				<Detect2Chars attribute="Comment" context="Commentar 1" char="/" char1="/"/>
 				<Detect2Chars attribute="Comment" context="Commentar 2" char="/" char1="*" beginRegion="Comment"/>
 				<AnyChar attribute="Symbol" context="#stay" String="~!@%^&amp;*()-+=|\/{}[]:;'&lt;&gt;,.?"/>
@@ -235,10 +235,6 @@
 			<context attribute="Comment" lineEndContext="#pop" name="Commentar 1"/>
 			<context attribute="Comment" lineEndContext="#stay" name="Commentar 2">
 				<Detect2Chars attribute="Comment" context="#pop" char="*" char1="/" endRegion="Comment"/>
-			</context>
-
-			<context attribute="Global Scope" lineEndContext="#stay" name="Global">
-				<DetectChar attribute="Global Scope" context="#pop" char=" " endRegion="Global Scope"/>
 			</context>
 		</contexts>
 		<itemDatas>
