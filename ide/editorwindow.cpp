@@ -92,8 +92,8 @@ bool EditorWindow::isTilemap(QString path) {
 	QFile fileCheck{path};
 	if (!fileCheck.exists()) return false;
 
+	if (path.endsWith(".tmx")) return true;
 	if (!path.endsWith(".json")) return false;
-	if (!path.endsWith(".tmx")) return true;
 
 	QString fileContents = fileCheck.readAll();
 
