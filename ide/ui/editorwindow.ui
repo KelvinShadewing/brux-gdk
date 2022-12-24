@@ -98,7 +98,15 @@
          <attribute name="title">
           <string>Tiling</string>
          </attribute>
-         <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>TODO: Add Tiling, please use tiled instead while this gets implemented.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
