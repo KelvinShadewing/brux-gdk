@@ -56,30 +56,7 @@ void EditorWindow::openDirectory(bool checked) {
 	QString newDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), getenv("HOME"), QFileDialog::ShowDirsOnly);
 
 	if (!newDir.isEmpty()) {
-		int remainingFiles = Documents.size();
-
-		OpenSourceFiles.clear();
-
-		while (remainingFiles != 0) {
-			closeFile(0);
-			remainingFiles--;
-		}
-
-		QString shortDir = newDir.split("/").last();
-
-		setWindowTitle(shortDir + " - BRUX IDE");
-
-		Directory = newDir;
-		DirectoryView.setRootPath(Directory);
-
-		auto TreeView = ui->centralwidget->findChild<QTreeView*>("treeView");
-		TreeView->setModel(&DirectoryView);
-		TreeView->setRootIndex(DirectoryView.index(Directory));
-		TreeView->hideColumn(3);
-		int sizeOfColumn = TreeView->maximumWidth() / 4;
-		TreeView->setColumnWidth(0, sizeOfColumn * 2.5f);
-		TreeView->setColumnWidth(1, sizeOfColumn * 0.75f);
-		TreeView->setColumnWidth(2, sizeOfColumn * 0.5f);
+		processDirectory(newDir);
 	}
 }
 
@@ -92,8 +69,13 @@ void EditorWindow::openFile(bool checked) {
 }
 
 bool EditorWindow::isFile(QString path) {
-	QFile fileCheck{path};
-	return fileCheck.exists();
+	QFileInfo fileCheck{path};
+	return fileCheck.exists() && fileCheck.isFile();
+}
+
+bool EditorWindow::isDirectory(QString path) {
+	QFileInfo fileCheck{path};
+	return fileCheck.exists() && fileCheck.isDir();
 }
 
 bool EditorWindow::isTilemap(QString path) {
@@ -135,6 +117,38 @@ void EditorWindow::processFile(QString path, QString name, bool newFile) {
 		createTab(name, vecSize);
 		OpenSourceFiles.push_back(path);
 	}
+}
+
+void EditorWindow::processDirectory(QString path, bool doCloseFiles) {
+	std::cout << "hi" << std::endl;
+	if (!isDirectory(path)) return;
+	if (doCloseFiles) {
+		int remainingFiles = Documents.size();
+
+		OpenSourceFiles.clear();
+
+		while (remainingFiles != 0) {
+			closeFile(0);
+			remainingFiles--;
+		}
+	}
+	std::cout << "h" << std::endl;
+
+	QString shortDir = path.split("/").last();
+
+	setWindowTitle(shortDir + " - BRUX IDE");
+
+	Directory = path;
+	DirectoryView.setRootPath(Directory);
+
+	auto TreeView = ui->centralwidget->findChild<QTreeView*>("treeView");
+	TreeView->setModel(&DirectoryView);
+	TreeView->setRootIndex(DirectoryView.index(Directory));
+	TreeView->hideColumn(3);
+	int sizeOfColumn = TreeView->maximumWidth() / 4;
+	TreeView->setColumnWidth(0, sizeOfColumn * 2.5f);
+	TreeView->setColumnWidth(1, sizeOfColumn * 0.75f);
+	TreeView->setColumnWidth(2, sizeOfColumn * 0.5f);
 }
 
 void EditorWindow::closeFile(int index) {

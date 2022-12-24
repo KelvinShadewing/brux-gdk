@@ -31,9 +31,13 @@ public:
 
 	bool isFile(QString path);
 
+	bool isDirectory(QString path);
+
 	bool isTilemap(QString path);
 
 	void processFile(QString path, QString name = "", bool newFile = false);
+
+	void processDirectory(QString path, bool doCloseFiles = true);
 
 	void closeFile(int index);
 

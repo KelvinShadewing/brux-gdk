@@ -79,6 +79,7 @@ int main(int argc, char *argv[]) {
 	KAboutData::setApplicationData(aboutData);
 
 	QCommandLineParser Parser;
+	Parser.addPositionalArgument("file", QCoreApplication::translate("main", "File or directory to open"));
 	aboutData.setupCommandLine(&Parser);
 	Parser.process(a);
 	aboutData.processCommandLine(&Parser);
@@ -94,5 +95,21 @@ int main(int argc, char *argv[]) {
 	}
 	EditorWindow w;
 	w.show();
+	const QStringList args = Parser.positionalArguments();
+	if (args.size() > 0) {
+		if (!args.at(0).isEmpty()) {
+			QString value = args.at(0);
+			if (!value.contains("/")) value = QString(getenv("PWD")) + "/" + value;
+
+			bool file = w.isFile(value);
+			bool dir = w.isDirectory(value);
+
+			// Determine what the argument is
+			if (file) w.processFile(value, value.split("/").last());
+			else if (dir) w.processDirectory(value, false);
+			else std::cout << "Failed to process path" << std::endl;
+		}
+	}
+
 	return a.exec();
 }
