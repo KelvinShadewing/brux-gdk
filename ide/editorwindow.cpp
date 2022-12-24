@@ -14,6 +14,7 @@ EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWin
 	ui->setupUi(this);
 	setWindowTitle("BRUX IDE");
 	QMenu* newMenu = new QMenu("File");
+	connect(newMenu->addAction("Open File"), SIGNAL(triggered()) , this, SLOT(openFile()));
 	connect(newMenu->addAction("Open Folder"), SIGNAL(triggered()) , this, SLOT(openDirectory()));
 	KHelpMenu* Help = new KHelpMenu(this, KAboutData::applicationData());
 	ui->menubar->addMenu(newMenu);
@@ -26,7 +27,6 @@ EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWin
 	connect(TreeView, &QTreeView::doubleClicked, this, &EditorWindow::handleDoubleClick);
 
 	TextEditorInstance = KTextEditor::Editor::instance();
-
 }
 
 EditorWindow::~EditorWindow() {
@@ -49,7 +49,7 @@ void EditorWindow::handleDoubleClick(QModelIndex index) {
 	QTreeView* treeView = ui->centralwidget->findChild<QTreeView*>("treeView");
 	QString item = treeView->model()->data(index).toString();
 
-	openFile(DirectoryView.filePath(index), item);
+	processFile(DirectoryView.filePath(index), item);
 }
 
 void EditorWindow::openDirectory(bool checked) {
@@ -83,6 +83,14 @@ void EditorWindow::openDirectory(bool checked) {
 	}
 }
 
+void EditorWindow::openFile(bool checked) {
+	QString openFile = QFileDialog::getOpenFileName(this, tr("Open File"), getenv("HOME"));
+
+	if (!openFile.isEmpty()) {
+		processFile(openFile, openFile.split("/").last());
+	}
+}
+
 bool EditorWindow::isFile(QString path) {
 	QFile fileCheck{path};
 	return fileCheck.exists();
@@ -101,7 +109,7 @@ bool EditorWindow::isTilemap(QString path) {
 	return false;
 }
 
-void EditorWindow::openFile(QString path, QString name, bool newFile) {
+void EditorWindow::processFile(QString path, QString name, bool newFile) {
 	int vecSize = Documents.size();
 	// New file logic
 	if (newFile) {

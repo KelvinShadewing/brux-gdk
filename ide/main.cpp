@@ -15,6 +15,7 @@
 #include <iostream>
 
 // Thanks StackOverflow, very cool!
+// Only needed in main.cpp as editorwindow has no need for cryptographic hashes
 QByteArray fileChecksum(QFile* file, QCryptographicHash::Algorithm hashAlgorithm) {
 	if (file->exists() && file->open(QFile::ReadOnly)) {
 		QCryptographicHash hash(hashAlgorithm);
@@ -35,14 +36,18 @@ int main(int argc, char *argv[]) {
 	QByteArray syntaxDefinitionChecksum = fileChecksum(&syntaxDefinition, QCryptographicHash::Algorithm::Sha512);
 
 	QString word = "";
+	QString extraDesc = "";
 	if (!syntaxCheck.exists()) word = "Generate";
-	else if (syntaxUserDefinitionChecksum != syntaxDefinitionChecksum) word = "Update";
+	else if (syntaxUserDefinitionChecksum != syntaxDefinitionChecksum) {
+		word = "Update";
+		extraDesc = "\n\nYou may be seeing this as you have either updated the BRUX IDE or modified the syntax definition file.";
+	}
 
 	if (word != "") {
 		KGuiItem yesButton("Yes", QString(), word + "s the syntax highlighting definition and continues to the IDE", "Clicking this will create the file \"$HOME/.local/share/org.kde.syntax-highlighting/syntax/brux.xml\".");
 		KGuiItem noButton("No", QString(), "Continues to the IDE without changes to syntax highlighting", "Clicking this will not change the syntax highlighting definition for BRUX.");
 
-		auto genSyntaxDefinition = KMessageBox::questionTwoActions(0, word + " syntax highlighting definitions?\n\nThis will cover the following file extensions:\n*.nut\n*.brx", "Syntax Highlighting", yesButton, noButton);
+		auto genSyntaxDefinition = KMessageBox::questionTwoActions(0, word + " syntax highlighting definitions?" + extraDesc + "\n\nThis will cover the following file extensions:\n*.nut\n*.brx", "Syntax Highlighting", yesButton, noButton);
 
 		if (genSyntaxDefinition == KMessageBox::PrimaryAction) {
 			QFile::remove(syntaxPath);

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
 
-<!-- Original by Matt Williams (from https://store.kde.org/p/1220580/), adjusted for brux-gdk -->
+<!--
+Original by Matt Williams (from https://store.kde.org/p/1220580/), adjusted for brux-gdk and modern versions of Squirrel.
+Comes packaged with the BRUX IDE and works with anything that uses KTextEditor or KSyntaxHighlighting
+-->
 <language name="BRUX (Squirrel)" version="1" kateversion="5.44" section="Scripts" extensions="*.nut;*.brx" author="Tulip" license="AGPL v3">
 	<highlighting>
 		<list name="keywords">
@@ -49,12 +52,20 @@
 			<item>while</item>
 			<item>yield</item>
 		</list>
+		<list name="sq_constants">
+			<item>_versionnumber_</item>
+			<item>_version_</item>
+			<item>_charsize_</item>
+			<item>_intsize_</item>
+			<item>_floatsize_</item>
+		</list>
+		<!-- Is this a good name?  -->
 		<list name="scope">
 			<!-- :: isn't here as it uses Detect2Chars -->
 			<item>local</item>
 			<item>const</item>
 		</list>
-		<list name="functions">
+		<list name="sq_functions">
 			<item>_add</item>
 			<item>_call</item>
 			<item>_cloned</item>
@@ -64,12 +75,31 @@
 			<item>_get</item>
 			<item>_modulo</item>
 			<item>_mul</item>
-			<item> _newslot</item>
+			<item>_newslot</item>
 			<item>_nexti</item>
 			<item>_set</item>
 			<item>_sub</item>
 			<item>_typeof</item>
 			<item>_unm</item>
+			<item>array</item>
+			<item>assert</item>
+			<item>callee</item>
+			<item>collectgarbage</item>
+			<item>compilestring</item>
+			<item>enabledebuginfo</item>
+			<item>error</item>
+			<item>getconsttable</item>
+			<item>getroottable</item>
+			<item>getstackinfos</item>
+			<item>newthread</item>
+			<item>print</item>
+			<item>resurrectunreachable</item>
+			<item>setconsttable</item>
+			<item>setdebughook</item>
+			<item>seterrorhandler</item>
+			<item>setroottable</item>
+			<item>type</item>
+			<item>weakref</item>
 		</list>
 		<list name="brux_functions">
 			<item>abs</item>
@@ -94,7 +124,6 @@
 			<item>displayW</item>
 			<item>distance2</item>
 			<item>distance3</item>
-			<item>donut</item>
 			<item>dostr</item>
 			<item>drawCircle</item>
 			<item>drawImage</item>
@@ -102,9 +131,6 @@
 			<item>drawPoint</item>
 			<item>drawRec</item>
 			<item>drawSprite</item>
-			<item>drawSpriteEx</item>
-			<item>drawSpriteExMod</item>
-			<item>drawSpriteMod</item>
 			<item>drawText</item>
 			<item>fileAppend</item>
 			<item>fileExists</item>
@@ -174,7 +200,6 @@
 			<item>playMusic</item>
 			<item>playSound</item>
 			<item>pointAngle</item>
-			<item>print</item>
 			<item>randFloat</item>
 			<item>randInt</item>
 			<item>replaceSprite</item>
@@ -212,13 +237,18 @@
 			<item>windowW</item>
 			<item>wrap</item>
 		</list>
+		<list name="brux_import">
+			<item>donut</item>
+		</list>
 		<contexts>
 			<context attribute="Normal Text" lineEndContext="#stay" name="Normal">
 				<DetectSpaces />
 				<keyword attribute="Keyword" context="#stay" String="keywords"/>
 				<keyword attribute="Data Scope" context="#stay" String="scope"/>
-				<keyword attribute="Function" context="#stay" String="functions" />
+				<keyword attribute="Function" context="#stay" String="sq_functions" />
 				<keyword attribute="Function" context="#stay" String="brux_functions" />
+				<keyword attribute="Brux Import" context="#stay" String="brux_import" />
+				<keyword attribute="Squirrel Constants" context="#stay" String="sq_constants" />
 				<DetectChar attribute="String" context="string" char="&quot;" />
 				<Float attribute="Float" context="#stay"/>
 				<HlCOct attribute="Octal" context="#stay"/>
@@ -227,7 +257,7 @@
 				<Detect2Chars attribute="Global Scope" context="Global" char=":" char1=":"/>
 				<Detect2Chars attribute="Comment" context="Commentar 1" char="/" char1="/"/>
 				<Detect2Chars attribute="Comment" context="Commentar 2" char="/" char1="*" beginRegion="Comment"/>
-				<AnyChar attribute="Symbol" context="#stay" String="~!@%^&amp;*()-+=|\/{}[]:;'&lt;&gt;,.?"/>
+				<AnyChar attribute="Symbols" context="#stay" String="~!@%^&amp;*()-+=|\/{}[]:;'&lt;&gt;,.?"/>
 			</context>
 			<context attribute="String" lineEndContext="#stay" name="string" >
 				<DetectChar attribute="String" context="#pop" char="&quot;" />
@@ -243,8 +273,6 @@
 			<itemData name="Data Scope" defStyleNum="dsDataType" />
 			<itemData name="Global Scope" defStyleNum="dsDataType" />
 			<itemData name="Symbols" defStyleNum="dsOperator" />
-			<itemData name="Bitshift Left" defStyleNum="dsOperator" />
-			<itemData name="Bitshift Right" defStyleNum="dsOperator" />
 			<itemData name="String" defStyleNum="dsString" />
 			<itemData name="Decimal" defStyleNum="dsDecVal"/>
 			<itemData name="Octal" defStyleNum="dsBaseN"/>
@@ -254,9 +282,11 @@
 			<itemData name="String" defStyleNum="dsString"/>
 			<itemData name="String Char" defStyleNum="dsChar"/>
 			<itemData name="Comment" defStyleNum="dsComment"/>
-			<itemData name="Function" defStyleNum="dsFunction"/>
-			<itemData name="Brux Function" defStyleNum="dsFunction"/>
-			<itemData name="Symbol" defStyleNum="dsOperator"/>
+			<itemData name="Function" defStyleNum="dsBuiltIn"/>
+			<itemData name="Brux Function" defStyleNum="dsBuiltIn"/>
+			<itemData name="Brux Import" defStyleNum="dsImport"/>
+			<itemData name="Squirrel Constants" defStyleNum="dsConstant"/>
+			<itemData name="Dynamic Function" defStyleNum="dsFunction"/>
 		</itemDatas>
 		<general>
 			<comments>

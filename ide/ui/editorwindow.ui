@@ -41,6 +41,9 @@
       </item>
       <item>
        <widget class="QTabWidget" name="tabHandler">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
@@ -80,6 +83,9 @@
          </layout>
         </widget>
         <widget class="QWidget" name="tiling">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -89,27 +95,7 @@
          <attribute name="title">
           <string>Tiling</string>
          </attribute>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QTabWidget" name="tileTabs">
-            <property name="currentIndex">
-             <number>-1</number>
-            </property>
-            <property name="usesScrollButtons">
-             <bool>false</bool>
-            </property>
-            <property name="documentMode">
-             <bool>false</bool>
-            </property>
-            <property name="tabsClosable">
-             <bool>true</bool>
-            </property>
-            <property name="tabBarAutoHide">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QHBoxLayout" name="horizontalLayout_3"/>
         </widget>
        </widget>
       </item>
@@ -131,7 +117,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset theme="help-about">
-     <normaloff>.</normaloff>.</iconset>
+     <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
    </property>
    <property name="text">
     <string>About</string>

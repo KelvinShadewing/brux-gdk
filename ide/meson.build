@@ -3,7 +3,6 @@ project('ide', 'cpp', version : '0.0.1', default_options : ['cpp_std=c++11'])
 # Documentation: https://mesonbuild.com/Qt5-module.html
 qt5 = import('qt5')
 qt5dep = dependency('qt5', modules : ['Core', 'Widgets'], version : '>=5.12.0')
-#kf5dep = meson.get_compiler('cpp').find_library('KF5CoreAddons')
 kf5dep = dependency('KF5CoreAddons')
 kf5xmldep = dependency('KF5XmlGui')
 kf5translatedep = dependency('KF5I18n')

@@ -23,6 +23,8 @@ public slots:
 	void handleDoubleClick(QModelIndex index);
 
 	void openDirectory(bool checked = false);
+
+	void openFile(bool checked = false);
 public:
 	EditorWindow(QWidget *parent = nullptr, QString projectDirectory = getenv("HOME"));
 	~EditorWindow();
@@ -31,7 +33,7 @@ public:
 
 	bool isTilemap(QString path);
 
-	void openFile(QString path, QString name = "", bool newFile = false);
+	void processFile(QString path, QString name = "", bool newFile = false);
 
 	void closeFile(int index);
 
