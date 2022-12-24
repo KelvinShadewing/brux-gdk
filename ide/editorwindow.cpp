@@ -120,7 +120,6 @@ void EditorWindow::processFile(QString path, QString name, bool newFile) {
 }
 
 void EditorWindow::processDirectory(QString path, bool doCloseFiles) {
-	std::cout << "hi" << std::endl;
 	if (!isDirectory(path)) return;
 	if (doCloseFiles) {
 		int remainingFiles = Documents.size();
@@ -132,7 +131,6 @@ void EditorWindow::processDirectory(QString path, bool doCloseFiles) {
 			remainingFiles--;
 		}
 	}
-	std::cout << "h" << std::endl;
 
 	QString shortDir = path.split("/").last();
 
