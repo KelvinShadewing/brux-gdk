@@ -31,8 +31,11 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
         <property name="dragDropMode">
-         <enum>QAbstractItemView::NoDragDrop</enum>
+         <enum>QAbstractItemView::DragOnly</enum>
         </property>
         <property name="sortingEnabled">
          <bool>false</bool>
@@ -114,20 +117,6 @@
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionAbout">
-   <property name="icon">
-    <iconset theme="help-about">
-     <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
-   </property>
-   <property name="text">
-    <string>About</string>
-   </property>
-  </action>
-  <action name="actionOpen_Directory">
-   <property name="text">
-    <string>Open Directory</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>
