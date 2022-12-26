@@ -13,12 +13,12 @@ endif
 
 qt5 = import('qt5')
 qt5dep = dependency('qt5', modules : ['Core', 'Widgets'], version : '>=5.12.0')
-kf5dep = dependency('KF5CoreAddons')
-kf5xmldep = dependency('KF5XmlGui')
-kf5translatedep = dependency('KF5I18n')
-kf5syntaxdep = dependency('KF5SyntaxHighlighting')
-kf5textdep = dependency('KF5TextEditor')
-kf5partdep = dependency('KF5Parts')
+kf5dep = dependency('KF5CoreAddons', version : '>=5.78.0')
+kf5xmldep = dependency('KF5XmlGui', version : '>=5.78.0')
+kf5translatedep = dependency('KF5I18n', version : '>=5.78.0')
+kf5syntaxdep = dependency('KF5SyntaxHighlighting', version : '>=5.78.0')
+kf5textdep = dependency('KF5TextEditor', version : '>=5.78.0')
+kf5partdep = dependency('KF5Parts', version : '>=5.78.0')
 tileddep = meson.get_compiler('cpp').find_library('tiled')
 
 included_directories = ['/usr/include/KF5/KCoreAddons', '/usr/include/KF5/KI18n', '/usr/include/KF5/KXmlGui', '/usr/include/KF5/KParts', '/usr/include/KF5/KSyntaxHighlighting', '/usr/include/KF5/KTextEditor', tileddir]
