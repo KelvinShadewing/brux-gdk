@@ -8,9 +8,9 @@
 #include <KTextEditor/View>
 #include <KSyntaxHighlighting/Repository>
 
-#include <tiled/map.h>
-#include <tiled/maprenderer.h>
-#include <tiled/tiled.h>
+#include <map.h>
+#include <maprenderer.h>
+#include <tiled.h>
 
 #include <vector>
 
