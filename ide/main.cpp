@@ -47,9 +47,9 @@ int main(int argc, char *argv[]) {
 		KGuiItem yesButton("Yes", QString(), word + "s the syntax highlighting definition and continues to the IDE", "Clicking this will create the file \"$HOME/.local/share/org.kde.syntax-highlighting/syntax/brux.xml\".");
 		KGuiItem noButton("No", QString(), "Continues to the IDE without changes to syntax highlighting", "Clicking this will not change the syntax highlighting definition for BRUX.");
 
-		auto genSyntaxDefinition = KMessageBox::questionTwoActions(0, word + " syntax highlighting definitions?" + extraDesc + "\n\nThis will cover the following file extensions:\n*.nut\n*.brx", "Syntax Highlighting", yesButton, noButton);
+		auto genSyntaxDefinition = KMessageBox::questionYesNo(0, word + " syntax highlighting definitions?" + extraDesc + "\n\nThis will cover the following file extensions:\n*.nut\n*.brx", "Syntax Highlighting", yesButton, noButton);
 
-		if (genSyntaxDefinition == KMessageBox::PrimaryAction) {
+		if (genSyntaxDefinition == KMessageBox::Yes) {
 			QFile::remove(syntaxPath);
 			if (!syntaxDefinition.exists()) KMessageBox::error(0, "Couldn't locate the syntax definition.", "ERROR: Missing file");
 			else if (!QFile::copy(":/brux.xml", syntaxPath)) KMessageBox::error(0, "Couldn't copy the syntax definition.", "ERROR: Copy fail");
