@@ -34,8 +34,8 @@ int main(int argc, char *argv[]) {
 	QString syntaxDirPath = getenv("HOME");
 	syntaxDirPath += "/.local/share/org.kde.syntax-highlighting/";
 
-	std::cout << QDir(syntaxDirPath).mkpath(".")  << std::endl;
-	std::cout <<  QDir(syntaxDirPath).mkpath("./syntax") << std::endl;
+	QDir(syntaxDirPath).mkpath(".");
+	QDir(syntaxDirPath).mkpath("./syntax");
 
 	QFile syntaxCheck{syntaxPath};
 	QFile syntaxDefinition{":/brux.xml"};
