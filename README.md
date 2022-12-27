@@ -17,6 +17,7 @@ Developers using Brux may freely make games without any need for paid license or
 http://kelvinshadewing.net/dl/brux-nightly.zip
 
 ### Dependencies
+#### Runtime
 
 * SDL2
 * SDL2_image
@@ -24,7 +25,10 @@ http://kelvinshadewing.net/dl/brux-nightly.zip
 * SDL2_net
 * SDL2_gfx
 * [Squirrel](http://squirrel-lang.org/)
+#### Integrated Development Environment
 
+* Qt5 (>=5.12)
+* K Frameworks 5 (>=5.78.0)
 ### To Do (Runtime)
 
 - [X] Sprite loading and rendering
