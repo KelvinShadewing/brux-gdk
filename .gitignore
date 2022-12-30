@@ -1,5 +1,8 @@
 # Directories
 .vscode/
+ide/.kdev4/*
+ide/build/*
+ide/.cache/*
 rte/bin/xyg
 rte/bin/release/*
 rte/obj/*
@@ -7,8 +10,10 @@ rte/obj/*
 *.o
 *.dll
 *.exe
+*.kdev4
 */log.txt
 log.txt
+ide/meson.build.user
 rte/*.layout
 rte/bin/brux
 rte/bin/brux.*
