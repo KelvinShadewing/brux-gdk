@@ -46,6 +46,7 @@ SQInteger sqClearScreen(HSQUIRRELVM v);
 SQInteger sqSetDrawTarget(HSQUIRRELVM v);
 SQInteger sqGetDrawTarget(HSQUIRRELVM v);
 SQInteger sqDrawImage(HSQUIRRELVM v);
+SQInteger sqDrawImageEx(HSQUIRRELVM v);
 SQInteger sqSetDrawColor(HSQUIRRELVM v);
 SQInteger sqSetBackgroundColor(HSQUIRRELVM v);
 SQInteger sqLoadImage(HSQUIRRELVM v);

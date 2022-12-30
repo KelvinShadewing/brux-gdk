@@ -210,6 +210,40 @@ void xyDrawImage(Uint32 tex, float x, float y) {
 	}
 };
 
+void xyDrawImageEx(Uint32 tex, float x, float y, float angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha, Uint32 color) {
+	SDL_Rect rec;
+	rec.x = 0;
+	rec.y = 0;
+
+	SDL_Rect des;
+	des.x = x;
+	des.y = y;
+
+	//Break color into 8-bit versions
+	Uint8 r, g, b;
+	r = (color >> 24) & 0xFF;
+	g = (color >> 16) & 0xFF;
+	b = (color >> 8) & 0xFF;
+
+	SDL_Point *piv = new SDL_Point;
+	piv->x = 0;
+	piv->y = 0;
+
+
+	if(vcTextures.size() > tex) { //If the argument is in range)
+		if(vcTextures[tex] != 0) { //If the index points to an image)
+			SDL_QueryTexture(vcTextures[tex], 0, 0, &rec.w, &rec.h);
+			des.w = rec.w * xscale;
+			des.h = rec.h * yscale;
+			SDL_SetTextureColorMod(vcTextures[tex], r, g, b);
+			SDL_SetTextureAlphaMod(vcTextures[tex], alpha * 255);
+			SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
+			SDL_SetTextureAlphaMod(vcTextures[tex], 255);
+			SDL_SetTextureColorMod(vcTextures[tex], 255, 255, 255);
+		}
+	}
+};
+
 //Delete image
 void xyDeleteImage(Uint32 tex) {
 	if(tex > vcSprites.size()) return;

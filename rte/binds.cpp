@@ -301,6 +301,24 @@ SQInteger sqDrawImage(HSQUIRRELVM v) {
 	return 0;
 };
 
+SQInteger sqDrawImageEx(HSQUIRRELVM v) {
+	SQInteger x, y, img, f, c;
+	SQFloat a, w, h, r;
+
+	sq_getinteger(v, 2, &img);
+	sq_getinteger(v, 3, &x);
+	sq_getinteger(v, 4, &y);
+	sq_getfloat(v, 5, &a);
+	sq_getinteger(v, 6, &f);
+	sq_getfloat(v, 7, &w);
+	sq_getfloat(v, 8, &h);
+	sq_getinteger(v, 9, &c);
+
+	xyDrawImageEx(img, x, y, a, static_cast<SDL_RendererFlip>(f), w, h, r, c);
+
+	return 0;
+};
+
 SQInteger sqSetDrawColor(HSQUIRRELVM v) {
 	SQInteger c;
 

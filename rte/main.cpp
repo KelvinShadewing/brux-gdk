@@ -1,12 +1,12 @@
-/*======================================*\
-| PROJECT: Brux Game Runtime Environment |
-| AUTHOR: Nick Kovacs                    |
-| DATE: 8-15-15                          |
-| DESC: Runtime environment used for     |
-|  games and applications created using  |
-|  the Brux game framework.              |
-| LICENSE:GNU General Public License v.3 |
-\*======================================*/
+/*=============================================*\
+| PROJECT: Brux Game Runtime Environment        |
+| AUTHOR: Nick Kovacs                           |
+| DATE: 8-15-15                                 |
+| DESC: Runtime environment used for            |
+|  games and applications created using         |
+|  the Brux game framework.                     |
+| LICENSE: GNU Affero General Public License v3 |
+\*=============================================*/
 
 /*===========*\
 | MAIN SOURCE |
@@ -310,11 +310,11 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 
 	//Graphics
 	xyPrint(0, "Embedding graphics...");
-	xyBindFunc(v, sqSetDrawTarget, "setDrawTarget", 2, ".n"); //Doc'd
+	xyBindFunc(v, sqSetDrawTarget, "setDrawTarget", 2, ". n"); //Doc'd
 	xyBindFunc(v, sqGetDrawTarget, "getDrawTarget"); //Doc'd
 	xyBindFunc(v, sqClearScreen, "clearScreen"); //Doc'd
 	xyBindFunc(v, sqResetDrawTarget, "resetDrawTarget");
-	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".n|bn|bn|b"); //Doc'd
+	xyBindFunc(v, sqDrawImageEx, "drawImageEx", 9, ". n|b n|b n|b n|b n|b n|b n|b n|b");
 	xyBindFunc(v, sqSetDrawColor, "setDrawColor", 2, ".n"); //Doc'd
 	xyBindFunc(v, sqLoadImage, "loadImage", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqLoadImageKeyed, "loadImageKey", 3, ".sn|b"); //Doc'd
@@ -343,7 +343,6 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqSpriteName, "spriteName", 2, ".n|b"); //Doc'd
 	xyBindFunc(v, sqNewSprite, "newSprite", 8, ".si|bi|bi|bi|bi|bi|b"); //Doc'd
 	xyBindFunc(v, sqNewSpriteFT, "newSpriteFT", 8, ".i|bi|bi|bi|bi|bi|bi|b");
-	xyBindFunc(v, sqDrawSprite, "drawSprite", 5, ".in|bn|bn|b"); //Doc'd
 	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".i|bn|bn|bn|bn|bi|bn|bn|bn|b"); //Doc'd
 	xyBindFunc(v, sqDrawSpriteMod, "drawSpriteMod", 6, ".i|bn|bn|bn|bn|bn|b"); //Doc'd
 	xyBindFunc(v, sqDrawSpriteExMod, "drawSpriteExMod", 11, ".i|bn|bn|bn|bn|bi|bn|bn|bn|bn|b"); //Doc'd
