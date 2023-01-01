@@ -7,7 +7,7 @@ spriteSetBlendMode(sprLight, bm_add)
 
 ::texAmbient <- newTexture(800, 800)
 
-textureSetBlendMode(texAmbient, bm_sub)
+textureSetBlendMode(texAmbient, bm_mod)
 
 setDrawColor(0x204080ff)
 
