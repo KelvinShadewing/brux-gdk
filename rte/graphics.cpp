@@ -246,10 +246,11 @@ void xyDrawImageEx(Uint32 tex, float x, float y, float angle, SDL_RendererFlip f
 
 //Delete image
 void xyDeleteImage(Uint32 tex) {
-	if(tex > vcSprites.size()) return;
+	if(tex > vcTextures.size()) return;
 
 	SDL_DestroyTexture(vcTextures[tex]);
-	vcSprites[tex] = 0;
+	if(tex < vcTextures.size() - 1) vcTextures[tex] = 0;
+	else vcTextures.pop_back();
 };
 
 //Get FPS
