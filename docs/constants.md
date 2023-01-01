@@ -643,13 +643,15 @@ For use in text rendering functions.
 
 For use when drawing sprites/textures/geometry. Currently unsupported.
 
-* bm_norm
+* bm_none
+
+* bm_blend
 
 * bm_add
 
 * bm_sub
 
-* bm_mult
+* bm_mod
 
 ### Operating systems
 
