@@ -590,10 +590,12 @@ void xyUpdate() {
 	if (fLength < max_delay) {
 		if (gvMaxFPS != 0) std::this_thread::sleep_for((max_delay - fLength) - std::chrono::duration<float>(0.0001f)); //SDL_Delay(max_delay - fLength);
 	}
-	if(fLength.count() != 0) {
-		std::chrono::duration<float> timeSince = std::chrono::steady_clock::now() - gvTickLast;
-		gvFPS = 1.0f / timeSince.count();
-	}
+
+	//Calculate time since previous tick and adjust framerate
+	std::chrono::duration<float> timeSince = std::chrono::steady_clock::now() - gvTickLast;
+	gvFPS = 1.0f / timeSince.count();
+
+	// Update previous tick and increment frames
 	gvTickLast = std::chrono::steady_clock::now();
 	gvFrames++;
 };
