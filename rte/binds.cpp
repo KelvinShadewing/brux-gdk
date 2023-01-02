@@ -48,7 +48,7 @@ SQInteger sqGetTicks(HSQUIRRELVM v) {
 };
 
 SQInteger sqGetFPS(HSQUIRRELVM v) {
-	sq_pushinteger(v, gvFPS);
+	sq_pushinteger(v, std::round(gvFPS));
 
 	return 1;
 };
