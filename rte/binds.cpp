@@ -48,7 +48,7 @@ SQInteger sqGetTicks(HSQUIRRELVM v) {
 };
 
 SQInteger sqGetFPS(HSQUIRRELVM v) {
-	sq_pushinteger(v, gvFPS);
+	sq_pushinteger(v, std::round(gvFPS));
 
 	return 1;
 };
@@ -495,6 +495,7 @@ SQInteger sqTextureSetBlendMode(HSQUIRRELVM v) {
 			break;
 		case 3:
 			m = SDL_ComposeCustomBlendMode(SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT, SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT);
+			break;
 		case 4:
 			m = SDL_BLENDMODE_MOD;
 			break;
@@ -749,6 +750,7 @@ SQInteger sqSpriteSetBlendMode(HSQUIRRELVM v) {
 			break;
 		case 3:
 			m = SDL_ComposeCustomBlendMode(SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT, SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT);
+			break;
 		case 4:
 			m = SDL_BLENDMODE_MOD;
 			break;

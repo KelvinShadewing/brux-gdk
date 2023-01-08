@@ -21,7 +21,8 @@
 #include <limits>
 #include <sys/stat.h>
 #include <bitset>
-
+#include <chrono>
+#include <thread>
 
 //If running on Windows, use Windows
 //working directory functions.
