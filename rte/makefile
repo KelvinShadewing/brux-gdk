@@ -37,7 +37,8 @@ bin/brux.dge: $(DEPS) $(SRC)
 	mipsel-gcw0-linux-uclibc-g++ --std=c++17 $(CXXFLAGS) $(CXXFLAGS_PKGS) -o bin/brux.dge $(SRC) -mips32 -D_DINGUX -I/opt/gcw0-toolchain/usr/include $(CFLAGS) -L/opt/gcw0-toolchain/usr/lib -L/opt/gcw0-toolchain/usr/lib/gcc/mipsel-gcw0-linux-uclibc/4.9.1 -O2
 
 clean:
-	rm *.o
+	rm -f bin/brux bin/brux.exe bin/brux.dge
+	rm -f *.o
 
 debug: $(DEPS)
 	g++ -o bin/brux $(SRC) $(CFLAGS) -g
