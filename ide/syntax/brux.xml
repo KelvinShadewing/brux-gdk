@@ -134,6 +134,7 @@ Comes packaged with the BRUX IDE and works with anything that uses KTextEditor o
 			<item>drawSprite</item>
 			<item>drawText</item>
 			<item>fileAppend</item>
+			<item>fileDelete</item>
 			<item>fileExists</item>
 			<item>fileRead</item>
 			<item>fileWrite</item>

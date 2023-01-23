@@ -430,18 +430,18 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyPrint(0, "Embedding file I/O...");
 	xyBindFunc(v, sqImport, "import", 2, ".s");
 	xyBindFunc(v, sqDoString, "dostr", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqMount, "mount", 3, ".sb");
-	xyBindFunc(v, sqUnmount, "unmount", 2, ".s");
+	xyBindFunc(v, sqMount, "mount", 3, ".sb"); //Doc'd
+	xyBindFunc(v, sqUnmount, "unmount", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqGetDir, "getdir"); //Doc'd
-	xyBindFunc(v, sqGetWriteDir, "getWriteDir");
-	xyBindFunc(v, sqGetPrefDir, "getPrefDir", 3, ".ss");
-	xyBindFunc(v, sqSetWriteDir, "setWriteDir", 2, ".s");
-	xyBindFunc(v, sqCreateDir, "createDir", 2, ".s");
+	xyBindFunc(v, sqGetWriteDir, "getWriteDir"); //Doc'd
+	xyBindFunc(v, sqGetPrefDir, "getPrefDir", 3, ".ss"); //Doc'd
+	xyBindFunc(v, sqSetWriteDir, "setWriteDir", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqCreateDir, "createDir", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqFileRead, "fileRead", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqFileWrite, "fileWrite", 3, ".ss"); //Doc'd
 	xyBindFunc(v, sqFileAppend, "fileAppend", 3, ".ss"); //Doc'd
 	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqFileDelete, "fileDelete", 2, ".s");
+	xyBindFunc(v, sqFileDelete, "fileDelete", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqDecodeJSON, "jsonRead", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqLsDir, "lsdir", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqIsDir, "isdir", 2, ".s"); //Doc'd
