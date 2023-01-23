@@ -177,6 +177,120 @@ SQInteger sqDoString(HSQUIRRELVM v) {
 	return 0;
 }
 
+SQInteger sqMount(HSQUIRRELVM v) {
+	const char* dir;
+	const char* mountpoint;
+	SQBool prepend;
+
+	sq_getstring(v, 2, &dir);
+	sq_getstring(v, 3, &mountpoint);
+	sq_getbool(v, 4, &prepend);
+
+	xyFSMount(dir, mountpoint, prepend);
+
+	return 0;
+};
+
+SQInteger sqUnmount(HSQUIRRELVM v) {
+	const char* dir;
+
+	sq_getstring(v, 2, &dir);
+
+	xyFSUnmount(dir);
+
+	return 0;
+};
+
+SQInteger sqGetDir(HSQUIRRELVM v) {
+	const std::string data = xyGetDir();
+
+	sq_pushstring(v, data.c_str(), data.size());
+
+	return 1;
+};
+
+SQInteger sqGetWriteDir(HSQUIRRELVM v) {
+	const std::string data = xyGetWriteDir();
+
+	sq_pushstring(v, data.c_str(), data.size());
+
+	return 1;
+};
+
+SQInteger sqGetPrefDir(HSQUIRRELVM v) {
+	const char* org;
+	const char* app;
+
+	sq_getstring(v, 2, &org);
+	sq_getstring(v, 3, &app);
+
+	const std::string data = xyGetPrefDir(org, app);
+
+	sq_pushstring(v, data.c_str(), data.size());
+
+	return 1;
+};
+
+SQInteger sqSetWriteDir(HSQUIRRELVM v) {
+	const char* dir;
+
+	sq_getstring(v, 2, &dir);
+
+	xySetWriteDir(dir);
+
+	return 0;
+};
+
+SQInteger sqCreateDir(HSQUIRRELVM v) {
+	const char* name;
+
+	sq_getstring(v, 2, &name);
+
+	xyCreateDir(name);
+
+	return 0;
+};
+
+SQInteger sqFileRead(HSQUIRRELVM v) {
+	const char* file;
+
+	sq_getstring(v, 2, &file);
+
+	if (xyFileExists(file)) {
+		const std::string data = xyFileRead(file);
+		sq_pushstring(v, data.c_str(), data.size());
+	}
+	else {
+		xyPrint(0, "WARNING: %s does not exist!", file);
+		sq_pushstring(v, "-1", 2);
+	}
+	return 1;
+};
+
+SQInteger sqFileWrite(HSQUIRRELVM v) {
+	const char* file;
+	const char* data;
+
+	sq_getstring(v, 2, &file);
+	sq_getstring(v, 3, &data);
+
+	xyFileWrite(file, data);
+
+	return 0;
+};
+
+SQInteger sqFileAppend(HSQUIRRELVM v) {
+	const char* file;
+	const char* data;
+
+	sq_getstring(v, 2, &file);
+	sq_getstring(v, 3, &data);
+
+	xyFileAppend(file, data);
+
+	return 0;
+};
+
 SQInteger sqFileExists(HSQUIRRELVM v) {
 	const char* file;
 
@@ -187,71 +301,42 @@ SQInteger sqFileExists(HSQUIRRELVM v) {
 	return 1;
 };
 
-SQInteger sqGetDir(HSQUIRRELVM v) {
-	char* buff = getCD(NULL, 0);
-	sq_pushstring(v, buff, strlen(buff));
+SQInteger sqFileDelete(HSQUIRRELVM v) {
+	const char* file;
+
+	sq_getstring(v, 2, &file);
+
+	xyFileDelete(file);
+
+	return 0;
+};
+
+SQInteger sqIsDir(HSQUIRRELVM v) {
+	const char* dir;
+
+	sq_getstring(v, 2, &dir);
+
+	sq_pushbool(v, xyIsDirectory(dir));
+
 	return 1;
 };
 
-SQInteger sqSetDir(HSQUIRRELVM v) {
-	const char* d;
-	sq_getstring(v, 2, &d);
-	chdir(d);
-	return 0;
-};
+SQInteger sqLsDir(HSQUIRRELVM v) {
+	const char* dir;
 
-SQInteger sqFileWrite(HSQUIRRELVM v) {
-	const char* f;
-	const char* s;
+	sq_getstring(v, 2, &dir);
 
-	sq_getstring(v, 2, &f);
-	sq_getstring(v, 3, &s);
+	// Create array for results.
+	sq_newarray(v, 0);
 
-	std::ofstream fi;
-	fi.open(f, ios::out);
-	fi << s;
-	fi.close();
-
-	return 0;
-};
-
-SQInteger sqFileAppend(HSQUIRRELVM v) {
-	const char* f;
-	const char* s;
-
-	sq_getstring(v, 2, &f);
-	sq_getstring(v, 3, &s);
-
-	std::ofstream fi;
-	fi.open(f, ios::out | ios::app);
-	fi << s;
-	fi.close();
-
-	return 0;
-};
-
-SQInteger sqFileRead(HSQUIRRELVM v) {
-	const char* f;
-	int l;
-	std::ifstream t;
-
-	sq_getstring(v, 2, &f);
-
-	if(!xyFileExists(f)) {
-		xyPrint(0, "WARNING: %s does not exist!", f);
-		sq_pushstring(v, "-1", 2);
-		return 1;
-	} else {
-		t.open(f);
-		t.seekg(0, ios::end);
-		l = t.tellg();
-		char b[l];
-		t.seekg(0, ios::beg);
-		t.read(b, l);
-		t.close();
-		sq_pushstring(v, b, l);
-		return 1;
+	// Append all results to the array.
+	const std::vector<std::string> files = xyListDirectory(dir);
+	for (const std::string& file : files) {
+		sq_pushstring(v, file.c_str(), file.size());
+		sq_arrayappend(v, -2);
 	}
+
+	return 1;
 };
 
 

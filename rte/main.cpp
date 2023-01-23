@@ -64,16 +64,15 @@ int main(int argc, char* argv[]) {
 				//If the input is a Squirrel file
 				if(curarg.substr(curarg.find_last_of('.')) == ".sq" || curarg.substr(curarg.find_last_of('.')) == ".nut" || curarg.substr(curarg.find_last_of('.')) == ".brx"){
 					//Check that the file really exists
-					if(xyFileExists(curarg.c_str())) {
+					if(xyLegacyFileExists(curarg)) {
 						//All checks pass, assign the file
 						char tmpstr[64];
-						xygapp = curarg.c_str();
+						xygapp = curarg;
 						size_t found = xygapp.find_last_of("/\\");
 						gvWorkDir = xygapp.substr(0, found);
 						chdir(gvWorkDir.c_str());
-						char* curdir = getcwd(0,0);
-						xyPrint(0, "Working directory: %s", curdir);
-						delete curdir;
+						const std::string curdir = xyGetDir();
+						xyPrint(0, "Working directory: %s", curdir.c_str());
 					}
 				}
 			}
@@ -85,11 +84,19 @@ int main(int argc, char* argv[]) {
 
 	SDL_ShowCursor(0);
 
+	//Mount the current working directory.
+	xyFSMount(xyGetDir(), "/", true);
+
+	//Set the current write directory to a default for Brux.
+	//Can be changed later by the game.
+	xySetWriteDir(xyGetPrefDir("brux", "brux"));
+
 	//Run app
 	if(xygapp != "") {
 		xyPrint(0, "Running %s...", xygapp.c_str());
 		sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
-	} else {
+	}
+	else {
 		if(xyFileExists("test.nut")) sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
 		else if(xyFileExists("game.brx")) sqstd_dofile(gvSquirrel, "game.brx", 0, 1);
 	}
@@ -113,6 +120,10 @@ int xyInit() {
 	//Print opening message
 	xyPrint(0, "\n/========================\\\n| BRUX GAME RUNTIME LOG |\n\\========================/\n\n");
 	xyPrint(0, "Initializing program...\n\n");
+
+	//Initialize the file system (PhysFS)
+	xyPrint(0, "Initializing file system...");
+	xyFSInit();
 
 	//Initiate SDL
 	SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
@@ -250,6 +261,10 @@ void xyEnd(){
 	Mix_Quit();
 	SDL_Quit();
 
+	//Destroy the file system (PhysFS)
+	xyPrint(0, "Closing file system...");
+	xyFSDeinit();
+
 	//Close log file
 	xyPrint(0, "System closed successfully!");
 	gvLog.close();
@@ -274,8 +289,8 @@ void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key) {
 };
 
 void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nParams, const SQChar* sParams) {
-  //Binds a function from C++ to a word in
-  //Squirrel to be called from scripts.
+	//Binds a function from C++ to a word in
+	//Squirrel to be called from scripts.
 	sq_pushroottable(v);
 	sq_pushstring(v, key, -1);
 	sq_newclosure(v, func, 0);
@@ -413,17 +428,23 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 
 	//File IO
 	xyPrint(0, "Embedding file I/O...");
-	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqImport, "import", 2, ".s");
 	xyBindFunc(v, sqDoString, "dostr", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqDecodeJSON, "jsonRead", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqMount, "mount", 4, ".ssb"); //Doc'd
+	xyBindFunc(v, sqUnmount, "unmount", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqGetDir, "getdir"); //Doc'd
-	xyBindFunc(v, sqSetDir, "chdir", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqLsDir, "lsdir", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqIsDir, "isdir", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqGetWriteDir, "getWriteDir"); //Doc'd
+	xyBindFunc(v, sqGetPrefDir, "getPrefDir", 3, ".ss"); //Doc'd
+	xyBindFunc(v, sqSetWriteDir, "setWriteDir", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqCreateDir, "createDir", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqFileRead, "fileRead", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqFileWrite, "fileWrite", 3, ".ss"); //Doc'd
 	xyBindFunc(v, sqFileAppend, "fileAppend", 3, ".ss"); //Doc'd
-	xyBindFunc(v, sqFileRead, "fileRead", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqFileDelete, "fileDelete", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqDecodeJSON, "jsonRead", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqLsDir, "lsdir", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqIsDir, "isdir", 2, ".s"); //Doc'd
 
 	//Audio
 	xyPrint(0, "Embedding audio...");

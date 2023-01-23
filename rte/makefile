@@ -1,4 +1,4 @@
-CFLAGS = -I. -lstdc++ -lSDL2main -lSDL2 -lSDL2_image -lSDL2_gfx -lSDL2_mixer -lSDL2_net -lsquirrel -lsqstdlib -lm --std=c++17
+CFLAGS = -I. -lstdc++ -lSDL2main -lSDL2 -lSDL2_image -lSDL2_gfx -lSDL2_mixer -lSDL2_net -lphysfs -lsquirrel -lsqstdlib -lm --std=c++17
 
 EMCFLAGS = -O3 -I. -lstdc++ -lm --std=c++17
 

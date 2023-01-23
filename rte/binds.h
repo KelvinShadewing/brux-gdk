@@ -31,14 +31,20 @@ SQInteger sqToggleFullscreen(HSQUIRRELVM v);
 SQInteger sqImport(HSQUIRRELVM v);
 SQInteger sqDoNut(HSQUIRRELVM v);
 SQInteger sqDoString(HSQUIRRELVM v);
-SQInteger sqFileExists(HSQUIRRELVM v);
-SQInteger sqFileWrite(HSQUIRRELVM v);
-SQInteger sqFileRead(HSQUIRRELVM v);
-SQInteger sqFileAppend(HSQUIRRELVM v);
+SQInteger sqMount(HSQUIRRELVM v);
+SQInteger sqUnmount(HSQUIRRELVM v);
 SQInteger sqGetDir(HSQUIRRELVM v);
-SQInteger sqSetDir(HSQUIRRELVM v);
-SQInteger sqLsDir(HSQUIRRELVM v);
+SQInteger sqGetWriteDir(HSQUIRRELVM v);
+SQInteger sqGetPrefDir(HSQUIRRELVM v);
+SQInteger sqSetWriteDir(HSQUIRRELVM v);
+SQInteger sqCreateDir(HSQUIRRELVM v);
+SQInteger sqFileRead(HSQUIRRELVM v);
+SQInteger sqFileWrite(HSQUIRRELVM v);
+SQInteger sqFileAppend(HSQUIRRELVM v);
+SQInteger sqFileExists(HSQUIRRELVM v);
+SQInteger sqFileDelete(HSQUIRRELVM v);
 SQInteger sqIsDir(HSQUIRRELVM v);
+SQInteger sqLsDir(HSQUIRRELVM v);
 
 //Graphics
 SQInteger sqWait(HSQUIRRELVM v);

@@ -116,6 +116,7 @@ Comes packaged with the BRUX IDE and works with anything that uses KTextEditor o
 			<item>choose</item>
 			<item>clearScreen</item>
 			<item>countActors</item>
+			<item>createDir</item>
 			<item>deleteActor</item>
 			<item>deleteMusic</item>
 			<item>deleteSound</item>
@@ -133,6 +134,7 @@ Comes packaged with the BRUX IDE and works with anything that uses KTextEditor o
 			<item>drawSprite</item>
 			<item>drawText</item>
 			<item>fileAppend</item>
+			<item>fileDelete</item>
 			<item>fileExists</item>
 			<item>fileRead</item>
 			<item>fileWrite</item>
@@ -143,9 +145,11 @@ Comes packaged with the BRUX IDE and works with anything that uses KTextEditor o
 			<item>getFrames</item>
 			<item>getMusicVolume</item>
 			<item>getOS</item>
+			<item>getPrefDir</item>
 			<item>getQuit</item>
 			<item>getSoundVolume</item>
 			<item>getTicks</item>
+			<item>getWriteDir</item>
 			<item>getdir</item>
 			<item>hitLineCircle</item>
 			<item>hitLineLine</item>
@@ -184,6 +188,7 @@ Comes packaged with the BRUX IDE and works with anything that uses KTextEditor o
 			<item>loadMusic</item>
 			<item>loadSound</item>
 			<item>lsdir</item>
+			<item>mount</item>
 			<item>mouseDown</item>
 			<item>mousePress</item>
 			<item>mouseRelease</item>
@@ -222,6 +227,7 @@ Comes packaged with the BRUX IDE and works with anything that uses KTextEditor o
 			<item>setSoundVolume</item>
 			<item>setWindowIcon</item>
 			<item>setWindowTitle</item>
+			<item>setWriteDir</item>
 			<item>spriteH</item>
 			<item>spriteName</item>
 			<item>spriteSetBlendMode</item>
@@ -231,6 +237,7 @@ Comes packaged with the BRUX IDE and works with anything that uses KTextEditor o
 			<item>stopSound</item>
 			<item>textureSetBlendMode</item>
 			<item>toggleFullscreen</item>
+			<item>unmount</item>
 			<item>update</item>
 			<item>wait</item>
 			<item>windowH</item>
