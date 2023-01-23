@@ -56,9 +56,10 @@ void xyFileWrite(const std::string& file, const std::string& data);
 void xyFileAppend(const std::string& file, const std::string& data);
 bool xyFileExists(const std::string& file);
 bool xyLegacyFileExists(const std::string& file);
+void xyFileDelete(const std::string& name);
 
-SQInteger sqLsDir(HSQUIRRELVM v);
-SQInteger sqIsDir(HSQUIRRELVM v);
+bool xyIsDirectory(const std::string& name);
+std::vector<std::string> xyListDirectory(const std::string& dir);
 
 /** JSON encoding/decoding. **/
 void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item);

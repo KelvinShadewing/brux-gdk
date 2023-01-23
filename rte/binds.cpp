@@ -299,6 +299,44 @@ SQInteger sqFileExists(HSQUIRRELVM v) {
 	return 1;
 };
 
+SQInteger sqFileDelete(HSQUIRRELVM v) {
+	const char* file;
+
+	sq_getstring(v, 2, &file);
+
+	xyFileDelete(file);
+
+	return 0;
+};
+
+SQInteger sqIsDir(HSQUIRRELVM v) {
+	const char* dir;
+
+	sq_getstring(v, 2, &dir);
+
+	sq_pushbool(v, xyIsDirectory(dir));
+
+	return 1;
+};
+
+SQInteger sqLsDir(HSQUIRRELVM v) {
+	const char* dir;
+
+	sq_getstring(v, 2, &dir);
+
+	// Create array for results.
+	sq_newarray(v, 0);
+
+	// Append all results to the array.
+	const std::vector<std::string> files = xyListDirectory(dir);
+	for (const std::string& file : files) {
+		sq_pushstring(v, file.c_str(), file.size());
+		sq_arrayappend(v, -2);
+	}
+
+	return 1;
+};
+
 
 
 //////////////

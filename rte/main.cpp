@@ -441,6 +441,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqFileWrite, "fileWrite", 3, ".ss"); //Doc'd
 	xyBindFunc(v, sqFileAppend, "fileAppend", 3, ".ss"); //Doc'd
 	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s"); //Doc'd
+	xyBindFunc(v, sqFileDelete, "fileDelete", 2, ".s");
 	xyBindFunc(v, sqDecodeJSON, "jsonRead", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqLsDir, "lsdir", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqIsDir, "isdir", 2, ".s"); //Doc'd

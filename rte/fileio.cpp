@@ -178,17 +178,43 @@ bool xyLegacyFileExists(const std::string& file) {
 	return stat(file.c_str(), &buff) != -1;
 }
 
+void xyFileDelete(const std::string& name)
+{
+	// If a directory is provided, delete all files inside of it.
+	if (xyIsDirectory(name)) {
+		std::filesystem::path dir_path = name;
+		const std::vector<std::string> files = xyListDirectory(name);
+		for (const std::string& file : files) {
+			try {
+				// Delete files/folders by providing their path, relative to the directory.
+				xyFileDelete((dir_path / std::filesystem::path(file)).string());
+			}
+			catch (const std::exception& err) {
+				throw PhysFSError("Could not delete file or directory '" + file + "', contained inside of the directory '" +
+						name + "', which is being deleted: \"" + err.what() + "\"", "delete");
+			}
+		}
+	}
 
-SQInteger sqLsDir(HSQUIRRELVM v) {
-	const char* dir;
+	// Delete the file/directory.
+	if (!PHYSFS_delete(name.c_str()))
+		throw PhysFSError("Could not delete file or directory '" + name + "'", "delete");
+};
 
-	sq_getstring(v, 2, &dir);
 
-	// Create array for results.
-	sq_newarray(v, 0);
+bool xyIsDirectory(const std::string& name) {
+	// Get file/directory stats.
+	PHYSFS_Stat stat;
+	PHYSFS_stat(name.c_str(), &stat);
+
+	return stat.filetype == PHYSFS_FILETYPE_DIRECTORY;
+}
+
+std::vector<std::string> xyListDirectory(const std::string& dir) {
+	std::vector<std::string> result;
 
 	// Read files and append to array.
-	char **rc = PHYSFS_enumerateFiles(dir);
+	char **rc = PHYSFS_enumerateFiles(dir.c_str());
 	if (rc == NULL) {
 		std::stringstream err;
 		err << "Error enumerating files in directory '" << dir << "'";
@@ -196,28 +222,12 @@ SQInteger sqLsDir(HSQUIRRELVM v) {
 	}
 	char **i;
 
-	for (i = rc; *i != NULL; i++) {
-		sq_pushstring(v, *i, strlen(*i));
-		sq_arrayappend(v, -2);
-	}
+	for (i = rc; *i != NULL; i++)
+		result.push_back(*i);
 
 	PHYSFS_freeList(rc);
-	return 1;
-};
-
-SQInteger sqIsDir(HSQUIRRELVM v) {
-	const char* dir;
-
-	sq_getstring(v, 2, &dir);
-
-	// Get file/directory stats.
-	PHYSFS_Stat stat;
-	PHYSFS_stat(dir, &stat);
-
-	sq_pushbool(v, stat.filetype == PHYSFS_FILETYPE_DIRECTORY);
-
-	return 1;
-};
+	return result;
+}
 
 
 /** JSON encoding/decoding. **/
