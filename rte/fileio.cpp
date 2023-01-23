@@ -51,9 +51,9 @@ void xyFSDeinit() {
 
 /** General file system management functions. **/
 
-void xyFSMount(const std::string& dir, bool prepend) {
-	if (!PHYSFS_mount(dir.c_str(), NULL, !prepend))
-		throw PhysFSError("Cannot mount '" + dir + "'", "mount");
+void xyFSMount(const std::string& dir, const std::string& mountpoint, bool prepend) {
+	if (!PHYSFS_mount(dir.c_str(), mountpoint.c_str(), !prepend))
+		throw PhysFSError("Cannot mount '" + dir + "' to \"" + mountpoint + "\"", "mount");
 };
 
 void xyFSUnmount(const std::string& dir) {
@@ -101,9 +101,9 @@ void xySetWriteDir(const std::string& dir) {
 	if (!PHYSFS_setWriteDir(dir.c_str()))
 		throw PhysFSError("Error setting '" + dir + "' directory as write directory", "setWriteDir");
 
-	// Mount the write directory, so it prepends to (overrides) files in the search path.
+	// Mount and prepend the write directory to the root of the search path.
 	try {
-		xyFSMount(dir, true);
+		xyFSMount(dir, "/", true);
 	}
 	catch (const std::exception& err) {
 		std::stringstream out;

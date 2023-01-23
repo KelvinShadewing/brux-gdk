@@ -179,12 +179,14 @@ SQInteger sqDoString(HSQUIRRELVM v) {
 
 SQInteger sqMount(HSQUIRRELVM v) {
 	const char* dir;
+	const char* mountpoint;
 	SQBool prepend;
 
 	sq_getstring(v, 2, &dir);
-	sq_getbool(v, 3, &prepend);
+	sq_getstring(v, 3, &mountpoint);
+	sq_getbool(v, 4, &prepend);
 
-	xyFSMount(dir, prepend);
+	xyFSMount(dir, mountpoint, prepend);
 
 	return 0;
 };

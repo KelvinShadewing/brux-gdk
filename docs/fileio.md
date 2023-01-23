@@ -5,10 +5,14 @@
 
 &nbsp;
 
-* <a name="mount"></a>**`mount( string )`**
+* <a name="mount"></a>**`mount( string1, string2, bool )`**
 
-  Mounts (adds to the search path) a folder or an archive, referenced by the path `string`.
+  Mounts (adds to the search path) a folder or an archive, referenced by the path `string1`, to the mountpoint `string2`.
+  If `bool` is set to `true`, the files being mounted will be prepended on top of the search path, overriding any matching ones.
   Wrapper of [PHYSFS_mount()](https://icculus.org/physfs/docs/html/physfs_8h.html#a8eb320e9af03dcdb4c05bbff3ea604d4).
+
+> **NOTE:**
+  To mount to the root of the search path, provide `"/"` as the mountpoint.
 
 * <a name="unmount"></a>**`unmount( string )`**
 
@@ -65,7 +69,7 @@
 
 * <a name="setWriteDir"></a>**`setWriteDir( string )`**
 
-  Sets the path where file writing should be allowed. Writing directories are automatically prepended to the search path, overriding any matching files.
+  Sets the path where file writing should be allowed. Writing directories are automatically prepended to the root of the search path, overriding any matching files.
   Wrapper of [PHYSFS_setWriteDir()](https://icculus.org/physfs/docs/html/physfs_8h.html#a36c408d40b3a93c8f9fc02a16c02e430).
 
 > **NOTE:**

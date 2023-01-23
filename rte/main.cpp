@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
 	SDL_ShowCursor(0);
 
 	//Mount the current working directory.
-	xyFSMount(xyGetDir(), true);
+	xyFSMount(xyGetDir(), "/", true);
 
 	//Set the current write directory to a default for Brux.
 	//Can be changed later by the game.
@@ -430,7 +430,7 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyPrint(0, "Embedding file I/O...");
 	xyBindFunc(v, sqImport, "import", 2, ".s");
 	xyBindFunc(v, sqDoString, "dostr", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqMount, "mount", 3, ".sb"); //Doc'd
+	xyBindFunc(v, sqMount, "mount", 4, ".ssb"); //Doc'd
 	xyBindFunc(v, sqUnmount, "unmount", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqGetDir, "getdir"); //Doc'd
 	xyBindFunc(v, sqGetWriteDir, "getWriteDir"); //Doc'd

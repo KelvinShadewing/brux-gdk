@@ -42,7 +42,7 @@ void xyFSInit();
 void xyFSDeinit();
 
 /** General file system management functions. **/
-void xyFSMount(const std::string& dir, bool prepend);
+void xyFSMount(const std::string& dir, const std::string& mountpoint, bool prepend);
 void xyFSUnmount(const std::string& dir);
 
 std::string xyGetDir();
