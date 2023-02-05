@@ -4,11 +4,11 @@
 
 
 
-#include "main.h"
-#include "global.h"
-#include "graphics.h"
-#include "sprite.h"
-#include "text.h"
+#include "brux/main.hpp"
+#include "brux/global.hpp"
+#include "brux/graphics.hpp"
+#include "brux/sprite.hpp"
+#include "brux/text.hpp"
 
 //New bitmap font format to replace SDL_ttf.
 //

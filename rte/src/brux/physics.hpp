@@ -4,6 +4,9 @@
 
 #ifndef BRUX_GDK_PHYISICS_H
 #define BRUX_GDK_PHYISICS_H
+
+#ifdef DO_NOT_INCLUDE // Not to be compiled.
+
 #include <chipmunk.h>
 #include <vector>
 
@@ -24,5 +27,7 @@ private:
 	std::vector<cpBody*>  bodylist;
 	std::vector<cpShape*> shapelist;
 };
+
+#endif
 
 #endif //BRUX_GDK_PHYISICS_H

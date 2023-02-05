@@ -2,11 +2,11 @@
 | GLOBAL SOURCE |
 \*=============*/
 
-#include "main.h"
-#include "sprite.h"
-#include "global.h"
-#include "text.h"
-#include "shapes.h"
+#include "brux/main.hpp"
+#include "brux/sprite.hpp"
+#include "brux/global.hpp"
+#include "brux/text.hpp"
+#include "brux/shapes.hpp"
 
 int __stack_chk_guard = 0xdeadbeef;
 bool gvQuit = 0;

@@ -4,11 +4,11 @@
 
 
 
-#include "main.h"
-#include "global.h"
-#include "graphics.h"
-#include "sprite.h"
-#include "maths.h"
+#include "brux/main.hpp"
+#include "brux/global.hpp"
+#include "brux/graphics.hpp"
+#include "brux/sprite.hpp"
+#include "brux/maths.hpp"
 
 xySprite::xySprite(const char* filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) {
 	//Set variables

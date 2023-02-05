@@ -5,9 +5,10 @@
 #ifndef _GLOBALS_H_
 #define _GLOBALS_H_
 
-#include "sprite.h"
-#include "text.h"
-#include "shapes.h"
+#include "brux/main.hpp"
+#include "brux/sprite.hpp"
+#include "brux/text.hpp"
+#include "brux/shapes.hpp"
 
 extern int __stack_chk_guard;
 extern bool gvQuit;					//Let's the game know when to quit

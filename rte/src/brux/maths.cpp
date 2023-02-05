@@ -3,9 +3,9 @@
 \*============*/
 
 
-#include "main.h"
-#include "global.h"
-#include "maths.h"
+#include "brux/main.hpp"
+#include "brux/global.hpp"
+#include "brux/maths.hpp"
 
 float xyDistance(float x1, float y1, float x2, float y2) {
 	//2D distance formula

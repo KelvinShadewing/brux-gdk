@@ -1,4 +1,4 @@
-CFLAGS = -I. -lstdc++ -lSDL2main -lSDL2 -lSDL2_image -lSDL2_gfx -lSDL2_mixer -lSDL2_net -lphysfs -lsquirrel -lsqstdlib -lm --std=c++17
+CFLAGS = -Isrc -lstdc++ -lSDL2main -lSDL2 -lSDL2_image -lSDL2_gfx -lSDL2_mixer -lSDL2_net -lphysfs -lsquirrel -lsqstdlib -lm --std=c++17
 
 EMCFLAGS = -O3 -I. -lstdc++ -lm --std=c++17
 
@@ -8,11 +8,11 @@ WINDEFS = -DWINVER=0x0400 -D__WIN95__ -D__GNUWIN32__ -DSTRICT -DHAVE_W32API_H -D
 
 WINLIBS = -lstdc++ -lgcc -lodbc32 -lwsock32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lodbc32 -ladvapi32 -lodbc32 -lwsock32 -lopengl32 -lglu32 -lole32
 
-SRC = audio.cpp actors.cpp binds.cpp cJSON.c core.cpp fileio.cpp global.cpp graphics.cpp input.cpp main.cpp maths.cpp shapes.cpp sprite.cpp text.cpp
+SRC = src/brux/audio.cpp src/brux/actors.cpp src/brux/binds.cpp src/external/cJSON.c src/brux/core.cpp src/brux/fileio.cpp src/brux/global.cpp src/brux/graphics.cpp src/brux/input.cpp src/brux/main.cpp src/brux/maths.cpp src/brux/shapes.cpp src/brux/sprite.cpp src/brux/text.cpp
 
-DEPS = audio.h binds.h cJSON.h core.h fileio.h global.h graphics.h input.h main.h maths.h shapes.h sprite.h text.h
+DEPS = src/brux/audio.hpp src/brux/binds.hpp src/external/cJSON.h src/brux/core.hpp src/brux/fileio.hpp src/brux/global.hpp src/brux/graphics.hpp src/brux/input.hpp src/brux/main.hpp src/brux/maths.hpp src/brux/shapes.hpp src/brux/sprite.hpp src/brux/text.hpp
 
-OBJ = audio.o actors.o binds.o cJSON.o core.o fileio.o global.o graphics.o input.o main.o maths.o shapes.o sprite.o text.o
+OBJ = src/brux/audio.o src/brux/actors.o src/brux/binds.o src/external/cJSON.o src/brux/core.o src/brux/fileio.o src/brux/global.o src/brux/graphics.o src/brux/input.o src/brux/main.o src/brux/maths.o src/brux/shapes.o src/brux/sprite.o src/brux/text.o
 
 # TODO: Find a way to make this only run when rule passed in is web
 ifndef EMCINCLUDE

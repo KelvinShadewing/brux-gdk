@@ -13,16 +13,16 @@
 \*===========*/
 
 //Main headers
-#include "main.h"
-#include "core.h"
-#include "global.h"
-#include "input.h"
-#include "graphics.h"
-#include "maths.h"
-#include "fileio.h"
-#include "binds.h"
-#include "text.h"
-#include "audio.h"
+#include "brux/main.hpp"
+#include "brux/core.hpp"
+#include "brux/global.hpp"
+#include "brux/input.hpp"
+#include "brux/graphics.hpp"
+#include "brux/maths.hpp"
+#include "brux/fileio.hpp"
+#include "brux/binds.hpp"
+#include "brux/text.hpp"
+#include "brux/audio.hpp"
 
 
 /////////////////

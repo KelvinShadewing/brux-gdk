@@ -5,7 +5,7 @@
 #ifndef _GRAPHICS_H_
 #define _GRAPHICS_H_
 
-#include "main.h"
+#include "brux/main.hpp"
 
 SDL_Texture* xyLoadTexture(const char* path);
 void xyClearScreen();

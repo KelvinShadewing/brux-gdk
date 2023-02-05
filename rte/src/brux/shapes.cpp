@@ -2,10 +2,10 @@
 | SHAPES SOURCE |
 \*=============*/
 
-#include "main.h"
-#include "global.h"
-#include "maths.h"
-#include "shapes.h"
+#include "brux/main.hpp"
+#include "brux/global.hpp"
+#include "brux/maths.hpp"
+#include "brux/shapes.hpp"
 
 /*\
 This part is being put on hold.

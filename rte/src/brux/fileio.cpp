@@ -23,9 +23,9 @@
 
 #include <filesystem>
 
-#include "main.h"
-#include "global.h"
-#include "fileio.h"
+#include "brux/main.hpp"
+#include "brux/global.hpp"
+#include "brux/fileio.hpp"
 
 /* Initalize a PhysicsFS error. */
 PhysFSError::PhysFSError(const std::string& message, const std::string& action) throw() :

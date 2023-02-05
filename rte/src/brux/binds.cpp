@@ -2,16 +2,16 @@
 | BINDINGS SOURCE |
 \*===============*/
 
-#include "main.h"
-#include "global.h"
-#include "graphics.h"
-#include "input.h"
-#include "maths.h"
-#include "fileio.h"
-#include "text.h"
-#include "audio.h"
-#include "sprite.h"
-#include "binds.h"
+#include "brux/main.hpp"
+#include "brux/global.hpp"
+#include "brux/graphics.hpp"
+#include "brux/input.hpp"
+#include "brux/maths.hpp"
+#include "brux/fileio.hpp"
+#include "brux/text.hpp"
+#include "brux/audio.hpp"
+#include "brux/sprite.hpp"
+#include "brux/binds.hpp"
 
 //////////
 // MAIN //

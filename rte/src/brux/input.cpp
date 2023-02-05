@@ -2,7 +2,7 @@
 |INPUT SOURCE|
 \*==========*/
 
-#include "input.h"
+#include "brux/input.hpp"
 
 bool xyKeyPress(Uint32 key) {
 	if(key >= 322) return 0;

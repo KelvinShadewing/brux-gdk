@@ -5,8 +5,7 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
 
-#include "main.h"
-#include "global.h"
+#include "brux/global.hpp"
 
 bool xyKeyPress(Uint32 key); //Check if a key was pressed
 bool xyKeyRelease(Uint32 key); //Check if a key was released

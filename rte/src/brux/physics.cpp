@@ -2,8 +2,11 @@
 // Created by peter on 6/13/20.
 //
 
+#ifdef DO_NOT_INCLUDE // Not to be compiled.
+
 #include <cstdio>
-#include "physics.h"
+
+#include "brux/physics.hpp"
 
 int Phyisics::ChipMonkHelloWorld() {
 	// cpVect is a 2D vector and cpv() is a shortcut for initializing them.
@@ -124,3 +127,5 @@ void Phyisics::AddLineSegment(cpVect start, cpVect end) {
 	shapelist.push_back(segmentBody);
 	cpShapeSetFriction(segmentBody, 1);
 }
+
+#endif

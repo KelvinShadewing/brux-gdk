@@ -27,7 +27,7 @@
 //If running on Windows, use Windows
 //working directory functions.
 #ifdef _WIN32
-	#include "wdirent.h"
+	#include "external/wdirent.h"
 	#include <direct.h>
 	#define getCD _getcwd
 
@@ -39,7 +39,7 @@
 
 void __stack_chk_fail(void);
 
-#include "cJSON.h"
+#include "external/cJSON.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>

@@ -2,9 +2,9 @@
 | AUDIO SOURCE |
 \*============*/
 
-#include "main.h"
-#include "global.h"
-#include "audio.h"
+#include "brux/main.hpp"
+#include "brux/global.hpp"
+#include "brux/audio.hpp"
 
 Uint32 xyLoadSound(const char* filename) {
 	//Load the sound file

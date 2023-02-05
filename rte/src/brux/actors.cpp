@@ -2,9 +2,9 @@
 | ACTORS SOURCE |
 \*=============*/
 
-#include "main.h"
-#include "global.h"
-#include "core.h"
+#include "brux/main.hpp"
+#include "brux/global.hpp"
+#include "brux/core.hpp"
 
 /*
  # Actor standard lib is embedded in the RTE so

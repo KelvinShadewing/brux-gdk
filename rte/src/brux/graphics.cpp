@@ -3,10 +3,10 @@
 \*===============*/
 
 
-#include "main.h"
-#include "global.h"
-#include "graphics.h"
-#include "fileio.h"
+#include "brux/main.hpp"
+#include "brux/global.hpp"
+#include "brux/graphics.hpp"
+#include "brux/fileio.hpp"
 
 //////////
 //SYSTEM//
