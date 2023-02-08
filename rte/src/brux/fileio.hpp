@@ -62,7 +62,7 @@ bool xyIsDirectory(const std::string& name);
 std::vector<std::string> xyListDirectory(const std::string& dir);
 
 /** JSON encoding/decoding. **/
-void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item);
-SQInteger sqDecodeJSON(HSQUIRRELVM v);
+void sqDecodeJSONTable(HSQUIRRELVM v, cJSON* Item);
+void sqDecodeJSON(HSQUIRRELVM v, const char* str);
 
 #endif

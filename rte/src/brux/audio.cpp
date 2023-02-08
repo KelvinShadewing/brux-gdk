@@ -6,11 +6,11 @@
 #include "brux/global.hpp"
 #include "brux/audio.hpp"
 
-Uint32 xyLoadSound(const char* filename) {
+Uint32 xyLoadSound(const std::string& filename) {
 	//Load the sound file
-	Mix_Chunk* newSnd = Mix_LoadWAV(filename);
+	Mix_Chunk* newSnd = Mix_LoadWAV(filename.c_str());
 	if(newSnd == 0){
-		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename, Mix_GetError());
+		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename.c_str(), Mix_GetError());
 	}
 
 	//Add the file to the list
@@ -33,11 +33,11 @@ Uint32 xyLoadSound(const char* filename) {
 	return vcSounds.size() - 1;
 };
 
-Uint32 xyLoadMusic(const char* filename) {
+Uint32 xyLoadMusic(const std::string& filename) {
 	//Load the music file
-	Mix_Music* newMsc = Mix_LoadMUS(filename);
+	Mix_Music* newMsc = Mix_LoadMUS(filename.c_str());
 	if(newMsc == 0) {
-		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename, Mix_GetError());
+		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename.c_str(), Mix_GetError());
 	}
 
 	//Add the file to the list

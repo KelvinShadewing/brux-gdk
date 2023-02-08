@@ -77,9 +77,6 @@ int xyInit();
 void xyStart();
 void xyEnd();
 void xyPrint(HSQUIRRELVM v, const SQChar *s, ...);
-void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key);
-void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nParams, const SQChar* sParams);
-void xyBindAllFunctions(HSQUIRRELVM v);
 int xyGetOS();
 void xyUpdate();
 

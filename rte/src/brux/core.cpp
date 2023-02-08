@@ -479,14 +479,6 @@ void xyLoadCore() {
 
 	::eval <- function(expression) { return compilestring("return ("+expression+");")() }
 
-	//Non explicit functions
-	::drawImage <- function(image, x = 0, y = 0, angle = 0, flip = 0, xscale = 1.0, yscale = 1.0, color = 0xffffffff) {
-		drawImageEx(image, x, y, angle, flip, xscale, yscale, color)
-	}
-	::drawSprite <- function(sprite, frame = 0, x = 0, y = 0, angle = 0, flip = 0, xscale = 1.0, yscale = 1.0, alpha = 1.0, color = 0xffffffff) {
-		drawSpriteExMod(sprite, frame, x, y, angle, flip, xscale, yscale, alpha, color)
-	}
-
 	print("Imported core lib.");)rew";
 
 	SQInteger oldtop = sq_gettop(gvSquirrel);

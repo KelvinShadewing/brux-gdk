@@ -114,18 +114,18 @@ void xyResetDrawTarget() {
 //////////
 
 //Load image
-SDL_Texture* xyLoadTexture(const char* path) {
+SDL_Texture* xyLoadTexture(const std::string& path) {
 	SDL_Texture* newTexture = 0;
 
 	//Load the surface
-	SDL_Surface* loadedSurface = IMG_Load(path);
+	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if(loadedSurface == 0) {
-		xyPrint(0, "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
+		xyPrint(0, "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
 	} else {
 		//Make texture from surface
 		newTexture = SDL_CreateTextureFromSurface(gvRender, loadedSurface);
 		if(newTexture == 0) {
-			xyPrint(0, "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
+			xyPrint(0, "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
 		}
 
 		//Delete old surface
@@ -135,13 +135,13 @@ SDL_Texture* xyLoadTexture(const char* path) {
 	return newTexture;
 };
 
-SDL_Texture* xyLoadTextureKeyed(const char* path, Uint32 key) {
+SDL_Texture* xyLoadTextureKeyed(const std::string& path, Uint32 key) {
 	SDL_Texture* newTexture = 0;
 
 	//Load the surface
-	SDL_Surface* loadedSurface = IMG_Load(path);
+	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if(loadedSurface == 0) {
-		xyPrint(0, "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
+		xyPrint(0, "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
 	} else {
 		Uint8 r = xyGetRed(key);
 		Uint8 g = xyGetGreen(key);
@@ -149,7 +149,7 @@ SDL_Texture* xyLoadTextureKeyed(const char* path, Uint32 key) {
 		SDL_SetColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, r, g, b));
 		newTexture = SDL_CreateTextureFromSurface(gvRender, loadedSurface);
 		if(newTexture == 0) {
-			xyPrint(0, "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
+			xyPrint(0, "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
 		}
 
 		SDL_FreeSurface(loadedSurface);
@@ -159,11 +159,11 @@ SDL_Texture* xyLoadTextureKeyed(const char* path, Uint32 key) {
 };
 
 //Load a texture and assign it to a slot in the textures list
-Uint32 xyLoadImage(const char* path) {
-	SDL_Texture* nimg = xyLoadTexture(path);
+Uint32 xyLoadImage(const std::string& path) {
+	SDL_Texture* nimg = xyLoadTexture(path.c_str());
 
 	if(!nimg) {
-		xyPrint(0, "Unable to load file: %s", path);
+		xyPrint(0, "Unable to load file: %s", path.c_str());
 		gvQuit = 1;
 	}
 
@@ -175,11 +175,11 @@ Uint32 xyLoadImage(const char* path) {
 	return vcTextures.size() - 1;
 };
 
-Uint32 xyLoadImageKeyed(const char* path, Uint32 key) {
+Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key) {
 	SDL_Texture* nimg = xyLoadTextureKeyed(path, key);
 
 	if(!nimg) {
-		xyPrint(0, "Unable to load file: %s", path);
+		xyPrint(0, "Unable to load file: %s", path.c_str());
 		gvQuit = 1;
 	}
 

@@ -5,8 +5,8 @@
 #ifndef _AUDIO_H_
 #define _AUDIO_H_
 
-Uint32 xyLoadSound(const char* filename);
-Uint32 xyLoadMusic(const char* filename);
+Uint32 xyLoadSound(const std::string& filename);
+Uint32 xyLoadMusic(const std::string& filename);
 void xyDeleteSound(Uint32 sound);
 void xyDeleteMusic(Uint32 music);
 int xyPlaySound(Uint32 sound, Uint32 loops);

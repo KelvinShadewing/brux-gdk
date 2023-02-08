@@ -14,11 +14,13 @@ find_package(PhysFS REQUIRED)
 include(ExternalProject)
 include(ProvideSquirrel)
 
+include(BuildMiniswigWrapper)
+
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${PHYSFS_INCLUDE_DIR})
 include_directories(src)
 
-file(GLOB SRCFILES src/brux/*.cpp src/external/*.c)
+file(GLOB SRCFILES src/api/*.cpp src/brux/*.cpp src/external/*.c src/squirrel/*.cpp)
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/test/" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 add_executable(brux ${SRCFILES})
 

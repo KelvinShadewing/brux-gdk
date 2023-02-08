@@ -234,13 +234,14 @@ std::vector<std::string> xyListDirectory(const std::string& dir) {
 
 // Credit to Nova Storm for the JSON encoding and decoding functions
 
-void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item) {
-	if(!Item)
-		return;
-	while(Item) {
-		if(Item->str)
-			sq_pushstring(v, Item->str, -1);
-		switch(Item->type) {
+void sqDecodeJSONTable(HSQUIRRELVM v, cJSON* item) {
+	if (!item) return;
+
+	while (item) {
+		if (item->str)
+			sq_pushstring(v, item->str, -1);
+
+		switch (item->type) {
 			case cJSON_False:
 				sq_pushbool(v, SQFalse);
 				break;
@@ -251,53 +252,53 @@ void sqDecodeJSONTable(HSQUIRRELVM v, cJSON *Item) {
 				sq_pushnull(v);
 				break;
 			case cJSON_Number:
-				if(Item->valueint == Item->valuedouble)
-					sq_pushinteger(v, Item->valueint);
+				if (item->valueint == item->valuedouble)
+					sq_pushinteger(v, item->valueint);
 				else
-					sq_pushfloat(v, Item->valuedouble);
+					sq_pushfloat(v, item->valuedouble);
 				break;
 			case cJSON_String:
-				sq_pushstring(v, Item->valuestring, -1);
+				sq_pushstring(v, item->valuestring, -1);
 				break;
 			case cJSON_Array:
 				sq_newarray(v, 0);
-				sqDecodeJSONTable(v, Item->child);
+				sqDecodeJSONTable(v, item->child);
 				break;
 			case cJSON_Object:
 				sq_newtable(v);
-				sqDecodeJSONTable(v, Item->child);
+				sqDecodeJSONTable(v, item->child);
 				break;
 		}
-		if(Item->str)
-			sq_newslot(v,-3,SQFalse);
+
+		if (item->str)
+			sq_newslot(v, -3, SQFalse);
 		else
 			sq_arrayappend(v, -2);
-		Item = Item->next;
+
+		item = item->next;
 	}
 };
 
-SQInteger sqDecodeJSON(HSQUIRRELVM v) {
-	const SQChar *Str;
-	sq_getstring(v, 2, &Str);
-	if(Str[0]!='{' && Str[0]!='[') {
-		if(!strcmp(Str, "true"))
+void sqDecodeJSON(HSQUIRRELVM v, const char* str) {
+	if (str[0] != '{' && str[0] != '[') {
+		if (!strcmp(str, "true"))
 			sq_pushbool(v, SQTrue);
-		else if(!strcmp(Str, "false"))
+		else if (!strcmp(str, "false"))
 			sq_pushbool(v, SQFalse);
-		else if(isdigit(Str[0]) || (Str[0]=='-' && isdigit(Str[1])))
-			sq_pushinteger(v, strtol(Str, NULL, 0));
+		else if (std::isdigit(str[0]) || (str[0] == '-' && std::isdigit(str[1])))
+			sq_pushinteger(v, strtol(str, NULL, 0));
 		else
-			sq_pushstring(v, Str, -1);
-		return 1;
+			sq_pushstring(v, str, -1);
+		return;
 	}
 
-	cJSON *Root = cJSON_Parse(Str);
-	if(!Root || !Root->child) {
+	cJSON* root = cJSON_Parse(str);
+	if (!root || !root->child) {
 		sq_pushnull(v);
-		return 1;
+		return;
 	}
 	sq_newtable(v);
-	sqDecodeJSONTable(v, Root->child);
-	cJSON_Delete(Root);
-	return 1;
+	sqDecodeJSONTable(v, root->child);
+	cJSON_Delete(root);
+	return;
 }

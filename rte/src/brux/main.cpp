@@ -12,18 +12,15 @@
 | MAIN SOURCE |
 \*===========*/
 
-//Main headers
 #include "brux/main.hpp"
-#include "brux/core.hpp"
-#include "brux/global.hpp"
-#include "brux/input.hpp"
-#include "brux/graphics.hpp"
-#include "brux/maths.hpp"
-#include "brux/fileio.hpp"
-#include "brux/binds.hpp"
-#include "brux/text.hpp"
-#include "brux/audio.hpp"
 
+#include "brux/audio.hpp"
+#include "brux/core.hpp"
+#include "brux/fileio.hpp"
+#include "brux/global.hpp"
+#include "brux/graphics.hpp"
+#include "brux/input.hpp"
+#include "squirrel/wrapper.hpp"
 
 /////////////////
 //MAIN FUNCTION//
@@ -40,7 +37,16 @@ int main(int argc, char* argv[]) {
 	);
 #endif
 	//Initiate everything
-	if(xyInit() == 0) {
+	int initResult = 0;
+	try {
+		initResult = xyInit();
+	}
+	catch (std::exception& err) {
+		xyPrint(0, "Error initiating Brux: %s", err.what());
+		xyEnd();
+		return 1;
+	}
+	if (initResult == 0) {
 		xyPrint(0, "Failed to initiate Brux!");
 		xyEnd();
 		return 1;
@@ -102,7 +108,13 @@ int main(int argc, char* argv[]) {
 	}
 
 	//End game
-	xyEnd();
+	try {
+		xyEnd();
+	}
+	catch (std::exception& err) {
+		xyPrint(0, "Error quitting Brux: %s", err.what());
+		return 1;
+	}
 
 	return 0;
 }
@@ -194,7 +206,9 @@ int xyInit() {
 	sqstd_register_mathlib(gvSquirrel);
 	sqstd_register_stringlib(gvSquirrel);
 
-	xyBindAllFunctions(gvSquirrel);
+	/* Bind all Brux API functions to Squirrel, using the generated wrapper. */
+	xyPrint(0, "Embedding API...");
+	BruxAPI::register_brux_wrapper(gvSquirrel);
 
 	/*Error handler does not seem to print compile-time errors. I haven't
 	been able to figure out why, as the same code works in my other apps,
@@ -278,202 +292,6 @@ void xyPrint(HSQUIRRELVM v, const SQChar *s, ...) {
 	va_end(argv);
 	cout << buffer << endl;
 	gvLog << buffer << endl;
-};
-
-void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key) {
-	sq_pushroottable(v);
-	sq_pushstring(v, key, -1);
-	sq_newclosure(v, func, 0);
-	sq_newslot(v, -3, false);
-	sq_pop(v, 1);
-};
-
-void xyBindFunc(HSQUIRRELVM v, SQFUNCTION func, const SQChar *key, SQInteger nParams, const SQChar* sParams) {
-	//Binds a function from C++ to a word in
-	//Squirrel to be called from scripts.
-	sq_pushroottable(v);
-	sq_pushstring(v, key, -1);
-	sq_newclosure(v, func, 0);
-	sq_setparamscheck(v, nParams, sParams);
-	sq_newslot(v, -3, false);
-	sq_pop(v, 1);
-};
-
-void xyBindAllFunctions(HSQUIRRELVM v) {
-	//Binds all functions needed by the game.
-	//Calling this function again will fix any
-	//overwritten embedded functions, but the
-	//user can still redefine the function to
-	//call this anyway, so no safety net is
-	//even attempted. If they screw it up, they
-	//will jusy have to learn.
-
-	//Main
-	xyPrint(0, "Embedding main...");
-	xyBindFunc(v, sqUpdate, "update"); //Doc'd
-	xyBindFunc(v, sqGetOS, "getOS"); //Doc'd
-	xyBindFunc(v, sqWait, "wait", 2, ".n"); //Doc'd
-	xyBindFunc(v, sqDoNut, "donut", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqGetTicks, "getTicks"); //Doc'd
-	xyBindFunc(v, sqGetFPS, "getFPS"); //Doc'd
-	xyBindFunc(v, sqSetFPS, "setFPS", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqSetWindowTitle, "setWindowTitle", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqLoadWindowIcon, "setWindowIcon", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqGetFrames, "getFrames"); //Doc'd
-	xyBindFunc(v, sqBruxVersion, "bruxVersion"); //Doc'd
-	xyBindFunc(v, sqToggleFullscreen, "toggleFullscreen"); //Doc'd
-
-	//Graphics
-	xyPrint(0, "Embedding graphics...");
-	xyBindFunc(v, sqSetDrawTarget, "setDrawTarget", 2, ". n"); //Doc'd
-	xyBindFunc(v, sqGetDrawTarget, "getDrawTarget"); //Doc'd
-	xyBindFunc(v, sqClearScreen, "clearScreen"); //Doc'd
-	xyBindFunc(v, sqResetDrawTarget, "resetDrawTarget");
-	xyBindFunc(v, sqDrawImageEx, "drawImageEx", 9, ". n|b n|b n|b n|b n|b n|b n|b n|b");
-	xyBindFunc(v, sqSetDrawColor, "setDrawColor", 2, ".n"); //Doc'd
-	xyBindFunc(v, sqLoadImage, "loadImage", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqLoadImageKeyed, "loadImageKey", 3, ".sn|b"); //Doc'd
-	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".i|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqSetBackgroundColor, "setBackgroundColor", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqSetScaling, "setScaling", 2, ".n");
-	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqSetResolution, "setResolution", 3, ".n|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawCircle, "drawCircle", 5, ".n|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawRect, "drawRec", 6, ".n|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawRect, "drawRect", 6, ".n|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawPoint, "drawPoint", 3, ".n|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawLine, "drawLine", 5, ".n|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawLineWide, "drawLineWide", 6, ".n|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqNewTexture, "newTexture", 3, ".n|bn|b"); //Doc'd
-	xyBindFunc(v, sqGetScreenW, "screenW"); //Doc'd
-	xyBindFunc(v, sqGetScreenH, "screenH"); //Doc'd
-	xyBindFunc(v, sqGetWindowW, "windowW");
-	xyBindFunc(v, sqGetWindowH, "windowH");
-	xyBindFunc(v, sqGetDisplayW, "displayW"); //Doc'd
-	xyBindFunc(v, sqGetDisplayH, "displayH"); //Doc'd
-	xyBindFunc(v, sqTextureSetBlendMode, "textureSetBlendMode", 3, ".n|bn|b"); //Doc'd
-
-	//Sprites
-	xyPrint(0, "Embedding sprites...");
-	xyBindFunc(v, sqSpriteName, "spriteName", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqNewSprite, "newSprite", 8, ".si|bi|bi|bi|bi|bi|b"); //Doc'd
-	xyBindFunc(v, sqNewSpriteFT, "newSpriteFT", 8, ".i|bi|bi|bi|bi|bi|bi|b");
-	xyBindFunc(v, sqDrawSpriteEx, "drawSpriteEx", 10, ".i|bn|bn|bn|bn|bi|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawSpriteMod, "drawSpriteMod", 6, ".i|bn|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawSpriteExMod, "drawSpriteExMod", 11, ".i|bn|bn|bn|bn|bi|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDeleteSprite, "deleteSprite", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqFindSprite, "findSprite", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqSpriteW, "spriteW", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqSpriteH, "spriteH", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqReplaceSprite, "replaceSprite", 9, ".i|bsi|bi|bi|bi|bi|bi|b");
-	xyBindFunc(v, sqSpriteSetBlendMode, "spriteSetBlendMode", 3, ".n|bn|b"); //Doc'd
-
-	//Input
-	xyPrint(0, "Embedding input...");
-	xyBindFunc(v, sqKeyPress, "keyPress", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqKeyRelease, "keyRelease", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqKeyDown, "keyDown", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqKeyPressAny, "anyKeyPress"); //Doc'd
-	xyBindFunc(v, sqMouseDown, "mouseDown", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqMousePress, "mousePress", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqMouseRelease, "mouseRelease", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqMouseX, "mouseX"); //Doc'd
-	xyBindFunc(v, sqMouseY, "mouseY"); //Doc'd
-	xyBindFunc(v, sqGetQuit, "getQuit"); //Doc'd
-	xyBindFunc(v, sqGetPads, "joyCount"); //Doc'd
-	xyBindFunc(v, sqPadName, "joyName", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqPadAxis, "joyAxis", 3, ".i|bi|b"); //Doc'd
-	xyBindFunc(v, sqPadHatDown, "joyHatDown", 3, ".i|bi|b"); //Doc'd
-	xyBindFunc(v, sqPadHatPress, "joyHatPress", 3, ".i|bi|b"); //Doc'd
-	xyBindFunc(v, sqPadHatRelease, "joyHatRelease", 3, ".i|bi|b"); //Doc'd
-	xyBindFunc(v, sqPadButtonDown, "joyButtonDown", 3, ".i|bi|b"); //Doc'd
-	xyBindFunc(v, sqPadButtonPress, "joyButtonPress", 3, ".i|bi|b"); //Doc'd
-	xyBindFunc(v, sqPadButtonRelease, "joyButtonRelease", 3, ".i|bi|b"); //Doc'd
-	xyBindFunc(v, sqPadButtonAny, "anyJoyPress", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqPadX, "joyX", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqPadY, "joyY", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqPadZ, "joyZ", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqPadH, "joyH", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqPadV, "joyV", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqPadR, "joyR", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqPadL, "joyL", 2, ".i|b"); //Doc'd
-	xyBindFunc(v, sqPadAxisPress, "joyAxisPress", 4, ".i|bi|bi|b"); //Doc'd
-	xyBindFunc(v, sqPadAxisRelease, "joyAxisRelease", 4, ".i|bi|bi|b"); //Doc'd
-	xyBindFunc(v, sqKeyChar, "keyString"); //Doc'd
-	xyBindFunc(v, sqMouseWheelX, "mouseWheelX"); //Doc'd
-	xyBindFunc(v, sqMouseWheelY, "mouseWheelY"); //Doc'd
-
-	//Maths
-	xyPrint(0, "Embedding maths...");
-	xyBindFunc(v, sqRandomFloat, "randFloat", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqRandomInt, "randInt", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqDistance2, "distance2", 5, ".n|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDistance3, "distance3", 7, ".n|bn|bn|bn|bn|bn|b");
-	xyBindFunc(v, sqInDistance2, "inDistance2", 6, ".n|bn|bn|bn|bn|b");
-	xyBindFunc(v, sqWrap, "wrap", 4, ".n|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqRound, "round", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqCeil, "ceil", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqFloor, "floor", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqPointAngle, "pointAngle", 5, ".n|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqAbs, "abs", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqLenDirX, "lendirX", 3, ".n|bn|b"); //Doc'd
-	xyBindFunc(v, sqLenDirY, "lendirY", 3, ".n|bn|b"); //Doc'd
-	xyBindFunc(v, sqBinStr, "binstr", 2, ".n|b"); //Doc'd
-
-	//Text
-	xyPrint(0, "Embedding text...");
-	xyBindFunc(v, sqNewFont, "newFont", 6, ".n|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawText, "drawText", 5, ".n|bn|bn|bs"); //Doc'd
-	xyBindFunc(v, sqChint, "chint", 2, ".i|b"); //Doc'd
-
-	//File IO
-	xyPrint(0, "Embedding file I/O...");
-	xyBindFunc(v, sqImport, "import", 2, ".s");
-	xyBindFunc(v, sqDoString, "dostr", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqMount, "mount", 4, ".ssb"); //Doc'd
-	xyBindFunc(v, sqUnmount, "unmount", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqGetDir, "getdir"); //Doc'd
-	xyBindFunc(v, sqGetWriteDir, "getWriteDir"); //Doc'd
-	xyBindFunc(v, sqGetPrefDir, "getPrefDir", 3, ".ss"); //Doc'd
-	xyBindFunc(v, sqSetWriteDir, "setWriteDir", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqCreateDir, "createDir", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqFileRead, "fileRead", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqFileWrite, "fileWrite", 3, ".ss"); //Doc'd
-	xyBindFunc(v, sqFileAppend, "fileAppend", 3, ".ss"); //Doc'd
-	xyBindFunc(v, sqFileExists, "fileExists", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqFileDelete, "fileDelete", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqDecodeJSON, "jsonRead", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqLsDir, "lsdir", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqIsDir, "isdir", 2, ".s"); //Doc'd
-
-	//Audio
-	xyPrint(0, "Embedding audio...");
-	xyBindFunc(v, sqLoadMusic, "loadMusic", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqLoadSound, "loadSound", 2, ".s"); //Doc'd
-	xyBindFunc(v, sqPlaySound, "playSound", 3, ".n|bn|b"); //Doc'd
-	xyBindFunc(v, sqPlaySoundChannel, "playSoundChannel", 4, ".n|bn|bn|b");
-	xyBindFunc(v, sqPlayMusic, "playMusic", 3, ".n|bn|b"); //Doc'd
-	xyBindFunc(v, sqDeleteSound, "deleteSound", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqDeleteMusic, "deleteMusic", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqStopSound, "stopSound", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqStopChannel, "stopChannel", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqStopMusic, "stopMusic"); //Doc'd
-	xyBindFunc(v, sqCheckMusic, "checkMusic"); //Doc'd
-	xyBindFunc(v, sqCheckSound, "checkSound", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqSetMaxChannels, "setMaxChannels", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqPauseMusic, "pauseMusic"); //Doc'd
-	xyBindFunc(v, sqResumeMusic, "resumeMusic"); //Doc'd
-	xyBindFunc(v, sqMusicPaused, "musicPaused"); //Doc'd
-	xyBindFunc(v, sqFadeMusic, "fadeMusic", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqSetMusicVolume, "setMusicVolume", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqSetSoundVolume, "setSoundVolume", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqGetMusicVolume, "getMusicVolume"); //Doc'd
-	xyBindFunc(v, sqGetSoundVolume, "getSoundVolume"); //Doc'd
-
-	//Shapes
-	xyBindFunc(v, sqLineLine, "hitLineLine", 9, ".n|bn|bn|bn|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqLineCircle, "hitLineCircle", 8, ".n|bn|bn|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqLinePoint, "hitLinePoint", 7, ".n|bn|bn|bn|bn|bn|b"); //Doc'd
 };
 
 void xyUpdate() {
