@@ -16,3 +16,6 @@ add_custom_command(
   DEPENDS external/miniswig/miniswig
   IMPLICIT_DEPENDS CXX ${CMAKE_CURRENT_SOURCE_DIR}/src/api/api.hpp
 )
+add_custom_target(squirrel_wrapper ALL
+  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/squirrel/wrapper.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/squirrel/wrapper.hpp
+)
