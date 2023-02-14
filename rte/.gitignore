@@ -11,4 +11,3 @@ compile_commands.json
 CTestTestfile.cmake
 bin
 build
-src/squirrel/wrapper.*
