@@ -1,0 +1,81 @@
+name: Windows
+on:
+  push:
+    branches: [ "master", "unstable" ]
+    paths:
+      - rte/src/*
+  pull_request:
+    branches: [ "master", "unstable" ]
+    paths:
+      - rte/src/*
+  workflow_dispatch:
+
+jobs:
+  windows:
+    strategy:
+      matrix:
+        arch: [x64]
+        build_type: [Release]
+        include:
+          - build_type: Release
+            arch: x64
+            release: ON
+          - build_type: Release
+            arch: x86
+            release: ON
+
+    runs-on: windows-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: Use cached dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            C:/vcpkg/installed
+            C:/vcpkg/ports
+          key: ${{ runner.os }}-${{ matrix.arch }}-dependencies-${{ hashFiles('.github/workflows/windows.yml') }}
+
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: |
+          vcpkg integrate install
+          vcpkg install sdl2:$Env:ARCH-windows
+          vcpkg install sdl2-image:$Env:ARCH-windows
+          vcpkg install sdl2-gfx:$Env:ARCH-windows
+          vcpkg install sdl2-mixer:$Env:ARCH-windows
+          vcpkg install sdl2-net:$Env:ARCH-windows
+          vcpkg install physfs:$Env:ARCH-windows
+
+      - name: Configure bulid
+        env:
+          ARCH: ${{ matrix.arch }}
+          BUILD_TYPE: ${{ matrix.build_type }}
+        run: |
+          cmake --version
+          cd rte
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 17 2022" -A $Env:ARCH.replace("x86", "Win32") -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
+          mkdir $Env:BUILD_TYPE
+          copy ..\test\* $Env:BUILD_TYPE
+
+      - name: Build
+        working-directory: rte/build
+        env:
+          BUILD_TYPE: ${{ matrix.build_type }}
+        run: |
+          cmake --build . --config $Env:BUILD_TYPE
+
+      - name: Package
+        uses: actions/upload-artifact@v3
+        with:
+          name: "Brux-Windows-${{ matrix.arch }}-${{ matrix.build_type }}-binary"
+          path: "rte/build/${{ matrix.build_type }}"
