@@ -4,3 +4,6 @@
 [submodule "rte/external/squirrel"]
 	path = rte/external/squirrel
 	url = https://github.com/albertodemichelis/squirrel.git
+[submodule "rte/external/physfs"]
+	path = rte/external/physfs
+	url = https://github.com/icculus/physfs
