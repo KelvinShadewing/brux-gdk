@@ -36,9 +36,7 @@ jobs:
         id: cache-dependencies
         uses: actions/cache@v3
         with:
-          path: |
-            C:/vcpkg/installed
-            C:/vcpkg/ports
+          path: C:/vcpkg/installed
           key: ${{ runner.os }}-${{ matrix.arch }}-dependencies-${{ hashFiles('.github/workflows/windows.yml') }}
 
       - name: Install dependencies
