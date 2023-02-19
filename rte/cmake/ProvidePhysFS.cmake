@@ -15,8 +15,10 @@ endif()
 
 if(USE_SYSTEM_PHYSFS)
   add_library(LibPhysfs INTERFACE)
+  # Remove the "optimized;" and "debug;" strings, if appended to the PHYSFS_LIBRARY.
+  string(REGEX REPLACE "(optimized;|debug;)" "" PHYSFS_LINK_LIBRARY "${PHYSFS_LIBRARY}")
   set_target_properties(LibPhysfs PROPERTIES
-    INTERFACE_LINK_LIBRARIES "${PHYSFS_LIBRARY}"
+    INTERFACE_LINK_LIBRARIES "${PHYSFS_LINK_LIBRARY}"
     INTERFACE_INCLUDE_DIRECTORIES "${PHYSFS_INCLUDE_DIR}")
 else()
   if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/external/physfs/CMakeLists.txt)
