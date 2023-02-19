@@ -39,7 +39,7 @@ int getFrames(); // Doc'd
 int displayW(); // Doc'd
 int displayH(); // Doc'd
 std::string bruxVersion(); // Doc'd
-void toggleFullScreen(); // Doc'd
+void toggleFullscreen(); // Doc'd
 
 } // namespace BruxAPI
 

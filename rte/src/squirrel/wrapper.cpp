@@ -2447,12 +2447,12 @@ static SQInteger bruxVersion_wrapper(HSQUIRRELVM vm)
 
 }
 
-static SQInteger toggleFullScreen_wrapper(HSQUIRRELVM vm)
+static SQInteger toggleFullscreen_wrapper(HSQUIRRELVM vm)
 {
   (void) vm;
 
   try {
-    BruxAPI::toggleFullScreen();
+    BruxAPI::toggleFullscreen();
 
     return 0;
 
@@ -2460,7 +2460,7 @@ static SQInteger toggleFullScreen_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, e.what());
     return SQ_ERROR;
   } catch(...) {
-    sq_throwerror(vm, _SC("Unexpected exception while executing function 'toggleFullScreen'"));
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'toggleFullscreen'"));
     return SQ_ERROR;
   }
 
@@ -3870,14 +3870,14 @@ static SQInteger drawText_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, _SC("Argument 1 not an integer"));
     return SQ_ERROR;
   }
-  SQInteger arg1;
-  if(SQ_FAILED(sq_getinteger(vm, 3, &arg1))) {
-    sq_throwerror(vm, _SC("Argument 2 not an integer"));
+  SQFloat arg1;
+  if(SQ_FAILED(sq_getfloat(vm, 3, &arg1))) {
+    sq_throwerror(vm, _SC("Argument 2 not a float"));
     return SQ_ERROR;
   }
-  SQInteger arg2;
-  if(SQ_FAILED(sq_getinteger(vm, 4, &arg2))) {
-    sq_throwerror(vm, _SC("Argument 3 not an integer"));
+  SQFloat arg2;
+  if(SQ_FAILED(sq_getfloat(vm, 4, &arg2))) {
+    sq_throwerror(vm, _SC("Argument 3 not a float"));
     return SQ_ERROR;
   }
   const SQChar* arg3;
@@ -3887,7 +3887,7 @@ static SQInteger drawText_wrapper(HSQUIRRELVM vm)
   }
 
   try {
-    BruxAPI::drawText(static_cast<int> (arg0), static_cast<int> (arg1), static_cast<int> (arg2), arg3);
+    BruxAPI::drawText(static_cast<int> (arg0), arg1, arg2, arg3);
 
     return 0;
 
@@ -4644,11 +4644,11 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'bruxVersion'");
   }
 
-  sq_pushstring(v, "toggleFullScreen", -1);
-  sq_newclosure(v, &toggleFullScreen_wrapper, 0);
+  sq_pushstring(v, "toggleFullscreen", -1);
+  sq_newclosure(v, &toggleFullscreen_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
   if(SQ_FAILED(sq_createslot(v, -3))) {
-    throw SquirrelError(v, "Couldn't register function 'toggleFullScreen'");
+    throw SquirrelError(v, "Couldn't register function 'toggleFullscreen'");
   }
 
   sq_pushstring(v, "randFloat", -1);
@@ -4912,7 +4912,7 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "drawText", -1);
   sq_newclosure(v, &drawText_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".iiis");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".inns");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawText'");
   }
