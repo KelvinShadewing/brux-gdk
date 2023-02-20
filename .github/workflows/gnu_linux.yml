@@ -94,7 +94,6 @@ jobs:
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE $ARCH   \
                    -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=bin
-          cp -r ../test/* bin
 
       - name: Build
         working-directory: rte/build

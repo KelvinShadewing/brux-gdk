@@ -62,8 +62,6 @@ jobs:
           mkdir build
           cd build
           cmake .. -G "Visual Studio 17 2022" -A $Env:ARCH.replace("x86", "Win32") -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
-          mkdir $Env:BUILD_TYPE
-          copy ..\test\* $Env:BUILD_TYPE
 
       - name: Build
         working-directory: rte/build
@@ -71,6 +69,7 @@ jobs:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
           cmake --build . --config $Env:BUILD_TYPE
+          cmake --install .
 
       - name: Package
         uses: actions/upload-artifact@v3
