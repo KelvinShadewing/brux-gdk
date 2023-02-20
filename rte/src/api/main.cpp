@@ -91,7 +91,7 @@ std::string bruxVersion() {
 	return gvVNo;
 }
 
-void toggleFullScreen() {
+void toggleFullscreen() {
 	SDL_SetWindowFullscreen(gvWindow, (SDL_GetWindowFlags(gvWindow) & SDL_WINDOW_FULLSCREEN_DESKTOP) ? 0 : SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 

@@ -41,9 +41,9 @@ int newFont(int i, int c, int t, bool m, int k) {
 /** Macro to help easily check if a font is valid. **/
 #define FONT_CHECK_VALID  if (f >= vcFonts.size() || vcFonts[f] == 0) return
 
-void drawText(int f, int x, int y, const std::string& s) {
+void drawText(int f, float x, float y, const std::string& s) {
 	FONT_CHECK_VALID;
-	vcFonts[f]->draw(x, y, s);
+	vcFonts[f]->draw(static_cast<int>(x), static_cast<int>(y), s);
 }
 
 SQInteger chint(HSQUIRRELVM v, int i) {
