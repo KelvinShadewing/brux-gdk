@@ -438,20 +438,17 @@ void xyUpdate() {
 
 	//Wait for FPS limit
 	//Update ticks counter for FPS
-	gvTicks = std::chrono::steady_clock::now();
+	gvTicks = SDL_GetTicks();
+	Uint32 fLength = gvTicks - gvTickLast;
+	Uint32 max_delay = (1000 / gvMaxFPS);
 
-	std::chrono::duration<float> fLength = gvTicks - gvTickLast;
-	std::chrono::duration<float> max_delay = std::chrono::duration<float>(1.0f / gvMaxFPS);
 	if (fLength < max_delay) {
-		if (gvMaxFPS != 0) std::this_thread::sleep_for((max_delay - fLength) - std::chrono::duration<float>(0.0001f)); //SDL_Delay(max_delay - fLength);
+		if (gvMaxFPS != 0)
+			SDL_Delay(max_delay - fLength);
 	}
 
-	//Calculate time since previous tick and adjust framerate
-	std::chrono::duration<float> timeSince = std::chrono::steady_clock::now() - gvTickLast;
-	gvFPS = 1.0f / timeSince.count();
-
-	// Update previous tick and increment frames
-	gvTickLast = std::chrono::steady_clock::now();
+	if (fLength != 0) gvFPS = 1000 / (SDL_GetTicks() - gvTickLast);
+	gvTickLast = SDL_GetTicks();
 	gvFrames++;
 };
 
