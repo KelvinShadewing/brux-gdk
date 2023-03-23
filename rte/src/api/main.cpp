@@ -46,7 +46,7 @@ int getTicks() {
 }
 
 int getFPS() {
-	return std::round(gvFPS);
+	return static_cast<int>(std::round(gvFPS));
 }
 
 void setFPS(int max_fps) {

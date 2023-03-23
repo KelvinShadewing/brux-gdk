@@ -125,7 +125,7 @@ std::string xyFileRead(const std::string& file)
 		throw std::runtime_error("File '" + file + "' doesn't exist.");
 
 	PHYSFS_file* handle = PHYSFS_openRead(file.c_str());
-	const int length = PHYSFS_fileLength(handle);
+	const PHYSFS_sint64 length = PHYSFS_fileLength(handle);
 
 	char* buffer = new char[length + 1];
 	buffer[length] = 0; // Terminate string at the end.
@@ -146,7 +146,7 @@ void xyFileWrite(const std::string& file, const std::string& data)
 	xyCreateDir(std::filesystem::path(file).parent_path().string());
 
 	PHYSFS_file* handle = PHYSFS_openWrite(file.c_str());
-	const int length = data.size();
+	const int length = static_cast<int>(data.size());
 
 	const char* buffer = data.c_str();
 	if (PHYSFS_writeBytes(handle, buffer, length) < length)
@@ -255,7 +255,7 @@ void sqDecodeJSONTable(HSQUIRRELVM v, cJSON* item) {
 				if (item->valueint == item->valuedouble)
 					sq_pushinteger(v, item->valueint);
 				else
-					sq_pushfloat(v, item->valuedouble);
+					sq_pushfloat(v, static_cast<SQFloat>(item->valuedouble));
 				break;
 			case cJSON_String:
 				sq_pushstring(v, item->valuestring, -1);

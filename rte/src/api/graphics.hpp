@@ -31,8 +31,8 @@ void clearScreen(); // Doc'd
 void setDrawTarget(int tex); // Doc'd
 int getDrawTarget(); // Doc'd
 void resetDrawTarget();
-void drawImage(int img, float x, float y); // Doc'd
-void drawImageEx(int img, float x, float y, float a, int f, float w, float h, float c);
+void drawImage(int img, int x, int y); // Doc'd
+void drawImageEx(int img, int x, int y, float a, int f, int w, int h, int c);
 void setDrawColor(int color); // Doc'd
 int loadImage(const std::string& file); // Doc'd
 int loadImageKey(const std::string& file, int key); // Doc'd

@@ -24,17 +24,18 @@
 #include "brux/sprite.hpp"
 #include "brux/maths.hpp"
 
-xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) {
-	//Set variables
-	w = width;
-	h = height;
-	mar = margin;
-	pad = padding;
-	pvX = pivotX;
-	pvY = pivotY;
-	numero = 0;
-	tex = xyLoadImage(filename);
-	name = filename;
+xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) :
+	w(width),
+	h(height),
+	mar(margin),
+	pad(padding),
+	pvX(pivotX),
+	pvY(pivotY),
+	numero(0),
+	frames(),
+	tex(xyLoadImage(filename)),
+	name(filename)
+{
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
 
 	//Extract short file name
@@ -59,7 +60,7 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 		//If an open space wasn't found
 		if(numero == 0) {
 			vcSprites.push_back(this);
-			numero = vcSprites.size() - 1;
+			numero = static_cast<int>(vcSprites.size()) - 1;
 		}
 	}
 
@@ -68,23 +69,25 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
-	col = floor((float)(origW / (w + pad)));
-	row = floor((float)(origH / (h + pad)));
+	col = floor(static_cast<float>(origW / (w + pad)));
+	row = floor(static_cast<float>(origH / (h + pad)));
 	if(col < 1) col = 1;
 	if(row < 1) row = 1;
 	frames = col * row;
 };
 
-xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) {
-	//Set variables
-	w = width;
-	h = height;
-	mar = margin;
-	pad = padding;
-	pvX = pivotX;
-	pvY = pivotY;
-	numero = 0;
-	name = "texture";
+xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) :
+	w(width),
+	h(height),
+	mar(margin),
+	pad(padding),
+	pvX(pivotX),
+	pvY(pivotY),
+	numero(0),
+	frames(),
+	tex(),
+	name("texture")
+{
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
 
 	//Load texture
@@ -111,7 +114,7 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 		//If an open space wasn't found
 		if(numero == 0) {
 			vcSprites.push_back(this);
-			numero = vcSprites.size() - 1;
+			numero = static_cast<int>(vcSprites.size()) - 1;
 		}
 	}
 
@@ -120,8 +123,8 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
-	col = floor((float)(origW / (w + pad)));
-	row = floor((float)(origH / (h + pad)));
+	col = floor(static_cast<float>(origW / (w + pad)));
+	row = floor(static_cast<float>(origH / (h + pad)));
 	if(col < 1) col = 1;
 	if(row < 1) row = 1;
 	frames = col * row;
@@ -155,8 +158,8 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
-	col = floor((float)(origW / (w + pad)));
-	row = floor((float)(origH / (h + pad)));
+	col = floor(static_cast<float>(origW / (w + pad)));
+	row = floor(static_cast<float>(origH / (h + pad)));
 	if(col < 1) col = 1;
 	if(row < 1) row = 1;
 	frames = col * row;

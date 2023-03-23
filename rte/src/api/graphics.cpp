@@ -43,12 +43,12 @@ void resetDrawTarget() {
 	xyResetDrawTarget();
 }
 
-void drawImage(int img, float x, float y) {
+void drawImage(int img, int x, int y) {
 	xyDrawImage(img, x, y);
 }
 
-void drawImageEx(int img, float x, float y, float a, int f, float w, float h, float c) {
-	xyDrawImageEx(img, x, y, a, static_cast<SDL_RendererFlip>(f), w, h, 0.f, c);
+void drawImageEx(int img, int x, int y, float a, int f, int w, int h, int c) {
+	xyDrawImageEx(img, x, y, a, static_cast<SDL_RendererFlip>(f), w, h, 0, c);
 }
 
 void setDrawColor(int color) {

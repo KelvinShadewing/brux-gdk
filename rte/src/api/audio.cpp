@@ -107,8 +107,8 @@ bool musicPaused() {
 	return Mix_PlayingMusic() && Mix_PausedMusic();
 }
 
-void fadeMusic(float f) {
-	Mix_FadeOutMusic(f * 1000.0);
+void fadeMusic(int f) {
+	Mix_FadeOutMusic(f * 1000);
 }
 
 void setMusicVolume(int vol) {

@@ -46,7 +46,7 @@ Uint32 xyLoadSound(const std::string& filename) {
 
 	//If an open space wasn't found
 	vcSounds.push_back(newSnd);
-	return vcSounds.size() - 1;
+	return static_cast<int>(vcSounds.size()) - 1;
 };
 
 Uint32 xyLoadMusic(const std::string& filename) {
@@ -73,7 +73,7 @@ Uint32 xyLoadMusic(const std::string& filename) {
 
 	//If an open space wasn't found
 	vcMusic.push_back(newMsc);
-	return vcMusic.size() - 1;
+	return static_cast<int>(vcMusic.size()) - 1;
 };
 
 void xyDeleteSound(Uint32 sound) {

@@ -52,15 +52,15 @@ float wrap(float x, float mx, float mn) {
 }
 
 int floor(float f) {
-	return std::floor(f);
+	return static_cast<int>(std::floor(f));
 }
 
 int ceil(float f) {
-	return std::ceil(f);
+	return static_cast<int>(std::ceil(f));
 }
 
 int round(float f) {
-	return std::round(f);
+	return static_cast<int>(std::round(f));
 }
 
 float pointAngle(float x1, float y1, float x2, float y2) {

@@ -43,7 +43,7 @@ void setMaxChannels(int c); // Doc'd
 void pauseMusic(); // Doc'd
 void resumeMusic(); // Doc'd
 bool musicPaused(); // Doc'd
-void fadeMusic(float f); // Doc'd
+void fadeMusic(int f); // Doc'd
 void setMusicVolume(int vol); // Doc'd
 void setSoundVolume(int vol); // Doc'd
 int getMusicVolume(); // Doc'd

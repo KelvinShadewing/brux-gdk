@@ -36,7 +36,7 @@ std::string spriteName(int sprite) {
 }
 
 int findSprite(const std::string& name) {
-	//Print(0, "Searching for sprite: %s", name);
+	//xyPrint(0, "Searching for sprite: %s", name.c_str());
 	//xyPrint(0, "Number of sprites to search: %i", vcSprites.size());
 
 	for (size_t i = 0; i < vcSprites.size(); i++) {
@@ -66,22 +66,22 @@ int newSpriteFT(int t, int w, int h, int m, int p, int px, int py) {
 #define SPRITE_CHECK_VALID_VOID  SPRITE_CHECK_VALID return
 #define SPRITE_CHECK_VALID_INT   SPRITE_CHECK_VALID return 0
 
-void drawSprite(int i, float f, float x, float y) {
+void drawSprite(int i, int f, int x, int y) {
 	SPRITE_CHECK_VALID_VOID;
 	vcSprites[i]->draw(f, x, y);
 }
 
-void drawSpriteEx(int i, float f, float x, float y, float a, int l, float sx, float sy, float p) {
+void drawSpriteEx(int i, int f, int x, int y, int a, int l, float sx, float sy, float p) {
 	SPRITE_CHECK_VALID_VOID;
 	vcSprites[i]->drawex(f, x, y, a, static_cast<SDL_RendererFlip>(l), sx, sy, p);
 }
 
-void drawSpriteMod(int i, float f, float x, float y, float c) {
+void drawSpriteMod(int i, int f, int x, int y, int c) {
 	SPRITE_CHECK_VALID_VOID;
 	vcSprites[i]->drawmod(f, x, y, c);
 }
 
-void drawSpriteExMod(int i, float f, float x, float y, float a, int l, float sx, float sy, float p, float c) {
+void drawSpriteExMod(int i, int f, int x, int y, int a, int l, float sx, float sy, float p, int c) {
 	SPRITE_CHECK_VALID_VOID;
 	vcSprites[i]->drawexmod(f, x, y, a, static_cast<SDL_RendererFlip>(l), sx, sy, p, c);
 }

@@ -58,7 +58,7 @@ void xySetDrawColor(SQInteger color) {
 
 	//Do the same for each color value
 	Uint8 g;
-	g = ((color & 0x00FF0000) >> 16);
+	g = static_cast<Uint8>((color & 0x00FF0000) >> 16);
 
 	Uint8 b;
 	b = ((color & 0x0000FF00) >> 8);
@@ -68,7 +68,7 @@ void xySetDrawColor(SQInteger color) {
 
 	//Set the color
 	SDL_SetRenderDrawColor(gvRender, r, g, b, a);
-	gvDrawColor = color;
+	gvDrawColor = static_cast<int>(color);
 	if(SDL_BYTEORDER == SDL_LIL_ENDIAN) gvDrawColor = SDL_Swap32(gvDrawColor);
 };
 
@@ -187,7 +187,7 @@ Uint32 xyLoadImage(const std::string& path) {
 
 	//Return the texture index
 	vcTextures.push_back(nimg);
-	return vcTextures.size() - 1;
+	return static_cast<int>(vcTextures.size()) - 1;
 };
 
 Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key) {
@@ -209,11 +209,11 @@ Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key) {
 	}
 
 	vcTextures.push_back(nimg);
-	return vcTextures.size() - 1;
+	return static_cast<int>(vcTextures.size()) - 1;
 };
 
 //Draw image
-void xyDrawImage(Uint32 tex, float x, float y) {
+void xyDrawImage(Uint32 tex, int x, int y) {
 	SDL_Rect rec;
 	rec.x = x;
 	rec.y = y;
@@ -225,7 +225,7 @@ void xyDrawImage(Uint32 tex, float x, float y) {
 	}
 };
 
-void xyDrawImageEx(Uint32 tex, float x, float y, float angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha, Uint32 color) {
+void xyDrawImageEx(Uint32 tex, int x, int y, float angle, SDL_RendererFlip flip, int xscale, int yscale, int alpha, Uint32 color) {
 	SDL_Rect rec;
 	rec.x = 0;
 	rec.y = 0;
@@ -270,7 +270,7 @@ void xyDeleteImage(Uint32 tex) {
 
 //Get FPS
 Uint32 xyGetFPS() {
-	return gvFPS;
+	return static_cast<int>(std::round(gvFPS));
 };
 
 //Load a texture and assign it to a slot in the textures list
@@ -295,7 +295,7 @@ Uint32 xyNewTexture(Uint32 w, Uint32 h) {
 
 	//Return the texture index
 	vcTextures.push_back(nimg);
-	return vcTextures.size() - 1;
+	return static_cast<int>(vcTextures.size()) - 1;
 };
 
 

@@ -27,12 +27,12 @@
 namespace BruxAPI {
 
 // SDL_gfx
-void drawCircle(float x, float y, float r, bool f); // Doc'd
-void drawRec(float x, float y, float w, float h, bool f); // Clone of `drawRect()`
-void drawRect(float x, float y, float w, float h, bool f); // Doc'd
-void drawPoint(float x, float y); // Doc'd
-void drawLine(float x1, float y1, float x2, float y2); // Doc'd
-void drawLineWide(float x1, float y1, float x2, float y2, float w); // Doc'd
+void drawCircle(int x, int y, int r, bool f); // Doc'd
+void drawRec(int x, int y, int w, int h, bool f); // Clone of `drawRect()`
+void drawRect(int x, int y, int w, int h, bool f); // Doc'd
+void drawPoint(int x, int y); // Doc'd
+void drawLine(int x1, int y1, int x2, int y2); // Doc'd
+void drawLineWide(int x1, int y1, int x2, int y2, int w); // Doc'd
 
 } // namespace BruxAPI
 

@@ -31,10 +31,10 @@ std::string spriteName(int sprite); // Doc'd
 int findSprite(const std::string& name); // Doc'd
 int newSprite(const std::string& i, int w, int h, int m, int p, int px, int py); // Doc'd
 int newSpriteFT(int t, int w, int h, int m, int p, int px, int py);
-void drawSprite(int i, float f, float x, float y); // Doc'd
-void drawSpriteEx(int i, float f, float x, float y, float a, int l, float sx, float sy, float p); // Doc'd
-void drawSpriteMod(int i, float f, float x, float y, float c); // Doc'd
-void drawSpriteExMod(int i, float f, float x, float y, float a, int l, float sx, float sy, float p, float c); // Doc'd
+void drawSprite(int i, int f, int x, int y); // Doc'd
+void drawSpriteEx(int i, int f, int x, int y, int a, int l, float sx, float sy, float p); // Doc'd
+void drawSpriteMod(int i, int f, int x, int y, int c); // Doc'd
+void drawSpriteExMod(int i, int f, int x, int y, int a, int l, float sx, float sy, float p, int c); // Doc'd
 void deleteSprite(int i); // Doc'd
 int spriteW(int i); // Doc'd
 int spriteH(int i); // Doc'd

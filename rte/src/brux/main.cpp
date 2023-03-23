@@ -88,7 +88,6 @@ int main(int argc, char* argv[]) {
 					//Check that the file really exists
 					if(xyLegacyFileExists(curarg)) {
 						//All checks pass, assign the file
-						char tmpstr[64];
 						xygapp = curarg;
 						size_t found = xygapp.find_last_of("/\\");
 						gvWorkDir = xygapp.substr(0, found);
@@ -427,8 +426,8 @@ void xyUpdate() {
 	if(sx == 0) sx = 1;
 	if(sy == 0) sy = 1;
 
-	gvMouseX /= sx;
-	gvMouseY /= sy;
+	gvMouseX /= static_cast<int>(sx);
+	gvMouseY /= static_cast<int>(sy);
 
 	//Gamepad
 	//Check each pad
