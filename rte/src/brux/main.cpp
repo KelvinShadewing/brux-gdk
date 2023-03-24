@@ -91,7 +91,11 @@ int main(int argc, char* argv[]) {
 						xygapp = curarg;
 						size_t found = xygapp.find_last_of("/\\");
 						gvWorkDir = xygapp.substr(0, found);
-						chdir(gvWorkDir.c_str());
+						if (chdir(gvWorkDir.c_str()) != 0) { // Check whether an error has occured
+							xyPrint(0, "Error initiating Brux: Cannot change to input file working directory: %d", errno);
+							xyEnd();
+							return 1;
+						}
 						const std::string curdir = xyGetDir();
 						xyPrint(0, "Working directory: %s", curdir.c_str());
 					}
