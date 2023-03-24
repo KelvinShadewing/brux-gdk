@@ -54,7 +54,7 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 		numero = 0;
 	} else {
 		//Check for an open space in the list
-		for(int i = 1; i < vcFonts.size(); i++) {
+		for(int i = 1; i < static_cast<int>(vcFonts.size()); i++) {
 			if(vcFonts[i] == 0) {
 				vcFonts[i] = this;
 				numero = i;
@@ -136,13 +136,13 @@ void xyFont::draw(int x, int y, std::string text) {
 	int c; //Current character by font index
 
 	//Loop to end of std::string
-	for(int i = 0; i < text.length(); i++) {
+	for(int i = 0; i < static_cast<int>(text.length()); i++) {
 		if (text[i] == '\n') {
 			dy += source->geth();
 			dx = x;
 		} else {
 			c = (int)text[i] - start; //Get current character and apply font offset
-			if (c >= 0 && c < cw.size()){ //Is this character defined in the font?
+			if (c >= 0 && c < static_cast<int>(cw.size())){ //Is this character defined in the font?
 				source->draw(c, dx, dy);
 				dx += cw[c] + kern;
 			} else {

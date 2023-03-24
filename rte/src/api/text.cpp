@@ -39,7 +39,7 @@ int newFont(int i, int c, int t, bool m, int k) {
 }
 
 /** Macro to help easily check if a font is valid. **/
-#define FONT_CHECK_VALID  if (f >= vcFonts.size() || vcFonts[f] == 0) return
+#define FONT_CHECK_VALID  if (f >= static_cast<int>(vcFonts.size()) || vcFonts[f] == 0) return
 
 void drawText(int f, float x, float y, const std::string& s) {
 	FONT_CHECK_VALID;

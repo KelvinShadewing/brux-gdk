@@ -35,7 +35,7 @@ Uint32 xyLoadSound(const std::string& filename) {
 		return 0;
 	} else {
 		//Check for an open space in the list
-		for(int i = 1; i < vcSounds.size(); i++){
+		for(int i = 1; i < static_cast<int>(vcSounds.size()); i++){
 			if(vcSounds[i] == 0){
 				vcSounds[i] = newSnd;
 				return i;
@@ -62,7 +62,7 @@ Uint32 xyLoadMusic(const std::string& filename) {
 		return 0;
 	} else {
 		//Check for an open space in the list
-		for(int i = 1; i < vcMusic.size(); i++) {
+		for(int i = 1; i < static_cast<int>(vcMusic.size()); i++) {
 			if(vcMusic[i] == 0) {
 				vcMusic[i] = newMsc;
 				return i;

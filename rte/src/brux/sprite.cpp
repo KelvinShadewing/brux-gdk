@@ -49,7 +49,7 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 		numero = 0;
 	} else {
 		//Check for an open space in the list
-		for(int i = 1; i < vcSprites.size(); i++) {
+		for(int i = 1; i < static_cast<int>(vcSprites.size()); i++) {
 			if(vcSprites[i] == 0) {
 				vcSprites[i] = this;
 				numero = i;
@@ -103,7 +103,7 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 		numero = 0;
 	} else {
 		//Check for an open space in the list
-		for(int i = 1; i < vcSprites.size(); i++) {
+		for(int i = 1; i < static_cast<int>(vcSprites.size()); i++) {
 			if(vcSprites[i] == 0) {
 				vcSprites[i] = this;
 				numero = i;

@@ -124,7 +124,7 @@ int newTexture(int w, int h) {
 }
 
 void textureSetBlendMode(int texture, int blend) {
-	if (texture < 0 || texture > vcTextures.size() - 1) {
+	if (texture < 0 || texture > static_cast<int>(vcTextures.size()) - 1) {
 		throw std::runtime_error("Invalid texture ID. Cannot set blend mode");
 	}
 

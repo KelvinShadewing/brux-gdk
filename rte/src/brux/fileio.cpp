@@ -127,7 +127,7 @@ std::string xyFileRead(const std::string& file)
 	PHYSFS_file* handle = PHYSFS_openRead(file.c_str());
 	const PHYSFS_sint64 length = PHYSFS_fileLength(handle);
 
-	char* buffer = new char[length + 1];
+	char* buffer = new char[static_cast<unsigned int>(length) + 1];
 	buffer[length] = 0; // Terminate string at the end.
 	if (PHYSFS_readBytes(handle, buffer, length) <= 0)
 		throw PhysFSError("Cannot read any data from file '" + file + "'", "readBytes");

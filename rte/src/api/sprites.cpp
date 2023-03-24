@@ -29,7 +29,7 @@ namespace BruxAPI {
 /////////////
 
 std::string spriteName(int sprite) {
-	if(vcSprites.size() <= sprite || sprite < 0 || vcSprites[sprite] == 0)
+	if(static_cast<int>(vcSprites.size()) <= sprite || sprite < 0 || vcSprites[sprite] == 0)
 		return "N/A";
 
 	return vcSprites[sprite]->name;
@@ -62,7 +62,7 @@ int newSpriteFT(int t, int w, int h, int m, int p, float px, float py) {
 }
 
 /** Macros to help easily check if a sprite is valid. **/
-#define SPRITE_CHECK_VALID       if (vcSprites.size() <= i || vcSprites[i] == 0)
+#define SPRITE_CHECK_VALID       if (static_cast<int>(vcSprites.size()) <= i || vcSprites[i] == 0)
 #define SPRITE_CHECK_VALID_VOID  SPRITE_CHECK_VALID return
 #define SPRITE_CHECK_VALID_INT   SPRITE_CHECK_VALID return 0
 
@@ -102,7 +102,7 @@ int spriteH(int i) {
 }
 
 void replaceSprite(int s, const std::string& f, int w, int h, int m, int p, float x, float y) {
-	if (s <= 0 || s >= vcSprites.size()) return;
+	if (s <= 0 || s >= static_cast<int>(vcSprites.size())) return;
 
 	if (vcSprites[s] != 0) {
 		vcSprites[s]->replaceSprite(f, w, h, m, p, x, y);
@@ -113,7 +113,7 @@ void replaceSprite(int s, const std::string& f, int w, int h, int m, int p, floa
 }
 
 void spriteSetBlendMode(int sprite, int blend) {
-	if (sprite < 0 || sprite > vcSprites.size() - 1) {
+	if (sprite < 0 || sprite > static_cast<int>(vcSprites.size()) - 1) {
 		throw std::runtime_error("Invalid sprite ID. Cannot set blend mode");
 	}
 
