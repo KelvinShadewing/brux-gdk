@@ -44,7 +44,8 @@
 	#include "external/wdirent.h"
 	#include <direct.h>
 	#define getCD _getcwd
-
+	#define getcwd _getcwd
+	#define chdir _chdir
 #else
 	#include <dirent.h>
 	#include <unistd.h>
