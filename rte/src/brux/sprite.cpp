@@ -230,7 +230,7 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	piv->x = static_cast<int>(npvX * xscale);
 	piv->y = static_cast<int>(npvY * yscale);
 
-	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<int>(alpha) * 255);
+	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<Uint8>(alpha * 255));
 	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
 	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
 
@@ -311,7 +311,7 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	b = (color >> 8) & 0xFF;
 
 	SDL_SetTextureColorMod(vcTextures[tex], r, g, b);
-	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<int>(alpha) * 255);
+	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<Uint8>(alpha * 255));
 	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
 	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
 	SDL_SetTextureColorMod(vcTextures[tex], 255, 255, 255);
