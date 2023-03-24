@@ -29,8 +29,8 @@ namespace BruxAPI {
 // Sprites
 std::string spriteName(int sprite); // Doc'd
 int findSprite(const std::string& name); // Doc'd
-int newSprite(const std::string& i, int w, int h, int m, int p, int px, int py); // Doc'd
-int newSpriteFT(int t, int w, int h, int m, int p, int px, int py);
+int newSprite(const std::string& i, int w, int h, int m, int p, float px, float py); // Doc'd
+int newSpriteFT(int t, int w, int h, int m, int p, float px, float py);
 void drawSprite(int i, int f, int x, int y); // Doc'd
 void drawSpriteEx(int i, int f, int x, int y, int a, int l, float sx, float sy, float p); // Doc'd
 void drawSpriteMod(int i, int f, int x, int y, int c); // Doc'd
@@ -38,7 +38,7 @@ void drawSpriteExMod(int i, int f, int x, int y, int a, int l, float sx, float s
 void deleteSprite(int i); // Doc'd
 int spriteW(int i); // Doc'd
 int spriteH(int i); // Doc'd
-void replaceSprite(int s, const std::string& f, int w, int h, int m, int p, int x, int y);
+void replaceSprite(int s, const std::string& f, int w, int h, int m, int p, float x, float y);
 void spriteSetBlendMode(int sprite, int blend); // Doc'd
 
 } // namespace BruxAPI

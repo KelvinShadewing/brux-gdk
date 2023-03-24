@@ -24,7 +24,7 @@
 #include "brux/sprite.hpp"
 #include "brux/maths.hpp"
 
-xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) :
+xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY) :
 	w(width),
 	h(height),
 	mar(margin),
@@ -69,14 +69,14 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
-	col = floor(static_cast<float>(origW / (w + pad)));
-	row = floor(static_cast<float>(origH / (h + pad)));
+	col = static_cast<int>(std::floor(origW / (w + pad)));
+	row = static_cast<int>(std::floor(origH / (h + pad)));
 	if(col < 1) col = 1;
 	if(row < 1) row = 1;
 	frames = col * row;
 };
 
-xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) :
+xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY) :
 	w(width),
 	h(height),
 	mar(margin),
@@ -123,14 +123,14 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
-	col = floor(static_cast<float>(origW / (w + pad)));
-	row = floor(static_cast<float>(origH / (h + pad)));
+	col = static_cast<int>(std::floor(origW / (w + pad)));
+	row = static_cast<int>(std::floor(origH / (h + pad)));
 	if(col < 1) col = 1;
 	if(row < 1) row = 1;
 	frames = col * row;
 };
 
-void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, int pivotX, int pivotY) {
+void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY) {
 	//Set variables
 	w = width;
 	h = height;
@@ -158,8 +158,8 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
-	col = floor(static_cast<float>(origW / (w + pad)));
-	row = floor(static_cast<float>(origH / (h + pad)));
+	col = static_cast<int>(std::floor(origW / (w + pad)));
+	row = static_cast<int>(std::floor(origH / (h + pad)));
 	if(col < 1) col = 1;
 	if(row < 1) row = 1;
 	frames = col * row;
@@ -172,13 +172,13 @@ xySprite::~xySprite() {
 };
 
 void xySprite::draw(int f, int x, int y) {
-	int fd = xyWrap(f, 0, frames - 1);
+	int fd = static_cast<int>(xyWrap(static_cast<float>(f), 0, static_cast<float>(frames) - 1));
 
 	SDL_Rect rec;
 	SDL_Rect des;
 
-	des.x = x - pvX;
-	des.y = y - pvY;
+	des.x = x - static_cast<int>(pvX);
+	des.y = y - static_cast<int>(pvY);
 	des.w = w;
 	des.h = h;
 
@@ -197,12 +197,12 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	//Do nothing if scaling is set to 0 on either dimension
 	if(xscale == 0 || yscale == 0) return;
 
-	int fd = xyWrap(f, 0, frames - 1);
+	int fd = static_cast<int>(xyWrap(static_cast<float>(f), 0, static_cast<float>(frames) - 1));
 
 	SDL_Rect rec;
 	SDL_Rect des;
 
-	//Temporary new pivots to be changed based on fliip
+	//Temporary new pivots to be changed based on flip
 	float npvX = pvX;
 	float npvY = pvY;
 
@@ -213,10 +213,10 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 		npvY = h - pvY;
 	}
 
-	des.x = x - (npvX * xscale);
-	des.y = y - (npvY * yscale);
-	des.w = w * xscale;
-	des.h = h * yscale;
+	des.x = x - static_cast<int>(npvX * xscale);
+	des.y = y - static_cast<int>(npvY * yscale);
+	des.w = w * static_cast<int>(xscale);
+	des.h = h * static_cast<int>(yscale);
 
 	int fx = fd % col;
 	int fy = (fd - fx) / col;
@@ -227,10 +227,10 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	rec.h = h;
 
 	SDL_Point *piv = new SDL_Point;
-	piv->x = npvX * xscale;
-	piv->y = npvY * yscale;
+	piv->x = static_cast<int>(npvX * xscale);
+	piv->y = static_cast<int>(npvY * yscale);
 
-	SDL_SetTextureAlphaMod(vcTextures[tex], alpha * 255);
+	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<int>(alpha) * 255);
 	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
 	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
 
@@ -238,13 +238,13 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 };
 
 void xySprite::drawmod(int f, int x, int y, Uint32 color) {
-	int fd = xyWrap(f, 0, frames - 1);
+	int fd = static_cast<int>(xyWrap(static_cast<float>(f), 0, static_cast<float>(frames) - 1));
 
 	SDL_Rect rec;
 	SDL_Rect des;
 
-	des.x = x - pvX;
-	des.y = y - pvY;
+	des.x = x - static_cast<int>(pvX);
+	des.y = y - static_cast<int>(pvY);
 	des.w = w;
 	des.h = h;
 
@@ -271,7 +271,7 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	//Do nothing if scaling is set to 0 on either dimension
 	if(xscale == 0 || yscale == 0) return;
 
-	int fd = xyWrap(f, 0, frames - 1);
+	int fd = static_cast<int>(xyWrap(static_cast<float>(f), 0, static_cast<float>(frames) - 1));
 
 	//Temporary new pivots to be changed based on fliip
 	float npvX = pvX;
@@ -287,10 +287,10 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	SDL_Rect rec;
 	SDL_Rect des;
 
-	des.x = x - (npvX * xscale);
-	des.y = y - (npvY * yscale);
-	des.w = w * xscale;
-	des.h = h * yscale;
+	des.x = x - static_cast<int>(npvX * xscale);
+	des.y = y - static_cast<int>(npvY * yscale);
+	des.w = w * static_cast<int>(xscale);
+	des.h = h * static_cast<int>(yscale);
 
 	int fx = fd % col;
 	int fy = (fd - fx) / col;
@@ -301,8 +301,8 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	rec.h = h;
 
 	SDL_Point *piv = new SDL_Point;
-	piv->x = npvX * xscale;
-	piv->y = npvY * yscale;
+	piv->x = static_cast<int>(npvX * xscale);
+	piv->y = static_cast<int>(npvY * yscale);
 
 	//Break color into 8-bit versions
 	Uint8 r, g, b;
@@ -311,26 +311,10 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	b = (color >> 8) & 0xFF;
 
 	SDL_SetTextureColorMod(vcTextures[tex], r, g, b);
-	SDL_SetTextureAlphaMod(vcTextures[tex], alpha * 255);
+	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<int>(alpha) * 255);
 	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
 	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
 	SDL_SetTextureColorMod(vcTextures[tex], 255, 255, 255);
 
 	delete piv;
 };
-
-Uint32 xySprite::getnum() {
-	return numero;
-};
-
-Uint32 xySprite::gettex() {
-	return tex;
-};
-
-Uint32 xySprite::getframes() {
-	return frames;
-};
-
-Uint32 xySprite::getw(){ return w; };
-Uint32 xySprite::geth(){ return h; };
-const char* xySprite::getname(){ return name.c_str(); };

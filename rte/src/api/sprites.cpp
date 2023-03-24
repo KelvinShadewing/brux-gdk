@@ -51,12 +51,12 @@ int findSprite(const std::string& name) {
 	return 0;
 }
 
-int newSprite(const std::string& i, int w, int h, int m, int p, int px, int py) {
+int newSprite(const std::string& i, int w, int h, int m, int p, float px, float py) {
 	xySprite* newsprite = new xySprite(i, w, h, m, p, px, py);
 	return newsprite->getnum();
 }
 
-int newSpriteFT(int t, int w, int h, int m, int p, int px, int py) {
+int newSpriteFT(int t, int w, int h, int m, int p, float px, float py) {
 	xySprite* newsprite = new xySprite(t, w, h, m, p, px, py);
 	return newsprite->getnum();
 }
@@ -101,7 +101,7 @@ int spriteH(int i) {
 	return vcSprites[i]->geth();
 }
 
-void replaceSprite(int s, const std::string& f, int w, int h, int m, int p, int x, int y) {
+void replaceSprite(int s, const std::string& f, int w, int h, int m, int p, float x, float y) {
 	if (s <= 0 || s >= vcSprites.size()) return;
 
 	if (vcSprites[s] != 0) {

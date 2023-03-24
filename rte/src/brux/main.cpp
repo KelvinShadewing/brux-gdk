@@ -446,7 +446,7 @@ void xyUpdate() {
 			SDL_Delay(max_delay - fLength);
 	}
 
-	if (fLength != 0) gvFPS = 1000 / (SDL_GetTicks() - gvTickLast);
+	if (fLength != 0) gvFPS = 1000 / static_cast<float>(SDL_GetTicks() - gvTickLast);
 	gvTickLast = SDL_GetTicks();
 	gvFrames++;
 };

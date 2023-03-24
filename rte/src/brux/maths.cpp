@@ -52,7 +52,7 @@ int xyRandomInt(int mx) {
 };
 
 float xyRandomFloat(float mx) {
-	return (rand() / static_cast<float>(RAND_MAX)) * mx;
+	return (static_cast<float>(rand()) / (float)RAND_MAX) * mx;
 };
 
 float xyWrap(float x, float a0, float a1) {

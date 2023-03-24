@@ -221,7 +221,7 @@ bool xyLineCircle(xyPnt* a, xyPnt* b, xyPnt* c, float r) {
 	float distY = a->y - b->y;
 	float len = sqrt((distX * distX) + (distY * distY));
 
-	float dot = ( ((c->x - a->x) * (b->x - a->x)) + ((c->y - a->y) * (b->y - a->y)) ) / pow(len, 2);
+	float dot = ( ((c->x - a->x) * (b->x - a->x)) + ((c->y - a->y) * (b->y - a->y)) ) / static_cast<float>(pow(len, 2));
 	float cx = a->x + (dot * (b->x - a->x));
 	float cy = a->y + (dot * (b->y - a->y));
 

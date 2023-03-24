@@ -34,7 +34,7 @@ int newFont(int i, int c, int t, bool m, int k) {
 	if (t > 255) t = 255;
 	if (c > 255) c = 255;
 
-	xyFont* newfont = new xyFont(i, (char)c, t, m, k);
+	xyFont* newfont = new xyFont(i, static_cast<char>(c), static_cast<unsigned char>(t), m, k);
 	return newfont->getnum();
 }
 
@@ -47,7 +47,7 @@ void drawText(int f, float x, float y, const std::string& s) {
 }
 
 SQInteger chint(HSQUIRRELVM v, int i) {
-	const char s = (const char)i;
+	const char s = static_cast<const char>(i);
 
 	sq_pushstring(v, &s, 1);
 

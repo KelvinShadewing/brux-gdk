@@ -3369,19 +3369,19 @@ static SQInteger newSprite_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, _SC("Argument 5 not an integer"));
     return SQ_ERROR;
   }
-  SQInteger arg5;
-  if(SQ_FAILED(sq_getinteger(vm, 7, &arg5))) {
-    sq_throwerror(vm, _SC("Argument 6 not an integer"));
+  SQFloat arg5;
+  if(SQ_FAILED(sq_getfloat(vm, 7, &arg5))) {
+    sq_throwerror(vm, _SC("Argument 6 not a float"));
     return SQ_ERROR;
   }
-  SQInteger arg6;
-  if(SQ_FAILED(sq_getinteger(vm, 8, &arg6))) {
-    sq_throwerror(vm, _SC("Argument 7 not an integer"));
+  SQFloat arg6;
+  if(SQ_FAILED(sq_getfloat(vm, 8, &arg6))) {
+    sq_throwerror(vm, _SC("Argument 7 not a float"));
     return SQ_ERROR;
   }
 
   try {
-    int return_value = BruxAPI::newSprite(arg0, static_cast<int> (arg1), static_cast<int> (arg2), static_cast<int> (arg3), static_cast<int> (arg4), static_cast<int> (arg5), static_cast<int> (arg6));
+    int return_value = BruxAPI::newSprite(arg0, static_cast<int> (arg1), static_cast<int> (arg2), static_cast<int> (arg3), static_cast<int> (arg4), arg5, arg6);
 
     sq_pushinteger(vm, return_value);
     return 1;
@@ -3423,19 +3423,19 @@ static SQInteger newSpriteFT_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, _SC("Argument 5 not an integer"));
     return SQ_ERROR;
   }
-  SQInteger arg5;
-  if(SQ_FAILED(sq_getinteger(vm, 7, &arg5))) {
-    sq_throwerror(vm, _SC("Argument 6 not an integer"));
+  SQFloat arg5;
+  if(SQ_FAILED(sq_getfloat(vm, 7, &arg5))) {
+    sq_throwerror(vm, _SC("Argument 6 not a float"));
     return SQ_ERROR;
   }
-  SQInteger arg6;
-  if(SQ_FAILED(sq_getinteger(vm, 8, &arg6))) {
-    sq_throwerror(vm, _SC("Argument 7 not an integer"));
+  SQFloat arg6;
+  if(SQ_FAILED(sq_getfloat(vm, 8, &arg6))) {
+    sq_throwerror(vm, _SC("Argument 7 not a float"));
     return SQ_ERROR;
   }
 
   try {
-    int return_value = BruxAPI::newSpriteFT(static_cast<int> (arg0), static_cast<int> (arg1), static_cast<int> (arg2), static_cast<int> (arg3), static_cast<int> (arg4), static_cast<int> (arg5), static_cast<int> (arg6));
+    int return_value = BruxAPI::newSpriteFT(static_cast<int> (arg0), static_cast<int> (arg1), static_cast<int> (arg2), static_cast<int> (arg3), static_cast<int> (arg4), arg5, arg6);
 
     sq_pushinteger(vm, return_value);
     return 1;
@@ -3765,19 +3765,19 @@ static SQInteger replaceSprite_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, _SC("Argument 6 not an integer"));
     return SQ_ERROR;
   }
-  SQInteger arg6;
-  if(SQ_FAILED(sq_getinteger(vm, 8, &arg6))) {
-    sq_throwerror(vm, _SC("Argument 7 not an integer"));
+  SQFloat arg6;
+  if(SQ_FAILED(sq_getfloat(vm, 8, &arg6))) {
+    sq_throwerror(vm, _SC("Argument 7 not a float"));
     return SQ_ERROR;
   }
-  SQInteger arg7;
-  if(SQ_FAILED(sq_getinteger(vm, 9, &arg7))) {
-    sq_throwerror(vm, _SC("Argument 8 not an integer"));
+  SQFloat arg7;
+  if(SQ_FAILED(sq_getfloat(vm, 9, &arg7))) {
+    sq_throwerror(vm, _SC("Argument 8 not a float"));
     return SQ_ERROR;
   }
 
   try {
-    BruxAPI::replaceSprite(static_cast<int> (arg0), arg1, static_cast<int> (arg2), static_cast<int> (arg3), static_cast<int> (arg4), static_cast<int> (arg5), static_cast<int> (arg6), static_cast<int> (arg7));
+    BruxAPI::replaceSprite(static_cast<int> (arg0), arg1, static_cast<int> (arg2), static_cast<int> (arg3), static_cast<int> (arg4), static_cast<int> (arg5), arg6, arg7);
 
     return 0;
 

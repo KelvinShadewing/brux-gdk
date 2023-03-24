@@ -41,13 +41,7 @@
 
 xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, int _kern) {
 	//If there is no sprite that can be used, then cancel
-	if(vcSprites.size() <= index) {
-		xyPrint(0, "The sprite does not exist!");
-		delete this;
-		return;
-	}
-
-	if(vcSprites[index] == 0) {
+	if(vcSprites.size() <= index || vcSprites[index] == 0) {
 		xyPrint(0, "The sprite does not exist!");
 		delete this;
 		return;
@@ -71,7 +65,7 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 		//If an open space wasn't found
 		if(numero == -1) {
 			vcFonts.push_back(this);
-			numero = vcFonts.size() - 1;
+			numero = static_cast<int>(vcFonts.size()) - 1;
 		}
 	}
 
@@ -81,56 +75,57 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 	//Get frame number and x/width
 	cx.resize(source->getframes());
 	cw.resize(source->getframes());
-	if(true){//Monospace
-		if(cx.size() > 0) {
-			for(int i = 0; i < source->getframes(); i++) {
-				cx[i] = 0;
-				cw[i] = source->getw();
-			}
+
+	if(cx.size() > 0) {
+		for(Uint32 i = 0; i < source->getframes(); i++) {
+			cx[i] = 0;
+			cw[i] = source->getw();
 		}
-	} else {	//Dynamic (ignored until character scanning is done)
-		//TODO: Get individual character width
-
-		//Get and store current render target
-		SDL_Texture* ttex;
-		ttex = SDL_GetRenderTarget(gvRender);
-
-		//Make temporary texture
-		SDL_Texture* worktex = SDL_CreateTexture(gvRender, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, source->getw(), source->geth());
-
-		//Set render target to temp
-		SDL_SetRenderTarget(gvRender, worktex);
-
-		//For each frame in the source sprite
-		for(int i = 0; i < source->getframes(); i++) {
-			//Render current frame
-			SDL_RenderClear(gvRender);
-			source->draw(i, 0, 0);
-
-			//For each column in source width
-			for(int j = 0; j < source->getw(); j++) {
-				bool found = 0;
-
-				//For each pixel in the column
-				for(int k = 0; k < source->geth(); k++) {
-					//If pixel alpha is above threshold, set cx here, then break
-				}
-			}
-
-			//For each column in source width
-			for(int j = 0; j < source->getw(); j++) {
-				bool found = 0;
-
-				//For each pixel in the column
-				for(int k = 0; k < source->geth(); k++) {
-					//If pixel alpha is above threshold, update cw to this coord minus cx, then break
-				}
-			}
-			//Clear texture
-		}
-		//Delete temp texture
-		//Reset render target to stored texture
 	}
+
+#ifdef DO_NOT_INCLUDE //Dynamic (ignored until character scanning is done)
+	//TODO: Get individual character width
+
+	//Get and store current render target
+	SDL_Texture* ttex;
+	ttex = SDL_GetRenderTarget(gvRender);
+
+	//Make temporary texture
+	SDL_Texture* worktex = SDL_CreateTexture(gvRender, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, source->getw(), source->geth());
+
+	//Set render target to temp
+	SDL_SetRenderTarget(gvRender, worktex);
+
+	//For each frame in the source sprite
+	for(Uint32 i = 0; i < source->getframes(); i++) {
+		//Render current frame
+		SDL_RenderClear(gvRender);
+		source->draw(i, 0, 0);
+
+		//For each column in source width
+		for(Uint32 j = 0; j < source->getw(); j++) {
+			bool found = 0;
+
+			//For each pixel in the column
+			for(Uint32 k = 0; k < source->geth(); k++) {
+				//If pixel alpha is above threshold, set cx here, then break
+			}
+		}
+
+		//For each column in source width
+		for(Uint32 j = 0; j < source->getw(); j++) {
+			bool found = 0;
+
+			//For each pixel in the column
+			for(Uint32 k = 0; k < source->geth(); k++) {
+				//If pixel alpha is above threshold, update cw to this coord minus cx, then break
+			}
+		}
+		//Clear texture
+	}
+	//Delete temp texture
+	//Reset render target to stored texture
+#endif
 
 	start = firstchar;
 	kern = _kern;
