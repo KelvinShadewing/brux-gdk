@@ -24,7 +24,7 @@ jobs:
             arch: 64
             release: ON
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -38,17 +38,6 @@ jobs:
           sudo dpkg --add-architecture i386
           sudo apt-get update
 
-          # The Ubuntu 20.04 GitHub image adds a lot of unnecessary deb.sury.org packages,
-          # which causes issues installing dependencies for SDL2 and SDL2-mixer.
-          # Remove all that and downgrade to official versions.
-          sudo apt-get remove --yes php.*
-          sudo apt-get install --yes --allow-downgrades \
-            libpcre2-16-0:amd64=10.34-7 \
-            libpcre2-32-0:amd64=10.34-7 \
-            libpcre2-8-0:amd64=10.34-7 \
-            libpcre2-dev:amd64=10.34-7 \
-            libpcre2-posix2:amd64=10.34-7
-
           sudo apt-get install -y \
             cmake \
             build-essential \
@@ -58,7 +47,17 @@ jobs:
             libsdl2-image-dev:i386 \
             libsdl2-gfx-dev:i386 \
             libsdl2-mixer-dev:i386 \
-            libsdl2-net-dev:i386
+            libsdl2-net-dev:i386 \
+            libflac-dev:i386 \
+            libjpeg-dev:i386 \
+            libpng-dev:i386 \
+            libtiff-dev:i386 \
+            libfluidsynth-dev:i386 \
+            libwebp-dev:i386 \
+            libmodplug-dev:i386 \
+            libmpg123-dev:i386 \
+            libvorbis-dev:i386 \
+            libopusfile-dev:i386
 
       - name: Install 64-bit dependencies
         if: ${{ matrix.arch == 64 }}
@@ -75,7 +74,17 @@ jobs:
             libsdl2-image-dev \
             libsdl2-gfx-dev \
             libsdl2-mixer-dev \
-            libsdl2-net-dev
+            libsdl2-net-dev \
+            libflac-dev \
+            libjpeg-dev \
+            libpng-dev \
+            libtiff-dev \
+            libfluidsynth-dev \
+            libwebp-dev \
+            libmodplug-dev \
+            libmpg123-dev \
+            libvorbis-dev \
+            libopusfile-dev
 
       - name: Set compiler (gcc)
         run: |
@@ -93,7 +102,8 @@ jobs:
           mkdir build
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE $ARCH   \
-                   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=bin
+                   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=bin   \
+                   -DBUILD_STATIC_LIBS=ON
 
       - name: Build
         working-directory: rte/build

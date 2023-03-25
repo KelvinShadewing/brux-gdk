@@ -215,6 +215,6 @@ if(SDL2_MIXER_FOUND)
     set_target_properties(SDL2::Mixer PROPERTIES
                           IMPORTED_LOCATION "${SDL2_MIXER_LIBRARY}"
                           INTERFACE_INCLUDE_DIRECTORIES "${SDL2_MIXER_INCLUDE_DIR}"
-                          INTERFACE_LINK_LIBRARIES SDL2::Core)
+                          INTERFACE_LINK_LIBRARIES SDL2)
   endif()
 endif()

@@ -217,6 +217,6 @@ if(SDL2_NET_FOUND)
     set_target_properties(SDL2::Net PROPERTIES
                           IMPORTED_LOCATION "${SDL2_NET_LIBRARY}"
                           INTERFACE_INCLUDE_DIRECTORIES "${SDL2_NET_INCLUDE_DIR}"
-                          INTERFACE_LINK_LIBRARIES SDL2::Core)
+                          INTERFACE_LINK_LIBRARIES SDL2)
   endif()
 endif()

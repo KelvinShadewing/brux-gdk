@@ -217,6 +217,6 @@ if(SDL2_GFX_FOUND)
     set_target_properties(SDL2::GFX PROPERTIES
                           IMPORTED_LOCATION "${SDL2_GFX_LIBRARY}"
                           INTERFACE_INCLUDE_DIRECTORIES "${SDL2_GFX_INCLUDE_DIR}"
-                          INTERFACE_LINK_LIBRARIES SDL2::Core)
+                          INTERFACE_LINK_LIBRARIES SDL2)
   endif()
 endif()
