@@ -61,7 +61,8 @@ void __stack_chk_fail(void);
 #include <SDL2/SDL_net.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
-#ifndef __EMSCRIPTEN__
+
+#if __has_include("squirrel.h")
 #include <squirrel.h>
 #include <sqstdio.h>
 #include <sqstdaux.h>
@@ -69,7 +70,6 @@ void __stack_chk_fail(void);
 #include <sqstdstring.h>
 #include <sqstdsystem.h>
 #else
-#include <emscripten/emscripten.h>
 #include <squirrel.h>
 #include <sqstdio.h>
 #include <sqstdaux.h>
@@ -77,6 +77,11 @@ void __stack_chk_fail(void);
 #include <sqstdstring.h>
 #include <sqstdsystem.h>
 #endif
+
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+
 
 using namespace std;
 
