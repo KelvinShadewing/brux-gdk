@@ -16,7 +16,8 @@
 
 void xyLoadActors() {
 	const SQChar *cmd = R"rew(::actor <- {}
-	::actlast <- 0
+	::__actlast__ <- 0
+	::__actor_delete_list__ <- []
 
 	::Actor <-class{
 		id = 0
@@ -45,20 +46,26 @@ void xyLoadActors() {
 
 	::newActor <- function(type, x, y, arr = null) {
 		local na = type(x, y, arr)
-		na.id = actlast
-		actor[actlast] <- na
+		na.id = __actlast__
+		actor[__actlast__] <- na
 		if(!actor.rawin(typeof na)) actor[typeof na] <- {}
-		actor[typeof na][actlast] <- na
-		actlast++
+		actor[typeof na][__actlast__] <- na
+		__actlast__++
 		return na.id
 	}
 
-	::deleteActor <- function(id) {
+	::__deleteActor_true__ <- function(id) {
 		if(!actor.rawin(id)) return
 
 		local cat = typeof actor[id]
 		delete actor[cat][id]; actor[id].destructor()
 		delete actor[id]
+	}
+
+	::deleteActor <- function(id) {
+		if(!actor.rawin(id)) return
+
+		__actor_delete_list__.push(id)
 	}
 
 	::deleteAllActors <- function(ignorePersistent = false) {
@@ -71,7 +78,7 @@ void xyLoadActors() {
 
 				if(!i.persistent || ignorePersistent) {
 					didFind = true
-					deleteActor(key)
+					__deleteActor_true__(key)
 				}
 			}
 		}
@@ -89,6 +96,11 @@ void xyLoadActors() {
 		foreach(i in actor) {
 			if(typeof i != "table") i.run()
 		}
+
+		for(local i = 0; i < __actor_delete_list__.len(); i++) {
+			__deleteActor_true__(__actor_delete_list__[i])
+		}
+		__actor_delete_list__.clear()
 	}
 
 	::checkActor <- function(id) {
