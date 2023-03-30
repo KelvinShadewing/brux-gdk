@@ -80,8 +80,10 @@ void xyLoadActors() {
 
 	::deleteActor <- function(id) {
 		if(!actor.rawin(id)) return
+		if(typeof actor[id] == "table") return
 
 		__actor_delete_list__.push(id)
+		actor[id] = false
 	}
 
 	::deleteAllActors <- function(ignorePersistent = false) {
@@ -120,9 +122,9 @@ void xyLoadActors() {
 	}
 
 	::checkActor <- function(id) {
+		if(!(id in actor) || actor[id] == false) return false
 		if(typeof id == "string") return actor.rawin(id) && actor[id].len() > 0
 		if(typeof id == "integer") return actor.rawin(id)
-
 	}
 
 	print("Imported actors lib."))rew";
