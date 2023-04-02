@@ -62,7 +62,14 @@ void EditorWindow::openDirectory(bool checked) {
 }
 
 void EditorWindow::testProject() {
-	std::string environment = getenv("XDG_CURRENT_DESKTOP");
+	char* desktop = getenv("XDG_CURRENT_DESKTOP");
+	std::string environment;
+
+	if (desktop == NULL) {
+		std::cout << "XDG_CURRENT_DESKTOP is unset. Defaulting to no terminal." << std::endl;
+		environment = "";
+	} else environment = desktop;
+
 	std::string command;
 	if (environment == "KDE") command = "konsole --workdir " + Directory.toStdString() + " -e \"brux\" &";
 	else if (environment == "XFCE") command = "xfce4-terminal --working-directory " + Directory.toStdString() + " --command=\"brux\" &";
