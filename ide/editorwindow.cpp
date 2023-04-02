@@ -16,6 +16,7 @@ EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWin
 	QMenu* newMenu = new QMenu("File");
 	connect(newMenu->addAction("Open File"), SIGNAL(triggered()) , this, SLOT(openFile()));
 	connect(newMenu->addAction("Open Folder"), SIGNAL(triggered()) , this, SLOT(openDirectory()));
+	connect(newMenu->addAction("Test Project"), SIGNAL(triggered()) , this, SLOT(testProject()));
 	KHelpMenu* Help = new KHelpMenu(this, KAboutData::applicationData());
 	ui->menubar->addMenu(newMenu);
 	ui->menubar->addMenu(Help->menu());
@@ -59,6 +60,15 @@ void EditorWindow::openDirectory(bool checked) {
 		processDirectory(newDir);
 	}
 }
+
+void EditorWindow::testProject() {
+	std::string environment = getenv("DESKTOP_SESSION");
+	std::string command;
+	if (environment.find("plasma") != environment.npos) command = "konsole --workdir " + Directory.toStdString() + " -e \"brux\" &";
+	else command = ("cd " + Directory + " && brux &").toStdString();
+	system(command.c_str());
+}
+
 
 void EditorWindow::openFile(bool checked) {
 	QString openFile = QFileDialog::getOpenFileName(this, tr("Open File"), getenv("HOME"));

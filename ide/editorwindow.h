@@ -8,8 +8,6 @@
 #include <KTextEditor/View>
 #include <KSyntaxHighlighting/Repository>
 
-#include <map.h>
-#include <maprenderer.h>
 #include <vector>
 
 #include "ui_editorwindow.h"
@@ -23,6 +21,8 @@ public slots:
 	void openDirectory(bool checked = false);
 
 	void openFile(bool checked = false);
+
+	void testProject();
 public:
 	EditorWindow(QWidget *parent = nullptr, QString projectDirectory = getenv("HOME"));
 	~EditorWindow();
