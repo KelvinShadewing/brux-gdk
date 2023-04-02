@@ -62,9 +62,11 @@ void EditorWindow::openDirectory(bool checked) {
 }
 
 void EditorWindow::testProject() {
-	std::string environment = getenv("DESKTOP_SESSION");
+	std::string environment = getenv("XDG_CURRENT_DESKTOP");
 	std::string command;
-	if (environment.find("plasma") != environment.npos) command = "konsole --workdir " + Directory.toStdString() + " -e \"brux\" &";
+	if (environment == "KDE") command = "konsole --workdir " + Directory.toStdString() + " -e \"brux\" &";
+	else if (environment == "XFCE") command = "xfce4-terminal --working-directory " + Directory.toStdString() + " --command=\"brux\" &";
+	else if (environment.find("GNOME") != environment.npos) command = "gnome-terminal --working-directory " + Directory.toStdString() + " --command=\"brux\" &";
 	else command = ("cd " + Directory + " && brux &").toStdString();
 	system(command.c_str());
 }
