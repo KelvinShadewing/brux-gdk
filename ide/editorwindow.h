@@ -24,7 +24,7 @@ public slots:
 
 	void testProject();
 public:
-	EditorWindow(QWidget *parent = nullptr, QString projectDirectory = getenv("HOME"));
+	EditorWindow(QWidget *parent = nullptr, QString projectDirectory = "");
 	~EditorWindow();
 
 	bool isFile(QString path);

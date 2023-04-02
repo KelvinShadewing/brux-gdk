@@ -62,6 +62,7 @@ void EditorWindow::openDirectory(bool checked) {
 }
 
 void EditorWindow::testProject() {
+	if (Directory == "") return; // No directory open, return.
 	char* desktop = getenv("XDG_CURRENT_DESKTOP");
 	std::string environment;
 
