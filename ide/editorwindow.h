@@ -10,8 +10,6 @@
 
 #include <map.h>
 #include <maprenderer.h>
-#include <tiled.h>
-
 #include <vector>
 
 #include "ui_editorwindow.h"
@@ -49,7 +47,6 @@ private:
 	KTextEditor::Editor* TextEditorInstance;
 	std::vector<KTextEditor::Document*> Documents;
 	std::vector<KTextEditor::View*> DocumentViews;
-	std::vector<Tiled::MapRenderer> Renderers;
 	std::vector<QString> OpenSourceFiles;
 	std::vector<QString> OpenTilemapFiles;
 	QString Directory;
