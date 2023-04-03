@@ -333,18 +333,19 @@ void xyBindAllFunctions(HSQUIRRELVM v) {
 	xyBindFunc(v, sqSetDrawColor, "setDrawColor", 2, ".n"); //Doc'd
 	xyBindFunc(v, sqLoadImage, "loadImage", 2, ".s"); //Doc'd
 	xyBindFunc(v, sqLoadImageKeyed, "loadImageKey", 3, ".sn|b"); //Doc'd
-	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".i|bn|bn|b"); //Doc'd
+	xyBindFunc(v, sqDrawImage, "drawImage", 4, ".i|b n|b n|b"); //Doc'd
+	xyBindFunc(v, sqDrawImagePart, "drawImagePart", 8, ". i n|b n|b n|b n|b n|b n|b");
 	xyBindFunc(v, sqSetBackgroundColor, "setBackgroundColor", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqSetScaling, "setScaling", 2, ".n");
-	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ".n|b"); //Doc'd
-	xyBindFunc(v, sqSetResolution, "setResolution", 3, ".n|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawCircle, "drawCircle", 5, ".n|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawRect, "drawRec", 6, ".n|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawRect, "drawRect", 6, ".n|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawPoint, "drawPoint", 3, ".n|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawLine, "drawLine", 5, ".n|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqDrawLineWide, "drawLineWide", 6, ".n|bn|bn|bn|bn|b"); //Doc'd
-	xyBindFunc(v, sqNewTexture, "newTexture", 3, ".n|bn|b"); //Doc'd
+	xyBindFunc(v, sqSetScaling, "setScaling", 2, ". n");
+	xyBindFunc(v, sqSetScalingFilter, "setScalingFilter", 2, ". n|b"); //Doc'd
+	xyBindFunc(v, sqSetResolution, "setResolution", 3, ". n|b n|b"); //Doc'd
+	xyBindFunc(v, sqDrawCircle, "drawCircle", 5, ". n|b n|b n|b n|b"); //Doc'd
+	xyBindFunc(v, sqDrawRect, "drawRec", 6, ".n|b n|b n|b n|b n|b"); //Doc'd
+	xyBindFunc(v, sqDrawRect, "drawRect", 6, ".n|b n|b n|b n|b n|b"); //Doc'd
+	xyBindFunc(v, sqDrawPoint, "drawPoint", 3, ".n|b n|b"); //Doc'd
+	xyBindFunc(v, sqDrawLine, "drawLine", 5, ".n|b n|b n|b n|b"); //Doc'd
+	xyBindFunc(v, sqDrawLineWide, "drawLineWide", 6, ".n|b n|b n|b n|b n|b"); //Doc'd
+	xyBindFunc(v, sqNewTexture, "newTexture", 3, ".n|b n|b"); //Doc'd
 	xyBindFunc(v, sqGetScreenW, "screenW"); //Doc'd
 	xyBindFunc(v, sqGetScreenH, "screenH"); //Doc'd
 	xyBindFunc(v, sqGetWindowW, "windowW");

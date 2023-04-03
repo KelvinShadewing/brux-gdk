@@ -8,6 +8,7 @@ setResolution(1280, 720)
 ::smoothing <- 64
 ::hillW <- 128
 ::hillH <- 40
+::worldArr <- array(screenW() * screenH(), 0)
 
 
 ::getLimitedNoise <- function(y, limit) { return min(limit, max(-limit, (y + randInt(limit / 2) - randInt(limit)) / 2)) }

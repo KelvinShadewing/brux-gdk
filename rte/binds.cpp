@@ -386,6 +386,22 @@ SQInteger sqDrawImage(HSQUIRRELVM v) {
 	return 0;
 };
 
+SQInteger sqDrawImagePart(HSQUIRRELVM v) {
+	SQInteger x, y, ox, oy, w, h, img;
+
+	sq_getinteger(v, 2, &img);
+	sq_getinteger(v, 3, &x);
+	sq_getinteger(v, 4, &y);
+	sq_getinteger(v, 5, &ox);
+	sq_getinteger(v, 6, &oy);
+	sq_getinteger(v, 7, &w);
+	sq_getinteger(v, 8, &h);
+
+	xyDrawImagePart(img, x, y, ox, oy, w, h);
+
+	return 0;
+};
+
 SQInteger sqDrawImageEx(HSQUIRRELVM v) {
 	SQInteger x, y, img, f, c;
 	SQFloat a, w, h, r;
