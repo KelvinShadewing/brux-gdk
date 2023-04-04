@@ -1028,6 +1028,59 @@ static SQInteger drawImage_wrapper(HSQUIRRELVM vm)
 
 }
 
+static SQInteger drawImagePart_wrapper(HSQUIRRELVM vm)
+{
+  SQInteger arg0;
+  if(SQ_FAILED(sq_getinteger(vm, 2, &arg0))) {
+    sq_throwerror(vm, _SC("Argument 1 not an integer"));
+    return SQ_ERROR;
+  }
+  SQInteger arg1;
+  if(SQ_FAILED(sq_getinteger(vm, 3, &arg1))) {
+    sq_throwerror(vm, _SC("Argument 2 not an integer"));
+    return SQ_ERROR;
+  }
+  SQInteger arg2;
+  if(SQ_FAILED(sq_getinteger(vm, 4, &arg2))) {
+    sq_throwerror(vm, _SC("Argument 3 not an integer"));
+    return SQ_ERROR;
+  }
+  SQInteger arg3;
+  if(SQ_FAILED(sq_getinteger(vm, 5, &arg3))) {
+    sq_throwerror(vm, _SC("Argument 4 not an integer"));
+    return SQ_ERROR;
+  }
+  SQInteger arg4;
+  if(SQ_FAILED(sq_getinteger(vm, 6, &arg4))) {
+    sq_throwerror(vm, _SC("Argument 5 not an integer"));
+    return SQ_ERROR;
+  }
+  SQInteger arg5;
+  if(SQ_FAILED(sq_getinteger(vm, 7, &arg5))) {
+    sq_throwerror(vm, _SC("Argument 6 not an integer"));
+    return SQ_ERROR;
+  }
+  SQInteger arg6;
+  if(SQ_FAILED(sq_getinteger(vm, 8, &arg6))) {
+    sq_throwerror(vm, _SC("Argument 7 not an integer"));
+    return SQ_ERROR;
+  }
+
+  try {
+    BruxAPI::drawImagePart(static_cast<int> (arg0), static_cast<int> (arg1), static_cast<int> (arg2), static_cast<int> (arg3), static_cast<int> (arg4), static_cast<int> (arg5), static_cast<int> (arg6));
+
+    return 0;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'drawImagePart'"));
+    return SQ_ERROR;
+  }
+
+}
+
 static SQInteger drawImageEx_wrapper(HSQUIRRELVM vm)
 {
   SQInteger arg0;
@@ -4229,6 +4282,13 @@ void register_brux_wrapper(HSQUIRRELVM v)
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnn");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawImage'");
+  }
+
+  sq_pushstring(v, "drawImagePart", -1);
+  sq_newclosure(v, &drawImagePart_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnnnn");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'drawImagePart'");
   }
 
   sq_pushstring(v, "drawImageEx", -1);

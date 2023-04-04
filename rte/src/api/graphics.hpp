@@ -32,6 +32,7 @@ void setDrawTarget(int tex); // Doc'd
 int getDrawTarget(); // Doc'd
 void resetDrawTarget();
 void drawImage(int img, int x, int y); // Doc'd
+void drawImagePart(int img, int x, int y, int ox, int oy, int w, int h);
 void drawImageEx(int img, int x, int y, float a, int f, int w, int h, int c);
 void setDrawColor(int color); // Doc'd
 int loadImage(const std::string& file); // Doc'd

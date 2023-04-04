@@ -1,41 +1,54 @@
-setResolution(426, 240)
+setResolution(1280, 720)
 
-::hilly <- 0
+::hillY <- 240
 ::surface <- newTexture(screenW(), screenH())
-::hillarr <- null
-::smoothing <- 16
-::hillw <- 32
+::hillArr <- null
+::caveArrPath <- null
+::caveArrRadius <- null
+::smoothing <- 64
+::hillW <- 128
+::hillH <- 40
+::worldArr <- array(screenW() * screenH(), 0)
 
 
 ::getLimitedNoise <- function(y, limit) { return min(limit, max(-limit, (y + randInt(limit / 2) - randInt(limit)) / 2)) }
+
+::createLine <- function(w, h, s) {
+	local newArr = []
+	local y = 0
+	for(local i = 0; i <= screenW(); i++) {
+		y = (w > 0 ? sin(i / w) * 8 : 0) + (y + getLimitedNoise(y, h)) / 2
+		if(i == 0) newArr.push(y)
+		else {
+			newArr.push((y + newArr[i - 1]) / 2)
+			newArr[i] = (newArr[i] + newArr[i - 1]) / 2
+		}
+	}
+
+	for(local i = 0; i < smoothing; i++) {
+		for(local j = 1; j < newArr.len(); j++) {
+			newArr[j] = (newArr[j] + newArr[j - 1]) / 2
+		}
+		newArr[0] = (newArr[0] + newArr[newArr.len() - 1]) / 2
+	}
+
+	return newArr
+}
 
 ::updateSurface <- function() {
 	setDrawTarget(surface)
 	setDrawColor(0xff)
 	drawRec(0, 0, screenW(), screenH(), true)
-	hilly = 0
 
-	setDrawColor(0xffffffff)
-	hillarr = []
-	for(local i = 0; i <= screenW(); i++) {
-		hilly = (hillw > 0 ? sin(i / hillw) * 8 : 0) + (hilly + getLimitedNoise(hilly, 128)) / 2
-		if(i == 0) hillarr.push(hilly)
-		else {
-			hillarr.push((hilly + hillarr[i - 1]) / 2)
-			hillarr[i] = (hillarr[i] + hillarr[i - 1]) / 2
-		}
-	}
+	setDrawColor(0x208040ff)
 
-	for(local i = 0; i < smoothing; i++) {
-		for(local j = 1; j < hillarr.len(); j++) {
-			hillarr[j] = (hillarr[j] + hillarr[j - 1]) / 2
-		}
-		hillarr[0] = (hillarr[0] + hillarr[hillarr.len() - 1]) / 2
-	}
-
+	//Create surface terrain
+	hillArr = createLine(hillW, hillH, smoothing)
 	for(local i = 1; i <= screenW(); i++) {
-		drawLine(i, 120 + hillarr[i], i - 1, 120 + hillarr[i - 1])
+		drawLine(i, hillY + hillArr[i], i, screenW())
 	}
+
+	//Create caves
 
 	resetDrawTarget()
 }

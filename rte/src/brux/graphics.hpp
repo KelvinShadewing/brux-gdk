@@ -29,6 +29,7 @@ void xyWait(int ticks);
 void xySetDrawTarget(Uint32 tex);
 void xyResetDrawTarget();
 void xyDrawImage(Uint32 tex, int x, int y);
+void xyDrawImagePart(Uint32 tex, int x, int y, int ox, int oy, int w, int h);
 void xyDrawImageEx(Uint32 tex, int x, int y, float angle, SDL_RendererFlip flip, int xscale, int yscale, int alpha, Uint32 color);
 Uint32 xyLoadImage(const std::string& path, Uint32 key);
 void xySetDrawColor(int r, int g, int b, int a);

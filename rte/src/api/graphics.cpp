@@ -47,6 +47,10 @@ void drawImage(int img, int x, int y) {
 	xyDrawImage(img, x, y);
 }
 
+void drawImagePart(int img, int x, int y, int ox, int oy, int w, int h) {
+	xyDrawImagePart(img, x, y, ox, oy, w, h);
+}
+
 void drawImageEx(int img, int x, int y, float a, int f, int w, int h, int c) {
 	xyDrawImageEx(img, x, y, a, static_cast<SDL_RendererFlip>(f), w, h, 0, c);
 }

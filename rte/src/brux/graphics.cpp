@@ -225,6 +225,26 @@ void xyDrawImage(Uint32 tex, int x, int y) {
 	}
 };
 
+void xyDrawImagePart(Uint32 tex, int x, int y, int ox, int oy, int w, int h) {
+	SDL_Rect rec;
+	rec.x = x;
+	rec.y = y;
+	rec.w = w;
+	rec.h = h;
+
+	SDL_Rect slice;
+	slice.x = ox;
+	slice.y = oy;
+	slice.w = w;
+	slice.h = h;
+
+	if(vcTextures.size() > tex) { //If the argument is in range)
+		if(vcTextures[tex] != 0) { //If the index points to an image)
+			SDL_RenderCopy(gvRender, vcTextures[tex], &slice, &rec);
+		}
+	}
+};
+
 void xyDrawImageEx(Uint32 tex, int x, int y, float angle, SDL_RendererFlip flip, int xscale, int yscale, int alpha, Uint32 color) {
 	SDL_Rect rec;
 	rec.x = 0;
