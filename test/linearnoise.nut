@@ -41,7 +41,7 @@ setResolution(1280, 720)
 	drawRec(0, 0, screenW(), screenH(), true)
 
 	setDrawColor(0x208040ff)
-	
+
 	//Create surface terrain
 	hillArr = createLine(hillW, hillH, smoothing)
 	for(local i = 1; i <= screenW(); i++) {

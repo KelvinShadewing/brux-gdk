@@ -1,4 +1,6 @@
-make clean
+git submodule update --init --recursive
+mkdir build
+cd build
+cmake ..
 make
-cd ./bin
-brux test.nut
+./brux
