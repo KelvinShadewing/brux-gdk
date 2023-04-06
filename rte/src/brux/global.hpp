@@ -39,8 +39,13 @@ extern SDL_Texture *gvScreen;		//Main screen texture
 extern int gvError;					//Error code
 extern float gvFPS;
 extern Uint32 gvMaxFPS;
+#ifdef USE_CHRONO_STEADY_CLOCK
+extern std::chrono::time_point<std::chrono::steady_clock> gvTicks;
+extern std::chrono::time_point<std::chrono::steady_clock> gvTickLast;
+#else
 extern Uint32 gvTicks;
 extern Uint32 gvTickLast;
+#endif
 extern Uint32 gvFrames;
 extern const char *gvVNo;			//XYRE version number
 extern const float pi;				//Pi

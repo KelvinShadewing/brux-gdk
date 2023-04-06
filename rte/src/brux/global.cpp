@@ -35,8 +35,13 @@ SDL_Window *gvWindow;
 SDL_Renderer *gvRender;
 SDL_Texture *gvScreen;
 int gvError;
+#ifdef USE_CHRONO_STEADY_CLOCK
+std::chrono::time_point<std::chrono::steady_clock> gvTicks = std::chrono::steady_clock::now();
+std::chrono::time_point<std::chrono::steady_clock> gvTickLast = std::chrono::steady_clock::now();
+#else
 Uint32 gvTicks = 1;
 Uint32 gvTickLast = 0;
+#endif
 float gvFPS = 0;
 Uint32 gvMaxFPS = 60;
 Uint32 gvFrames = 0;

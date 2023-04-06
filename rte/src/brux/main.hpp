@@ -21,6 +21,12 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
+//Toggle features based on conditions
+#ifndef _MSC_VER
+	//If the compiler isn't MSVC, use std::chrono::steady_clock
+	#define USE_CHRONO_STEADY_CLOCK
+#endif
+
 //Headers
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,6 +43,10 @@
 #include <limits>
 #include <sys/stat.h>
 #include <bitset>
+#ifdef USE_CHRONO_STEADY_CLOCK
+#include <chrono>
+#include <thread>
+#endif
 
 //If running on Windows, use Windows
 //working directory functions.
@@ -62,26 +72,16 @@ void __stack_chk_fail(void);
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 
-#if __has_include("squirrel.h")
 #include <squirrel.h>
 #include <sqstdio.h>
 #include <sqstdaux.h>
 #include <sqstdmath.h>
 #include <sqstdstring.h>
 #include <sqstdsystem.h>
-#else
-#include <squirrel.h>
-#include <sqstdio.h>
-#include <sqstdaux.h>
-#include <sqstdmath.h>
-#include <sqstdstring.h>
-#include <sqstdsystem.h>
-#endif
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
 #endif
-
 
 using namespace std;
 
