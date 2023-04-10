@@ -1,4 +1,4 @@
-project('ide', 'cpp', version : '0.0.1', default_options : ['cpp_std=c++17'])
+project('ide', 'cpp', version : '0.0.2', default_options : ['cpp_std=c++17'])
 
 # Documentation: https://mesonbuild.com/Qt5-module.html
 fs = import('fs')
