@@ -18,7 +18,7 @@ translations = qt5.compile_translations(ts_files : ['translations/ide_en_US.ts']
 
 generated_files = qt5.preprocess(
 							qresources : ['resources.qrc'],
-							moc_headers : ['editorwindow.h'],
+							moc_headers : ['editorwindow.hpp'],
 							ui_files : ['ui/editorwindow.ui'],
 							dependencies: deparr,
 							include_directories: included_directories)
@@ -29,4 +29,4 @@ executable('ide',
 		generated_files,
 		dependencies : deparr,
 		include_directories: included_directories,
-		cpp_args : ['-DVERSION="@0@"'.format(meson.project_version()), '-Wdeprecated-declarations']) # This is only here because Arch Linux complains while ubuntu doesn't.
+		cpp_args : ['-DVERSION="@0@"'.format(meson.project_version()), '-Wno-deprecated-declarations']) # This is only here because of deprecated values in KF5.

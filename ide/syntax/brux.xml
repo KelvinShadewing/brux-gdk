@@ -132,6 +132,9 @@ Comes packaged with the BRUX IDE and works with anything that uses KTextEditor o
 			<item>drawPoint</item>
 			<item>drawRec</item>
 			<item>drawSprite</item>
+			<item>drawSpriteEx</item>
+			<item>drawSpriteExMod</item>
+			<item>drawSpriteMod</item>
 			<item>drawText</item>
 			<item>fileAppend</item>
 			<item>fileDelete</item>

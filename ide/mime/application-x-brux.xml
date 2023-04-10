@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-    <mime-type type="application/brux">
-        <icon name="application-x-executable"/>
+    <mime-type type="application/x-brux">
+        <icon name="application-x-executable-script"/>
         <glob-deleteall/>
         <glob pattern="*.brx"/>
     </mime-type>
