@@ -93,12 +93,12 @@ public:
 	void closeTab(int index);
 private:
 	Ui::EditorWindow *ui;
-	KTextEditor::Editor* TextEditorInstance;
-	std::vector<KTextEditor::Document*> Documents;
-	std::vector<KTextEditor::View*> DocumentViews;
-	std::vector<QString> OpenSourceFiles;
-	std::vector<QString> OpenTilemapFiles;
-	QString Directory;
-	QFileSystemModel DirectoryView;
+	KTextEditor::Editor* textEditorInstance;
+	std::vector<KTextEditor::Document*> documentList;
+	std::vector<KTextEditor::View*> documentViewList;
+	std::vector<QString> openTextFiles;
+	std::vector<QString> openTilemaps;
+	QString directory;
+	QFileSystemModel directoryView;
 };
 #endif // EDITORWINDOW_H
