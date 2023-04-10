@@ -71,49 +71,53 @@ int main(int argc, char *argv[]) {
 		}
 
 		#ifdef __linux__
-		QFile mimeCheckBrux{mimePath + "/application-x-brux.xml"};
-		QFile mimeCheckSquirrel{mimePath + "/text-x-squirrel.xml"};
-		QFile mimeDefinitionBrux{":/application-x-brux.xml"};
-		QFile mimeDefinitionSquirrel{":/application-x-brux.xml"};
-		QByteArray mimeUserBruxDefinitionChecksum = fileChecksum(&mimeCheckBrux, QCryptographicHash::Algorithm::Sha512);
-		QByteArray mimeUserSquirrelDefinitionChecksum = fileChecksum(&mimeCheckSquirrel, QCryptographicHash::Algorithm::Sha512);
-		QByteArray mimeDefinitionBruxChecksum = fileChecksum(&mimeDefinitionBrux, QCryptographicHash::Algorithm::Sha512);
-		QByteArray mimeDefinitionSquirrelChecksum = fileChecksum(&mimeDefinitionSquirrel, QCryptographicHash::Algorithm::Sha512);
+		QFileInfo mimePathInfo{mimePath};
+		if (mimePathInfo.exists() && mimePathInfo.isDir()) {
+			std::cout << "Local mimedir exists." << std::endl;
+			QFile mimeCheckBrux{mimePath + "/application-x-brux.xml"};
+			QFile mimeCheckSquirrel{mimePath + "/text-x-squirrel.xml"};
+			QFile mimeDefinitionBrux{":/application-x-brux.xml"};
+			QFile mimeDefinitionSquirrel{":/application-x-brux.xml"};
+			QByteArray mimeUserBruxDefinitionChecksum = fileChecksum(&mimeCheckBrux, QCryptographicHash::Algorithm::Sha512);
+			QByteArray mimeUserSquirrelDefinitionChecksum = fileChecksum(&mimeCheckSquirrel, QCryptographicHash::Algorithm::Sha512);
+			QByteArray mimeDefinitionBruxChecksum = fileChecksum(&mimeDefinitionBrux, QCryptographicHash::Algorithm::Sha512);
+			QByteArray mimeDefinitionSquirrelChecksum = fileChecksum(&mimeDefinitionSquirrel, QCryptographicHash::Algorithm::Sha512);
 
-		QString mimeWord = "";
-		QString mimeDesc = "";
-		if (!mimeDefinitionBrux.exists() && !mimeDefinitionSquirrel.exists()) mimeWord = "Generate";
-		else if (mimeDefinitionBruxChecksum != mimeUserBruxDefinitionChecksum || mimeDefinitionSquirrelChecksum != mimeUserSquirrelDefinitionChecksum) {
-			mimeWord = "Update";
-			mimeDesc = "\n\nYou may be seeing this as you have either updated the BRUX IDE or modified the mimetype definition file(s).";
-		}
+			QString mimeWord = "";
+			QString mimeDesc = "";
+			if (!mimeDefinitionBrux.exists() && !mimeDefinitionSquirrel.exists()) mimeWord = "Generate";
+			else if (mimeDefinitionBruxChecksum != mimeUserBruxDefinitionChecksum || mimeDefinitionSquirrelChecksum != mimeUserSquirrelDefinitionChecksum) {
+				mimeWord = "Update";
+				mimeDesc = "\n\nYou may be seeing this as you have either updated the BRUX IDE or modified the mimetype definition file(s).";
+			}
 
-		if (mimeWord != "") {
-			KGuiItem yesButton("Yes", QString(), mimeWord + "s the syntax highlighting definition and continues to the IDE", "Clicking this will create the file \"$HOME/.local/share/org.kde.syntax-highlighting/syntax/brux.xml\".");
-			KGuiItem noButton("No", QString(), "Continues to the IDE without changes to syntax highlighting", "Clicking this will not change the syntax highlighting definition for BRUX.");
+			if (mimeWord != "") {
+				KGuiItem yesButton("Yes", QString(), mimeWord + "s the syntax highlighting definition and continues to the IDE", "Clicking this will create the file \"$HOME/.local/share/org.kde.syntax-highlighting/syntax/brux.xml\".");
+				KGuiItem noButton("No", QString(), "Continues to the IDE without changes to syntax highlighting", "Clicking this will not change the syntax highlighting definition for BRUX.");
 
-			auto genSyntaxDefinition = KMessageBox::questionYesNo(0, mimeWord + " mimetype definitions?" + mimeDesc + "\n\
-This will cover the following file extensions and their respective mimetypes:\n*.nut (text/x-squirrel)\n*.brx (application/x-brux)", "Syntax Highlighting", yesButton, noButton);
+				auto genSyntaxDefinition = KMessageBox::questionYesNo(0, mimeWord + " mimetype definitions?" + mimeDesc + "\n\
+	This will cover the following file extensions and their respective mimetypes:\n*.nut (text/x-squirrel)\n*.brx (application/x-brux)", "Syntax Highlighting", yesButton, noButton);
 
-			if (genSyntaxDefinition == KMessageBox::Yes) {
-				QString list[2] = {"application-x-brux", "text-x-squirrel"};
-				if (mimeCheckBrux.exists()) QFile::remove(mimePath + "/application-x-brux.xml");
-				if (mimeCheckSquirrel.exists()) QFile::remove(mimePath + "/text-x-squirrel.xml");
-				for (QString string : list) {
-					bool goodToCopy = true;
-					if ((string == "application-x-brux" && !mimeDefinitionBrux.exists()) || (string == "text-x-squirrel" && !mimeDefinitionSquirrel.exists())) goodToCopy = false;
+				if (genSyntaxDefinition == KMessageBox::Yes) {
+					QString list[2] = {"application-x-brux", "text-x-squirrel"};
+					if (mimeCheckBrux.exists()) QFile::remove(mimePath + "/application-x-brux.xml");
+					if (mimeCheckSquirrel.exists()) QFile::remove(mimePath + "/text-x-squirrel.xml");
+					for (QString string : list) {
+						bool goodToCopy = true;
+						if ((string == "application-x-brux" && !mimeDefinitionBrux.exists()) || (string == "text-x-squirrel" && !mimeDefinitionSquirrel.exists())) goodToCopy = false;
 
-					if (goodToCopy) {
-						std::cout << ":/" + string.toStdString() + ".xml" << "\n" << (mimePath + string + ".xml").toStdString() << std::endl;
-						if (!QFile::copy(":/" + string + ".xml", (mimePath + string + ".xml"))) KMessageBox::error(0, "Couldn't copy the syntax definition.", "ERROR: Copy fail");
+						if (goodToCopy) {
+							std::cout << ":/" + string.toStdString() + ".xml" << "\n" << (mimePath + string + ".xml").toStdString() << std::endl;
+							if (!QFile::copy(":/" + string + ".xml", (mimePath + string + ".xml"))) KMessageBox::error(0, "Couldn't copy the syntax definition.", "ERROR: Copy fail");
+						}
+						else {
+							KMessageBox::error(0, "Couldn't locate the syntax definition.", "ERROR: Missing file");
+						}
 					}
-					else {
-						KMessageBox::error(0, "Couldn't locate the syntax definition.", "ERROR: Missing file");
+					int returnValue = system("update-mime-database ~/.local/share/mime");
+					if (returnValue != 0) {
+						KMessageBox::error(0, "update-mime-database could not update the mime database.", "ERROR: Local mime database update failed.");
 					}
-				}
-				int returnValue = system("update-mime-database ~/.local/share/mime");
-				if (returnValue != 0) {
-					KMessageBox::error(0, "update-mime-database could not update the mime database.", "ERROR: Local mime database update failed.");
 				}
 			}
 		}
