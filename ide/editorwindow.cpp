@@ -1,4 +1,4 @@
-#include "editorwindow.h"
+#include "editorwindow.hpp"
 #include "ui_editorwindow.h"
 
 #include <iostream>
@@ -64,18 +64,18 @@ void EditorWindow::openDirectory(bool checked) {
 void EditorWindow::testProject() {
 	if (Directory == "") return; // No directory open, return.
 	char* desktop = getenv("XDG_CURRENT_DESKTOP");
-	std::string environment;
+	std::string environment, command;
 
 	if (desktop == NULL) {
 		std::cout << "XDG_CURRENT_DESKTOP is unset. Defaulting to no terminal." << std::endl;
 		environment = "";
 	} else environment = desktop;
 
-	std::string command;
+	// Determine which command should be used
 	if (environment == "KDE") command = "konsole --workdir " + Directory.toStdString() + " -e \"brux\" &";
 	else if (environment == "XFCE") command = "xfce4-terminal --working-directory " + Directory.toStdString() + " --command=\"brux\" &";
 	else if (environment.find("GNOME") != environment.npos) command = "gnome-terminal --working-directory " + Directory.toStdString() + " --command=\"brux\" &";
-	else command = ("cd " + Directory + " && brux &").toStdString();
+	else command = ("cd " + Directory + " && brux &").toStdString(); // Default to running in the background with no terminal
 	system(command.c_str());
 }
 
