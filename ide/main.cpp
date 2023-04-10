@@ -72,6 +72,7 @@ int main(int argc, char *argv[]) {
 
 		#ifdef __linux__
 		QFileInfo mimePathInfo{mimePath};
+		if (!(mimePathInfo.exists() && mimePathInfo.isDir())) system("mkdir ~/.local/share/mime; mkdir ~/.local/share/mime/packages");
 		if (mimePathInfo.exists() && mimePathInfo.isDir()) {
 			std::cout << "Local mimedir exists." << std::endl;
 			QFile mimeCheckBrux{mimePath + "/application-x-brux.xml"};
