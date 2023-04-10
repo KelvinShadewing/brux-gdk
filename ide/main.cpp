@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
 			QFile mimeCheckBrux{mimePath + "/application-x-brux.xml"};
 			QFile mimeCheckSquirrel{mimePath + "/text-x-squirrel.xml"};
 			QFile mimeDefinitionBrux{":/application-x-brux.xml"};
-			QFile mimeDefinitionSquirrel{":/application-x-brux.xml"};
+			QFile mimeDefinitionSquirrel{":/text-x-squirrel.xml"};
 			QByteArray mimeUserBruxDefinitionChecksum = fileChecksum(&mimeCheckBrux, QCryptographicHash::Algorithm::Sha512);
 			QByteArray mimeUserSquirrelDefinitionChecksum = fileChecksum(&mimeCheckSquirrel, QCryptographicHash::Algorithm::Sha512);
 			QByteArray mimeDefinitionBruxChecksum = fileChecksum(&mimeDefinitionBrux, QCryptographicHash::Algorithm::Sha512);
@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
 				KGuiItem noButton("No", QString(), "Continues to the IDE without changes to syntax highlighting", "Clicking this will not change the syntax highlighting definition for BRUX.");
 
 				auto genSyntaxDefinition = KMessageBox::questionYesNo(0, mimeWord + " mimetype definitions?" + mimeDesc + "\n\
-	This will cover the following file extensions and their respective mimetypes:\n*.nut (text/x-squirrel)\n*.brx (application/x-brux)", "Syntax Highlighting", yesButton, noButton);
+This will cover the following file extensions and their respective mimetypes:\n*.nut (text/x-squirrel)\n*.brx (application/x-brux)", "Syntax Highlighting", yesButton, noButton);
 
 				if (genSyntaxDefinition == KMessageBox::Yes) {
 					QString list[2] = {"application-x-brux", "text-x-squirrel"};
