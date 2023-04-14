@@ -213,10 +213,10 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 		npvY = h - pvY;
 	}
 
-	des.x = x - static_cast<int>(npvX * xscale);
-	des.y = y - static_cast<int>(npvY * yscale);
-	des.w = w * static_cast<int>(xscale);
-	des.h = h * static_cast<int>(yscale);
+	des.x = x - static_cast<float>(npvX * xscale);
+	des.y = y - static_cast<float>(npvY * yscale);
+	des.w = w * static_cast<float>(xscale);
+	des.h = h * static_cast<float>(yscale);
 
 	int fx = fd % col;
 	int fy = (fd - fx) / col;
@@ -287,10 +287,10 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	SDL_Rect rec;
 	SDL_Rect des;
 
-	des.x = x - static_cast<int>(npvX * xscale);
-	des.y = y - static_cast<int>(npvY * yscale);
-	des.w = w * static_cast<int>(xscale);
-	des.h = h * static_cast<int>(yscale);
+	des.x = x - static_cast<float>(npvX * xscale);
+	des.y = y - static_cast<float>(npvY * yscale);
+	des.w = w * static_cast<float>(xscale);
+	des.h = h * static_cast<float>(yscale);
 
 	int fx = fd % col;
 	int fy = (fd - fx) / col;
