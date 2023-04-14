@@ -495,6 +495,8 @@ void xyLoadCore() {
 
 	::eval <- function(expression) { return compilestring("return ("+expression+");")() }
 
+	::drawSprite <- function(i, f, x, y, a = 0, l = 0, sx = 1.0, sy = 1.0, p = 1.0, c = 0xffffffff) { drawSpriteExMod(i, f, x, y, a, l, sx, sy, p, c)}
+
 	print("Imported core lib.");)rew";
 
 	SQInteger oldtop = sq_gettop(gvSquirrel);

@@ -8,9 +8,11 @@ All code is available under the [GNU Affero General Public License v3](https://w
 
 ### **Introduction**
 
- Brux (formerly known as XYG) is an open-source, cross-platform, runtime-based game development kit using the Squirrel language. The aim is to make development both easy and versatile, allowing games to be written by hand in a simple text editor or made in an IDE similar to Game Maker, and to allow games to be ported with little to no modification to the code, offering a "build once, run everywhere" development process.
+Brux (formerly known as XYG) is an open-source, cross-platform, runtime-based game development kit using the Squirrel language. The aim is to make development both easy and versatile, allowing games to be written by hand in a simple text editor or made in an IDE similar to Game Maker, and to allow games to be ported with little to no modification to the code, offering a "build once, run everywhere" development process.
 
 Developers using Brux may freely make games without any need for paid license or royalties. Anyone willing to donate may visit my **[Patreon](http://www.patreon.com/kelvin)** or my **[Ko-Fi](http://www.ko-fi.com/kelvinshadewing)**.
+
+Disclosure: The material in this {book/paper/blog/article} has not been reviewed, endorsed, or approved of by the Rust Foundation. For more information on the Rust Foundation Trademark Policy, click here.
 
 ### Nightly Build
 
