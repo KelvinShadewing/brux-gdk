@@ -3999,42 +3999,42 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "playSound", -1);
   sq_newclosure(v, &playSound_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'playSound'");
   }
 
   sq_pushstring(v, "playSoundChannel", -1);
   sq_newclosure(v, &playSoundChannel_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'playSoundChannel'");
   }
 
   sq_pushstring(v, "playMusic", -1);
   sq_newclosure(v, &playMusic_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'playMusic'");
   }
 
   sq_pushstring(v, "deleteSound", -1);
   sq_newclosure(v, &deleteSound_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'deleteSound'");
   }
 
   sq_pushstring(v, "deleteMusic", -1);
   sq_newclosure(v, &deleteMusic_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'deleteMusic'");
   }
 
   sq_pushstring(v, "stopSound", -1);
   sq_newclosure(v, &stopSound_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'stopSound'");
   }
@@ -4048,14 +4048,14 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "stopChannel", -1);
   sq_newclosure(v, &stopChannel_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'stopChannel'");
   }
 
   sq_pushstring(v, "checkSound", -1);
   sq_newclosure(v, &checkSound_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'checkSound'");
   }
@@ -4069,7 +4069,7 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "setMaxChannels", -1);
   sq_newclosure(v, &setMaxChannels_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'setMaxChannels'");
   }
@@ -4097,21 +4097,21 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "fadeMusic", -1);
   sq_newclosure(v, &fadeMusic_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'fadeMusic'");
   }
 
   sq_pushstring(v, "setMusicVolume", -1);
   sq_newclosure(v, &setMusicVolume_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'setMusicVolume'");
   }
 
   sq_pushstring(v, "setSoundVolume", -1);
   sq_newclosure(v, &setSoundVolume_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'setSoundVolume'");
   }
@@ -4153,7 +4153,7 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "mount", -1);
   sq_newclosure(v, &mount_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".ssb");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".ssb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'mount'");
   }
@@ -4258,7 +4258,7 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "setDrawTarget", -1);
   sq_newclosure(v, &setDrawTarget_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'setDrawTarget'");
   }
@@ -4279,28 +4279,28 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "drawImage", -1);
   sq_newclosure(v, &drawImage_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawImage'");
   }
 
   sq_pushstring(v, "drawImagePart", -1);
   sq_newclosure(v, &drawImagePart_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawImagePart'");
   }
 
   sq_pushstring(v, "drawImageEx", -1);
   sq_newclosure(v, &drawImageEx_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawImageEx'");
   }
 
   sq_pushstring(v, "setDrawColor", -1);
   sq_newclosure(v, &setDrawColor_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'setDrawColor'");
   }
@@ -4314,35 +4314,35 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "loadImageKey", -1);
   sq_newclosure(v, &loadImageKey_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".sn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".sb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'loadImageKey'");
   }
 
   sq_pushstring(v, "setBackgroundColor", -1);
   sq_newclosure(v, &setBackgroundColor_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'setBackgroundColor'");
   }
 
   sq_pushstring(v, "setScaling", -1);
   sq_newclosure(v, &setScaling_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'setScaling'");
   }
 
   sq_pushstring(v, "setScalingFilter", -1);
   sq_newclosure(v, &setScalingFilter_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'setScalingFilter'");
   }
 
   sq_pushstring(v, "setResolution", -1);
   sq_newclosure(v, &setResolution_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'setResolution'");
   }
@@ -4377,35 +4377,35 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "newTexture", -1);
   sq_newclosure(v, &newTexture_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'newTexture'");
   }
 
   sq_pushstring(v, "textureSetBlendMode", -1);
   sq_newclosure(v, &textureSetBlendMode_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'textureSetBlendMode'");
   }
 
   sq_pushstring(v, "keyPress", -1);
   sq_newclosure(v, &keyPress_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'keyPress'");
   }
 
   sq_pushstring(v, "keyDown", -1);
   sq_newclosure(v, &keyDown_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'keyDown'");
   }
 
   sq_pushstring(v, "keyRelease", -1);
   sq_newclosure(v, &keyRelease_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'keyRelease'");
   }
@@ -4419,21 +4419,21 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "mouseDown", -1);
   sq_newclosure(v, &mouseDown_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'mouseDown'");
   }
 
   sq_pushstring(v, "mousePress", -1);
   sq_newclosure(v, &mousePress_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'mousePress'");
   }
 
   sq_pushstring(v, "mouseRelease", -1);
   sq_newclosure(v, &mouseRelease_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'mouseRelease'");
   }
@@ -4468,126 +4468,126 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "joyName", -1);
   sq_newclosure(v, &joyName_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyName'");
   }
 
   sq_pushstring(v, "joyX", -1);
   sq_newclosure(v, &joyX_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyX'");
   }
 
   sq_pushstring(v, "joyY", -1);
   sq_newclosure(v, &joyY_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyY'");
   }
 
   sq_pushstring(v, "joyZ", -1);
   sq_newclosure(v, &joyZ_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyZ'");
   }
 
   sq_pushstring(v, "joyH", -1);
   sq_newclosure(v, &joyH_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyH'");
   }
 
   sq_pushstring(v, "joyV", -1);
   sq_newclosure(v, &joyV_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyV'");
   }
 
   sq_pushstring(v, "joyR", -1);
   sq_newclosure(v, &joyR_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyR'");
   }
 
   sq_pushstring(v, "joyL", -1);
   sq_newclosure(v, &joyL_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyL'");
   }
 
   sq_pushstring(v, "joyAxis", -1);
   sq_newclosure(v, &joyAxis_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyAxis'");
   }
 
   sq_pushstring(v, "joyHatDown", -1);
   sq_newclosure(v, &joyHatDown_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyHatDown'");
   }
 
   sq_pushstring(v, "joyHatPress", -1);
   sq_newclosure(v, &joyHatPress_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyHatPress'");
   }
 
   sq_pushstring(v, "joyHatRelease", -1);
   sq_newclosure(v, &joyHatRelease_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyHatRelease'");
   }
 
   sq_pushstring(v, "joyButtonPress", -1);
   sq_newclosure(v, &joyButtonPress_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyButtonPress'");
   }
 
   sq_pushstring(v, "joyButtonDown", -1);
   sq_newclosure(v, &joyButtonDown_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyButtonDown'");
   }
 
   sq_pushstring(v, "joyButtonRelease", -1);
   sq_newclosure(v, &joyButtonRelease_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyButtonRelease'");
   }
 
   sq_pushstring(v, "joyButtonAny", -1);
   sq_newclosure(v, &joyButtonAny_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyButtonAny'");
   }
 
   sq_pushstring(v, "joyAxisPress", -1);
   sq_newclosure(v, &joyAxisPress_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyAxisPress'");
   }
 
   sq_pushstring(v, "joyAxisRelease", -1);
   sq_newclosure(v, &joyAxisRelease_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'joyAxisRelease'");
   }
@@ -4622,7 +4622,7 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "wait", -1);
   sq_newclosure(v, &wait_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'wait'");
   }
@@ -4657,7 +4657,7 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "setFPS", -1);
   sq_newclosure(v, &setFPS_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'setFPS'");
   }
@@ -4713,168 +4713,168 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "randFloat", -1);
   sq_newclosure(v, &randFloat_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'randFloat'");
   }
 
   sq_pushstring(v, "randInt", -1);
   sq_newclosure(v, &randInt_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'randInt'");
   }
 
   sq_pushstring(v, "distance2", -1);
   sq_newclosure(v, &distance2_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'distance2'");
   }
 
   sq_pushstring(v, "inDistance2", -1);
   sq_newclosure(v, &inDistance2_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'inDistance2'");
   }
 
   sq_pushstring(v, "distance3", -1);
   sq_newclosure(v, &distance3_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'distance3'");
   }
 
   sq_pushstring(v, "wrap", -1);
   sq_newclosure(v, &wrap_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'wrap'");
   }
 
   sq_pushstring(v, "floor", -1);
   sq_newclosure(v, &floor_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'floor'");
   }
 
   sq_pushstring(v, "ceil", -1);
   sq_newclosure(v, &ceil_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'ceil'");
   }
 
   sq_pushstring(v, "round", -1);
   sq_newclosure(v, &round_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'round'");
   }
 
   sq_pushstring(v, "pointAngle", -1);
   sq_newclosure(v, &pointAngle_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'pointAngle'");
   }
 
   sq_pushstring(v, "abs", -1);
   sq_newclosure(v, &abs_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'abs'");
   }
 
   sq_pushstring(v, "lendirX", -1);
   sq_newclosure(v, &lendirX_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'lendirX'");
   }
 
   sq_pushstring(v, "lendirY", -1);
   sq_newclosure(v, &lendirY_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'lendirY'");
   }
 
   sq_pushstring(v, "binstr", -1);
   sq_newclosure(v, &binstr_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'binstr'");
   }
 
   sq_pushstring(v, "drawCircle", -1);
   sq_newclosure(v, &drawCircle_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnb");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawCircle'");
   }
 
   sq_pushstring(v, "drawRec", -1);
   sq_newclosure(v, &drawRec_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnb");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawRec'");
   }
 
   sq_pushstring(v, "drawRect", -1);
   sq_newclosure(v, &drawRect_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnb");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawRect'");
   }
 
   sq_pushstring(v, "drawPoint", -1);
   sq_newclosure(v, &drawPoint_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawPoint'");
   }
 
   sq_pushstring(v, "drawLine", -1);
   sq_newclosure(v, &drawLine_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawLine'");
   }
 
   sq_pushstring(v, "drawLineWide", -1);
   sq_newclosure(v, &drawLineWide_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawLineWide'");
   }
 
   sq_pushstring(v, "hitLineLine", -1);
   sq_newclosure(v, &hitLineLine_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'hitLineLine'");
   }
 
   sq_pushstring(v, "hitLineCircle", -1);
   sq_newclosure(v, &hitLineCircle_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'hitLineCircle'");
   }
 
   sq_pushstring(v, "hitLinePoint", -1);
   sq_newclosure(v, &hitLinePoint_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'hitLinePoint'");
   }
 
   sq_pushstring(v, "spriteName", -1);
   sq_newclosure(v, &spriteName_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'spriteName'");
   }
@@ -4888,98 +4888,98 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
   sq_pushstring(v, "newSprite", -1);
   sq_newclosure(v, &newSprite_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".snnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".sb|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'newSprite'");
   }
 
   sq_pushstring(v, "newSpriteFT", -1);
   sq_newclosure(v, &newSpriteFT_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'newSpriteFT'");
   }
 
   sq_pushstring(v, "drawSprite", -1);
   sq_newclosure(v, &drawSprite_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawSprite'");
   }
 
   sq_pushstring(v, "drawSpriteEx", -1);
   sq_newclosure(v, &drawSpriteEx_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawSpriteEx'");
   }
 
   sq_pushstring(v, "drawSpriteMod", -1);
   sq_newclosure(v, &drawSpriteMod_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawSpriteMod'");
   }
 
   sq_pushstring(v, "drawSpriteExMod", -1);
   sq_newclosure(v, &drawSpriteExMod_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnnnnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawSpriteExMod'");
   }
 
   sq_pushstring(v, "deleteSprite", -1);
   sq_newclosure(v, &deleteSprite_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'deleteSprite'");
   }
 
   sq_pushstring(v, "spriteW", -1);
   sq_newclosure(v, &spriteW_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'spriteW'");
   }
 
   sq_pushstring(v, "spriteH", -1);
   sq_newclosure(v, &spriteH_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'spriteH'");
   }
 
   sq_pushstring(v, "replaceSprite", -1);
   sq_newclosure(v, &replaceSprite_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nsnnnnnn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nsb|nb|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'replaceSprite'");
   }
 
   sq_pushstring(v, "spriteSetBlendMode", -1);
   sq_newclosure(v, &spriteSetBlendMode_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'spriteSetBlendMode'");
   }
 
   sq_pushstring(v, "newFont", -1);
   sq_newclosure(v, &newFont_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnnbn");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|nb|nb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'newFont'");
   }
 
   sq_pushstring(v, "drawText", -1);
   sq_newclosure(v, &drawText_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".nnns");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|nb|ns");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'drawText'");
   }
 
   sq_pushstring(v, "chint", -1);
   sq_newclosure(v, &chint_wrapper, 0);
-  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".n");
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'chint'");
   }
