@@ -3978,10 +3978,10 @@ static SQInteger chint_wrapper(HSQUIRRELVM vm)
 
 }
 
-} // namespace Wrapper
+} // namespace wrapper
 void register_brux_wrapper(HSQUIRRELVM v)
 {
-  using namespace Wrapper;
+  using namespace wrapper;
 
   sq_pushstring(v, "loadSound", -1);
   sq_newclosure(v, &loadSound_wrapper, 0);
@@ -4986,6 +4986,6 @@ void register_brux_wrapper(HSQUIRRELVM v)
 
 }
 
-} // namespace Scripting
+} // namespace scripting
 
 /* EOF */
