@@ -88,16 +88,10 @@ int main(int argc, char* argv[]) {
 					//Check that the file really exists
 					if(xyLegacyFileExists(curarg)) {
 						//All checks pass, assign the file
-						xygapp = curarg;
-						size_t found = xygapp.find_last_of("/\\");
-						gvWorkDir = xygapp.substr(0, found);
-						if (chdir(gvWorkDir.c_str()) != 0) { // Check whether an error has occured
-							xyPrint(0, "Error initiating Brux: Cannot change to input file working directory: %d", errno);
-							xyEnd();
-							return 1;
-						}
 						const std::string curdir = xyGetDir();
 						xyPrint(0, "Working directory: %s", curdir.c_str());
+						xygapp = curarg;
+						gvWorkDir = curdir.c_str();
 					}
 				}
 			}
