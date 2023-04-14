@@ -7,14 +7,14 @@ spriteSetBlendMode(sprLight, bm_add)
 
 ::texAmbient <- newTexture(800, 800)
 
-textureSetBlendMode(texAmbient, bm_sub)
+textureSetBlendMode(texAmbient, bm_mod)
 
 setDrawColor(0x204080ff)
 
 while(!keyPress(k_escape) && !getQuit()) {
 	setDrawTarget(texAmbient)
 	drawRec(0, 0, 800, 800, true)
-	drawSprite(sprLight, 0, mouseX(), mouseY())
+	drawSprite(sprLight, 0, mouseX(), mouseY(), 0, 0, 1.5)
 	drawSprite(sprLight, 0, 160, 90)
 	resetDrawTarget()
 

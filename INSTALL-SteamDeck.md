@@ -9,7 +9,7 @@ Firstly, go into the `Settings > System` in Gaming Mode and enable developer mod
 Afterwards, go into Desktop Mode and open Konsole and run the following commands:
 ```sh
 sudo steamos-readonly disable
-sudo pacman-key init
+sudo pacman-key --init
 sudo pacman-key --populate archlinux && sudo pacman-key --populate holo
 ```
 These commands will let you install software via pacman by disabling the read-only filesystem and getting all trusted keys for archlinux and holo sources. <br>

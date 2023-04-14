@@ -1,0 +1,70 @@
+<!--
+This basically only exists so someone can easily extend it for fancy web shenanigans.
+Modified version of https://raw.githubusercontent.com/emscripten-core/emscripten/main/src/shell_minimal.html
+-->
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Emscripten</title>
+		<style>
+		.emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: inline-block; }
+		textarea.emscripten { font-family: monospace; width: 80%; }
+		div.emscripten { text-align: center; }
+		/* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+		canvas.emscripten { border: 0px none; background-color: black; margin: 0px 0px; padding: 0px 0px 0px 0px; width: 40%; height: 40%; }
+		body { margin: 0 0; width: 100vw; min-height: 100vh; box-sizing: border-box; left: 0px; top: 0px; }
+
+		</style>
+	</head>
+	<body>
+		<div class="emscripten" id="status" style="color: red;"></div>
+		<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+		<hr/>
+		<textarea class="emscripten" id="output" rows="8"></textarea>
+		<script type='text/javascript'>
+			var Module = {
+				preRun: [],
+				postRun: [],
+				print: (function() {
+					var element = document.getElementById('output');
+					if (element) element.value = ''; // clear browser cache
+					return function(text) {
+						if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+						// These replacements are necessary if you render to raw HTML
+						//text = text.replace(/&/g, "&amp;");
+						//text = text.replace(/</g, "&lt;");
+						//text = text.replace(/>/g, "&gt;");
+						//text = text.replace('\n', '<br>', 'g');
+						console.log(text);
+						if (element) {
+							element.value += text + "\n";
+							element.scrollTop = element.scrollHeight; // focus on bottom
+						}
+					};
+				})(),
+				canvas: (function() {
+					var canvas = document.getElementById('canvas');
+
+					// As a default initial behavior, pop up an alert when webgl context is lost. To make your
+					// application robust, you may want to override this behavior before shipping!
+					// See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+					canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+
+					return canvas;
+				})(),
+				setStatus: function(text) {
+					document.getElementById('status').innerHTML = text;
+				}
+			};
+			window.onerror = function() {
+				Module.setStatus('Exception thrown, see JavaScript console');
+				Module.setStatus = function(text) {
+					if (text) console.error('[post-exception status] ' + text);
+				};
+			};
+		</script>
+		<script src="game.js"></script>
+		{{{ SCRIPT }}}
+	</body>
+</html>
