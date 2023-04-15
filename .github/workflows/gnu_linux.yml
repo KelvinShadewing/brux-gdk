@@ -57,7 +57,8 @@ jobs:
             libmodplug-dev:i386 \
             libmpg123-dev:i386 \
             libvorbis-dev:i386 \
-            libopusfile-dev:i386
+            libopusfile-dev:i386 \
+            libzstd-dev:i386
 
       - name: Install 64-bit dependencies
         if: ${{ matrix.arch == 64 }}
@@ -84,7 +85,8 @@ jobs:
             libmodplug-dev \
             libmpg123-dev \
             libvorbis-dev \
-            libopusfile-dev
+            libopusfile-dev \
+            libzstd-dev
 
       - name: Set compiler (gcc)
         run: |

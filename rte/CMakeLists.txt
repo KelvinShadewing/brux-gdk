@@ -42,8 +42,25 @@ include(ProvideSquirrel)
 
 # If static linking is enabled, link additional libraries
 if(BUILD_STATIC_LIBS)
-  target_link_libraries(SDL2::Image INTERFACE jpeg png tiff webp)
-  target_link_libraries(SDL2::Mixer INTERFACE FLAC fluidsynth modplug mpg123 ogg vorbisfile opusfile)
+  # SDL2::Image libraries
+  find_package(JPEG REQUIRED)
+  find_package(PNG REQUIRED)
+  find_package(TIFF REQUIRED)
+  find_package(LZMA REQUIRED)
+  find_package(zstd REQUIRED)
+  find_package(JBIG REQUIRED)
+  find_package(Deflate REQUIRED)
+  find_package(WebP REQUIRED)
+  target_link_libraries(SDL2::Image INTERFACE ${JPEG_LIBRARIES} ${PNG_LIBRARIES} ${TIFF_LIBRARIES} ${LZMA_LIBRARIES} ${zstd_LIBRARIES} ${JBIG_LIBRARIES} ${Deflate_LIBRARIES} ${WebP_LIBRARIES})
+
+  # SDL2::Mixer libraries
+  find_package(OGG REQUIRED)
+  find_package(FLAC REQUIRED)
+  find_package(Modplug REQUIRED)
+  find_package(MPG123 REQUIRED)
+  find_package(VORBIS REQUIRED)
+  find_package(OpusFile REQUIRED)
+  target_link_libraries(SDL2::Mixer INTERFACE ${FLAC_LIBRARY} fluidsynth ${MODPLUG_LIBRARIES} ${MPG123_LIBRARIES} ${VORBIS_LIBRARIES} ${OPUSFILE_LIBRARIES} ${OGG_LIBRARIES})
 endif()
 
 # Include additional scripts
