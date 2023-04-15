@@ -1,4 +1,4 @@
-# File originates from https://github.com/SuperTux/supertux/blob/master/mk/cmake/SuperTux/ProvidePhysfs.cmake
+# ORIGIN: https://github.com/SuperTux/supertux/blob/master/mk/cmake/SuperTux/ProvidePhysfs.cmake
 
 find_package(PhysFS)
 

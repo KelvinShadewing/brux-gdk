@@ -1,4 +1,4 @@
-# File originates from https://github.com/SuperTux/supertux/blob/master/mk/cmake/SuperTux/ProvideSquirrel.cmake
+# ORIGIN: https://github.com/SuperTux/supertux/blob/master/mk/cmake/SuperTux/ProvideSquirrel.cmake
 
 option(USE_SYSTEM_SQUIRREL "Use preinstalled squirrel if available" ON)
 
