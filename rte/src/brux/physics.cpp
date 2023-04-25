@@ -8,7 +8,7 @@
 
 #include "brux/physics.hpp"
 
-int Phyisics::ChipMonkHelloWorld() {
+int Physics::ChipMonkHelloWorld() {
 	// cpVect is a 2D vector and cpv() is a shortcut for initializing them.
 	cpVect gravity = cpv(0, -100);
 
@@ -70,7 +70,7 @@ int Phyisics::ChipMonkHelloWorld() {
 	return 0;
 }
 
-Phyisics::Phyisics () {
+Physics::Physics () {
 	space = cpSpaceNew();
 	gravity = cpv(0, -100);
 	cpSpaceSetGravity(space, gravity);
@@ -79,7 +79,7 @@ Phyisics::Phyisics () {
 	// It is *highly* recommended to use a fixed size time step.
 	timeStep = 1.0/60.0;
 }
-Phyisics::~Phyisics() {
+Physics::~Physics() {
 	for (auto & i : bodylist)
 	{
 		cpBodyFree(i);
@@ -92,10 +92,10 @@ Phyisics::~Phyisics() {
 	shapelist.clear();
 	cpSpaceFree(space);
 }
-void Phyisics::sceneStep(){
+void Physics::sceneStep(){
 	cpSpaceStep(space, timeStep);
 }
-cpBody *Phyisics::AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass,cpVect pos) {
+cpBody *Physics::AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass,cpVect pos) {
 	cpFloat moment = cpMomentForCircle(mass, 0, radius, cpvzero);
 	cpBody *ballBody = cpSpaceAddBody(space, cpBodyNew(mass, moment));
 	bodylist.push_back(ballBody);
@@ -108,7 +108,7 @@ cpBody *Phyisics::AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass,c
 	cpSpaceAddShape(space, ballShape);
 	return ballBody;
 }
-cpBody *Phyisics::AddSimpleBox(void * userData, cpFloat width, cpFloat height, cpFloat mass, cpVect pos) {
+cpBody *Physics::AddSimpleBox(void * userData, cpFloat width, cpFloat height, cpFloat mass, cpVect pos) {
 	cpFloat moment = cpMomentForBox(mass, width, height);
 	cpBody *boxBody = cpSpaceAddBody(space, cpBodyNew(mass, moment));
 	bodylist.push_back(boxBody);
@@ -121,7 +121,7 @@ cpBody *Phyisics::AddSimpleBox(void * userData, cpFloat width, cpFloat height, c
 	cpSpaceAddShape(space, ballShape);
 	return boxBody;
 }
-void Phyisics::AddLineSegment(cpVect start, cpVect end) {
+void Physics::AddLineSegment(cpVect start, cpVect end) {
 	cpShape *segmentBody = cpSegmentShapeNew(cpSpaceGetStaticBody(space), start, end, 0);
 	cpSpaceAddShape(space, segmentBody);
 	shapelist.push_back(segmentBody);
