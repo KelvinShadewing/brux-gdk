@@ -103,7 +103,7 @@ Comes packaged with the BRUX IDE and works with anything that uses KTextEditor o
 		</list>
 		<list name="brux_functions">
 			<item>abs</item>
-			<item>anyJoyPress</item>
+			<item>joyPressAny</item>
 			<item>anyKeyPress</item>
 			<item>binstr</item>
 			<item>bruxVersion</item>

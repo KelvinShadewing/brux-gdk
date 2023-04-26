@@ -1517,11 +1517,11 @@ static SQInteger keyRelease_wrapper(HSQUIRRELVM vm)
 
 }
 
-static SQInteger anyKeyPress_wrapper(HSQUIRRELVM vm)
+static SQInteger keyPressAny_wrapper(HSQUIRRELVM vm)
 {
 
   try {
-    int return_value = BruxAPI::anyKeyPress();
+    int return_value = BruxAPI::keyPressAny();
 
     sq_pushinteger(vm, return_value);
     return 1;
@@ -1530,7 +1530,7 @@ static SQInteger anyKeyPress_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, e.what());
     return SQ_ERROR;
   } catch(...) {
-    sq_throwerror(vm, _SC("Unexpected exception while executing function 'anyKeyPress'"));
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'keyPressAny'"));
     return SQ_ERROR;
   }
 
@@ -2080,7 +2080,7 @@ static SQInteger joyButtonRelease_wrapper(HSQUIRRELVM vm)
 
 }
 
-static SQInteger joyButtonAny_wrapper(HSQUIRRELVM vm)
+static SQInteger joyPressAny_wrapper(HSQUIRRELVM vm)
 {
   SQInteger arg0;
   if(SQ_FAILED(sq_getinteger(vm, 2, &arg0))) {
@@ -2089,7 +2089,7 @@ static SQInteger joyButtonAny_wrapper(HSQUIRRELVM vm)
   }
 
   try {
-    int return_value = BruxAPI::joyButtonAny(static_cast<int> (arg0));
+    int return_value = BruxAPI::joyPressAny(static_cast<int> (arg0));
 
     sq_pushinteger(vm, return_value);
     return 1;
@@ -2098,7 +2098,7 @@ static SQInteger joyButtonAny_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, e.what());
     return SQ_ERROR;
   } catch(...) {
-    sq_throwerror(vm, _SC("Unexpected exception while executing function 'joyButtonAny'"));
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'joyPressAny'"));
     return SQ_ERROR;
   }
 
@@ -4410,11 +4410,11 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'keyRelease'");
   }
 
-  sq_pushstring(v, "anyKeyPress", -1);
-  sq_newclosure(v, &anyKeyPress_wrapper, 0);
+  sq_pushstring(v, "keyPressAny", -1);
+  sq_newclosure(v, &keyPressAny_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
   if(SQ_FAILED(sq_createslot(v, -3))) {
-    throw SquirrelError(v, "Couldn't register function 'anyKeyPress'");
+    throw SquirrelError(v, "Couldn't register function 'keyPressAny'");
   }
 
   sq_pushstring(v, "mouseDown", -1);
@@ -4571,11 +4571,11 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'joyButtonRelease'");
   }
 
-  sq_pushstring(v, "joyButtonAny", -1);
-  sq_newclosure(v, &joyButtonAny_wrapper, 0);
+  sq_pushstring(v, "joyPressAny", -1);
+  sq_newclosure(v, &joyPressAny_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
-    throw SquirrelError(v, "Couldn't register function 'joyButtonAny'");
+    throw SquirrelError(v, "Couldn't register function 'joyPressAny'");
   }
 
   sq_pushstring(v, "joyAxisPress", -1);

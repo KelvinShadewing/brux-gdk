@@ -37,7 +37,7 @@ int keyRelease(int key) {
 	return xyKeyRelease(key);
 }
 
-int anyKeyPress() {
+int keyPressAny() {
 	int key = -1;
 
 	for (int i = 0; i < 322; i++) {
@@ -138,7 +138,7 @@ int joyButtonRelease(int i, int b) {
 	return (!gvPadButton[i][b] && gvPadLastButton[i][b]);
 }
 
-int joyButtonAny(int p) {
+int joyPressAny(int p) {
 	int button = -1;
 
 	for (int i = 0; i < 32; i++) {

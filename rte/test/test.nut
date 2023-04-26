@@ -339,7 +339,7 @@ print(jsonWrite(arraySort(d)))
 	if(joyHatRelease(0, js_right)) drawCircle(40, 184, 4, true) //Right
 	if(joyHatRelease(0, js_down)) drawCircle(32, 192, 4, true) //Down
 
-	local currentpress = anyJoyPress(0)
+	local currentpress = joyPressAny(0)
 	if(currentpress != -1) lastbutton = currentpress
 	drawText(fntW, 0, 232, "Last button pressed: " + lastbutton)
 }
