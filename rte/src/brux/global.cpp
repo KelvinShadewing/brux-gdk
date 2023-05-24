@@ -50,6 +50,7 @@ const float pi = 3.14159265f;
 bool gvClearScreen = 1;
 SDL_Event Event;
 std::vector<SDL_Texture*> vcTextures;
+std::vector<std::string> vcTextureNames;
 bool gvDebug = 1;
 std::vector<xySprite*> vcSprites;
 std::vector<xyFont*> vcFonts;

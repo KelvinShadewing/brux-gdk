@@ -141,7 +141,6 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 	numero = 0;
 	frames = 0; //Obsolete, will untangle later
 	Uint32 newtex = xyLoadImage(filename);
-	name = filename;
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
 
 	//Delete old texture

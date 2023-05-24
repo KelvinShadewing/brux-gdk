@@ -52,6 +52,7 @@ extern const float pi;				//Pi
 extern bool gvClearScreen;			//Whether to clear the screen on update
 extern SDL_Event Event;				//Used for event handling
 extern std::vector<SDL_Texture*> vcTextures;		//Keeps track of user-created textures
+extern std::vector<std::string> vcTextureNames;
 extern bool gvDebug;				//Controls whether or not debug output is printed
 extern std::vector<xySprite*> vcSprites;	//std::vector containing all sprite pointers
 extern Uint32 gvBackColor;			//Background color

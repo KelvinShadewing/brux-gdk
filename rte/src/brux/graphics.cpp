@@ -147,6 +147,25 @@ SDL_Texture* xyLoadTexture(const std::string& path) {
 		SDL_FreeSurface(loadedSurface);
 	}
 
+	//Add texture name
+	if(vcTextureNames.size() == 1) vcTextureNames.push_back("");
+
+	std::string name = path;
+	std::string::size_type slashnum = path.find_last_of("/");
+	if(slashnum != std::string::npos) name = path.substr(slashnum, name.length() - 1);
+
+	bool didfind = false;
+	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
+		if(vcTextureNames[i] == "") {
+			
+			vcTextureNames[i] = name;
+			didfind = true;
+			//Return the texture index
+			break;
+		}
+	}
+	if(!didfind) vcTextureNames.push_back(name);
+
 	return newTexture;
 };
 
@@ -169,6 +188,25 @@ SDL_Texture* xyLoadTextureKeyed(const std::string& path, Uint32 key) {
 
 		SDL_FreeSurface(loadedSurface);
 	}
+
+	//Add texture name
+	if(vcTextureNames.size() == 1) vcTextureNames.push_back("");
+	
+	std::string name = path;
+	std::string::size_type slashnum = path.find_last_of("/");
+	if(slashnum != std::string::npos) name = path.substr(slashnum, name.length() - 1);
+
+	bool didfind = false;
+	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
+		if(vcTextureNames[i] == "") {
+			
+			vcTextureNames[i] = name;
+			didfind = true;
+			//Return the texture index
+			break;
+		}
+	}
+	if(!didfind) vcTextureNames.push_back(name);
 
 	return newTexture;
 };
@@ -312,6 +350,20 @@ Uint32 xyNewTexture(Uint32 w, Uint32 h) {
 			return i;
 		}
 	}
+
+	//Add texture name
+	if(vcTextureNames.size() == 1) vcTextureNames.push_back("");
+
+	bool didfind = false;
+	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
+		if(vcTextureNames[i] == "") {
+			vcTextureNames[i] = "new-texture-" + std::to_string(i);
+			//Return the texture index
+			didfind = true;
+			break;
+		}
+	}
+	if(!didfind) vcTextureNames.push_back("new-texture-" + std::to_string(vcTextures.size() - 1));
 
 	//Return the texture index
 	vcTextures.push_back(nimg);
