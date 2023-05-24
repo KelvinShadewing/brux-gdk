@@ -47,7 +47,7 @@ int windowW();
 int windowH();
 int newTexture(int w, int h); // Doc'd
 void textureSetBlendMode(int texture, int blend); // Doc'd
-int findTexture(const char* name);
+int findTexture(const std::string& name);
 
 } // namespace BruxAPI
 

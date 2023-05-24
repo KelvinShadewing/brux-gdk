@@ -157,9 +157,9 @@ void textureSetBlendMode(int texture, int blend) {
 	SDL_SetTextureBlendMode(vcTextures[texture], mode);
 }
 
-int findTexture(const char* name) {
+int findTexture(const std::string& name) {
 	for(int i = 0; i < vcTextureNames.size(); i++) {
-		if(strcmp(vcTextureNames[i].c_str(), name)) return i;
+		if(vcTextureNames[i] == name) return i;
 	}
 
 	return -1;
