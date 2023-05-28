@@ -165,4 +165,16 @@ int findTexture(const std::string& name) {
 	return -1;
 }
 
+std::string getTextureName(int texture) {
+	if(texture > 0 && texture < vcTextureNames.size())
+		return vcTextureNames[texture];
+	else
+		return "";
+}
+
+void printTextureNames() {
+	for(int i = 0; i < vcTextureNames.size(); i++)
+		xyPrint(0, "%s", vcTextureNames[i].c_str());
+}
+
 } // namespace BruxAPI

@@ -152,7 +152,8 @@ SDL_Texture* xyLoadTexture(const std::string& path) {
 
 	std::string name = path;
 	std::string::size_type slashnum = path.find_last_of("/");
-	if(slashnum != std::string::npos) name = path.substr(slashnum, name.length() - 1);
+	if(slashnum != std::string::npos)
+		name = path.substr(slashnum + 1, name.length() - 1);
 
 	bool didfind = false;
 	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
@@ -194,7 +195,8 @@ SDL_Texture* xyLoadTextureKeyed(const std::string& path, Uint32 key) {
 	
 	std::string name = path;
 	std::string::size_type slashnum = path.find_last_of("/");
-	if(slashnum != std::string::npos) name = path.substr(slashnum, name.length() - 1);
+	if(slashnum != std::string::npos)
+		name = path.substr(slashnum + 1, name.length() - 1);
 
 	bool didfind = false;
 	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
@@ -225,6 +227,16 @@ Uint32 xyLoadImage(const std::string& path) {
 
 	//Return the texture index
 	vcTextures.push_back(nimg);
+
+	std::string name = path;
+	std::string::size_type slashnum = name.find_last_of("/");
+	if(slashnum != std::string::npos)
+		name = name.substr(slashnum + 1, name.length() - 1);
+
+	if(vcTextureNames.size() == 1)
+		vcTextureNames.push_back(0);
+	vcTextureNames.push_back(name);
+
 	return static_cast<int>(vcTextures.size()) - 1;
 };
 
@@ -245,6 +257,18 @@ Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key) {
 			return i;
 		}
 	}
+
+	//Return the texture index
+	vcTextures.push_back(nimg);
+
+	std::string name = path;
+	std::string::size_type slashnum = name.find_last_of("/");
+	if(slashnum != std::string::npos)
+		name = name.substr(slashnum + 1, name.length() - 1);
+
+	if(vcTextureNames.size() == 1)
+		vcTextureNames.push_back(0);
+	vcTextureNames.push_back(name);
 
 	vcTextures.push_back(nimg);
 	return static_cast<int>(vcTextures.size()) - 1;
@@ -322,8 +346,15 @@ void xyDeleteImage(Uint32 tex) {
 	if(tex > vcTextures.size()) return;
 
 	SDL_DestroyTexture(vcTextures[tex]);
-	if(tex < vcTextures.size() - 1) vcTextures[tex] = 0;
-	else vcTextures.pop_back();
+	if(tex < vcTextures.size() - 1)
+		vcTextures[tex] = 0;
+	else
+		vcTextures.pop_back();
+
+	if(tex < vcTextureNames.size() - 1)
+		vcTextureNames[tex] = "";
+	else
+		vcTextureNames.pop_back();
 };
 
 //Get FPS

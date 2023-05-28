@@ -1469,6 +1469,50 @@ static SQInteger findTexture_wrapper(HSQUIRRELVM vm)
 
 }
 
+static SQInteger getTextureName_wrapper(HSQUIRRELVM vm)
+{
+  SQInteger arg0;
+  if(SQ_FAILED(sq_getinteger(vm, 2, &arg0))) {
+    sq_throwerror(vm, _SC("Argument 1 not an integer"));
+    return SQ_ERROR;
+  }
+
+  try {
+    std::string return_value = BruxAPI::getTextureName(static_cast<int> (arg0));
+
+    assert(return_value.size() < static_cast<size_t>(std::numeric_limits<SQInteger>::max()));
+    sq_pushstring(vm, return_value.c_str(), static_cast<SQInteger>(return_value.size()));
+    return 1;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'getTextureName'"));
+    return SQ_ERROR;
+  }
+
+}
+
+static SQInteger printTextureNames_wrapper(HSQUIRRELVM vm)
+{
+  (void) vm;
+
+  try {
+    BruxAPI::printTextureNames();
+
+    return 0;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'printTextureNames'"));
+    return SQ_ERROR;
+  }
+
+}
+
 static SQInteger keyPress_wrapper(HSQUIRRELVM vm)
 {
   SQInteger arg0;
@@ -4418,6 +4462,20 @@ void register_brux_wrapper(HSQUIRRELVM v)
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".s");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'findTexture'");
+  }
+
+  sq_pushstring(v, "getTextureName", -1);
+  sq_newclosure(v, &getTextureName_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'getTextureName'");
+  }
+
+  sq_pushstring(v, "printTextureNames", -1);
+  sq_newclosure(v, &printTextureNames_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'printTextureNames'");
   }
 
   sq_pushstring(v, "keyPress", -1);

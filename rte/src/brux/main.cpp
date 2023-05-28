@@ -238,6 +238,7 @@ int xyInit() {
 
 	//Initiate other
 	vcTextures.push_back(0);
+	vcTextureNames.push_back("");
 	vcSprites.push_back(0);
 	vcSounds.push_back(0);
 	vcMusic.push_back(0);
