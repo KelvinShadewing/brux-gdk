@@ -147,26 +147,6 @@ SDL_Texture* xyLoadTexture(const std::string& path) {
 		SDL_FreeSurface(loadedSurface);
 	}
 
-	//Add texture name
-	if(vcTextureNames.size() == 1) vcTextureNames.push_back("");
-
-	std::string name = path;
-	std::string::size_type slashnum = path.find_last_of("/");
-	if(slashnum != std::string::npos)
-		name = path.substr(slashnum + 1, name.length() - 1);
-
-	bool didfind = false;
-	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
-		if(vcTextureNames[i] == "") {
-			
-			vcTextureNames[i] = name;
-			didfind = true;
-			//Return the texture index
-			break;
-		}
-	}
-	if(!didfind) vcTextureNames.push_back(name);
-
 	return newTexture;
 };
 
@@ -190,26 +170,6 @@ SDL_Texture* xyLoadTextureKeyed(const std::string& path, Uint32 key) {
 		SDL_FreeSurface(loadedSurface);
 	}
 
-	//Add texture name
-	if(vcTextureNames.size() == 1) vcTextureNames.push_back("");
-	
-	std::string name = path;
-	std::string::size_type slashnum = path.find_last_of("/");
-	if(slashnum != std::string::npos)
-		name = path.substr(slashnum + 1, name.length() - 1);
-
-	bool didfind = false;
-	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
-		if(vcTextureNames[i] == "") {
-			
-			vcTextureNames[i] = name;
-			didfind = true;
-			//Return the texture index
-			break;
-		}
-	}
-	if(!didfind) vcTextureNames.push_back(name);
-
 	return newTexture;
 };
 
@@ -225,19 +185,27 @@ Uint32 xyLoadImage(const std::string& path) {
 	//Make sure vcTextures[0] == 0
 	if(vcTextures.size() == 1) vcTextures.push_back(0);
 
-	//Return the texture index
-	vcTextures.push_back(nimg);
+	//Add texture name
+	while(vcTextureNames.size() == 1) vcTextureNames.push_back("");
 
 	std::string name = path;
-	std::string::size_type slashnum = name.find_last_of("/");
+	std::string::size_type slashnum = path.find_last_of("/");
 	if(slashnum != std::string::npos)
-		name = name.substr(slashnum + 1, name.length() - 1);
+		name = path.substr(slashnum + 1, name.length() - 1);
 
-	if(vcTextureNames.size() == 1)
-		vcTextureNames.push_back(0);
+	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
+		if(vcTextureNames[i] == "") {
+			
+			vcTextureNames[i] = name;
+			vcTextures[i] = nimg;
+			return i;
+		}
+	}
+
+	//Return the texture index
 	vcTextureNames.push_back(name);
-
-	return static_cast<int>(vcTextures.size()) - 1;
+	vcTextures.push_back(nimg);
+	return (vcTextures.size()) - 1;
 };
 
 Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key) {
@@ -251,27 +219,27 @@ Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key) {
 	//Make sure vcTextures[0] == 0
 	if(vcTextures.size() == 1) vcTextures.push_back(0);
 
-	for(Uint32 i = 1; i < vcTextures.size(); i++) {
-		if(vcTextures[i] == 0) {
+	//Add texture name
+	while(vcTextureNames.size() == 1) vcTextureNames.push_back("");
+
+	std::string name = path;
+	std::string::size_type slashnum = path.find_last_of("/");
+	if(slashnum != std::string::npos)
+		name = path.substr(slashnum + 1, name.length() - 1);
+
+	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
+		if(vcTextureNames[i] == "") {
+			
+			vcTextureNames[i] = name;
 			vcTextures[i] = nimg;
 			return i;
 		}
 	}
 
 	//Return the texture index
-	vcTextures.push_back(nimg);
-
-	std::string name = path;
-	std::string::size_type slashnum = name.find_last_of("/");
-	if(slashnum != std::string::npos)
-		name = name.substr(slashnum + 1, name.length() - 1);
-
-	if(vcTextureNames.size() == 1)
-		vcTextureNames.push_back(0);
 	vcTextureNames.push_back(name);
-
 	vcTextures.push_back(nimg);
-	return static_cast<int>(vcTextures.size()) - 1;
+	return (vcTextures.size()) - 1;
 };
 
 //Draw image
@@ -343,7 +311,10 @@ void xyDrawImageEx(Uint32 tex, int x, int y, float angle, SDL_RendererFlip flip,
 
 //Delete image
 void xyDeleteImage(Uint32 tex) {
-	if(tex > vcTextures.size()) return;
+	if(tex > vcTextures.size())
+		return;
+	if(tex < 0)
+		return;
 
 	SDL_DestroyTexture(vcTextures[tex]);
 	if(tex < vcTextures.size() - 1)
@@ -374,31 +345,22 @@ Uint32 xyNewTexture(Uint32 w, Uint32 h) {
 	//Make sure vcTextures[0] == 0
 	if(vcTextures.size() == 1) vcTextures.push_back(0);
 
-	for(Uint32 i = 1; i < vcTextures.size(); i++) {
-		if(vcTextures[i] == 0) {
+	//Add texture name
+	while(vcTextureNames.size() == 1) vcTextureNames.push_back("");
+
+	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
+		if(vcTextureNames[i] == "") {
+			
+			vcTextureNames[i] = "new-texture-" + std::to_string(i);
 			vcTextures[i] = nimg;
-			//Return the texture index
 			return i;
 		}
 	}
 
-	//Add texture name
-	if(vcTextureNames.size() == 1) vcTextureNames.push_back("");
-
-	bool didfind = false;
-	for(Uint32 i = 1; i < vcTextureNames.size(); i++) {
-		if(vcTextureNames[i] == "") {
-			vcTextureNames[i] = "new-texture-" + std::to_string(i);
-			//Return the texture index
-			didfind = true;
-			break;
-		}
-	}
-	if(!didfind) vcTextureNames.push_back("new-texture-" + std::to_string(vcTextures.size() - 1));
-
 	//Return the texture index
+	vcTextureNames.push_back("new-texture-" + std::to_string(vcTextures.size() - 1));
 	vcTextures.push_back(nimg);
-	return static_cast<int>(vcTextures.size()) - 1;
+	return (vcTextures.size()) - 1;
 };
 
 
