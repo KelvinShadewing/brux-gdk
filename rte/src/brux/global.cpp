@@ -1,5 +1,6 @@
 //  Brux - Globals
 //  Copyright (C) 2016 KelvinShadewing
+//  Copyright (C) 2023 hexaheximal
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as published by
@@ -56,8 +57,6 @@ std::vector<xySprite*> vcSprites;
 std::vector<xyFont*> vcFonts;
 Uint32 gvBackColor;
 Uint32 gvDrawColor;
-std::vector<Mix_Chunk*> vcSounds;
-std::vector<Mix_Music*> vcMusic;
 std::string gvAppDir;
 std::string gvWorkDir;
 const Uint8 *sdlKeys;

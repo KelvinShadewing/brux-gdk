@@ -498,6 +498,45 @@ static SQInteger getSoundVolume_wrapper(HSQUIRRELVM vm)
 
 }
 
+static SQInteger getAudioDriver_wrapper(HSQUIRRELVM vm)
+{
+
+  try {
+    const std::string& return_value = BruxAPI::getAudioDriver();
+
+    assert(return_value.size() < static_cast<size_t>(std::numeric_limits<SQInteger>::max()));
+    sq_pushstring(vm, return_value.c_str(), static_cast<SQInteger>(return_value.size()));
+    return 1;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'getAudioDriver'"));
+    return SQ_ERROR;
+  }
+
+}
+
+static SQInteger isAudioAvailable_wrapper(HSQUIRRELVM vm)
+{
+
+  try {
+    bool return_value = BruxAPI::isAudioAvailable();
+
+    sq_pushbool(vm, return_value);
+    return 1;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'isAudioAvailable'"));
+    return SQ_ERROR;
+  }
+
+}
+
 static SQInteger import_wrapper(HSQUIRRELVM vm)
 {
   const SQChar* arg0;
@@ -1186,7 +1225,7 @@ static SQInteger loadImage_wrapper(HSQUIRRELVM vm)
 
 }
 
-static SQInteger loadImageKey_wrapper(HSQUIRRELVM vm)
+static SQInteger loadImageKeyed_wrapper(HSQUIRRELVM vm)
 {
   const SQChar* arg0;
   if(SQ_FAILED(sq_getstring(vm, 2, &arg0))) {
@@ -1200,7 +1239,7 @@ static SQInteger loadImageKey_wrapper(HSQUIRRELVM vm)
   }
 
   try {
-    int return_value = BruxAPI::loadImageKey(arg0, static_cast<int> (arg1));
+    int return_value = BruxAPI::loadImageKeyed(arg0, static_cast<int> (arg1));
 
     sq_pushinteger(vm, return_value);
     return 1;
@@ -1209,7 +1248,7 @@ static SQInteger loadImageKey_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, e.what());
     return SQ_ERROR;
   } catch(...) {
-    sq_throwerror(vm, _SC("Unexpected exception while executing function 'loadImageKey'"));
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'loadImageKeyed'"));
     return SQ_ERROR;
   }
 
@@ -4198,6 +4237,20 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'getSoundVolume'");
   }
 
+  sq_pushstring(v, "getAudioDriver", -1);
+  sq_newclosure(v, &getAudioDriver_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'getAudioDriver'");
+  }
+
+  sq_pushstring(v, "isAudioAvailable", -1);
+  sq_newclosure(v, &isAudioAvailable_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'isAudioAvailable'");
+  }
+
   sq_pushstring(v, "import", -1);
   sq_newclosure(v, &import_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".s");
@@ -4380,11 +4433,11 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'loadImage'");
   }
 
-  sq_pushstring(v, "loadImageKey", -1);
-  sq_newclosure(v, &loadImageKey_wrapper, 0);
+  sq_pushstring(v, "loadImageKeyed", -1);
+  sq_newclosure(v, &loadImageKeyed_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".sb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
-    throw SquirrelError(v, "Couldn't register function 'loadImageKey'");
+    throw SquirrelError(v, "Couldn't register function 'loadImageKeyed'");
   }
 
   sq_pushstring(v, "setBackgroundColor", -1);

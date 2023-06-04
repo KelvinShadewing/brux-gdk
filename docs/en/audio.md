@@ -15,11 +15,15 @@
 
 * <a name="playsound"></a>**`playSound( sound, loops )`**
 
-  Plays a sound that repeats as many times as defined by `loops`. If `-1` is used, the sound will loop until stopped. Returns the channel number of the sound being played. If looping, the return value should be stored in order to stop it later.
+  Plays a sound that repeats as many times as defined by `loops`.  
+  
+  If `-1` is used, the sound will loop until stopped. Returns the channel number of the sound being played. If looping, the return value should be stored in order to stop it later.
 
 * <a name="playmusic"></a>**`playMusic( music, loops )`**
 
-  Plays a music track and repeats as many times as `loops` says. Unlike with sound, it does not return a channel since only one music track can play at once.
+  Plays a music track and repeats as many times as `loops` says.  
+  
+  Unlike with sound, it does not return a channel since only one music track can play at once.
 
 * <a name="deletesound"></a>**`deleteSound( sound )`**
 
@@ -84,3 +88,17 @@
 * <a name="getSoundVolume"></a>**`getSoundVolume()`**
 
   Returns the current sound volume with an integer between 0 and 128.
+
+* <a name="getAudioDriver"></a>**`getAudioDriver()`**
+
+  Returns the name of the currently active audio driver.  
+
+  If no audio driver is present, this will return the string `None`.  
+  
+  Note that `None` actually is an audio driver (see `src/audio/audio_none.cpp`), but it does not actually handle audio and is only used as a fallback.
+
+* <a name="isAudioAvailable"></a>**`isAudioAvailable()`**
+
+  Checks if audio playback is currently available.  
+
+  Note that this function's implementation currently does not check that the audio stack is working, it only checks that a real audio driver (not the fallback `None` driver, which doesn't actually handle audio) is present.

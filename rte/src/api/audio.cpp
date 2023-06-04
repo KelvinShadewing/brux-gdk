@@ -1,6 +1,7 @@
 //  Brux - Audio API
 //  Copyright (C) 2016 KelvinShadewing
-//                2023 Vankata453
+//  Copyright (C) 2023 Vankata453
+//  Copyright (C) 2023 hexaheximal
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as published by
@@ -19,7 +20,7 @@
 
 #include "brux/main.hpp"
 
-#include "brux/audio.hpp"
+#include "audio/audio.hpp"
 #include "brux/global.hpp"
 
 namespace BruxAPI {
@@ -37,30 +38,15 @@ int loadMusic(const std::string& m) {
 }
 
 int playSound(int s, int l) {
-	const int c = xyPlaySound(s, l);
-	if (c != -1)
-		Mix_Volume(c, gvVolumeSound);
-
-	return c;
+	return xyPlaySound(s, l);
 }
 
 int playSoundChannel(int s, int l, int c) {
-	const int i = Mix_PlayChannel(c, vcSounds[s], l);
-	if (i == -1) {
-		std::stringstream err;
-		err << "Error playing sound! SDL_Mixer Error: " << Mix_GetError() << std::endl;
-		throw std::runtime_error(err.str());
-	}
-	else {
-		Mix_Volume(i, gvVolumeSound);
-	}
-
-	return i;
+	return xyPlaySoundChannel(s, l, c);
 }
 
 void playMusic(int m, int l) {
 	xyPlayMusic(m, l);
-	Mix_VolumeMusic(gvVolumeMusic);
 }
 
 void deleteSound(int s) {
@@ -76,44 +62,44 @@ void stopSound(int s) {
 }
 
 void stopMusic() {
-	Mix_HaltMusic();
+	xyStopMusic();
 }
 
 void stopChannel(int c) {
-	Mix_HaltChannel(c);
+	xyStopChannel(c);
 }
 
 bool checkSound(int c) {
-	return Mix_Playing(c);
+	return xyCheckSound(c);
 }
 
 bool checkMusic() {
-	return Mix_PlayingMusic();
+	return xyCheckMusic();
 }
 
 void setMaxChannels(int c) {
-	Mix_AllocateChannels(c);
+	xyAllocateChannels(c);
 }
 
 void pauseMusic() {
-	Mix_PauseMusic();
+	xyPauseMusic();
 }
 
 void resumeMusic() {
-	Mix_ResumeMusic();
+	xyResumeMusic();
 }
 
 bool musicPaused() {
-	return Mix_PlayingMusic() && Mix_PausedMusic();
+	return xyIsMusicPaused();
 }
 
 void fadeMusic(int f) {
-	Mix_FadeOutMusic(f * 1000);
+	xyFadeMusic(f);
 }
 
 void setMusicVolume(int vol) {
 	gvVolumeMusic = vol;
-	Mix_VolumeMusic(vol);
+	xySetMusicVolume(vol);
 }
 
 void setSoundVolume(int vol) {
@@ -126,6 +112,14 @@ int getMusicVolume() {
 
 int getSoundVolume() {
 	return gvVolumeSound;
+}
+
+const std::string& getAudioDriver() {
+	return gvAudioDriver;
+}
+
+bool isAudioAvailable() {
+	return xyIsAudioAvailable();
 }
 
 } // namespace BruxAPI

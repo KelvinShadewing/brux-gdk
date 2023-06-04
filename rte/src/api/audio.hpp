@@ -1,6 +1,7 @@
 //  Brux - Audio API
 //  Copyright (C) 2016 KelvinShadewing
-//                2023 Vankata453
+//  Copyright (C) 2023 Vankata453
+//  Copyright (C) 2023 hexaheximal
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as published by
@@ -48,6 +49,8 @@ void setMusicVolume(int vol); // Doc'd
 void setSoundVolume(int vol); // Doc'd
 int getMusicVolume(); // Doc'd
 int getSoundVolume(); // Doc'd
+const std::string& getAudioDriver(); // Doc'd
+bool isAudioAvailable(); // Doc'd
 
 } // namespace BruxAPI
 
