@@ -480,9 +480,10 @@ void xyLoadCore() {
 		else return b
 	}
 
-	::choose <- function(options) {
-		if(typeof options != "array") return options
-		return options[randInt(options.len())]
+	::choose <- function(...) {
+		if(vargv.len() == 0)
+			return null
+		return vargv[randInt(vargv.len())]
 	}
 
 	::system <- function(var) { print("I can't let you do that, Dave.") }
