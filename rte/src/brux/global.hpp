@@ -1,5 +1,6 @@
 //  Brux - Globals
 //  Copyright (C) 2016 KelvinShadewing
+//  Copyright (C) 2023 hexaheximal
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as published by
@@ -58,8 +59,9 @@ extern std::vector<xySprite*> vcSprites;	//std::vector containing all sprite poi
 extern Uint32 gvBackColor;			//Background color
 extern Uint32 gvDrawColor;			//Renderer color
 extern std::vector<xyFont*> vcFonts;	//Container for fonts
-extern std::vector<Mix_Chunk*> vcSounds;	//Container for sounds
-extern std::vector<Mix_Music*> vcMusic;	//Container for music
+
+// NOTE: vcSounds, vcMusic, as well as the rest of the audio code specific to SDL2, has been moved to the audio directory and made more portable.
+
 extern std::string gvAppDir;				//Directory Brux is running from
 extern std::string gvWorkDir;			//Working directory, default is the game directory
 extern const Uint8 *sdlKeys;

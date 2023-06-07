@@ -63,7 +63,10 @@ int loadImage(const std::string& file) {
 	return xyLoadImage(file);
 }
 
-int loadImageKey(const std::string& file, int key) {
+// Originally this was named loadImageKey, although that seems to be a typo - the documentation says it's getImageKeyed.
+// I discovered that by running the test suite and noticing the missing function.
+
+int loadImageKeyed(const std::string& file, int key) {
 	return xyLoadImageKeyed(file, key);
 }
 

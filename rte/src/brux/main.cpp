@@ -1,5 +1,6 @@
 //  Brux - Main
 //  Copyright (C) 2016 KelvinShadewing
+//  Copyright (C) 2023 hexaheximal
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as published by
@@ -30,7 +31,7 @@
 
 #include "brux/main.hpp"
 
-#include "brux/audio.hpp"
+#include "audio/audio.hpp"
 #include "brux/core.hpp"
 #include "brux/fileio.hpp"
 #include "brux/global.hpp"
@@ -199,14 +200,13 @@ int xyInit() {
 		}
 	}
 
-	//Initialize audio
-	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-		xyPrint(0, "SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
-		return 0;
-	}
+	// Initialize audio
+	
+	xyInitAudio();
 
-	//Get channel count
-	gvMixChannels = Mix_AllocateChannels(-8);
+	// Get channel count
+
+	gvMixChannels = xyGetAudioChannels();
 
 	//Initialize input
 	xyInitInput();
@@ -236,28 +236,28 @@ int xyInit() {
 
 	xyPrint(0, "Squirrel initialized successfully!");
 
-	//Initiate other
+	// Initiate other
 	vcTextures.push_back(0);
 	vcTextureNames.push_back("");
 	vcSprites.push_back(0);
-	vcSounds.push_back(0);
-	vcMusic.push_back(0);
+	xyInitAudio();
 	vcFonts.push_back(0);
 
-	xyLoadCore(); //Squirrel-side definitions
+	xyLoadCore(); // Squirrel-side definitions
 	xyLoadActors();
 
 	xyPrint(0, "\n================\n");
 
-	//Return success
+	// Return success
+	
 	return 1;
 };
 
-void xyEnd(){
-
+void xyEnd() {
 	xyPrint(0, "\n\n================\n");
 
-	//Cleanup all resources
+	// Cleanup all resources (except for audio)
+
 	xyPrint(0, "Cleaning up all resources...");
 	xyPrint(0, "Cleaning textures...");
 	for(int i = 0; i < static_cast<int>(vcTextures.size()); i++) {
@@ -269,30 +269,27 @@ void xyEnd(){
 		delete vcSprites[i];
 	}
 
-	xyPrint(0, "Cleaning sounds...");
-	for(int i = 0; i < static_cast<int>(vcSounds.size()); i++) {
-		xyDeleteSound(i);
-	}
-
-	xyPrint(0, "Cleaning music...");
-	for(int i = 0; i < static_cast<int>(vcMusic.size()); i++) {
-		xyDeleteMusic(i);
-	}
 	xyPrint(0, "Finished cleanup.");
 
-	//Close Squirrel
+	// Run Squirrel's garbage collector, and then close the Squirrel VM.
+	
 	xyPrint(0, "Closing Squirrel...");
 	SQInteger garbage = sq_collectgarbage(gvSquirrel);
 	xyPrint(0, "Collected %i junk obects.", garbage);
 	sq_pop(gvSquirrel, 1);
 	sq_close(gvSquirrel);
 
-	//Close SDL
+	// Unload all of the audio stuff
+
+	xyPrint(0, "Unloading audio system...");
+	xyUnloadAudio();
+
+	// Close SDL
+
 	xyPrint(0, "Closing SDL...");
 	SDL_DestroyRenderer(gvRender);
 	SDL_DestroyWindow(gvWindow);
 	IMG_Quit();
-	Mix_Quit();
 	SDL_Quit();
 
 	//Destroy the file system (PhysFS)
