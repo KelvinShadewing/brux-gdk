@@ -74,7 +74,7 @@ void EditorWindow::testProject() {
 	// Determine which command should be used
 	if (environment == "KDE") command = "konsole --workdir " + directory.toStdString() + " -e \"brux\" &";
 	else if (environment == "XFCE") command = "xfce4-terminal --working-directory " + directory.toStdString() + " --command=\"brux\" &";
-	else if (environment.find("GNOME") != environment.npos) command = "gnome-terminal --working-directory " + directory.toStdString() + " --command=\"brux\" &";
+	else if (environment.find("GNOME") != environment.npos) command = "gnome-terminal --working-directory " + directory.toStdString() + " --command=\"brux\" &"; // GNOME and GNOME Flashback
 	else command = ("cd " + directory + " && brux &").toStdString(); // Default to running in the background with no terminal
 	system(command.c_str());
 }
@@ -188,6 +188,9 @@ void EditorWindow::createTab(QString name, int documentIndex) {
 
 	// Create a new document view for the new tab
 	newTabLayout->addWidget(documentViewList[documentIndex]);
+
+	// Finally, change the current index to the newest tab
+	tabWidget->setCurrentIndex(tabWidget->count()-1);
 }
 
 void EditorWindow::closeTab(int index) {
