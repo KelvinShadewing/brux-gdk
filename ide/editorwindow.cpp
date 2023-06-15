@@ -1,4 +1,4 @@
-#include "editorwindow.h"
+#include "editorwindow.hpp"
 #include "ui_editorwindow.h"
 
 #include <iostream>
@@ -10,29 +10,30 @@
 #include <KHelpMenu>
 #include <KAboutData>
 
-EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWindow(parent), ui(new Ui::EditorWindow), Directory(projectDirectory) {
+EditorWindow::EditorWindow(QWidget *parent, QString projectDirectory) : QMainWindow(parent), ui(new Ui::EditorWindow), directory(projectDirectory) {
 	ui->setupUi(this);
 	setWindowTitle("BRUX IDE");
 	QMenu* newMenu = new QMenu("File");
 	connect(newMenu->addAction("Open File"), SIGNAL(triggered()) , this, SLOT(openFile()));
 	connect(newMenu->addAction("Open Folder"), SIGNAL(triggered()) , this, SLOT(openDirectory()));
+	connect(newMenu->addAction("Test Project"), SIGNAL(triggered()) , this, SLOT(testProject()));
 	KHelpMenu* Help = new KHelpMenu(this, KAboutData::applicationData());
 	ui->menubar->addMenu(newMenu);
 	ui->menubar->addMenu(Help->menu());
 
-	DirectoryView.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
+	directoryView.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
 
-	auto TreeView = ui->centralwidget->findChild<QTreeView*>("treeView");
+	QTreeView* treeView = ui->centralwidget->findChild<QTreeView*>("treeView");
 	connect(ui->centralwidget->findChild<QTabWidget*>("fileTabs"), &QTabWidget::tabCloseRequested, this, &EditorWindow::closeFile);
-	connect(TreeView, &QTreeView::doubleClicked, this, &EditorWindow::handleDoubleClick);
+	connect(treeView, &QTreeView::doubleClicked, this, &EditorWindow::handleDoubleClick);
 
-	TextEditorInstance = KTextEditor::Editor::instance();
+	textEditorInstance = KTextEditor::Editor::instance();
 }
 
 EditorWindow::~EditorWindow() {
-	int remainingFiles = Documents.size();
+	int remainingFiles = documentList.size();
 
-	OpenSourceFiles.clear();
+	openTextFiles.clear();
 
 	while (remainingFiles != 0) {
 		closeFile(0);
@@ -49,7 +50,7 @@ void EditorWindow::handleDoubleClick(QModelIndex index) {
 	QTreeView* treeView = ui->centralwidget->findChild<QTreeView*>("treeView");
 	QString item = treeView->model()->data(index).toString();
 
-	processFile(DirectoryView.filePath(index), item);
+	processFile(directoryView.filePath(index), item);
 }
 
 void EditorWindow::openDirectory(bool checked) {
@@ -59,6 +60,25 @@ void EditorWindow::openDirectory(bool checked) {
 		processDirectory(newDir);
 	}
 }
+
+void EditorWindow::testProject() {
+	if (directory == "") return; // No directory open, return.
+	char* desktop = getenv("XDG_CURRENT_DESKTOP");
+	std::string environment, command;
+
+	if (desktop == NULL) {
+		std::cout << "XDG_CURRENT_DESKTOP is unset. Defaulting to no terminal." << std::endl;
+		environment = "";
+	} else environment = desktop;
+
+	// Determine which command should be used
+	if (environment == "KDE") command = "konsole --workdir " + directory.toStdString() + " -e \"brux\" &";
+	else if (environment == "XFCE") command = "xfce4-terminal --working-directory " + directory.toStdString() + " --command=\"brux\" &";
+	else if (environment.find("GNOME") != environment.npos) command = "gnome-terminal --working-directory " + directory.toStdString() + " --command=\"brux\" &"; // GNOME and GNOME Flashback
+	else command = ("cd " + directory + " && brux &").toStdString(); // Default to running in the background with no terminal
+	system(command.c_str());
+}
+
 
 void EditorWindow::openFile(bool checked) {
 	QString openFile = QFileDialog::getOpenFileName(this, tr("Open File"), getenv("HOME"));
@@ -92,12 +112,12 @@ bool EditorWindow::isTilemap(QString path) {
 }
 
 void EditorWindow::processFile(QString path, QString name, bool newFile) {
-	int vecSize = Documents.size();
+	int listSize = documentList.size();
 	// New file logic
 	if (newFile) {
-		Documents.push_back(TextEditorInstance->createDocument(this));
-		DocumentViews.push_back(Documents[vecSize]->createView(nullptr));
-		createTab("New File", vecSize);
+		documentList.push_back(textEditorInstance->createDocument(this));
+		documentViewList.push_back(documentList[listSize]->createView(nullptr));
+		createTab("New File", listSize);
 		return;
 	}
 
@@ -107,24 +127,24 @@ void EditorWindow::processFile(QString path, QString name, bool newFile) {
 		return; // Do this later
 	}
 
-	if(std::find(OpenSourceFiles.begin(), OpenSourceFiles.end(), path) != OpenSourceFiles.end()) return;
+	if(std::find(openTextFiles.begin(), openTextFiles.end(), path) != openTextFiles.end()) return;
 
 	QDir dirExistsCheck{path};
 	if (!dirExistsCheck.exists()) {
-		Documents.push_back(TextEditorInstance->createDocument(this));
-		Documents[vecSize]->openUrl(QUrl("file://" + path));
-		DocumentViews.push_back(Documents[vecSize]->createView(nullptr));
-		createTab(name, vecSize);
-		OpenSourceFiles.push_back(path);
+		documentList.push_back(textEditorInstance->createDocument(this));
+		documentList[listSize]->openUrl(QUrl("file://" + path));
+		documentViewList.push_back(documentList[listSize]->createView(nullptr));
+		createTab(name, listSize);
+		openTextFiles.push_back(path);
 	}
 }
 
 void EditorWindow::processDirectory(QString path, bool doCloseFiles) {
 	if (!isDirectory(path)) return;
 	if (doCloseFiles) {
-		int remainingFiles = Documents.size();
+		int remainingFiles = documentList.size();
 
-		OpenSourceFiles.clear();
+		openTextFiles.clear();
 
 		while (remainingFiles != 0) {
 			closeFile(0);
@@ -136,25 +156,25 @@ void EditorWindow::processDirectory(QString path, bool doCloseFiles) {
 
 	setWindowTitle(shortDir + " - BRUX IDE");
 
-	Directory = path;
-	DirectoryView.setRootPath(Directory);
+	directory = path;
+	directoryView.setRootPath(directory);
 
-	auto TreeView = ui->centralwidget->findChild<QTreeView*>("treeView");
-	TreeView->setModel(&DirectoryView);
-	TreeView->setRootIndex(DirectoryView.index(Directory));
-	TreeView->hideColumn(3);
-	int sizeOfColumn = TreeView->maximumWidth() / 4;
-	TreeView->setColumnWidth(0, sizeOfColumn * 2.5f);
-	TreeView->setColumnWidth(1, sizeOfColumn * 0.75f);
-	TreeView->setColumnWidth(2, sizeOfColumn * 0.5f);
+	QTreeView* treeView = ui->centralwidget->findChild<QTreeView*>("treeView");
+	treeView->setModel(&directoryView);
+	treeView->setRootIndex(directoryView.index(directory));
+	treeView->hideColumn(3);
+	int sizeOfColumn = treeView->maximumWidth() / 4;
+	treeView->setColumnWidth(0, sizeOfColumn * 2.5f);
+	treeView->setColumnWidth(1, sizeOfColumn * 0.75f);
+	treeView->setColumnWidth(2, sizeOfColumn * 0.5f);
 }
 
 void EditorWindow::closeFile(int index) {
-	DocumentViews[index]->close();
-	Documents[index]->closeStream();
+	documentViewList[index]->close();
+	documentList[index]->closeStream();
 	closeTab(index);
-	if (OpenSourceFiles.size() == 0) return; // We manually cleared this so don't erase from OpenSourceFiles.
-	OpenSourceFiles.erase(OpenSourceFiles.begin() + index);
+	if (openTextFiles.size() == 0) return; // We manually cleared this so don't erase from openTextFiles.
+	openTextFiles.erase(openTextFiles.begin() + index);
 }
 
 void EditorWindow::createTab(QString name, int documentIndex) {
@@ -167,7 +187,10 @@ void EditorWindow::createTab(QString name, int documentIndex) {
 	else tabWidget->insertTab(0, newTab, name);
 
 	// Create a new document view for the new tab
-	newTabLayout->addWidget(DocumentViews[documentIndex]);
+	newTabLayout->addWidget(documentViewList[documentIndex]);
+
+	// Finally, change the current index to the newest tab
+	tabWidget->setCurrentIndex(tabWidget->count()-1);
 }
 
 void EditorWindow::closeTab(int index) {
