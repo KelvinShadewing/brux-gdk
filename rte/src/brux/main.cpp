@@ -42,6 +42,7 @@
 /////////////////
 //MAIN FUNCTION//
 /////////////////
+
 #ifdef __EMSCRIPTEN__
 EMSCRIPTEN_KEEPALIVE
 #endif
@@ -53,7 +54,8 @@ int main(int argc, char* argv[]) {
 		FS.chdir('/bin');
 	);
 #endif
-	//Initiate everything
+	// Initiate everything
+	
 	int initResult = 0;
 	try {
 		initResult = xyInit();
@@ -69,65 +71,87 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 
-	//Process arguments
+	// Process arguments
+	
 	std::string xygapp = "";
 	std::string curarg = "";
-	for(int i = 0; i < argc; i++) {
-		//Print each argument and process them
+	
+	for (int i = 0; i < argc; i++) {
 		curarg = argv[i];
-		xyPrint(0, curarg.c_str());
+		
+		// The first argument is just the
+		// command to invoke the runtime,
+		// so skip it.
+		
+		if (i != 0) {
+			// Handle arguments
 
-	//The first argument is just the
-	//command to invoke the runtime,
-	//so skip it.
-		if(i != 0) {
-			//Input file
-			//If the file is long enough
-			if(curarg.length() > 4) {
-				//If the input is a Squirrel file
-				if(curarg.substr(curarg.find_last_of('.')) == ".sq" || curarg.substr(curarg.find_last_of('.')) == ".nut" || curarg.substr(curarg.find_last_of('.')) == ".brx"){
-					//Check that the file really exists
-					if(xyLegacyFileExists(curarg)) {
-						//All checks pass, assign the file
+			if (curarg == "-f" || curarg == "--fullscreen") {
+				SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+			}
+			
+			// Check if the argument is long enough to be a source file
+				
+			if (curarg.length() > 4) {
+				// Check if the argument is a source file
+				
+				if (curarg.substr(curarg.find_last_of('.')) == ".sq" || curarg.substr(curarg.find_last_of('.')) == ".nut" || curarg.substr(curarg.find_last_of('.')) == ".brx") {
+					// Check if the file actually exists
+					
+					if (xyLegacyFileExists(curarg)) {
+						// If everything looks good, set it as the main file.
+						
 						xygapp = curarg;
+						
 						size_t found = xygapp.find_last_of("/\\");
+						
 						gvWorkDir = xygapp.substr(0, found);
-						if (chdir(gvWorkDir.c_str()) != 0) { // Check whether an error has occured
+						
+						if (chdir(gvWorkDir.c_str()) != 0) {
 							xyPrint(0, "Error initiating Brux: Cannot change to input file working directory: %d", errno);
 							xyEnd();
 							return 1;
 						}
+						
 						const std::string curdir = xyGetDir();
+						
 						xyPrint(0, "Working directory: %s", curdir.c_str());
 					}
 				}
 			}
-		//Other arguments
-
-		if(curarg == "-f" || curarg == "--fullscreen") SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		}
 	}
 
 	SDL_ShowCursor(0);
 
-	//Mount the current working directory.
+	// Mount the current working directory.
+	 
 	xyFSMount(xyGetDir(), "/", true);
 
-	//Set the current write directory to a default for Brux.
-	//Can be changed later by the game.
+	// Set the current write directory to a default for Brux.
+	// Can be changed later by the game.
+	
 	xySetWriteDir(xyGetPrefDir("brux", "brux"));
 
-	//Run app
-	if(xygapp != "") {
+	// If the filename isn't blank, run it.
+	
+	if (xygapp != "") {
 		xyPrint(0, "Running %s...", xygapp.c_str());
 		sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
-	}
-	else {
-		if(xyFileExists("test.nut")) sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
-		else if(xyFileExists("game.brx")) sqstd_dofile(gvSquirrel, "game.brx", 0, 1);
+	} else {
+		// Otherwise, attempt to load test.nut or game.brx as a fallback.
+		
+		if (xyFileExists("test.nut")) {
+			sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
+		}
+		
+		else if (xyFileExists("game.brx")) {
+			sqstd_dofile(gvSquirrel, "game.brx", 0, 1);
+		}
 	}
 
-	//End game
+	// End game
+	
 	try {
 		xyEnd();
 	}
@@ -268,7 +292,7 @@ int xyInit() {
 	// Return success
 	
 	return 1;
-};
+}
 
 void xyEnd() {
 	xyPrint(0, "\n\n================\n");
@@ -316,7 +340,7 @@ void xyEnd() {
 	//Close log file
 	xyPrint(0, "System closed successfully!");
 	gvLog.close();
-};
+}
 
 void xyPrint(HSQUIRRELVM v, const SQChar *s, ...) {
 	va_list argv;
@@ -326,7 +350,7 @@ void xyPrint(HSQUIRRELVM v, const SQChar *s, ...) {
 	va_end(argv);
 	cout << buffer << endl;
 	gvLog << buffer << endl;
-};
+}
 
 void xyUpdate() {
 	// Update last button state
@@ -347,6 +371,8 @@ void xyUpdate() {
 	gvQuit = 0;
 
 	// Poll events
+	
+	SDL_Event Event;
 	
 	while (SDL_PollEvent(&Event)) {
 		// Quit if SDL tells us to
@@ -514,6 +540,7 @@ void xyUpdate() {
 
 	// Wait for FPS limit
 	// Update ticks counter for FPS
+	
 #ifdef USE_CHRONO_STEADY_CLOCK
 	gvTicks = std::chrono::steady_clock::now();
 
@@ -524,11 +551,13 @@ void xyUpdate() {
 			std::this_thread::sleep_for((max_delay - fLength) - std::chrono::duration<float>(0.0001f));
 	}
 
-	//Calculate time since previous tick and adjust framerate
+	// Calculate time since previous tick and adjust framerate
+	
 	std::chrono::duration<float> timeSince = std::chrono::steady_clock::now() - gvTickLast;
 	gvFPS = 1.0f / timeSince.count();
 
 	// Update previous tick and increment frames
+	
 	gvTickLast = std::chrono::steady_clock::now();
 #else
 	gvTicks = SDL_GetTicks();
@@ -544,26 +573,26 @@ void xyUpdate() {
 	gvTickLast = SDL_GetTicks();
 #endif
 	gvFrames++;
-};
+}
 
 int xyGetOS() {
 #ifdef _WIN32
-	return 0;
+	return OS_WINDOWS;
 #endif
 #ifdef __gnu_linux__
-	return 1;
+	return OS_LINUX;
 #endif
 #ifdef __ANDROID__
-	return 2;
+	return OS_ANDROID;
 #endif
 #ifdef __APPLE__
-	return 3;
+	return OS_MAC;
 #endif
 #ifdef _DINGUX
-	return 4;
+	return OS_DINGUX;
 #endif
 };
 
 void __stack_chk_fail(void) {
 	xyPrint(0, "Stack smash detected.");
-};
+}

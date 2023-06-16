@@ -25,17 +25,45 @@
 #include "brux/text.hpp"
 #include "brux/shapes.hpp"
 
+// Not sure why this is here.
+
 int __stack_chk_guard = 0xdeadbeef;
-bool gvQuit = 0;
-int gvMouseX = 0, gvMouseY = 0;
-Uint32 gvScrW = 320, gvScrH = 240;
-Uint32 gvWinW = 320, gvWinH = 240;
+
+// Used to detect a request to close the application
+
+bool gvQuit = false;
+
+// Mouse position
+
+int gvMouseX = 0;
+int gvMouseY = 0;
+
+// Game screen size
+
+Uint32 gvScrW = 320;
+Uint32 gvScrH = 240;
+
+// Window size
+
+Uint32 gvWinW = 320;
+Uint32 gvWinH = 240;
+
+// Squirrel VM
+
 HSQUIRRELVM gvSquirrel;
+
+// Log buffer
+
 std::ofstream gvLog;
+
+// SDL2-specific variables
+
 SDL_Window *gvWindow;
 SDL_Renderer *gvRender;
 SDL_Texture *gvScreen;
-int gvError;
+
+// Used for FPS limiting
+
 #ifdef USE_CHRONO_STEADY_CLOCK
 std::chrono::time_point<std::chrono::steady_clock> gvTicks = std::chrono::steady_clock::now();
 std::chrono::time_point<std::chrono::steady_clock> gvTickLast = std::chrono::steady_clock::now();
@@ -43,38 +71,67 @@ std::chrono::time_point<std::chrono::steady_clock> gvTickLast = std::chrono::ste
 Uint32 gvTicks = 1;
 Uint32 gvTickLast = 0;
 #endif
+
+// Current game FPS
+
 float gvFPS = 0;
+
+// Maximum FPS limit, this can be changed by the game
+
 Uint32 gvMaxFPS = 60;
 Uint32 gvFrames = 0;
+
+// Brux version string
+
 const char *gvVNo = "v0.3.2";
-const float pi = 3.14159265f;
+
+// Should it clear the screen? If true, then the answer is yes.
+
 bool gvClearScreen = 1;
-SDL_Event Event;
+
+// SDL2-related vectors
+// The audio-specific ones have been moved to src/audio/audio_sdl2.cpp though.
+
 std::vector<SDL_Texture*> vcTextures;
 std::vector<std::string> vcTextureNames;
-bool gvDebug = 1;
 std::vector<xySprite*> vcSprites;
 std::vector<xyFont*> vcFonts;
+
+// Should it show debug info? If true, then the answer is yes.
+
+bool gvDebug = true;
+
+// Draw colors
+
 Uint32 gvBackColor;
 Uint32 gvDrawColor;
+
+// Stores the current working directory that the engine is running from
+
 std::string gvAppDir;
+
+// Stores the current working directory inside of Brux GDK
+
 std::string gvWorkDir;
+
 const Uint8 *sdlKeys;
 std::vector<Uint8> keystate(322);
 std::vector<Uint8> keylast(322);
 Uint32 buttonstate[5];
 Uint32 buttonlast[5];
-int mouseWheelX = 0;
-int mouseWheelY = 0;
+Uint32 mouseWheelX = 0;
+Uint32 mouseWheelY = 0;
 Uint8 fileMax = 128;
 std::vector<xyShape*> gvShape;
 std::string gvInputString;
-int gvMixChannels;
-int gvVolumeMusic = 128;
-int gvVolumeSound = 128;
-int gvDrawTarget = 0;
+Uint32 gvMixChannels = 0;
+Uint32 gvVolumeMusic = 128;
+Uint32 gvVolumeSound = 128;
+Uint32 gvDrawTarget = 0;
 
-//Gamepad
+// Gamepad
+// NOTE: I don't know why, I don't want to know why, but *somehow* this entirely breaks if we use the Uint32 type for this
+
 SDL_Joystick* gvGamepad[8] = {0};
 int gvPadButton[8][32] = {0};
 int gvPadLastButton[8][32] = {0};
