@@ -143,21 +143,26 @@ int main(int argc, char* argv[]) {
 //OTHER FUNCTIONS//
 ///////////////////
 
-//Handles initialization of SDL2 and Squirrel
+// Handles initialization of SDL2 and Squirrel
+
 int xyInit() {
-	//Initiate log file
+	// Initiate log file
+	
 	remove("log.txt");
 	gvLog.open("log.txt", ios_base::out);
 
-	//Print opening message
+	// Print opening message
+	
 	xyPrint(0, "\n/========================\\\n| BRUX GAME RUNTIME LOG |\n\\========================/\n\n");
 	xyPrint(0, "Initializing program...\n\n");
 
-	//Initialize the file system (PhysFS)
+	// Initialize the file system (PhysFS)
+	
 	xyPrint(0, "Initializing file system...");
 	xyFSInit();
 
-	//Initiate SDL
+	// Initiate SDL2
+	
 	SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
 #ifdef __EMSCRIPTEN__
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS) < 0) {
@@ -169,27 +174,34 @@ int xyInit() {
 	}
 
 	//Create window
-	gvWindow = SDL_CreateWindow("BRUX", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
-	if(gvWindow == 0) {
+	
+	gvWindow = SDL_CreateWindow("Brux GDK", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
+	
+	if (gvWindow == 0) {
 		xyPrint(0, "Window could not be created! SDL Error: %s\n", SDL_GetError());
 		return 0;
 	} else {
-		//Create renderer for window
+		// Create renderer for window
+		
 		gvRender = SDL_CreateRenderer(gvWindow, -1, SDL_RENDERER_ACCELERATED);
-		if(gvRender == 0) {
+		
+		if (gvRender == 0) {
 			xyPrint(0, "Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 			return 0;
 		} else {
-			//Initialize renderer color
+			// Initialize renderer color
+			
 			SDL_SetRenderDrawColor(gvRender, 0xFF, 0xFF, 0xFF, 0xFF);
 
-			//Initialize PNG loading
+			// Initialize PNG loading
+			
 			if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
 				xyPrint(0, "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 				return 0;
 			}
 
-			//Set up the viewport
+			// Set up the viewport
+			
 			SDL_Rect screensize;
 			screensize.x = 0;
 			screensize.y = 0;
@@ -197,6 +209,11 @@ int xyInit() {
 			screensize.h = gvScrH;
 			SDL_RenderSetViewport(gvRender, &screensize);
 			SDL_RenderSetLogicalSize(gvRender, gvScrW, gvScrH);
+			
+			// Set the mimumum window size
+			// No idea why it didn't do this before.
+			
+			SDL_SetWindowMinimumSize(gvWindow, gvScrW, gvScrH);
 		}
 	}
 
@@ -312,83 +329,130 @@ void xyPrint(HSQUIRRELVM v, const SQChar *s, ...) {
 };
 
 void xyUpdate() {
-
-	//Update last button state
-	for(int i = 0; i < 5; i++) {
+	// Update last button state
+	
+	int i;
+	
+	for (i = 0; i < 5; i++) {
 		buttonlast[i] = buttonstate[i];
-	};
+	}
+	
+	// Reset the mouse wheel position
 
 	mouseWheelX = 0;
 	mouseWheelY = 0;
 
-	//Reset event-related globals
+	// Reset event-related globals
+	
 	gvQuit = 0;
 
-	//Poll events
-	while(SDL_PollEvent(&Event)) {
-		//Quit
-		if(Event.type == SDL_QUIT) gvQuit = 1;
-
-		//Mouse button
-		if(Event.type == SDL_MOUSEBUTTONDOWN) {
-			if(Event.button.button == SDL_BUTTON_LEFT) buttonstate[0] = 1;
-			if(Event.button.button == SDL_BUTTON_MIDDLE) buttonstate[1] = 1;
-			if(Event.button.button == SDL_BUTTON_RIGHT) buttonstate[2] = 1;
-			if(Event.button.button == SDL_BUTTON_X1) buttonstate[3] = 1;
-			if(Event.button.button == SDL_BUTTON_X2) buttonstate[4] = 1;
+	// Poll events
+	
+	while (SDL_PollEvent(&Event)) {
+		// Quit if SDL tells us to
+		
+		if(Event.type == SDL_QUIT) {
+			gvQuit = 1;
+			continue;
 		}
-
-		if(Event.type == SDL_MOUSEBUTTONUP) {
-			if(Event.button.button == SDL_BUTTON_LEFT) buttonstate[0] = 0;
-			if(Event.button.button == SDL_BUTTON_MIDDLE) buttonstate[1] = 0;
-			if(Event.button.button == SDL_BUTTON_RIGHT) buttonstate[2] = 0;
-			if(Event.button.button == SDL_BUTTON_X1) buttonstate[3] = 0;
-			if(Event.button.button == SDL_BUTTON_X2) buttonstate[4] = 0;
+		
+		// Handle mouse button press/release
+		// Significantly code-golfed by hexaheximal
+		
+		if (Event.type == SDL_MOUSEBUTTONDOWN || Event.type == SDL_MOUSEBUTTONUP) {
+			// The new state will be 1 if it's down, or 0 if it's up.
+			
+			int newButtonState = Event.type == SDL_MOUSEBUTTONDOWN ? 1 : 0;
+			
+			switch (Event.button.button) {
+				case SDL_BUTTON_LEFT:
+					buttonstate[0] = newButtonState;
+					break;
+				case SDL_BUTTON_MIDDLE:
+					buttonstate[1] = newButtonState;
+					break;
+				case SDL_BUTTON_RIGHT:
+					buttonstate[2] = newButtonState;
+					break;
+				case SDL_BUTTON_X1:
+					buttonstate[3] = newButtonState;
+					break;
+				case SDL_BUTTON_X2:
+					buttonstate[4] = newButtonState;
+					break;
+				default:
+					xyPrint(0, "Unknown button pressed! This should never happen!");
+					break;
+			}
+			
+			continue;
 		}
+		
+		// Handle mouse wheel movement
 
-		if(Event.type == SDL_MOUSEWHEEL) {
+		if (Event.type == SDL_MOUSEWHEEL) {
 			mouseWheelX = Event.wheel.x;
 			mouseWheelY = Event.wheel.y;
+			continue;
 		}
+		
+		// Handle text input
 
-		if(Event.type == SDL_TEXTINPUT) {
+		if (Event.type == SDL_TEXTINPUT) {
 			gvInputString = Event.text.text;
+			continue;
 		}
 	}
 
-	//Update screen
+	// Update the game window
+	
 	SDL_RenderPresent(gvRender);
+	
 	Uint32 olddraw = gvDrawColor;
+	
 	xySetDrawColor(gvBackColor);
+	
 	SDL_RenderClear(gvRender);
+	
 	xySetDrawColor(olddraw);
-	if(SDL_BYTEORDER == SDL_LIL_ENDIAN) gvDrawColor = SDL_Swap32(gvDrawColor);
-
-	//Update input
+	
+	if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
+		gvDrawColor = SDL_Swap32(gvDrawColor);
+	}
+	
+	// Update input
+	
 	keylast = keystate;
 	SDL_PumpEvents();
-	for(int i = 0; i < 322; i++) {
+	
+	for (int i = 0; i < 322; i++) {
 		keystate[i] = sdlKeys[i];
 	}
 
 	SDL_GetMouseState(&gvMouseX, &gvMouseY);
-
-	for(int i = 0; i < 8; i++) {
-		for(int j = 0; j < 32; j++) {
+	
+	// This algorithm is a complicated mess
+	// TODO: clean this up later
+	
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 32; j++) {
 			gvPadLastButton[i][j] = gvPadButton[i][j];
-		};
+		}
 
-		if(SDL_JoystickGetAttached(gvGamepad[i])) {
+		if (SDL_JoystickGetAttached(gvGamepad[i])) {
 			gvPadHatLast[i] = gvPadHat[i];
 			gvPadHat[i] = SDL_JoystickGetHat(gvGamepad[i], 0);
-			for(int j = 0; j < 10; j++){
+			
+			for (int j = 0; j < 10; j++) {
 				gvPadLastAxis[i][j] = gvPadAxis[i][j];
 				gvPadAxis[i][j] = SDL_JoystickGetAxis(gvGamepad[i], j);
-			};
-			for(int j = 0; j < 32; j++){
+			}
+			
+			for (int j = 0; j < 32; j++) {
 				gvPadLastButton[i][j] = gvPadButton[i][j];
 				gvPadButton[i][j] = SDL_JoystickGetButton(gvGamepad[i], j);
-			};
+			}
+			
 			gvPadX[i] = SDL_JoystickGetAxis(gvGamepad[i], 0);
 			gvPadY[i] = SDL_JoystickGetAxis(gvGamepad[i], 1);
 			gvPadZ[i] = SDL_JoystickGetAxis(gvGamepad[i], 2);
@@ -401,11 +465,11 @@ void xyUpdate() {
 			gvPadHatLast[i] = gvPadHat[i];
 			gvPadHat[i] = 0;
 
-			for(int j = 0; j < 10; j++) {
+			for (int j = 0; j < 10; j++) {
 				gvPadAxis[i][j] = 0;
 			}
 
-			for(int j = 0; j < 32; j++) {
+			for (int j = 0; j < 32; j++) {
 				gvPadLastButton[i][j] = gvPadButton[i][j];
 				gvPadButton[i][j] = 0;
 			}
@@ -421,24 +485,35 @@ void xyUpdate() {
 		}
 	}
 
-	//Divide by scale
+	// Divide by scale
+	
 	float sx, sy;
+	
 	SDL_RenderGetScale(gvRender, &sx, &sy);
 
-	if(sx == 0) sx = 1;
-	if(sy == 0) sy = 1;
-
+	// This code was originally broken in a way that could cause a crash because it didn't properly handle floating-point numbers.
+	// Should be fixed now.
+	
+	if (1.0 > sx) {
+		sx = 1.0;
+	}
+	
+	if (1.0 > sy) {
+		sy = 1.0;
+	}
+	
 	gvMouseX /= static_cast<int>(sx);
 	gvMouseY /= static_cast<int>(sy);
 
-	//Gamepad
-	//Check each pad
+	// Gamepad
+	// Check each pad
+	
 	for(int i = 0; i < 8; i++) {
 		if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
 	}
 
-	//Wait for FPS limit
-	//Update ticks counter for FPS
+	// Wait for FPS limit
+	// Update ticks counter for FPS
 #ifdef USE_CHRONO_STEADY_CLOCK
 	gvTicks = std::chrono::steady_clock::now();
 
