@@ -41,7 +41,7 @@ void xyInitAudio() {
 	#ifdef USE_FASTFILL
 	xyPrint(0, "Audio system: SDL2 (fastfill enabled)");
 	#else
-	xyPrint(0, "Audio system: SDL2 (fastfill disablec)");
+	xyPrint(0, "Audio system: SDL2 (fastfill disabled)");
 	#endif
 
 	// Historically, brux-gdk used a 22050Hz sampling rate.
