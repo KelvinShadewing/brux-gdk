@@ -88,6 +88,8 @@ void setScalingFilter(int hint) {
 }
 
 void setResolution(int w, int h) {
+	// Don't allow the width and/or height to be 0
+	
 	if (w < 1 || h < 1) {
 		throw std::runtime_error("Window dimensions cannot be 0");
 	}
@@ -100,6 +102,7 @@ void setResolution(int w, int h) {
 	SDL_RenderSetViewport(gvRender, &screensize);
 	SDL_RenderSetLogicalSize(gvRender, w, h);
 	SDL_SetWindowSize(gvWindow, w, h);
+	SDL_SetWindowMinimumSize(gvWindow, w, h);
 }
 
 int screenW() {
