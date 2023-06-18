@@ -38,6 +38,10 @@
 #include "brux/input.hpp"
 #include "squirrel/wrapper.hpp"
 
+#include "../test/game/game.hpp"
+#include "../test/projection_test/projection_test.hpp"
+#include "../test/playground/playground.hpp"
+
 /////////////////
 //MAIN FUNCTION//
 /////////////////
@@ -115,6 +119,9 @@ int main(int argc, char* argv[]) {
 	//Set the current write directory to a default for Brux.
 	//Can be changed later by the game.
 	xySetWriteDir(xyGetPrefDir("brux", "brux"));
+
+	Playground game;
+	game.StartGame();
 
 	//Run app
 	if(xygapp != "") {

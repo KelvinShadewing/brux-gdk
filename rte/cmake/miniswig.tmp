@@ -1,0 +1,461 @@
+# 0 "src/api/api.hpp"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+
+# 1 "/usr/include/stdc-predef.h" 3 4
+/* Copyright (C) 1991-2022 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, see
+   <https://www.gnu.org/licenses/>.  */
+
+
+
+
+/* This header is separate from features.h so that the compiler can
+   include it implicitly at the start of every compilation.  It must
+   not itself include <features.h> or any other header that includes
+   <features.h> because the implicit include comes before any feature
+   test macros that may be defined in a source file before it first
+   explicitly includes a system header.  GCC knows the name of this
+   header in order to preinclude it.  */
+
+/* glibc's intent is to support the IEC 559 math functionality, real
+   and complex.  If the GCC (4.9 and later) predefined macros
+   specifying compiler intent are available, use them to determine
+   whether the overall intent is to support these features; otherwise,
+   presume an older compiler has intent to support these features and
+   define these macros by default.  */
+# 56 "/usr/include/stdc-predef.h" 3 4
+/* wchar_t uses Unicode 10.0.0.  Version 10.0 of the Unicode Standard is
+   synchronized with ISO/IEC 10646:2017, fifth edition, plus
+   the following additions from Amendment 1 to the fifth edition:
+   - 56 emoji characters
+   - 285 hentaigana
+   - 3 additional Zanabazar Square characters */
+# 0 "<command-line>" 2
+# 1 "src/api/api.hpp"
+
+# 1 "src/api/api.hpp"
+// This file is processed by Miniswig to produce the Brux Squirrel API.
+# 1 "src/api/audio.hpp" 1
+//  Brux - Audio API
+//  Copyright (C) 2016 KelvinShadewing
+//                2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 27 "src/api/audio.hpp"
+namespace BruxAPI {
+
+// Audio
+int loadSound(const std::string& s); // Doc'd
+int loadMusic(const std::string& m); // Doc'd
+int playSound(int s, int l); // Doc'd
+int playSoundChannel(int s, int l, int c);
+void playMusic(int m, int l); // Doc'd
+void deleteSound(int s); // Doc'd
+void deleteMusic(int m); // Doc'd
+void stopSound(int s); // Doc'd
+void stopMusic(); // Doc'd
+void stopChannel(int c); // Doc'd
+bool checkSound(int c); // Doc'd
+bool checkMusic(); // Doc'd
+void setMaxChannels(int c); // Doc'd
+void pauseMusic(); // Doc'd
+void resumeMusic(); // Doc'd
+bool musicPaused(); // Doc'd
+void fadeMusic(int f); // Doc'd
+void setMusicVolume(int vol); // Doc'd
+void setSoundVolume(int vol); // Doc'd
+int getMusicVolume(); // Doc'd
+int getSoundVolume(); // Doc'd
+
+} // namespace BruxAPI
+# 3 "src/api/api.hpp" 2
+# 1 "src/api/fileio.hpp" 1
+//  Brux - File I/O API
+//  Copyright (C) 2016 KelvinShadewing
+//                2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 29 "src/api/fileio.hpp"
+namespace BruxAPI {
+
+// File IO
+void import(const std::string& file); // Clone of `donut()`
+void donut(const std::string& file); // Doc'd
+void dostr(const std::string& str); // Doc'd
+void mount(const std::string& dir, const std::string& mountpoint, bool prepend); // Doc'd
+void unmount(const std::string& dir); // Doc'd
+std::string getdir(); // Doc'd
+std::string getWriteDir(); // Doc'd
+std::string getPrefDir(const std::string& org, const std::string& app); // Doc'd
+void setWriteDir(const std::string& dir); // Doc'd
+void createDir(const std::string& name); // Doc'd
+std::string fileRead(const std::string& file); // Doc'd
+void fileWrite(const std::string& file, const std::string& data); // Doc'd
+void fileAppend(const std::string& file, const std::string& data); // Doc'd
+bool fileExists(const std::string& file); // Doc'd
+void fileDelete(const std::string& file); // Doc'd
+bool isdir(const std::string& dir); // Doc'd
+SQInteger lsdir(HSQUIRRELVM v, const std::string& dir); // Doc'd
+
+} // namespace BruxAPI
+# 4 "src/api/api.hpp" 2
+# 1 "src/api/graphics.hpp" 1
+//  Brux - Graphics API
+//  Copyright (C) 2016 KelvinShadewing
+//                2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 27 "src/api/graphics.hpp"
+namespace BruxAPI {
+
+// Graphics
+void clearScreen(); // Doc'd
+void setDrawTarget(int tex); // Doc'd
+int getDrawTarget(); // Doc'd
+void resetDrawTarget();
+void drawImage(int img, int x, int y); // Doc'd
+void drawImagePart(int img, int x, int y, int ox, int oy, int w, int h);
+void drawImageEx(int img, int x, int y, float a, int f, int w, int h, int c);
+void setDrawColor(int color); // Doc'd
+int loadImage(const std::string& file); // Doc'd
+int loadImageKey(const std::string& file, int key); // Doc'd
+void setBackgroundColor(int color); // Doc'd
+void setScaling(float scale);
+void setScalingFilter(int hint); // Doc'd
+void setResolution(int w, int h); // Doc'd
+int screenW(); // Doc'd
+int screenH(); // Doc'd
+int windowW();
+int windowH();
+int newTexture(int w, int h); // Doc'd
+void textureSetBlendMode(int texture, int blend); // Doc'd
+int findTexture(const std::string& name);
+std::string getTextureName(int texture);
+void printTextureNames();
+
+} // namespace BruxAPI
+# 5 "src/api/api.hpp" 2
+# 1 "src/api/input.hpp" 1
+//  Brux - Input API
+//  Copyright (C) 2016 KelvinShadewing
+//                2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 27 "src/api/input.hpp"
+namespace BruxAPI {
+
+// Input
+int keyPress(int key); // Doc'd
+int keyDown(int key); // Doc'd
+int keyRelease(int key); // Doc'd
+int keyPressAny(); // Doc'd
+int mouseDown(int button); // Doc'd
+int mousePress(int button); // Doc'd
+int mouseRelease(int button); // Doc'd
+int mouseX(); // Doc'd
+int mouseY(); // Doc'd
+bool getQuit(); // Doc'd
+int joyCount(); // Doc'd
+std::string joyName(int i); // Doc'd
+int joyX(int i); // Doc'd
+int joyY(int i); // Doc'd
+int joyZ(int i); // Doc'd
+int joyH(int i); // Doc'd
+int joyV(int i); // Doc'd
+int joyR(int i); // Doc'd
+int joyL(int i); // Doc'd
+int joyAxis(int i, int j); // Doc'd
+bool joyHatDown(int i, int d); // Doc'd
+bool joyHatPress(int i, int d); // Doc'd
+bool joyHatRelease(int i, int d); // Doc'd
+int joyButtonPress(int i, int b); // Doc'd
+int joyButtonDown(int i, int b); // Doc'd
+int joyButtonRelease(int i, int b); // Doc'd
+int joyPressAny(int p); // Doc'd
+int joyAxisPress(int p, int a, int d); // Doc'd
+int joyAxisRelease(int p, int a, int d); // Doc'd
+std::string keyString(); // Doc'd
+int mouseWheelX(); // Doc'd
+int mouseWheelY(); // Doc'd
+
+} // namespace BruxAPI
+# 6 "src/api/api.hpp" 2
+# 1 "src/api/json.hpp" 1
+//  Brux - JSON API
+//  Copyright (C) 2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 28 "src/api/json.hpp"
+namespace BruxAPI {
+
+// JSON
+SQInteger jsonRead(HSQUIRRELVM v, const std::string& str); // Doc'd
+
+} // namespace BruxAPI
+# 7 "src/api/api.hpp" 2
+# 1 "src/api/main.hpp" 1
+//  Brux - Main API
+//  Copyright (C) 2016 KelvinShadewing
+//                2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 27 "src/api/main.hpp"
+namespace BruxAPI {
+
+// Main
+void wait(int seconds); // Doc'd
+void update(); // Doc'd
+std::string getOS(); // Doc'd
+int getTicks(); // Doc'd
+int getFPS(); // Doc'd
+void setFPS(int max_fps); // Doc'd
+void setWindowTitle(const std::string& title); // Doc'd
+void setWindowIcon(const std::string& file); // Doc'd
+int getFrames(); // Doc'd
+int displayW(); // Doc'd
+int displayH(); // Doc'd
+std::string bruxVersion(); // Doc'd
+void toggleFullscreen(); // Doc'd
+
+} // namespace BruxAPI
+# 8 "src/api/api.hpp" 2
+# 1 "src/api/maths.hpp" 1
+//  Brux - Maths API
+//  Copyright (C) 2016 KelvinShadewing
+//                2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 27 "src/api/maths.hpp"
+namespace BruxAPI {
+
+// Maths
+float randFloat(float a); // Doc'd
+int randInt(int a); // Doc'd
+float distance2(float x1, float y1, float x2, float y2); // Doc'd
+bool inDistance2(float x1, float y1, float x2, float y2, float d);
+float distance3(float x1, float y1, float z1, float x2, float y2, float z2);
+float wrap(float x, float mx, float mn); // Doc'd
+int floor(float f); // Doc'd
+int ceil(float f); // Doc'd
+int round(float f); // Doc'd
+float pointAngle(float x1, float y1, float x2, float y2); // Doc'd
+float abs(float f); // Doc'd
+float lendirX(float l, float d); // Doc'd
+float lendirY(float l, float d); // Doc'd
+std::string binstr(int i); // Doc'd
+
+} // namespace BruxAPI
+# 9 "src/api/api.hpp" 2
+# 1 "src/api/sdl.hpp" 1
+//  Brux - SDL API
+//  Copyright (C) 2016 KelvinShadewing
+//                2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 27 "src/api/sdl.hpp"
+namespace BruxAPI {
+
+// SDL_gfx
+void drawCircle(int x, int y, int r, bool f); // Doc'd
+void drawRec(int x, int y, int w, int h, bool f); // Clone of `drawRect()`
+void drawRect(int x, int y, int w, int h, bool f); // Doc'd
+void drawPoint(int x, int y); // Doc'd
+void drawLine(int x1, int y1, int x2, int y2); // Doc'd
+void drawLineWide(int x1, int y1, int x2, int y2, int w); // Doc'd
+
+} // namespace BruxAPI
+# 10 "src/api/api.hpp" 2
+# 1 "src/api/shapes.hpp" 1
+//  Brux - Shapes API
+//  Copyright (C) 2016 KelvinShadewing
+//                2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 27 "src/api/shapes.hpp"
+namespace BruxAPI {
+
+// Shapes
+bool hitLineLine(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3); // Doc'd
+bool hitLineCircle(float x0, float y0, float x1, float y1, float x2, float y2, float r); // Doc'd
+bool hitLinePoint(float x0, float y0, float x1, float y1, float x2, float y2); // Doc'd
+
+} // namespace BruxAPI
+# 11 "src/api/api.hpp" 2
+# 1 "src/api/sprites.hpp" 1
+//  Brux - Sprites API
+//  Copyright (C) 2016 KelvinShadewing
+//                2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 27 "src/api/sprites.hpp"
+namespace BruxAPI {
+
+// Sprites
+std::string spriteName(int sprite); // Doc'd
+int findSprite(const std::string& name); // Doc'd
+int newSprite(const std::string& i, int w, int h, int m, int p, float px, float py); // Doc'd
+int newSpriteFT(int t, int w, int h, int m, int p, float px, float py);
+void drawSprite(int i, int f, int x, int y); // Doc'd
+void drawSpriteEx(int i, int f, int x, int y, int a, int l, float sx, float sy, float p); // Doc'd
+void drawSpriteMod(int i, int f, int x, int y, int c); // Doc'd
+void drawSpriteExMod(int i, int f, int x, int y, int a, int l, float sx, float sy, float p, int c); // Doc'd
+void deleteSprite(int i); // Doc'd
+int spriteW(int i); // Doc'd
+int spriteH(int i); // Doc'd
+void replaceSprite(int s, const std::string& f, int w, int h, int m, int p, float x, float y);
+void spriteSetBlendMode(int sprite, int blend); // Doc'd
+
+} // namespace BruxAPI
+# 12 "src/api/api.hpp" 2
+# 1 "src/api/text.hpp" 1
+//  Brux - Text API
+//  Copyright (C) 2016 KelvinShadewing
+//                2023 Vankata453
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 29 "src/api/text.hpp"
+namespace BruxAPI {
+
+// Text
+int newFont(int i, int c, int t, bool m, int k); // Doc'd
+void drawText(int f, float x, float y, const std::string& s); // Doc'd
+SQInteger chint(HSQUIRRELVM v, int i); // Doc'd
+
+} // namespace BruxAPI
+# 13 "src/api/api.hpp" 2

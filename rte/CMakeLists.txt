@@ -75,7 +75,13 @@ file(GLOB SRCFILES src/api/*.cpp
                    src/brux/*.cpp
                    src/external/*.c
                    src/squirrel/*.cpp
-                   src/squirrel/wrapper.cpp)
+                   src/squirrel/wrapper.cpp
+                   src/game/*.cpp
+                   src/math2/*.cpp
+                   src/math3/*.cpp
+                   src/test/game/*.cpp
+                   src/test/projection_test/*.cpp
+                   src/test/playground/*.cpp)
 add_executable(brux ${SRCFILES})
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/test/" DESTINATION "${RUNTIME_OUTPUT_DIR}")
 
