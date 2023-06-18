@@ -29,10 +29,14 @@ std::vector<Uint32> unloadedMusic;
 
 const std::string& gvAudioDriver = "SDL2";
 
+bool isAudioLoaded = false;
+bool didAudioLoadFail = false;
+
 // Checks if audio playback is currently available
+// NOTE: It doesn't appear to be possible to get the system volume using SDL2.
 
 bool xyIsAudioAvailable() {
-	return true; // TODO: detect if the audio stack works properly
+	return isAudioLoaded && !didAudioLoadFail && Mix_MasterVolume(-1) != 0;
 }
 
 // Initialize audio
@@ -49,9 +53,12 @@ void xyInitAudio() {
 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 		xyPrint(0, "SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
+		didAudioLoadFail = true;
 		return;
 	}
-
+	
+	isAudioLoaded = true;
+	
 	vcSounds.push_back(0);
 	vcMusic.push_back(0);
 }
@@ -80,7 +87,8 @@ Uint32 xyLoadSound(const std::string& filename) {
 	// Load the sound file with Mix_LoadWAV()
 	
 	Mix_Chunk* newSnd = Mix_LoadWAV(filename.c_str());
-	if(newSnd == 0){
+	
+	if (newSnd == 0){
 		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename.c_str(), Mix_GetError());
 	}
 

@@ -1,5 +1,6 @@
 //  Brux - Core
 //  Copyright (C) 2016 KelvinShadewing
+//  Copyright (C) 2023 hexaheximal
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as published by
@@ -390,6 +391,7 @@ void xyLoadCore() {
 	const os_linux = 1;
 	const os_android = 2;
 	const os_mac = 3;
+	const os_dingux = 4;
 
 	const js_max = 32768;
 	const js_up = 1;
