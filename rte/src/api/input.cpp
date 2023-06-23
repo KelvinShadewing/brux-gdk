@@ -19,6 +19,8 @@
 
 #include "brux/input.hpp"
 
+bool quitRequested = false;
+
 namespace BruxAPI {
 
 ///////////
@@ -71,7 +73,11 @@ int mouseY() {
 }
 
 bool getQuit() {
-	return gvQuit;
+	return gvQuit || quitRequested;
+}
+
+void quitGame() {
+	quitRequested = true;
 }
 
 int joyCount() {

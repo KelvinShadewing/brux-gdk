@@ -1772,6 +1772,25 @@ static SQInteger getQuit_wrapper(HSQUIRRELVM vm)
 
 }
 
+static SQInteger quitGame_wrapper(HSQUIRRELVM vm)
+{
+  (void) vm;
+
+  try {
+    BruxAPI::quitGame();
+
+    return 0;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'quitGame'"));
+    return SQ_ERROR;
+  }
+
+}
+
 static SQInteger joyCount_wrapper(HSQUIRRELVM vm)
 {
 
@@ -4599,6 +4618,13 @@ void register_brux_wrapper(HSQUIRRELVM v)
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'getQuit'");
+  }
+
+  sq_pushstring(v, "quitGame", -1);
+  sq_newclosure(v, &quitGame_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'quitGame'");
   }
 
   sq_pushstring(v, "joyCount", -1);

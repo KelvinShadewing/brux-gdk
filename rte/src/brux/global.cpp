@@ -114,6 +114,8 @@ std::string gvAppDir;
 
 std::string gvWorkDir;
 
+// misc
+
 const Uint8 *sdlKeys;
 std::vector<Uint8> keystate(322);
 std::vector<Uint8> keylast(322);
@@ -128,6 +130,7 @@ Uint32 gvMixChannels = 0;
 Uint32 gvVolumeMusic = 128;
 Uint32 gvVolumeSound = 128;
 Uint32 gvDrawTarget = 0;
+bool gvUpdateDeprecationWarningShown = false;
 
 // Gamepad
 // NOTE: I don't know why, I don't want to know why, but *somehow* this entirely breaks if we use the Uint32 type for this

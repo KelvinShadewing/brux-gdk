@@ -45,6 +45,10 @@
 
   Returns if the exit button on the window or the OS's exit shortcut has been pressed.
 
+* <a name="quitGame"></a>**`quitGame()`**
+
+  Sets gvQuit to true, causing the game to exit.
+
 * <a name="joyCount"></a>**`joyCount()`**
 
   Returns number of gamepads detected.

@@ -232,7 +232,7 @@ if (getAudioDriver() != "None" && isAudioAvailable()) {
 
 ::doTest <- function(name, handler) {
 	print("Test " + str(currentTest) + ": " + name)
-	
+
 	try {
 		handler()
 		print("PASS")
@@ -275,7 +275,11 @@ setFPS(60)
 ::midiFrame <- 0.0
 ::rspeed <- 3.98
 
-while (!getQuit()) {
+::gameUpdate <- function () {
+	if (keyPress(k_enter) || joyAxisPress(0, js_up, js_max / 4)) {
+		quitGame();
+	}
+
 	x = (400 / 2) - ((6 * text.len()) / 2)
 	y = 8 * 2
 
@@ -287,30 +291,28 @@ while (!getQuit()) {
 
 	x += sin(frame / 10.0) * 16.0;
 
+	midiFrame += abs(rspeed) / (8 + abs(rspeed))
+}
+
+::gameRender <- function () {
 	drawSprite(sprOcean, 0, 0, 0)
 	drawSprite(sprMidi, 48 + (midiFrame % 7), midiX, midiY)
 	drawText(font, x, y, text)
 	drawText(font, x2, y2, text2)
-
-	update()
-	frame++;
-	midiFrame += abs(rspeed) / (8 + abs(rspeed))
-
-	if (keyPress(k_enter) || joyAxisPress(0, js_up, js_max / 4)) {
-		break;
-	}
-} 
-
-if (score == total) {
-	print("All tests passed!")
 }
 
-print("Score: " + str(score) + " / " + str(total))
+::gameExit <- function () {
+	if (score == total) {
+		print("All tests passed!")
+	}
 
-if (nonexistantAPIs.len() != 0) {
-	print("Failed to find the following Brux APIs:")
+	print("Score: " + str(score) + " / " + str(total))
 
-	foreach (name in nonexistantAPIs) {
-		print(name)
+	if (nonexistantAPIs.len() != 0) {
+		print("Failed to find the following Brux APIs:")
+
+		foreach (name in nonexistantAPIs) {
+			print(name)
+		}
 	}
 }
