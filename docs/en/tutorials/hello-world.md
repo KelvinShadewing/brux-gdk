@@ -29,20 +29,24 @@ You may be wondering why the file path for background.png uses a forward slash i
 
 When you call the function `loadImage()`, it *returns* a value, meaning that the point where it was called becomes a value. For instance, if you typed `local x = mouseX();`, and the X position of the mouse was 42, it would be as though the code had been written `local x = 42;`. The semicolon at the end of each line says that the statement has ended and the system can move onto the next piece of code. Some languages will allow a line break to do the same, but if a language supports semicolons, then it's safer to use them. Currently, `image` has been assigned to a number, which is the number of background.png's index in XYG's memory. The image data itself is not stored in the variable. The reason why we don't store actual image data in the variable is so that muliple variables with the same value will not store copies of the image for each one.
 
-Now that we have the image loaded, we can draw it to the screen. The function to do this is `drawImage()`. However, just calling this function will not make the window show the image. We need to call `update()` to make the screen refresh and show its contents. Add these two lines to the end:
+Now that we have the image loaded, we can draw it to the screen. The function to do this is `drawImage()`.
+
+However, just calling this function will not make the window show the image. We need to create a render function to tell Brux GDK to run our drawImage() call and then update the window for each frame:
 
 ```
-drawImage(image, 0, 0);
-update();
+::gameRender <- function () {
+	drawImage(image, 0, 0);
+}
 ```
 
-Run this code, and what do you see? It just blinked in and out, right? That's because computers take *everything* literally. It loaded the image, drew it, put it on screen, and said "I'm done," and quit. We have to tell it to keep the image up for a while. After `update()`, we use `wait()` to keep things as they are for a while. `wait()` counts how long it should wait in miliseconds, so to wait for a full second, we use a value of 1000. Our code should look like this now:
+Our code should look like this now:
 
 ```
 local image = loadImage("res/background.png");
-drawImage(image, 0, 0);
-update();
-wait(1000);
+
+::gameRender <- function () {
+	drawImage(image, 0, 0);
+}
 ```
 
-And now you've written your first program in XYG! Yeah, it's not that much, but we'll be making more in later tutorials.
+And now you've written your first game with Brux GDK! Yeah, it's not that much, but we'll be making more in later tutorials.

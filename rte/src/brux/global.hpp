@@ -81,6 +81,7 @@ extern Uint32 gvMixChannels;
 extern Uint32 gvVolumeMusic;
 extern Uint32 gvVolumeSound;
 extern Uint32 gvDrawTarget;
+extern bool gvUpdateDeprecationWarningShown;
 
 // Gamepad
 

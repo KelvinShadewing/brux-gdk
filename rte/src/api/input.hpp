@@ -37,6 +37,7 @@ int mouseRelease(int button); // Doc'd
 int mouseX(); // Doc'd
 int mouseY(); // Doc'd
 bool getQuit(); // Doc'd
+void quitGame(); // Doc'd
 int joyCount(); // Doc'd
 std::string joyName(int i); // Doc'd
 int joyX(int i); // Doc'd

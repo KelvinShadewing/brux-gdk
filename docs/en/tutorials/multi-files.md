@@ -10,16 +10,16 @@ Rewrite your script so it looks like this:
 
 ```
 ::image <- loadImage("res/background.png");
-::quit <- false;
 
-while(!quit){
+::gameRender <- function () {
 	drawImage(image, 0, 0);
+}
 
-	if(keyPress(k_escape)) quit = true;
-
-	update();
-	wait(10);
-};
+::gameUpdate <- function () {
+	if (keyPress(k_escape)) {
+		quitGame();
+	}
+}
 ```
 
 The double colon `::` is used to specify a scope you want to work with. With nothing before it, it points to the global scope, which is what we'll be focusing on.
@@ -43,8 +43,6 @@ So how do we make Brux run multiple files? Let's make our file structure and fin
 ```
 donut("src/images.nut");
 donut("src/main.nut");
-
-main();
 ```
 
 The list of `donut()` calls will run every source file in your project. Since they're declaring everything as globals, those declarations will remain in Squirrel's memory until Brux itself closes.
@@ -54,18 +52,15 @@ It should be noted that Brux's working directory does not change when you use `d
 In `src/main.nut`, you'll put this code:
 
 ```
-::quit <- false;
+::gameRender <- function () {
+	drawImage(image, 0, 0);
+}
 
-::main <- function(){
-	while(!quit){
-		drawImage(image, 0, 0);
-
-		if(keyPress(k_escape)) quit = true;
-
-		update();
-		wait(10);
-	};
-};
+::gameUpdate <- function () {
+	if (keyPress(k_escape)) {
+		quitGame();
+	}
+}
 ```
 
 Functions and classes don't necessarily need the same declaration method as global variables, but it's a good habit to get into to make it clear they're global.
