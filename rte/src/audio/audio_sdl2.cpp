@@ -36,7 +36,7 @@ bool didAudioLoadFail = false;
 // NOTE: It doesn't appear to be possible to get the system volume using SDL2.
 
 bool xyIsAudioAvailable() {
-	return isAudioLoaded && !didAudioLoadFail && Mix_MasterVolume(-1) != 0;
+	return isAudioLoaded && !didAudioLoadFail;
 }
 
 // Initialize audio
