@@ -36,7 +36,7 @@ void drawImagePart(int img, int x, int y, int ox, int oy, int w, int h);
 void drawImageEx(int img, int x, int y, float a, int f, int w, int h, int c);
 void setDrawColor(int color); // Doc'd
 int loadImage(const std::string& file); // Doc'd
-int loadImageKey(const std::string& file, int key); // Doc'd
+int loadImageKeyed(const std::string& file, int key); // Doc'd
 void setBackgroundColor(int color); // Doc'd
 void setScaling(float scale);
 void setScalingFilter(int hint); // Doc'd
@@ -47,6 +47,9 @@ int windowW();
 int windowH();
 int newTexture(int w, int h); // Doc'd
 void textureSetBlendMode(int texture, int blend); // Doc'd
+int findTexture(const std::string& name);
+std::string getTextureName(int texture);
+void printTextureNames();
 
 } // namespace BruxAPI
 

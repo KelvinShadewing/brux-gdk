@@ -1,4 +1,4 @@
-# **XYG Tutorials**
+# **Brux GDK	 Tutorials**
 
 
 
@@ -25,4 +25,4 @@
 
 ----
 
-At the time of this writing, XYG is just a simple runtime that only works with one file: test.nut. All your game's code will be put in there for the time being. Later updates will allow XYG to execute precompiled .sq files.
+Welcome to Brux GDK. This game engine uses Squirrel scripting to create simple 2D games. These tutorials will help you get started in creating your own games.

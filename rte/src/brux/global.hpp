@@ -1,5 +1,6 @@
 //  Brux - Globals
 //  Copyright (C) 2016 KelvinShadewing
+//  Copyright (C) 2023 hexaheximal
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as published by
@@ -26,17 +27,25 @@
 #include "brux/text.hpp"
 #include "brux/shapes.hpp"
 
+#define pi 3.14159265f
+#define OS_WINDOWS 0
+#define OS_LINUX 1
+#define OS_ANDROID 2
+#define OS_MAC 3
+#define OS_DINGUX 4
+
 extern int __stack_chk_guard;
-extern bool gvQuit;					//Let's the game know when to quit
-extern int gvMouseX, gvMouseY;		//Mouse coordinates
-extern Uint32 gvScrW, gvScrH;		//Screen resolution
-extern Uint32 gvWinW, gvWinH;		//Window resolution
-extern HSQUIRRELVM gvSquirrel;		//Squirrel VM
-extern std::ofstream gvLog;				//Output log
-extern SDL_Window *gvWindow;		//Main window
-extern SDL_Renderer *gvRender;		//Main renderer
-extern SDL_Texture *gvScreen;		//Main screen texture
-extern int gvError;					//Error code
+extern bool gvQuit;
+extern int gvMouseX;
+extern int gvMouseY;
+extern Uint32 gvScrW, gvScrH;
+extern Uint32 gvWinW, gvWinH;
+extern HSQUIRRELVM gvSquirrel;
+extern std::ofstream gvLog;
+extern SDL_Window *gvWindow;
+extern SDL_Renderer *gvRender;
+extern SDL_Texture *gvScreen;
+extern Uint32 gvError;
 extern float gvFPS;
 extern Uint32 gvMaxFPS;
 #ifdef USE_CHRONO_STEADY_CLOCK
@@ -47,36 +56,34 @@ extern Uint32 gvTicks;
 extern Uint32 gvTickLast;
 #endif
 extern Uint32 gvFrames;
-extern const char *gvVNo;			//XYRE version number
-extern const float pi;				//Pi
-extern bool gvClearScreen;			//Whether to clear the screen on update
-extern SDL_Event Event;				//Used for event handling
-extern std::vector<SDL_Texture*> vcTextures;		//Keeps track of user-created textures
-extern bool gvDebug;				//Controls whether or not debug output is printed
-extern std::vector<xySprite*> vcSprites;	//std::vector containing all sprite pointers
-extern Uint32 gvBackColor;			//Background color
-extern Uint32 gvDrawColor;			//Renderer color
-extern std::vector<xyFont*> vcFonts;	//Container for fonts
-extern std::vector<Mix_Chunk*> vcSounds;	//Container for sounds
-extern std::vector<Mix_Music*> vcMusic;	//Container for music
-extern std::string gvAppDir;				//Directory Brux is running from
-extern std::string gvWorkDir;			//Working directory, default is the game directory
+extern const char *gvVNo;
+extern bool gvClearScreen;
+extern std::vector<SDL_Texture*> vcTextures;
+extern std::vector<std::string> vcTextureNames;
+extern bool gvDebug;
+extern std::vector<xySprite*> vcSprites;
+extern Uint32 gvBackColor;
+extern Uint32 gvDrawColor;
+extern std::vector<xyFont*> vcFonts;
+extern std::string gvAppDir;
+extern std::string gvWorkDir;
 extern const Uint8 *sdlKeys;
 extern std::vector<Uint8> keystate;
 extern std::vector<Uint8> keylast;
 extern Uint32 buttonstate[5];
 extern Uint32 buttonlast[5];
-extern int mouseWheelX;
-extern int mouseWheelY;
+extern Uint32 mouseWheelX;
+extern Uint32 mouseWheelY;
 extern Uint8 fileMax;
 extern std::vector<xyShape*> gvShape;
 extern std::string gvInputString;
-extern int gvMixChannels;
-extern int gvVolumeMusic;
-extern int gvVolumeSound;
-extern int gvDrawTarget;
+extern Uint32 gvMixChannels;
+extern Uint32 gvVolumeMusic;
+extern Uint32 gvVolumeSound;
+extern Uint32 gvDrawTarget;
 
-//Gamepad
+// Gamepad
+
 extern SDL_Joystick* gvGamepad[8];
 extern int gvPadButton[8][32];
 extern int gvPadLastButton[8][32];

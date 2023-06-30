@@ -30,7 +30,7 @@ namespace BruxAPI {
 int keyPress(int key); // Doc'd
 int keyDown(int key); // Doc'd
 int keyRelease(int key); // Doc'd
-int anyKeyPress(); // Doc'd
+int keyPressAny(); // Doc'd
 int mouseDown(int button); // Doc'd
 int mousePress(int button); // Doc'd
 int mouseRelease(int button); // Doc'd
@@ -53,7 +53,7 @@ bool joyHatRelease(int i, int d); // Doc'd
 int joyButtonPress(int i, int b); // Doc'd
 int joyButtonDown(int i, int b); // Doc'd
 int joyButtonRelease(int i, int b); // Doc'd
-int joyButtonAny(int p); // Doc'd
+int joyPressAny(int p); // Doc'd
 int joyAxisPress(int p, int a, int d); // Doc'd
 int joyAxisRelease(int p, int a, int d); // Doc'd
 std::string keyString(); // Doc'd

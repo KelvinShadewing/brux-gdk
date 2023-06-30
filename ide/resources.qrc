@@ -2,5 +2,7 @@
     <qresource prefix="/">
 		<file alias="LICENSE">LICENSE</file>
 		<file alias="brux.xml">syntax/brux.xml</file>
+		<file alias="application-x-brux.xml">mime/application-x-brux.xml</file>
+		<file alias="text-x-squirrel.xml">mime/text-x-squirrel.xml</file>
     </qresource>
 </RCC>

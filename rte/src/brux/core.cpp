@@ -1,5 +1,6 @@
 //  Brux - Core
 //  Copyright (C) 2016 KelvinShadewing
+//  Copyright (C) 2023 hexaheximal
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as published by
@@ -390,6 +391,7 @@ void xyLoadCore() {
 	const os_linux = 1;
 	const os_android = 2;
 	const os_mac = 3;
+	const os_dingux = 4;
 
 	const js_max = 32768;
 	const js_up = 1;
@@ -480,9 +482,10 @@ void xyLoadCore() {
 		else return b
 	}
 
-	::choose <- function(options) {
-		if(typeof options != "array") return options
-		return options[randInt(options.len())]
+	::choose <- function(...) {
+		if(vargv.len() == 0)
+			return null
+		return vargv[randInt(vargv.len())]
 	}
 
 	::system <- function(var) { print("I can't let you do that, Dave.") }
@@ -495,7 +498,7 @@ void xyLoadCore() {
 
 	::eval <- function(expression) { return compilestring("return ("+expression+");")() }
 
-	::drawSprite <- function(i, f, x, y, a = 0, l = 0, sx = 1.0, sy = 1.0, p = 1.0, c = 0xffffff) { drawSpriteExMod(i, f, x, y, a, l, float(sx), float(sy), p, c)}
+	::drawSprite <- function(i, f, x, y, a = 0, l = 0, sx = 1.0, sy = 1.0, p = 1.0, c = 0xffffffff) { drawSpriteExMod(i, f, x, y, a, l, float(sx), float(sy), p, c)}
 
 	print("Imported core lib.");)rew";
 

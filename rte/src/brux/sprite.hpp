@@ -21,8 +21,7 @@
 #ifndef _SPRITE_H_
 #define _SPRITE_H_
 
-class xySprite
-{
+class xySprite {
 private:
 	Uint32 numero, mar, pad, w, h, tex, col, row, frames = 0;
 	bool didLoad;

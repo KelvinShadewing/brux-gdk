@@ -19,7 +19,7 @@ jobs:
         include:
           - build_type: Release
             arch: 32
-            release: ON
+            release: OFF
           - build_type: Release
             arch: 64
             release: ON

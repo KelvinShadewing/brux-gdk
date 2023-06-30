@@ -498,6 +498,45 @@ static SQInteger getSoundVolume_wrapper(HSQUIRRELVM vm)
 
 }
 
+static SQInteger getAudioDriver_wrapper(HSQUIRRELVM vm)
+{
+
+  try {
+    const std::string& return_value = BruxAPI::getAudioDriver();
+
+    assert(return_value.size() < static_cast<size_t>(std::numeric_limits<SQInteger>::max()));
+    sq_pushstring(vm, return_value.c_str(), static_cast<SQInteger>(return_value.size()));
+    return 1;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'getAudioDriver'"));
+    return SQ_ERROR;
+  }
+
+}
+
+static SQInteger isAudioAvailable_wrapper(HSQUIRRELVM vm)
+{
+
+  try {
+    bool return_value = BruxAPI::isAudioAvailable();
+
+    sq_pushbool(vm, return_value);
+    return 1;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'isAudioAvailable'"));
+    return SQ_ERROR;
+  }
+
+}
+
 static SQInteger import_wrapper(HSQUIRRELVM vm)
 {
   const SQChar* arg0;
@@ -1186,7 +1225,7 @@ static SQInteger loadImage_wrapper(HSQUIRRELVM vm)
 
 }
 
-static SQInteger loadImageKey_wrapper(HSQUIRRELVM vm)
+static SQInteger loadImageKeyed_wrapper(HSQUIRRELVM vm)
 {
   const SQChar* arg0;
   if(SQ_FAILED(sq_getstring(vm, 2, &arg0))) {
@@ -1200,7 +1239,7 @@ static SQInteger loadImageKey_wrapper(HSQUIRRELVM vm)
   }
 
   try {
-    int return_value = BruxAPI::loadImageKey(arg0, static_cast<int> (arg1));
+    int return_value = BruxAPI::loadImageKeyed(arg0, static_cast<int> (arg1));
 
     sq_pushinteger(vm, return_value);
     return 1;
@@ -1209,7 +1248,7 @@ static SQInteger loadImageKey_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, e.what());
     return SQ_ERROR;
   } catch(...) {
-    sq_throwerror(vm, _SC("Unexpected exception while executing function 'loadImageKey'"));
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'loadImageKeyed'"));
     return SQ_ERROR;
   }
 
@@ -1445,6 +1484,74 @@ static SQInteger textureSetBlendMode_wrapper(HSQUIRRELVM vm)
 
 }
 
+static SQInteger findTexture_wrapper(HSQUIRRELVM vm)
+{
+  const SQChar* arg0;
+  if(SQ_FAILED(sq_getstring(vm, 2, &arg0))) {
+    sq_throwerror(vm, _SC("Argument 1 not a string"));
+    return SQ_ERROR;
+  }
+
+  try {
+    int return_value = BruxAPI::findTexture(arg0);
+
+    sq_pushinteger(vm, return_value);
+    return 1;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'findTexture'"));
+    return SQ_ERROR;
+  }
+
+}
+
+static SQInteger getTextureName_wrapper(HSQUIRRELVM vm)
+{
+  SQInteger arg0;
+  if(SQ_FAILED(sq_getinteger(vm, 2, &arg0))) {
+    sq_throwerror(vm, _SC("Argument 1 not an integer"));
+    return SQ_ERROR;
+  }
+
+  try {
+    std::string return_value = BruxAPI::getTextureName(static_cast<int> (arg0));
+
+    assert(return_value.size() < static_cast<size_t>(std::numeric_limits<SQInteger>::max()));
+    sq_pushstring(vm, return_value.c_str(), static_cast<SQInteger>(return_value.size()));
+    return 1;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'getTextureName'"));
+    return SQ_ERROR;
+  }
+
+}
+
+static SQInteger printTextureNames_wrapper(HSQUIRRELVM vm)
+{
+  (void) vm;
+
+  try {
+    BruxAPI::printTextureNames();
+
+    return 0;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'printTextureNames'"));
+    return SQ_ERROR;
+  }
+
+}
+
 static SQInteger keyPress_wrapper(HSQUIRRELVM vm)
 {
   SQInteger arg0;
@@ -1517,11 +1624,11 @@ static SQInteger keyRelease_wrapper(HSQUIRRELVM vm)
 
 }
 
-static SQInteger anyKeyPress_wrapper(HSQUIRRELVM vm)
+static SQInteger keyPressAny_wrapper(HSQUIRRELVM vm)
 {
 
   try {
-    int return_value = BruxAPI::anyKeyPress();
+    int return_value = BruxAPI::keyPressAny();
 
     sq_pushinteger(vm, return_value);
     return 1;
@@ -1530,7 +1637,7 @@ static SQInteger anyKeyPress_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, e.what());
     return SQ_ERROR;
   } catch(...) {
-    sq_throwerror(vm, _SC("Unexpected exception while executing function 'anyKeyPress'"));
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'keyPressAny'"));
     return SQ_ERROR;
   }
 
@@ -2080,7 +2187,7 @@ static SQInteger joyButtonRelease_wrapper(HSQUIRRELVM vm)
 
 }
 
-static SQInteger joyButtonAny_wrapper(HSQUIRRELVM vm)
+static SQInteger joyPressAny_wrapper(HSQUIRRELVM vm)
 {
   SQInteger arg0;
   if(SQ_FAILED(sq_getinteger(vm, 2, &arg0))) {
@@ -2089,7 +2196,7 @@ static SQInteger joyButtonAny_wrapper(HSQUIRRELVM vm)
   }
 
   try {
-    int return_value = BruxAPI::joyButtonAny(static_cast<int> (arg0));
+    int return_value = BruxAPI::joyPressAny(static_cast<int> (arg0));
 
     sq_pushinteger(vm, return_value);
     return 1;
@@ -2098,7 +2205,7 @@ static SQInteger joyButtonAny_wrapper(HSQUIRRELVM vm)
     sq_throwerror(vm, e.what());
     return SQ_ERROR;
   } catch(...) {
-    sq_throwerror(vm, _SC("Unexpected exception while executing function 'joyButtonAny'"));
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'joyPressAny'"));
     return SQ_ERROR;
   }
 
@@ -4130,6 +4237,20 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'getSoundVolume'");
   }
 
+  sq_pushstring(v, "getAudioDriver", -1);
+  sq_newclosure(v, &getAudioDriver_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'getAudioDriver'");
+  }
+
+  sq_pushstring(v, "isAudioAvailable", -1);
+  sq_newclosure(v, &isAudioAvailable_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'isAudioAvailable'");
+  }
+
   sq_pushstring(v, "import", -1);
   sq_newclosure(v, &import_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".s");
@@ -4312,11 +4433,11 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'loadImage'");
   }
 
-  sq_pushstring(v, "loadImageKey", -1);
-  sq_newclosure(v, &loadImageKey_wrapper, 0);
+  sq_pushstring(v, "loadImageKeyed", -1);
+  sq_newclosure(v, &loadImageKeyed_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".sb|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
-    throw SquirrelError(v, "Couldn't register function 'loadImageKey'");
+    throw SquirrelError(v, "Couldn't register function 'loadImageKeyed'");
   }
 
   sq_pushstring(v, "setBackgroundColor", -1);
@@ -4389,6 +4510,27 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'textureSetBlendMode'");
   }
 
+  sq_pushstring(v, "findTexture", -1);
+  sq_newclosure(v, &findTexture_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".s");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'findTexture'");
+  }
+
+  sq_pushstring(v, "getTextureName", -1);
+  sq_newclosure(v, &getTextureName_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'getTextureName'");
+  }
+
+  sq_pushstring(v, "printTextureNames", -1);
+  sq_newclosure(v, &printTextureNames_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'printTextureNames'");
+  }
+
   sq_pushstring(v, "keyPress", -1);
   sq_newclosure(v, &keyPress_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
@@ -4410,11 +4552,11 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'keyRelease'");
   }
 
-  sq_pushstring(v, "anyKeyPress", -1);
-  sq_newclosure(v, &anyKeyPress_wrapper, 0);
+  sq_pushstring(v, "keyPressAny", -1);
+  sq_newclosure(v, &keyPressAny_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".");
   if(SQ_FAILED(sq_createslot(v, -3))) {
-    throw SquirrelError(v, "Couldn't register function 'anyKeyPress'");
+    throw SquirrelError(v, "Couldn't register function 'keyPressAny'");
   }
 
   sq_pushstring(v, "mouseDown", -1);
@@ -4571,11 +4713,11 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'joyButtonRelease'");
   }
 
-  sq_pushstring(v, "joyButtonAny", -1);
-  sq_newclosure(v, &joyButtonAny_wrapper, 0);
+  sq_pushstring(v, "joyPressAny", -1);
+  sq_newclosure(v, &joyPressAny_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
-    throw SquirrelError(v, "Couldn't register function 'joyButtonAny'");
+    throw SquirrelError(v, "Couldn't register function 'joyPressAny'");
   }
 
   sq_pushstring(v, "joyAxisPress", -1);

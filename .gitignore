@@ -23,3 +23,4 @@ rte/bin/log.txt
 rte/XYG_Runtime.layout
 rte/XYG_Runtime.depend
 test/log.txt
+.vscode/*

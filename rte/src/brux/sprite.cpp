@@ -40,7 +40,8 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 
 	//Extract short file name
 	std::string::size_type slashnum = name.find_last_of("/");
-	if(slashnum != std::string::npos) name = name.substr(slashnum + 1, name.length() - 1);
+	if(slashnum != std::string::npos)
+		name = name.substr(slashnum + 1, name.length() - 1);
 
 	//Add sprite to list
 
@@ -141,7 +142,6 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 	numero = 0;
 	frames = 0; //Obsolete, will untangle later
 	Uint32 newtex = xyLoadImage(filename);
-	name = filename;
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
 
 	//Delete old texture
@@ -151,7 +151,8 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 	//Extract short file name
 	name = filename;
 	std::string::size_type slashnum = name.find_last_of("/");
-	if(slashnum != std::string::npos) name = name.substr(slashnum, name.length() - 1);
+	if(slashnum != std::string::npos)
+		name = name.substr(slashnum + 1, name.length() - 1);
 
 	//Parse the image for rows and colums
 	int origW, origH;

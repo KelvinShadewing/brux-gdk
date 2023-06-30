@@ -1,0 +1,9 @@
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
+
+// Handle CMake optional features
+
+#cmakedefine USE_SDL2_MIXER
+#cmakedefine USE_FASTFILL
+
+#endif

@@ -76,10 +76,6 @@
   The intended usage of this function is by providing the result of `getPrefDir()` as a parameter. This usage allows setting a proper writing directory for the game.
   By default, Brux uses the `brux` (or `brux/brux`) user-and-app specific directory for writing.
 
-* <a name="chdir"></a>**`chdir( string )`**
-
-  Attempts to change the current working directory.
-
 * <a name="lsdir"></a>**`lsdir( string )`**
 
   Returns a list of the directory `string`'s contents as an array.

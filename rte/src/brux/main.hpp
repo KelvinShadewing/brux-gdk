@@ -21,13 +21,18 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
-//Toggle features based on conditions
+// Toggle features based on conditions
 #ifndef _MSC_VER
-	//If the compiler isn't MSVC, use std::chrono::steady_clock
+	// If the compiler isn't MSVC, use std::chrono::steady_clock
 	#define USE_CHRONO_STEADY_CLOCK
 #endif
 
-//Headers
+// Config header, used for optional libraries
+
+#include "config.hpp"
+
+// Headers
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sstream>
@@ -48,8 +53,8 @@
 #include <thread>
 #endif
 
-//If running on Windows, use Windows
-//working directory functions.
+// If running on Windows, use Windows working directory functions.
+
 #ifdef _WIN32
 	#include "external/wdirent.h"
 	#include <direct.h>
@@ -67,9 +72,6 @@ void __stack_chk_fail(void);
 #include "external/cJSON.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
-#include <SDL2/SDL_net.h>
-#include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 
 #include <squirrel.h>
@@ -85,20 +87,21 @@ void __stack_chk_fail(void);
 
 using namespace std;
 
-//Defines
+// Defines
+
 #ifdef SQUNICODE
 	#define scvprintf vwprintf
 	#else
 	#define scvprintf vprintf
 #endif
 
-//Prototypes
+// Prototypes
+
 int xyInit();
 void xyStart();
 void xyEnd();
 void xyPrint(HSQUIRRELVM v, const SQChar *s, ...);
 int xyGetOS();
 void xyUpdate();
-
 
 #endif

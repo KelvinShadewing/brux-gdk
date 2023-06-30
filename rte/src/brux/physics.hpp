@@ -10,13 +10,13 @@
 #include <chipmunk.h>
 #include <vector>
 
-class Phyisics
+class Physics
 {
 public:
-	Phyisics();
+	Physics();
 	static int ChipMonkHelloWorld();
 	void sceneStep();
-	~Phyisics();
+	~Physics();
 	cpBody *AddSimpleCircle(void * userData, cpFloat radius,cpFloat mass, cpVect pos);
 	cpBody *AddSimpleBox(void * userData, cpFloat width, cpFloat height, cpFloat mass, cpVect pos);
 	void AddLineSegment(cpVect start, cpVect end);
