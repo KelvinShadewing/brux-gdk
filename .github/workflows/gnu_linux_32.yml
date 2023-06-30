@@ -1,4 +1,4 @@
-name: GNU/Linux
+name: GNU/Linux (32 Bit)
 on:
   push:
     branches: [ "master", "unstable" ]
