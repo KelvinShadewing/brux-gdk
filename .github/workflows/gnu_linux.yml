@@ -14,12 +14,12 @@ jobs:
   gnu-linux:
     strategy:
       matrix:
-        arch: [64]
+        arch: [32, 64]
         build_type: [Release]
         include:
           - build_type: Release
             arch: 32
-            release: ON
+            release: OFF
           - build_type: Release
             arch: 64
             release: ON
@@ -31,6 +31,34 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true
+
+      - name: Install 32-bit dependencies
+        if: ${{ matrix.arch == 32 }}
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+
+          sudo apt-get install -y \
+            cmake \
+            build-essential \
+            gcc-multilib \
+            g++-multilib \
+            libsdl2-dev:i386 \
+            libsdl2-image-dev:i386 \
+            libsdl2-gfx-dev:i386 \
+            libsdl2-mixer-dev:i386 \
+            libsdl2-net-dev:i386 \
+            libflac-dev:i386 \
+            libjpeg-dev:i386 \
+            libpng-dev:i386 \
+            libtiff-dev:i386 \
+            libfluidsynth-dev:i386 \
+            libwebp-dev:i386 \
+            libmodplug-dev:i386 \
+            libmpg123-dev:i386 \
+            libvorbis-dev:i386 \
+            libopusfile-dev:i386 \
+            libzstd-dev:i386
 
       - name: Install 64-bit dependencies
         if: ${{ matrix.arch == 64 }}
