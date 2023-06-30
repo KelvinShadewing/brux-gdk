@@ -1,4 +1,4 @@
-name: GNU/Linux
+name: GNU/Linux (32 Bit)
 on:
   push:
     branches: [ "master", "unstable" ]
@@ -14,14 +14,11 @@ jobs:
   gnu-linux:
     strategy:
       matrix:
-        arch: [64]
+        arch: [32]
         build_type: [Release]
         include:
           - build_type: Release
             arch: 32
-            release: ON
-          - build_type: Release
-            arch: 64
             release: ON
 
     runs-on: ubuntu-latest
@@ -32,33 +29,33 @@ jobs:
           fetch-depth: 1
           submodules: true
 
-      - name: Install 64-bit dependencies
-        if: ${{ matrix.arch == 64 }}
+      - name: Install 32-bit dependencies
+        if: ${{ matrix.arch == 32 }}
         run: |
+          sudo dpkg --add-architecture i386
           sudo apt-get update
+
           sudo apt-get install -y \
             cmake \
             build-essential \
-            g++-9 \
             gcc-multilib \
             g++-multilib \
-            libc++-dev \
-            libsdl2-dev \
-            libsdl2-image-dev \
-            libsdl2-gfx-dev \
-            libsdl2-mixer-dev \
-            libsdl2-net-dev \
-            libflac-dev \
-            libjpeg-dev \
-            libpng-dev \
-            libtiff-dev \
-            libfluidsynth-dev \
-            libwebp-dev \
-            libmodplug-dev \
-            libmpg123-dev \
-            libvorbis-dev \
-            libopusfile-dev \
-            libzstd-dev
+            libsdl2-dev:i386 \
+            libsdl2-image-dev:i386 \
+            libsdl2-gfx-dev:i386 \
+            libsdl2-mixer-dev:i386 \
+            libsdl2-net-dev:i386 \
+            libflac-dev:i386 \
+            libjpeg-dev:i386 \
+            libpng-dev:i386 \
+            libtiff-dev:i386 \
+            libfluidsynth-dev:i386 \
+            libwebp-dev:i386 \
+            libmodplug-dev:i386 \
+            libmpg123-dev:i386 \
+            libvorbis-dev:i386 \
+            libopusfile-dev:i386 \
+            libzstd-dev:i386
 
       - name: Set compiler (gcc)
         run: |
