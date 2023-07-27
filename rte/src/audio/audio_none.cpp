@@ -30,7 +30,7 @@ bool xyIsAudioAvailable() {
 // Initialize audio
 
 void xyInitAudio() {
-	xyPrint(0, "Audio system: None");
+	xyPrint("Audio system: None");
 }
 
 // Unload audio

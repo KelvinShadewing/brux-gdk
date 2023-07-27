@@ -100,7 +100,8 @@ using namespace std;
 int xyInit();
 void xyStart();
 void xyEnd();
-void xyPrint(HSQUIRRELVM v, const SQChar *s, ...);
+void xyPrint(const SQChar *s, ...);
+void sqPrint(HSQUIRRELVM v, const SQChar *s, ...);
 int xyGetOS();
 void xyUpdate();
 

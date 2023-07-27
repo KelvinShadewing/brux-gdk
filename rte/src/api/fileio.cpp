@@ -42,7 +42,7 @@ void donut(const std::string& file) {
 	b += a;
 	*/
 
-	xyPrint(0, "Running %s...", file.c_str());
+	xyPrint("Running %s...", file.c_str());
 	sqstd_dofile(gvSquirrel, file.c_str(), 0, 1);
 }
 
@@ -87,7 +87,7 @@ std::string fileRead(const std::string& file) {
 		return xyFileRead(file);
 	}
 
-	xyPrint(0, "WARNING: %s does not exist!", file.c_str());
+	xyPrint("WARNING: %s does not exist!", file.c_str());
 	return "-1";
 }
 

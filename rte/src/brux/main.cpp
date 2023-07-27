@@ -105,14 +105,14 @@ int main(int argc, char* argv[]) {
 						gvWorkDir = xygapp.substr(0, found);
 						
 						if (chdir(gvWorkDir.c_str()) != 0) {
-							xyPrint(0, "Error initiating Brux: Cannot change to input file working directory: %d", errno);
+							xyPrint("Error initiating Brux: Cannot change to input file working directory: %d", errno);
 							xyEnd();
 							return 1;
 						}
 						
 						const std::string curdir = xyGetDir();
 						
-						xyPrint(0, "Working directory: %s", curdir.c_str());
+						xyPrint("Working directory: %s", curdir.c_str());
 					}
 				}
 			}
@@ -151,20 +151,20 @@ int main(int argc, char* argv[]) {
 	try {
 		initResult = xyInit();
 	} catch (std::exception& err) {
-		xyPrint(0, "Error initiating Brux: %s", err.what());
+		xyPrint("Error initiating Brux: %s", err.what());
 		xyEnd();
 		return 1;
 	}
 		
 	if (initResult == 0) {
-		xyPrint(0, "Failed to initiate Brux!");
+		xyPrint("Failed to initiate Brux!");
 		xyEnd();
 		return 1;
 	}
 		
 	SDL_ShowCursor(0);
 	
-	xyPrint(0, "Running %s...", xygapp.c_str());
+	xyPrint("Running %s...", xygapp.c_str());
 	sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
 	
 	// Unload everything once the squirrel code is finished running
@@ -173,7 +173,7 @@ int main(int argc, char* argv[]) {
 		xyEnd();
 	}
 	catch (std::exception& err) {
-		xyPrint(0, "Error quitting Brux: %s", err.what());
+		xyPrint("Error quitting Brux: %s", err.what());
 		return 1;
 	}
 
@@ -194,7 +194,7 @@ int xyInit() {
 
 	// Print opening message
 	
-	xyPrint(0, "\n/========================\\\n| BRUX GAME RUNTIME LOG |\n\\========================/\n\n");
+	xyPrint("\n/========================\\\n| BRUX GAME RUNTIME LOG |\n\\========================/\n\n");
 
 	// Initiate SDL2
 	
@@ -204,7 +204,7 @@ int xyInit() {
 #else
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 #endif
-		xyPrint(0, "Failed to initialize! %s", SDL_GetError());
+		xyPrint("Failed to initialize! %s", SDL_GetError());
 		return 0;
 	}
 
@@ -213,7 +213,7 @@ int xyInit() {
 	gvWindow = SDL_CreateWindow("Brux GDK", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
 	
 	if (gvWindow == 0) {
-		xyPrint(0, "Window could not be created! SDL Error: %s\n", SDL_GetError());
+		xyPrint("Window could not be created! SDL Error: %s\n", SDL_GetError());
 		return 0;
 	} else {
 		// Create renderer for window
@@ -221,7 +221,7 @@ int xyInit() {
 		gvRender = SDL_CreateRenderer(gvWindow, -1, SDL_RENDERER_ACCELERATED);
 		
 		if (gvRender == 0) {
-			xyPrint(0, "Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+			xyPrint("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 			return 0;
 		} else {
 			// Initialize renderer color
@@ -231,7 +231,7 @@ int xyInit() {
 			// Initialize PNG loading
 			
 			if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-				xyPrint(0, "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+				xyPrint("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 				return 0;
 			}
 
@@ -263,13 +263,13 @@ int xyInit() {
 	//Initialize input
 	xyInitInput();
 
-	xyPrint(0, "SDL initialized successfully!");
+	xyPrint("SDL initialized successfully!");
 
 	//Initiate Squirrel
 	gvSquirrel = sq_open(1024);
 
 
-	sq_setprintfunc(gvSquirrel, xyPrint, xyPrint);
+	sq_setprintfunc(gvSquirrel, sqPrint, sqPrint);
 	sq_pushroottable(gvSquirrel);
 
 	sqstd_register_iolib(gvSquirrel);
@@ -278,7 +278,7 @@ int xyInit() {
 	sqstd_register_stringlib(gvSquirrel);
 
 	/* Bind all Brux API functions to Squirrel, using the generated wrapper. */
-	xyPrint(0, "Embedding API...");
+	xyPrint("Embedding API...");
 	BruxAPI::register_brux_wrapper(gvSquirrel);
 
 	/*Error handler does not seem to print compile-time errors. I haven't
@@ -286,7 +286,7 @@ int xyInit() {
 	and is taken from the sq.c example included with Squirrel.*/
 	sqstd_seterrorhandlers(gvSquirrel);
 
-	xyPrint(0, "Squirrel initialized successfully!");
+	xyPrint("Squirrel initialized successfully!");
 
 	// Initiate other
 	vcTextures.push_back(0);
@@ -298,7 +298,7 @@ int xyInit() {
 	xyLoadCore(); // Squirrel-side definitions
 	xyLoadActors();
 
-	xyPrint(0, "\n================\n");
+	xyPrint("\n================\n");
 
 	// Return success
 	
@@ -306,54 +306,64 @@ int xyInit() {
 }
 
 void xyEnd() {
-	xyPrint(0, "\n\n================\n");
+	xyPrint("\n\n================\n");
 
 	// Cleanup all resources (except for audio)
 
-	xyPrint(0, "Cleaning up all resources...");
-	xyPrint(0, "Cleaning textures...");
+	xyPrint("Cleaning up all resources...");
+	xyPrint("Cleaning textures...");
 	for(int i = 0; i < static_cast<int>(vcTextures.size()); i++) {
 		xyDeleteImage(i);
 	}
 
-	xyPrint(0, "Cleaning sprites...");
+	xyPrint("Cleaning sprites...");
 	for(int i = 0; i < static_cast<int>(vcSprites.size()); i++) {
 		delete vcSprites[i];
 	}
 
-	xyPrint(0, "Finished cleanup.");
+	xyPrint("Finished cleanup.");
 
 	// Run Squirrel's garbage collector, and then close the Squirrel VM.
 	
-	xyPrint(0, "Closing Squirrel...");
+	xyPrint("Closing Squirrel...");
 	SQInteger garbage = sq_collectgarbage(gvSquirrel);
-	xyPrint(0, "Collected %i junk obects.", garbage);
+	xyPrint("Collected %i junk obects.", garbage);
 	sq_pop(gvSquirrel, 1);
 	sq_close(gvSquirrel);
 
 	// Unload all of the audio stuff
 
-	xyPrint(0, "Unloading audio system...");
+	xyPrint("Unloading audio system...");
 	xyUnloadAudio();
 
 	// Close SDL
 
-	xyPrint(0, "Closing SDL...");
+	xyPrint("Closing SDL...");
 	SDL_DestroyRenderer(gvRender);
 	SDL_DestroyWindow(gvWindow);
 	IMG_Quit();
 	SDL_Quit();
 
 	//Destroy the file system (PhysFS)
-	xyPrint(0, "Closing file system...");
+	xyPrint("Closing file system...");
 	xyFSDeinit();
 
 	//Close log file
-	xyPrint(0, "System closed successfully!");
+	xyPrint("System closed successfully!");
 	gvLog.close();
 }
 
-void xyPrint(HSQUIRRELVM v, const SQChar *s, ...) {
+void xyPrint(const SQChar *s, ...) {
+	va_list argv;
+	va_start(argv, s);
+	SQChar buffer[100*100] = _SC("");
+	vsnprintf(buffer, sizeof(buffer), s, argv);
+	va_end(argv);
+	cout << buffer << endl;
+	gvLog << buffer << endl;
+}
+
+void sqPrint(HSQUIRRELVM v, const SQChar *s, ...) {
 	va_list argv;
 	va_start(argv, s);
 	SQChar buffer[100*100] = _SC("");
@@ -418,7 +428,7 @@ void xyUpdate() {
 					buttonstate[4] = newButtonState;
 					break;
 				default:
-					xyPrint(0, "Unknown button pressed! This should never happen!");
+					xyPrint("Unknown button pressed! This should never happen!");
 					break;
 			}
 			
@@ -605,5 +615,5 @@ int xyGetOS() {
 };
 
 void __stack_chk_fail(void) {
-	xyPrint(0, "Stack smash detected.");
+	xyPrint("Stack smash detected.");
 }

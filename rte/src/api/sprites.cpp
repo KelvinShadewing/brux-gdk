@@ -36,12 +36,12 @@ std::string spriteName(int sprite) {
 }
 
 int findSprite(const std::string& name) {
-	//xyPrint(0, "Searching for sprite: %s", name.c_str());
-	//xyPrint(0, "Number of sprites to search: %i", vcSprites.size());
+	//xyPrint("Searching for sprite: %s", name.c_str());
+	//xyPrint("Number of sprites to search: %i", vcSprites.size());
 
 	for (size_t i = 0; i < vcSprites.size(); i++) {
 		if (vcSprites[i] != 0) {
-			//xyPrint(0, "Current sprite name: %s", vcSprites[i]->getname());
+			//xyPrint("Current sprite name: %s", vcSprites[i]->getname());
 			if (vcSprites[i]->getname() == name) {
 				return vcSprites[i]->getnum();
 			}

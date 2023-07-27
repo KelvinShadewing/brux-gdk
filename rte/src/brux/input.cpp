@@ -68,7 +68,7 @@ void xyInitInput() {
 		keystate[i] = 0;
 		keylast[i] = 0;
 	};
-	xyPrint(0, "Input initialized.");
+	xyPrint("Input initialized.");
 };
 
 int xyJoyAxisPress (int pad, int axis, int dz) {

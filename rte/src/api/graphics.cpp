@@ -180,7 +180,7 @@ std::string getTextureName(int texture) {
 
 void printTextureNames() {
 	for(int i = 0; i < vcTextureNames.size(); i++)
-		xyPrint(0, "%d - %s", i, vcTextureNames[i].c_str());
+		xyPrint("%d - %s", i, vcTextureNames[i].c_str());
 }
 
 } // namespace BruxAPI

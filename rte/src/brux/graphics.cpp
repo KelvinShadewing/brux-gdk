@@ -135,12 +135,12 @@ SDL_Texture* xyLoadTexture(const std::string& path) {
 	//Load the surface
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if(loadedSurface == 0) {
-		xyPrint(0, "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+		xyPrint("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
 	} else {
 		//Make texture from surface
 		newTexture = SDL_CreateTextureFromSurface(gvRender, loadedSurface);
 		if(newTexture == 0) {
-			xyPrint(0, "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+			xyPrint("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
 		}
 
 		//Delete old surface
@@ -156,7 +156,7 @@ SDL_Texture* xyLoadTextureKeyed(const std::string& path, Uint32 key) {
 	//Load the surface
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if(loadedSurface == 0) {
-		xyPrint(0, "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+		xyPrint("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
 	} else {
 		Uint8 r = xyGetRed(key);
 		Uint8 g = xyGetGreen(key);
@@ -164,7 +164,7 @@ SDL_Texture* xyLoadTextureKeyed(const std::string& path, Uint32 key) {
 		SDL_SetColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, r, g, b));
 		newTexture = SDL_CreateTextureFromSurface(gvRender, loadedSurface);
 		if(newTexture == 0) {
-			xyPrint(0, "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+			xyPrint("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
 		}
 
 		SDL_FreeSurface(loadedSurface);
@@ -178,7 +178,7 @@ Uint32 xyLoadImage(const std::string& path) {
 	SDL_Texture* nimg = xyLoadTexture(path.c_str());
 
 	if(!nimg) {
-		xyPrint(0, "Unable to load file: %s", path.c_str());
+		xyPrint("Unable to load file: %s", path.c_str());
 		gvQuit = 1;
 	}
 
@@ -212,7 +212,7 @@ Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key) {
 	SDL_Texture* nimg = xyLoadTextureKeyed(path, key);
 
 	if(!nimg) {
-		xyPrint(0, "Unable to load file: %s", path.c_str());
+		xyPrint("Unable to load file: %s", path.c_str());
 		gvQuit = 1;
 	}
 
@@ -338,7 +338,7 @@ Uint32 xyNewTexture(Uint32 w, Uint32 h) {
 	SDL_Texture* nimg = SDL_CreateTexture( gvRender, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w, h );
 
 	if(!nimg) {
-		xyPrint(0, "Unable to create texture!");
+		xyPrint("Unable to create texture!");
 		gvQuit = 1;
 	}
 
