@@ -54,22 +54,19 @@ int main(int argc, char* argv[]) {
 		FS.chdir('/bin');
 	);
 #endif
-	// Initiate everything
+
+	// Initialize the file system (PhysFS)
 	
-	int initResult = 0;
-	try {
-		initResult = xyInit();
-	}
-	catch (std::exception& err) {
-		xyPrint(0, "Error initiating Brux: %s", err.what());
-		xyEnd();
-		return 1;
-	}
-	if (initResult == 0) {
-		xyPrint(0, "Failed to initiate Brux!");
-		xyEnd();
-		return 1;
-	}
+	xyFSInit();
+	
+	// Mount the current working directory.
+		 
+	xyFSMount(xyGetDir(), "/", true);
+
+	// Set the current write directory to a default for Brux.
+	// Can be changed later by the game.
+		
+	xySetWriteDir(xyGetPrefDir("brux", "brux"));
 
 	// Process arguments
 	
@@ -121,36 +118,56 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-
-	SDL_ShowCursor(0);
-
-	// Mount the current working directory.
-	 
-	xyFSMount(xyGetDir(), "/", true);
-
-	// Set the current write directory to a default for Brux.
-	// Can be changed later by the game.
 	
-	xySetWriteDir(xyGetPrefDir("brux", "brux"));
-
-	// If the filename isn't blank, run it.
+	bool shouldLoad = false;
 	
 	if (xygapp != "") {
-		xyPrint(0, "Running %s...", xygapp.c_str());
-		sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
+		// If xygapp is not a blank string at this point, we can safely assume that it exists.
+		
+		shouldLoad = true;
 	} else {
-		// Otherwise, attempt to load test.nut or game.brx as a fallback.
+		// If the filename is blank, attempt to load game.brx or test.nut as a fallback.
 		
-		if (xyFileExists("test.nut")) {
-			sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
-		}
-		
-		else if (xyFileExists("game.brx")) {
-			sqstd_dofile(gvSquirrel, "game.brx", 0, 1);
+		if (xyFileExists("game.brx")) {
+			xygapp = "game.brx";
+			shouldLoad = true;
+		} else if (xyFileExists("test.nut")) {
+			xygapp = "test.nut";
+			shouldLoad = true;
 		}
 	}
-
-	// End game
+	
+	// Handle situations where a main file can't be found
+	
+	if (!shouldLoad) {
+		puts("ERROR: Unable to load the main file. Make sure that it exists.");
+		return 1;
+	}
+	
+	// Initialize everything
+	
+	int initResult = 0;
+		
+	try {
+		initResult = xyInit();
+	} catch (std::exception& err) {
+		xyPrint(0, "Error initiating Brux: %s", err.what());
+		xyEnd();
+		return 1;
+	}
+		
+	if (initResult == 0) {
+		xyPrint(0, "Failed to initiate Brux!");
+		xyEnd();
+		return 1;
+	}
+		
+	SDL_ShowCursor(0);
+	
+	xyPrint(0, "Running %s...", xygapp.c_str());
+	sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
+	
+	// Unload everything once the squirrel code is finished running
 	
 	try {
 		xyEnd();
@@ -178,12 +195,6 @@ int xyInit() {
 	// Print opening message
 	
 	xyPrint(0, "\n/========================\\\n| BRUX GAME RUNTIME LOG |\n\\========================/\n\n");
-	xyPrint(0, "Initializing program...\n\n");
-
-	// Initialize the file system (PhysFS)
-	
-	xyPrint(0, "Initializing file system...");
-	xyFSInit();
 
 	// Initiate SDL2
 	
