@@ -28,7 +28,10 @@
 
 namespace BruxAPI {
 
-// File IO
+/////////////
+// FILE IO //
+/////////////
+
 void import(const std::string& file); // Clone of `donut()`
 void donut(const std::string& file); // Doc'd
 void dostr(const std::string& str); // Doc'd

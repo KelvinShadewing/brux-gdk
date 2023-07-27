@@ -73,52 +73,46 @@ int main(int argc, char* argv[]) {
 	std::string xygapp = "";
 	std::string curarg = "";
 	
-	for (int i = 0; i < argc; i++) {
+	for (int i = 1; i < argc; i++) {
 		curarg = argv[i];
-		
-		// The first argument is just the
-		// command to invoke the runtime,
-		// so skip it.
-		
-		if (i != 0) {
-			// Handle arguments
 
-			if (curarg == "-f" || curarg == "--fullscreen") {
-				SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
-			}
+		// Handle arguments
+		
+		if (curarg == "-f" || curarg == "--fullscreen") {
+			SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		}
+		
+		// Check if the argument is long enough to be a source file
+		
+		if (curarg.length() > 4) {
+			// Check if the argument is a source file
 			
-			// Check if the argument is long enough to be a source file
-				
-			if (curarg.length() > 4) {
-				// Check if the argument is a source file
-				
-				if (curarg.substr(curarg.find_last_of('.')) == ".sq" || curarg.substr(curarg.find_last_of('.')) == ".nut" || curarg.substr(curarg.find_last_of('.')) == ".brx") {
-					// Check if the file actually exists
+			if (curarg.substr(curarg.find_last_of('.')) == ".sq" || curarg.substr(curarg.find_last_of('.')) == ".nut" || curarg.substr(curarg.find_last_of('.')) == ".brx") {
+				// Check if the file actually exists
+
+				if (xyLegacyFileExists(curarg)) {
+					// If everything looks good, set it as the main file.
 					
-					if (xyLegacyFileExists(curarg)) {
-						// If everything looks good, set it as the main file.
-						
-						xygapp = curarg;
-						
-						size_t found = xygapp.find_last_of("/\\");
-						
-						gvWorkDir = xygapp.substr(0, found);
-						
-						if (chdir(gvWorkDir.c_str()) != 0) {
-							xyPrint("Error initiating Brux: Cannot change to input file working directory: %d", errno);
-							xyEnd();
-							return 1;
-						}
-						
-						const std::string curdir = xyGetDir();
-						
-						xyPrint("Working directory: %s", curdir.c_str());
+					xygapp = curarg;
+					
+					size_t found = xygapp.find_last_of("/\\");
+					
+					gvWorkDir = xygapp.substr(0, found);
+					
+					if (chdir(gvWorkDir.c_str()) != 0) {
+						xyPrint("Error initiating Brux: Cannot change to input file working directory: %d", errno);
+						xyEnd();
+						return 1;
 					}
+					
+					const std::string curdir = xyGetDir();
+					
+					xyPrint("Working directory: %s", curdir.c_str());
 				}
 			}
 		}
 	}
-	
+
 	bool shouldLoad = false;
 	
 	if (xygapp != "") {
@@ -171,8 +165,7 @@ int main(int argc, char* argv[]) {
 	
 	try {
 		xyEnd();
-	}
-	catch (std::exception& err) {
+	} catch (std::exception& err) {
 		xyPrint("Error quitting Brux: %s", err.what());
 		return 1;
 	}
@@ -208,7 +201,7 @@ int xyInit() {
 		return 0;
 	}
 
-	//Create window
+	// Create window
 	
 	gvWindow = SDL_CreateWindow("Brux GDK", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
 	
@@ -260,12 +253,14 @@ int xyInit() {
 
 	gvMixChannels = xyGetAudioChannels();
 
-	//Initialize input
+	// Initialize input
+
 	xyInitInput();
 
 	xyPrint("SDL initialized successfully!");
 
-	//Initiate Squirrel
+	// Initiate Squirrel
+
 	gvSquirrel = sq_open(1024);
 
 
@@ -277,25 +272,30 @@ int xyInit() {
 	sqstd_register_mathlib(gvSquirrel);
 	sqstd_register_stringlib(gvSquirrel);
 
-	/* Bind all Brux API functions to Squirrel, using the generated wrapper. */
+	// Bind all Brux API functions to Squirrel, using the miniswig generated wrapper.
+
 	xyPrint("Embedding API...");
 	BruxAPI::register_brux_wrapper(gvSquirrel);
 
-	/*Error handler does not seem to print compile-time errors. I haven't
-	been able to figure out why, as the same code works in my other apps,
-	and is taken from the sq.c example included with Squirrel.*/
+	// The error handler does not seem to print compile-time errors.
+	// I haven't been able to figure out why, as the same code works in my other apps,
+	// and is taken from the sq.c example included with Squirrel.
+
 	sqstd_seterrorhandlers(gvSquirrel);
 
 	xyPrint("Squirrel initialized successfully!");
 
-	// Initiate other
+	// Initiate other things
+
 	vcTextures.push_back(0);
 	vcTextureNames.push_back("");
 	vcSprites.push_back(0);
 	xyInitAudio();
 	vcFonts.push_back(0);
 
-	xyLoadCore(); // Squirrel-side definitions
+	// Squirrel-side definitions
+
+	xyLoadCore();
 	xyLoadActors();
 
 	xyPrint("\n================\n");
@@ -312,12 +312,14 @@ void xyEnd() {
 
 	xyPrint("Cleaning up all resources...");
 	xyPrint("Cleaning textures...");
-	for(int i = 0; i < static_cast<int>(vcTextures.size()); i++) {
+
+	for (int i = 0; i < vcTextures.size(); i++) {
 		xyDeleteImage(i);
 	}
 
 	xyPrint("Cleaning sprites...");
-	for(int i = 0; i < static_cast<int>(vcSprites.size()); i++) {
+	
+	for (int i = 0; i < vcSprites.size(); i++) {
 		delete vcSprites[i];
 	}
 
@@ -344,11 +346,13 @@ void xyEnd() {
 	IMG_Quit();
 	SDL_Quit();
 
-	//Destroy the file system (PhysFS)
+	// Destroy the file system (PhysFS)
+
 	xyPrint("Closing file system...");
 	xyFSDeinit();
 
-	//Close log file
+	// Close log file
+
 	xyPrint("System closed successfully!");
 	gvLog.close();
 }
@@ -356,9 +360,12 @@ void xyEnd() {
 void xyPrint(const SQChar *s, ...) {
 	va_list argv;
 	va_start(argv, s);
+
 	SQChar buffer[100*100] = _SC("");
+
 	vsnprintf(buffer, sizeof(buffer), s, argv);
 	va_end(argv);
+
 	cout << buffer << endl;
 	gvLog << buffer << endl;
 }
@@ -366,9 +373,12 @@ void xyPrint(const SQChar *s, ...) {
 void sqPrint(HSQUIRRELVM v, const SQChar *s, ...) {
 	va_list argv;
 	va_start(argv, s);
+
 	SQChar buffer[100*100] = _SC("");
+
 	vsnprintf(buffer, sizeof(buffer), s, argv);
 	va_end(argv);
+
 	cout << buffer << endl;
 	gvLog << buffer << endl;
 }
@@ -553,10 +563,12 @@ void xyUpdate() {
 	gvMouseY /= static_cast<int>(sy);
 
 	// Gamepad
-	// Check each pad
+	// Check each gamepad and keep track of which ones exist
 	
-	for(int i = 0; i < 8; i++) {
-		if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
+	for (int i = 0; i < 8; i++) {
+		if (SDL_NumJoysticks() > i) { 
+			gvGamepad[i] = SDL_JoystickOpen(i);
+		}
 	}
 
 	// Wait for FPS limit
@@ -612,7 +624,7 @@ int xyGetOS() {
 #ifdef _DINGUX
 	return OS_DINGUX;
 #endif
-};
+}
 
 void __stack_chk_fail(void) {
 	xyPrint("Stack smash detected.");

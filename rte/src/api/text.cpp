@@ -30,15 +30,26 @@ namespace BruxAPI {
 
 int newFont(int i, int c, int t, bool m, int k) {
 	// Sanitize inputs
-	if (i < 0) i = 0;
-	if (t > 255) t = 255;
-	if (c > 255) c = 255;
+
+	if (i < 0) {
+		i = 0;
+	}
+
+	if (t > 255) {
+		t = 255;
+	}
+
+	if (c > 255) {
+		c = 255;
+	}
 
 	xyFont* newfont = new xyFont(i, static_cast<char>(c), static_cast<unsigned char>(t), m, k);
+
 	return newfont->getnum();
 }
 
-/** Macro to help easily check if a font is valid. **/
+// Macro to help easily check if a font is valid.
+
 #define FONT_CHECK_VALID  if (f >= static_cast<int>(vcFonts.size()) || vcFonts[f] == 0) return
 
 void drawText(int f, float x, float y, const std::string& s) {
@@ -48,10 +59,8 @@ void drawText(int f, float x, float y, const std::string& s) {
 
 SQInteger chint(HSQUIRRELVM v, int i) {
 	const char s = static_cast<const char>(i);
-
 	sq_pushstring(v, &s, 1);
-
-	return 1; // Returns data.
+	return 1;
 }
 
 } // namespace BruxAPI

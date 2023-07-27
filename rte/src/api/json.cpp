@@ -28,7 +28,7 @@ namespace BruxAPI {
 
 SQInteger jsonRead(HSQUIRRELVM v, const std::string& str) {
 	sqDecodeJSON(v, str.c_str());
-	return 1; // Returns data.
+	return 1;
 }
 
 } // namespace BruxAPI

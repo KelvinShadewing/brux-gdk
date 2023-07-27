@@ -140,7 +140,7 @@ Uint32 xyLoadSound(const std::string& filename) {
 	// Yes, I know that this was originally supposed to subtract 1 from the length, and no, this is not a bug. We're using the length value before we added the element, so it ends up being correct.
 	
 	return arraySize;
-};
+}
 
 // Load a music file from a filename
 
@@ -209,7 +209,7 @@ Uint32 xyLoadMusic(const std::string& filename) {
 	// Yes, I know that this was originally supposed to subtract 1 from the length, and no, this is not a bug. We're using the length value before we added the element, so it ends up being correct.
 	
 	return arraySize;
-};
+}
 
 // Unload a sound effect
 
@@ -244,7 +244,7 @@ void xyDeleteSound(Uint32 sound) {
 	#ifdef USE_FASTFILL
 	unloadedSounds.push_back(sound);
 	#endif
-};
+}
 
 // Unload a song
 
@@ -279,7 +279,7 @@ void xyDeleteMusic(Uint32 music) {
 	#ifdef USE_FASTFILL
 	unloadedMusic.push_back(music);
 	#endif
-};
+}
 
 // Play a sound effect
 
@@ -298,7 +298,7 @@ int xyPlaySound(Uint32 sound, Uint32 loops) {
 	Mix_Volume(i, gvVolumeSound);
 	
 	return i;
-};
+}
 
 // Play a sound effect on a specific channel
 
@@ -332,7 +332,7 @@ int xyPlayMusic(Uint32 music, Uint32 loops) {
 	Mix_VolumeMusic(gvVolumeMusic);
 	
 	return i;
-};
+}
 
 // Stop a sound effect, no idea why it doesn't support stopping music
 
@@ -364,7 +364,7 @@ void xyStopSound(Uint32 sound) {
 			Mix_HaltChannel(i);
 		}
 	}
-};
+}
 
 // Stop all audio on an audio channel
 

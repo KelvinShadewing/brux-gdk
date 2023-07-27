@@ -62,8 +62,10 @@ void setWindowTitle(const std::string& title) {
 }
 
 void setWindowIcon(const std::string& file) {
-	if (!xyFileExists(file)) return;
-
+	if (!xyFileExists(file)) {
+		return;
+	}
+	
 	SDL_Surface* icon = IMG_Load(file.c_str());
 	SDL_SetWindowIcon(gvWindow, icon);
 	SDL_FreeSurface(icon);

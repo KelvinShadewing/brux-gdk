@@ -25,23 +25,25 @@
 #include <string>
 #include <vector>
 
-/* A class that takes the last PhysicsFS error and converts it to a readable message. */
-class PhysFSError final : public std::exception
-{
-private:
-	std::string m_message;
+// A class that takes the last PhysicsFS error and converts it to a readable message.
 
-public:
-	PhysFSError(const std::string& message, const std::string& action) throw();
-
-	const char* what() const throw() { return m_message.c_str(); }
+class PhysFSError final: public std::exception {
+	private:
+		std::string m_message;
+	public:
+		PhysFSError(const std::string& message, const std::string& action) throw();
+		const char* what() const throw() {
+			return m_message.c_str();
+		}
 };
 
-/** File system initialization/destruction. **/
+// File system initialization/destruction.
+
 void xyFSInit();
 void xyFSDeinit();
 
-/** General file system management functions. **/
+// General file system management functions.
+
 void xyFSMount(const std::string& dir, const std::string& mountpoint, bool prepend);
 void xyFSUnmount(const std::string& dir);
 
@@ -49,7 +51,6 @@ std::string xyGetDir();
 std::string xyGetWriteDir();
 std::string xyGetPrefDir(const std::string& org, const std::string& app);
 void xySetWriteDir(const std::string& dir);
-
 void xyCreateDir(const std::string& name);
 std::string xyFileRead(const std::string& file);
 void xyFileWrite(const std::string& file, const std::string& data);
@@ -61,7 +62,9 @@ void xyFileDelete(const std::string& name);
 bool xyIsDirectory(const std::string& name);
 std::vector<std::string> xyListDirectory(const std::string& dir);
 
-/** JSON encoding/decoding. **/
+// JSON encoding / decoding.
+// Originally implemented by Nova Storm.
+
 void sqDecodeJSONTable(HSQUIRRELVM v, cJSON* Item);
 void sqDecodeJSON(HSQUIRRELVM v, const char* str);
 

@@ -22,8 +22,10 @@
 #define _MAIN_H_
 
 // Toggle features based on conditions
+
 #ifndef _MSC_VER
 	// If the compiler isn't MSVC, use std::chrono::steady_clock
+	
 	#define USE_CHRONO_STEADY_CLOCK
 #endif
 

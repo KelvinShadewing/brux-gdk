@@ -75,14 +75,21 @@ void setBackgroundColor(int color) {
 }
 
 void setScaling(float scale) {
-	if (scale <= 0) return;
+	if (scale <= 0) {
+		return;
+	}
 
 	SDL_RenderSetScale(gvRender, scale, scale);
 }
 
 void setScalingFilter(int hint) {
-	if (hint > 2) hint = 2;
-	if (hint < 0) hint = 0;
+	if (hint > 2) {
+		hint = 2;
+	}
+
+	if (hint < 0) {
+		hint = 0;
+	}
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, std::to_string(hint).c_str());
 }
@@ -95,10 +102,12 @@ void setResolution(int w, int h) {
 	}
 
 	SDL_Rect screensize;
+
 	screensize.x = 0;
 	screensize.y = 0;
 	screensize.w = w;
 	screensize.h = h;
+
 	SDL_RenderSetViewport(gvRender, &screensize);
 	SDL_RenderSetLogicalSize(gvRender, w, h);
 	SDL_SetWindowSize(gvWindow, w, h);
@@ -107,25 +116,33 @@ void setResolution(int w, int h) {
 
 int screenW() {
 	SDL_Rect vp;
+
 	SDL_RenderGetViewport(gvRender, &vp);
+
 	return vp.w;
 }
 
 int screenH() {
 	SDL_Rect vp;
+
 	SDL_RenderGetViewport(gvRender, &vp);
+
 	return vp.h;
 }
 
 int windowW() {
 	int w;
+	
 	SDL_GetWindowSize(gvWindow, &w, 0);
+
 	return w;
 }
 
 int windowH() {
 	int h;
+
 	SDL_GetWindowSize(gvWindow, 0, &h);
+	
 	return h;
 }
 
@@ -139,6 +156,7 @@ void textureSetBlendMode(int texture, int blend) {
 	}
 
 	SDL_BlendMode mode;
+
 	switch (blend) {
 		case 0:
 			mode = SDL_BLENDMODE_NONE;
@@ -158,29 +176,33 @@ void textureSetBlendMode(int texture, int blend) {
 		default:
 			mode = SDL_BLENDMODE_NONE;
 			break;
-	};
+	}
 
 	SDL_SetTextureBlendMode(vcTextures[texture], mode);
 }
 
 int findTexture(const std::string& name) {
-	for(int i = 0; i < vcTextureNames.size(); i++) {
-		if(vcTextureNames[i] == name) return i;
+	for (int i = 0; i < vcTextureNames.size(); i++) {
+		if (vcTextureNames[i] == name) {
+			return i;
+		}
 	}
 
 	return 0;
 }
 
 std::string getTextureName(int texture) {
-	if(texture > 0 && texture < vcTextureNames.size())
+	if (texture > 0 && texture < vcTextureNames.size()) {
 		return vcTextureNames[texture];
-	else
-		return "";
+	}
+	
+	return "";
 }
 
 void printTextureNames() {
-	for(int i = 0; i < vcTextureNames.size(); i++)
+	for (int i = 0; i < vcTextureNames.size(); i++) {
 		xyPrint("%d - %s", i, vcTextureNames[i].c_str());
+	}
 }
 
 } // namespace BruxAPI
