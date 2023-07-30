@@ -54,109 +54,119 @@ int main(int argc, char* argv[]) {
 		FS.chdir('/bin');
 	);
 #endif
-	// Initiate everything
+
+	// Initialize the file system (PhysFS)
 	
-	int initResult = 0;
-	try {
-		initResult = xyInit();
-	}
-	catch (std::exception& err) {
-		xyPrint(0, "Error initiating Brux: %s", err.what());
-		xyEnd();
-		return 1;
-	}
-	if (initResult == 0) {
-		xyPrint(0, "Failed to initiate Brux!");
-		xyEnd();
-		return 1;
-	}
+	xyFSInit();
+	
+	// Mount the current working directory.
+		 
+	xyFSMount(xyGetDir(), "/", true);
+
+	// Set the current write directory to a default for Brux.
+	// Can be changed later by the game.
+		
+	xySetWriteDir(xyGetPrefDir("brux", "brux"));
 
 	// Process arguments
 	
 	std::string xygapp = "";
 	std::string curarg = "";
 	
-	for (int i = 0; i < argc; i++) {
+	for (int i = 1; i < argc; i++) {
 		curarg = argv[i];
-		
-		// The first argument is just the
-		// command to invoke the runtime,
-		// so skip it.
-		
-		if (i != 0) {
-			// Handle arguments
 
-			if (curarg == "-f" || curarg == "--fullscreen") {
-				SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
-			}
+		// Handle arguments
+		
+		if (curarg == "-f" || curarg == "--fullscreen") {
+			SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		}
+		
+		// Check if the argument is long enough to be a source file
+		
+		if (curarg.length() > 4) {
+			// Check if the argument is a source file
 			
-			// Check if the argument is long enough to be a source file
-				
-			if (curarg.length() > 4) {
-				// Check if the argument is a source file
-				
-				if (curarg.substr(curarg.find_last_of('.')) == ".sq" || curarg.substr(curarg.find_last_of('.')) == ".nut" || curarg.substr(curarg.find_last_of('.')) == ".brx") {
-					// Check if the file actually exists
+			if (curarg.substr(curarg.find_last_of('.')) == ".sq" || curarg.substr(curarg.find_last_of('.')) == ".nut" || curarg.substr(curarg.find_last_of('.')) == ".brx") {
+				// Check if the file actually exists
+
+				if (xyLegacyFileExists(curarg)) {
+					// If everything looks good, set it as the main file.
 					
-					if (xyLegacyFileExists(curarg)) {
-						// If everything looks good, set it as the main file.
-						
-						xygapp = curarg;
-						
-						size_t found = xygapp.find_last_of("/\\");
-						
-						gvWorkDir = xygapp.substr(0, found);
-						
-						if (chdir(gvWorkDir.c_str()) != 0) {
-							xyPrint(0, "Error initiating Brux: Cannot change to input file working directory: %d", errno);
-							xyEnd();
-							return 1;
-						}
-						
-						const std::string curdir = xyGetDir();
-						
-						xyPrint(0, "Working directory: %s", curdir.c_str());
+					xygapp = curarg;
+					
+					size_t found = xygapp.find_last_of("/\\");
+					
+					gvWorkDir = xygapp.substr(0, found);
+					
+					if (chdir(gvWorkDir.c_str()) != 0) {
+						xyPrint("Error initiating Brux: Cannot change to input file working directory: %d", errno);
+						xyEnd();
+						return 1;
 					}
+					
+					const std::string curdir = xyGetDir();
+					
+					xyPrint("Working directory: %s", curdir.c_str());
 				}
 			}
 		}
 	}
 
-	SDL_ShowCursor(0);
-
-	// Mount the current working directory.
-	 
-	xyFSMount(xyGetDir(), "/", true);
-
-	// Set the current write directory to a default for Brux.
-	// Can be changed later by the game.
-	
-	xySetWriteDir(xyGetPrefDir("brux", "brux"));
-
-	// If the filename isn't blank, run it.
+	bool shouldLoad = false;
 	
 	if (xygapp != "") {
-		xyPrint(0, "Running %s...", xygapp.c_str());
-		sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
+		// If xygapp is not a blank string at this point, we can safely assume that it exists.
+		
+		shouldLoad = true;
 	} else {
-		// Otherwise, attempt to load test.nut or game.brx as a fallback.
+		// If the filename is blank, attempt to load game.brx or test.nut as a fallback.
 		
-		if (xyFileExists("test.nut")) {
-			sqstd_dofile(gvSquirrel, "test.nut", 0, 1);
-		}
-		
-		else if (xyFileExists("game.brx")) {
-			sqstd_dofile(gvSquirrel, "game.brx", 0, 1);
+		if (xyFileExists("game.brx")) {
+			xygapp = "game.brx";
+			shouldLoad = true;
+		} else if (xyFileExists("test.nut")) {
+			xygapp = "test.nut";
+			shouldLoad = true;
 		}
 	}
-
-	// End game
+	
+	// Handle situations where a main file can't be found
+	
+	if (!shouldLoad) {
+		puts("ERROR: Unable to load the main file. Make sure that it exists.");
+		return 1;
+	}
+	
+	// Initialize everything
+	
+	int initResult = 0;
+		
+	try {
+		initResult = xyInit();
+	} catch (std::exception& err) {
+		xyPrint("Error initiating Brux: %s", err.what());
+		xyEnd();
+		return 1;
+	}
+		
+	if (initResult == 0) {
+		xyPrint("Failed to initiate Brux!");
+		xyEnd();
+		return 1;
+	}
+		
+	SDL_ShowCursor(0);
+	
+	xyPrint("Running %s...", xygapp.c_str());
+	sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
+	
+	// Unload everything once the squirrel code is finished running
 	
 	try {
 		xyEnd();
-	}
-	catch (std::exception& err) {
-		xyPrint(0, "Error quitting Brux: %s", err.what());
+	} catch (std::exception& err) {
+		xyPrint("Error quitting Brux: %s", err.what());
 		return 1;
 	}
 
@@ -177,13 +187,7 @@ int xyInit() {
 
 	// Print opening message
 	
-	xyPrint(0, "\n/========================\\\n| BRUX GAME RUNTIME LOG |\n\\========================/\n\n");
-	xyPrint(0, "Initializing program...\n\n");
-
-	// Initialize the file system (PhysFS)
-	
-	xyPrint(0, "Initializing file system...");
-	xyFSInit();
+	xyPrint("\n/========================\\\n| BRUX GAME RUNTIME LOG |\n\\========================/\n\n");
 
 	// Initiate SDL2
 	
@@ -193,16 +197,16 @@ int xyInit() {
 #else
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 #endif
-		xyPrint(0, "Failed to initialize! %s", SDL_GetError());
+		xyPrint("Failed to initialize! %s", SDL_GetError());
 		return 0;
 	}
 
-	//Create window
+	// Create window
 	
 	gvWindow = SDL_CreateWindow("Brux GDK", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
 	
 	if (gvWindow == 0) {
-		xyPrint(0, "Window could not be created! SDL Error: %s\n", SDL_GetError());
+		xyPrint("Window could not be created! SDL Error: %s\n", SDL_GetError());
 		return 0;
 	} else {
 		// Create renderer for window
@@ -210,7 +214,7 @@ int xyInit() {
 		gvRender = SDL_CreateRenderer(gvWindow, -1, SDL_RENDERER_ACCELERATED);
 		
 		if (gvRender == 0) {
-			xyPrint(0, "Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+			xyPrint("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 			return 0;
 		} else {
 			// Initialize renderer color
@@ -220,7 +224,7 @@ int xyInit() {
 			// Initialize PNG loading
 			
 			if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-				xyPrint(0, "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+				xyPrint("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 				return 0;
 			}
 
@@ -249,16 +253,18 @@ int xyInit() {
 
 	gvMixChannels = xyGetAudioChannels();
 
-	//Initialize input
+	// Initialize input
+
 	xyInitInput();
 
-	xyPrint(0, "SDL initialized successfully!");
+	xyPrint("SDL initialized successfully!");
 
-	//Initiate Squirrel
+	// Initiate Squirrel
+
 	gvSquirrel = sq_open(1024);
 
 
-	sq_setprintfunc(gvSquirrel, xyPrint, xyPrint);
+	sq_setprintfunc(gvSquirrel, sqPrint, sqPrint);
 	sq_pushroottable(gvSquirrel);
 
 	sqstd_register_iolib(gvSquirrel);
@@ -266,28 +272,33 @@ int xyInit() {
 	sqstd_register_mathlib(gvSquirrel);
 	sqstd_register_stringlib(gvSquirrel);
 
-	/* Bind all Brux API functions to Squirrel, using the generated wrapper. */
-	xyPrint(0, "Embedding API...");
+	// Bind all Brux API functions to Squirrel, using the miniswig generated wrapper.
+
+	xyPrint("Embedding API...");
 	BruxAPI::register_brux_wrapper(gvSquirrel);
 
-	/*Error handler does not seem to print compile-time errors. I haven't
-	been able to figure out why, as the same code works in my other apps,
-	and is taken from the sq.c example included with Squirrel.*/
+	// The error handler does not seem to print compile-time errors.
+	// I haven't been able to figure out why, as the same code works in my other apps,
+	// and is taken from the sq.c example included with Squirrel.
+
 	sqstd_seterrorhandlers(gvSquirrel);
 
-	xyPrint(0, "Squirrel initialized successfully!");
+	xyPrint("Squirrel initialized successfully!");
 
-	// Initiate other
+	// Initiate other things
+
 	vcTextures.push_back(0);
 	vcTextureNames.push_back("");
 	vcSprites.push_back(0);
 	xyInitAudio();
 	vcFonts.push_back(0);
 
-	xyLoadCore(); // Squirrel-side definitions
+	// Squirrel-side definitions
+
+	xyLoadCore();
 	xyLoadActors();
 
-	xyPrint(0, "\n================\n");
+	xyPrint("\n================\n");
 
 	// Return success
 	
@@ -295,59 +306,79 @@ int xyInit() {
 }
 
 void xyEnd() {
-	xyPrint(0, "\n\n================\n");
+	xyPrint("\n\n================\n");
 
 	// Cleanup all resources (except for audio)
 
-	xyPrint(0, "Cleaning up all resources...");
-	xyPrint(0, "Cleaning textures...");
-	for(int i = 0; i < static_cast<int>(vcTextures.size()); i++) {
+	xyPrint("Cleaning up all resources...");
+	xyPrint("Cleaning textures...");
+
+	for (int i = 0; i < vcTextures.size(); i++) {
 		xyDeleteImage(i);
 	}
 
-	xyPrint(0, "Cleaning sprites...");
-	for(int i = 0; i < static_cast<int>(vcSprites.size()); i++) {
+	xyPrint("Cleaning sprites...");
+	
+	for (int i = 0; i < vcSprites.size(); i++) {
 		delete vcSprites[i];
 	}
 
-	xyPrint(0, "Finished cleanup.");
+	xyPrint("Finished cleanup.");
 
 	// Run Squirrel's garbage collector, and then close the Squirrel VM.
 	
-	xyPrint(0, "Closing Squirrel...");
+	xyPrint("Closing Squirrel...");
 	SQInteger garbage = sq_collectgarbage(gvSquirrel);
-	xyPrint(0, "Collected %i junk obects.", garbage);
+	xyPrint("Collected %i junk obects.", garbage);
 	sq_pop(gvSquirrel, 1);
 	sq_close(gvSquirrel);
 
 	// Unload all of the audio stuff
 
-	xyPrint(0, "Unloading audio system...");
+	xyPrint("Unloading audio system...");
 	xyUnloadAudio();
 
 	// Close SDL
 
-	xyPrint(0, "Closing SDL...");
+	xyPrint("Closing SDL...");
 	SDL_DestroyRenderer(gvRender);
 	SDL_DestroyWindow(gvWindow);
 	IMG_Quit();
 	SDL_Quit();
 
-	//Destroy the file system (PhysFS)
-	xyPrint(0, "Closing file system...");
+	// Destroy the file system (PhysFS)
+
+	xyPrint("Closing file system...");
 	xyFSDeinit();
 
-	//Close log file
-	xyPrint(0, "System closed successfully!");
+	// Close log file
+
+	xyPrint("System closed successfully!");
 	gvLog.close();
 }
 
-void xyPrint(HSQUIRRELVM v, const SQChar *s, ...) {
+void xyPrint(const SQChar *s, ...) {
 	va_list argv;
 	va_start(argv, s);
+
 	SQChar buffer[100*100] = _SC("");
+
 	vsnprintf(buffer, sizeof(buffer), s, argv);
 	va_end(argv);
+
+	cout << buffer << endl;
+	gvLog << buffer << endl;
+}
+
+void sqPrint(HSQUIRRELVM v, const SQChar *s, ...) {
+	va_list argv;
+	va_start(argv, s);
+
+	SQChar buffer[100*100] = _SC("");
+
+	vsnprintf(buffer, sizeof(buffer), s, argv);
+	va_end(argv);
+
 	cout << buffer << endl;
 	gvLog << buffer << endl;
 }
@@ -407,7 +438,7 @@ void xyUpdate() {
 					buttonstate[4] = newButtonState;
 					break;
 				default:
-					xyPrint(0, "Unknown button pressed! This should never happen!");
+					xyPrint("Unknown button pressed! This should never happen!");
 					break;
 			}
 			
@@ -532,10 +563,12 @@ void xyUpdate() {
 	gvMouseY /= static_cast<int>(sy);
 
 	// Gamepad
-	// Check each pad
+	// Check each gamepad and keep track of which ones exist
 	
-	for(int i = 0; i < 8; i++) {
-		if(SDL_NumJoysticks() > i) gvGamepad[i] = SDL_JoystickOpen(i);
+	for (int i = 0; i < 8; i++) {
+		if (SDL_NumJoysticks() > i) { 
+			gvGamepad[i] = SDL_JoystickOpen(i);
+		}
 	}
 
 	// Wait for FPS limit
@@ -591,8 +624,8 @@ int xyGetOS() {
 #ifdef _DINGUX
 	return OS_DINGUX;
 #endif
-};
+}
 
 void __stack_chk_fail(void) {
-	xyPrint(0, "Stack smash detected.");
+	xyPrint("Stack smash detected.");
 }

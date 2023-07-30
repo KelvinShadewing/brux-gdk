@@ -27,7 +27,10 @@
 
 namespace BruxAPI {
 
-// JSON
+//////////
+// JSON //
+//////////
+
 SQInteger jsonRead(HSQUIRRELVM v, const std::string& str); // Doc'd
 
 } // namespace BruxAPI

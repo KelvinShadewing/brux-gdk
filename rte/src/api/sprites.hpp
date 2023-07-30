@@ -26,7 +26,10 @@
 
 namespace BruxAPI {
 
-// Sprites
+/////////////
+// SPRITES //
+/////////////
+
 std::string spriteName(int sprite); // Doc'd
 int findSprite(const std::string& name); // Doc'd
 int newSprite(const std::string& i, int w, int h, int m, int p, float px, float py); // Doc'd

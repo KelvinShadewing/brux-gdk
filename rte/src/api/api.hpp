@@ -1,4 +1,5 @@
 // This file is processed by Miniswig to produce the Brux Squirrel API.
+
 #include "api/audio.hpp"
 #include "api/fileio.hpp"
 #include "api/graphics.hpp"

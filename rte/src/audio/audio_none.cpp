@@ -30,7 +30,7 @@ bool xyIsAudioAvailable() {
 // Initialize audio
 
 void xyInitAudio() {
-	xyPrint(0, "Audio system: None");
+	xyPrint("Audio system: None");
 }
 
 // Unload audio
@@ -47,31 +47,31 @@ void xyAllocateChannels(int channels) {
 
 Uint32 xyLoadSound(const std::string& filename) {
 	return 0;
-};
+}
 
 // Load a music file from a filename
 
 Uint32 xyLoadMusic(const std::string& filename) {
 	return 0;
-};
+}
 
 // Unload a sound effect
 
 void xyDeleteSound(Uint32 sound) {
 	// We don't need to do anything here, as the audio it's trying to unload doesn't exist anyways.
-};
+}
 
 // Unload a song
 
 void xyDeleteMusic(Uint32 music) {
 	// We don't need to do anything here, as the audio it's trying to unload doesn't exist anyways.
-};
+}
 
 // Play a sound effect
 
 int xyPlaySound(Uint32 sound, Uint32 loops) {
 	return 0;
-};
+}
 
 // Play a sound effect on a specific channel
 
@@ -83,13 +83,13 @@ int xyPlaySoundChannel(Uint32 sound, Uint32 loops, Uint32 channel) {
 
 int xyPlayMusic(Uint32 music, Uint32 loops) {
 	return 0;
-};
+}
 
 // Stop a sound effect, no idea why it doesn't support stopping music
 
 void xyStopSound(Uint32 sound) {
 	// We don't need to do anything here, as the audio it's trying to stop doesn't exist anyways.
-};
+}
 
 // Stop all audio on an audio channel
 

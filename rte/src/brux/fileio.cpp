@@ -27,43 +27,46 @@
 #include "brux/global.hpp"
 #include "brux/fileio.hpp"
 
-/* Initalize a PhysicsFS error. */
-PhysFSError::PhysFSError(const std::string& message, const std::string& action) throw() :
-	m_message()
-{
+// Initalize a PhysicsFS error.
+
+PhysFSError::PhysFSError(const std::string& message, const std::string& action) throw(): m_message() {
 	const PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-	m_message = message + ": PHYSFS_" + action + " failed: " +
-							PHYSFS_getErrorByCode(code) + " (" + std::to_string(code) + ")";
+	
+	m_message = message + ": PHYSFS_" + action + " failed: " + PHYSFS_getErrorByCode(code) + " (" + std::to_string(code) + ")";
 }
 
-/** File system initialization/destruction. **/
+// File system initialization / destruction.
 
 void xyFSInit() {
-	if (!PHYSFS_init(NULL))
+	if (!PHYSFS_init(NULL)) {
 		throw PhysFSError("Cannot initialize PhysicsFS", "init");
-};
+	}
+}
 
 void xyFSDeinit() {
-	if (!PHYSFS_deinit())
+	if (!PHYSFS_deinit()) {
 		throw PhysFSError("Cannot properly de-initialize PhysicsFS", "deinit");
-};
+	}
+}
 
 
-/** General file system management functions. **/
+// General file system management functions.
 
 void xyFSMount(const std::string& dir, const std::string& mountpoint, bool prepend) {
-	if (!PHYSFS_mount(dir.c_str(), mountpoint.c_str(), !prepend))
+	if (!PHYSFS_mount(dir.c_str(), mountpoint.c_str(), !prepend)) {
 		throw PhysFSError("Cannot mount '" + dir + "' to \"" + mountpoint + "\"", "mount");
-};
+	}
+}
 
 void xyFSUnmount(const std::string& dir) {
 	if (!PHYSFS_unmount(dir.c_str()))
 		throw PhysFSError("Cannot unmount '" + dir + "'", "unmount");
-};
+}
 
 
 std::string xyGetDir() {
-	// Get the current working directory.
+	// Get the current working directory
+
 	return getcwd(0, 0);
 }
 
@@ -73,7 +76,7 @@ std::string xyGetWriteDir() {
 		return "";
 	else
 		return write_dir;
-};
+}
 
 std::string xyGetPrefDir(const std::string& org, const std::string& app) {
 	const char* dir = PHYSFS_getPrefDir(org.c_str(), app.c_str());
@@ -81,7 +84,7 @@ std::string xyGetPrefDir(const std::string& org, const std::string& app) {
 		throw PhysFSError("Error getting user-and-app specific directory", "getPrefDir");
 
 	return dir;
-};
+}
 
 void xySetWriteDir(const std::string& dir) {
 	// If there is a current write directory, unmount it.
@@ -110,7 +113,7 @@ void xySetWriteDir(const std::string& dir) {
 		out << "Error mounting write directory: " << err.what();
 		throw std::runtime_error(out.str());
 	}
-};
+}
 
 
 void xyCreateDir(const std::string& name) {
@@ -138,7 +141,7 @@ std::string xyFileRead(const std::string& file)
 
 	PHYSFS_close(handle);
 	return result;
-};
+}
 
 void xyFileWrite(const std::string& file, const std::string& data)
 {
@@ -153,7 +156,7 @@ void xyFileWrite(const std::string& file, const std::string& data)
 		throw PhysFSError("Cannot write all data to file '" + file + "'", "writeBytes");
 
 	PHYSFS_close(handle);
-};
+}
 
 void xyFileAppend(const std::string& file, const std::string& data)
 {
@@ -164,11 +167,11 @@ void xyFileAppend(const std::string& file, const std::string& data)
 
 	// Write old and new data.
 	xyFileWrite(file, file_data + data);
-};
+}
 
 bool xyFileExists(const std::string& file) {
 	return PHYSFS_exists(file.c_str());
-};
+}
 
 bool xyLegacyFileExists(const std::string& file) {
 	// This function should not be exposed, because it searches beyond PhysicsFS's search path.
@@ -199,7 +202,7 @@ void xyFileDelete(const std::string& name)
 	// Delete the file/directory.
 	if (!PHYSFS_delete(name.c_str()))
 		throw PhysFSError("Could not delete file or directory '" + name + "'", "delete");
-};
+}
 
 
 bool xyIsDirectory(const std::string& name) {
@@ -230,16 +233,18 @@ std::vector<std::string> xyListDirectory(const std::string& dir) {
 }
 
 
-/** JSON encoding/decoding. **/
-
-// Credit to Nova Storm for the JSON encoding and decoding functions
+// JSON encoding / decoding.
+// Originally implemented by Nova Storm.
 
 void sqDecodeJSONTable(HSQUIRRELVM v, cJSON* item) {
-	if (!item) return;
+	if (!item) {
+		return;
+	}
 
 	while (item) {
-		if (item->str)
+		if (item->str) {
 			sq_pushstring(v, item->str, -1);
+		}
 
 		switch (item->type) {
 			case cJSON_False:
@@ -270,35 +275,46 @@ void sqDecodeJSONTable(HSQUIRRELVM v, cJSON* item) {
 				break;
 		}
 
-		if (item->str)
+		if (item->str) {
 			sq_newslot(v, -3, SQFalse);
-		else
+		} else {
 			sq_arrayappend(v, -2);
+		}
 
 		item = item->next;
 	}
-};
+}
 
 void sqDecodeJSON(HSQUIRRELVM v, const char* str) {
 	if (str[0] != '{' && str[0] != '[') {
-		if (!strcmp(str, "true"))
+		if (!strcmp(str, "true")) {
 			sq_pushbool(v, SQTrue);
-		else if (!strcmp(str, "false"))
+		}
+
+		if (!strcmp(str, "false")) {
 			sq_pushbool(v, SQFalse);
-		else if (std::isdigit(str[0]) || (str[0] == '-' && std::isdigit(str[1])))
+		}
+
+		// FIXME: This code doesn't handle multi-digit integers and floating-point numbers properly.
+
+		if (std::isdigit(str[0]) || (str[0] == '-' && std::isdigit(str[1]))) {
 			sq_pushinteger(v, strtol(str, NULL, 0));
-		else
-			sq_pushstring(v, str, -1);
+		}
+		
+		sq_pushstring(v, str, -1);
 		return;
 	}
 
 	cJSON* root = cJSON_Parse(str);
+
 	if (!root || !root->child) {
 		sq_pushnull(v);
 		return;
 	}
+
 	sq_newtable(v);
 	sqDecodeJSONTable(v, root->child);
 	cJSON_Delete(root);
+
 	return;
 }

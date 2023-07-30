@@ -79,6 +79,9 @@ float lendirY(float l, float d) {
 	return xyLenDirY(l, d);
 }
 
+// this code sucks so much
+// kelvin, please stop doing this awfulness
+
 std::string binstr(int i) {
 	int l = static_cast<int>(log2(i)) + 1;
 	std::string s;

@@ -507,4 +507,4 @@ void xyLoadCore() {
 	sq_pushroottable(gvSquirrel);
 	sq_call(gvSquirrel, 1, SQFalse, SQTrue);
 	sq_settop(gvSquirrel, oldtop);
-};
+}
