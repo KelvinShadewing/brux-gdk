@@ -33,21 +33,13 @@ void import(const std::string& file) {
 }
 
 void donut(const std::string& file) {
-	/*
-	std::string b = "";
-	char c[256];
-	if(getcwd(c, sizeof(c)) == 0) return 0;
-	b += c;
-	b += "/";
-	b += a;
-	*/
-
-	xyPrint(0, "Running %s...", file.c_str());
+	xyPrint("Running %s...", file.c_str());
 	sqstd_dofile(gvSquirrel, file.c_str(), 0, 1);
 }
 
 void dostr(const std::string& str) {
 	SQInteger oldtop = sq_gettop(gvSquirrel);
+
 	sq_compilebuffer(gvSquirrel, str.c_str(), static_cast<int>(str.size()) * sizeof(SQChar), "std::string", 1);
 	sq_pushroottable(gvSquirrel);
 	sq_call(gvSquirrel, 1, SQFalse, SQTrue);
@@ -87,7 +79,8 @@ std::string fileRead(const std::string& file) {
 		return xyFileRead(file);
 	}
 
-	xyPrint(0, "WARNING: %s does not exist!", file.c_str());
+	xyPrint("WARNING: %s does not exist!", file.c_str());
+	
 	return "-1";
 }
 
@@ -113,16 +106,19 @@ bool isdir(const std::string& dir) {
 
 SQInteger lsdir(HSQUIRRELVM v, const std::string& dir) {
 	// Create array for results.
+
 	sq_newarray(v, 0);
 
 	// Append all results to the array.
+	
 	const std::vector<std::string> files = xyListDirectory(dir);
-	for (const std::string& file : files) {
+
+	for (const std::string& file: files) {
 		sq_pushstring(v, file.c_str(), file.size());
 		sq_arrayappend(v, -2);
 	}
-
-	return 1; // Returns data.
+	
+	return 1;
 }
 
 } // namespace BruxAPI

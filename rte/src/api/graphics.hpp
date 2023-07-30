@@ -26,7 +26,10 @@
 
 namespace BruxAPI {
 
-// Graphics
+//////////////
+// GRAPHICS //
+//////////////
+
 void clearScreen(); // Doc'd
 void setDrawTarget(int tex); // Doc'd
 int getDrawTarget(); // Doc'd

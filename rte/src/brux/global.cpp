@@ -25,8 +25,6 @@
 #include "brux/text.hpp"
 #include "brux/shapes.hpp"
 
-// Not sure why this is here.
-
 int __stack_chk_guard = 0xdeadbeef;
 
 // Used to detect a request to close the application

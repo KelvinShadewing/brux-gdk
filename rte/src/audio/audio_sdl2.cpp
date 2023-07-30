@@ -43,16 +43,16 @@ bool xyIsAudioAvailable() {
 
 void xyInitAudio() {
 	#ifdef USE_FASTFILL
-	xyPrint(0, "Audio system: SDL2 (fastfill enabled)");
+	xyPrint("Audio system: SDL2 (fastfill enabled)");
 	#else
-	xyPrint(0, "Audio system: SDL2 (fastfill disabled)");
+	xyPrint("Audio system: SDL2 (fastfill disabled)");
 	#endif
 
 	// Historically, brux-gdk used a 22050Hz sampling rate.
 	// I can't think of any good reason for that, and it makes the audio quality worse, so I've changed it to a more reasonable 44.1kHz.
 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-		xyPrint(0, "SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
+		xyPrint("SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
 		didAudioLoadFail = true;
 		return;
 	}
@@ -89,7 +89,7 @@ Uint32 xyLoadSound(const std::string& filename) {
 	Mix_Chunk* newSnd = Mix_LoadWAV(filename.c_str());
 
 	if (newSnd == 0){
-		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename.c_str(), Mix_GetError());
+		xyPrint("Failed to load %s! SDL_Mixer Error: %s\n", filename.c_str(), Mix_GetError());
 	}
 
 	// If the array is empty, push the sound onto it and return the first index.
@@ -140,7 +140,7 @@ Uint32 xyLoadSound(const std::string& filename) {
 	// Yes, I know that this was originally supposed to subtract 1 from the length, and no, this is not a bug. We're using the length value before we added the element, so it ends up being correct.
 
 	return arraySize;
-};
+}
 
 // Load a music file from a filename
 
@@ -152,7 +152,7 @@ Uint32 xyLoadMusic(const std::string& filename) {
 	// If SDL2 couldn't load it, show an error message with xyPrint()
 
 	if(newMsc == 0) {
-		xyPrint(0, "Failed to load %s! SDL_Mixer Error: %s\n", filename.c_str(), Mix_GetError());
+		xyPrint("Failed to load %s! SDL_Mixer Error: %s\n", filename.c_str(), Mix_GetError());
 	}
 
 	// If the array is empty, push the sound onto it and return the first index.
@@ -209,7 +209,7 @@ Uint32 xyLoadMusic(const std::string& filename) {
 	// Yes, I know that this was originally supposed to subtract 1 from the length, and no, this is not a bug. We're using the length value before we added the element, so it ends up being correct.
 
 	return arraySize;
-};
+}
 
 // Unload a sound effect
 
@@ -244,7 +244,7 @@ void xyDeleteSound(Uint32 sound) {
 	#ifdef USE_FASTFILL
 	unloadedSounds.push_back(sound);
 	#endif
-};
+}
 
 // Unload a song
 
@@ -279,7 +279,7 @@ void xyDeleteMusic(Uint32 music) {
 	#ifdef USE_FASTFILL
 	unloadedMusic.push_back(music);
 	#endif
-};
+}
 
 // Play a sound effect
 
@@ -291,14 +291,14 @@ int xyPlaySound(Uint32 sound, Uint32 loops) {
 	// If it failed, log the error with xyPrint()
 
 	if (i == -1) {
-		xyPrint(0, "Error playing sound! SDL_Mixer Error: %s\n", Mix_GetError());
+		xyPrint("Error playing sound! SDL_Mixer Error: %s\n", Mix_GetError());
 		return -1;
 	}
 
 	Mix_Volume(i, gvVolumeSound);
 
 	return i;
-};
+}
 
 // Play a sound effect on a specific channel
 
@@ -306,7 +306,7 @@ int xyPlaySoundChannel(Uint32 sound, Uint32 loops, Uint32 channel) {
 	const int i = Mix_PlayChannel(channel, vcSounds[sound], loops);
 
 	if (i == -1) {
-		xyPrint(0, "Error playing sound! SDL_Mixer Error: %s\n", Mix_GetError());
+		xyPrint("Error playing sound! SDL_Mixer Error: %s\n", Mix_GetError());
 		return -1;
 	}
 
@@ -325,14 +325,14 @@ int xyPlayMusic(Uint32 music, Uint32 loops) {
 	// If it failed, log the error with xyPrint()
 
 	if (i == -1) {
-		xyPrint(0, "Error playing music! SDL_Mixer Error: %s\n", Mix_GetError());
+		xyPrint("Error playing music! SDL_Mixer Error: %s\n", Mix_GetError());
 		return -1;
 	}
 
 	Mix_VolumeMusic(gvVolumeMusic);
 
 	return i;
-};
+}
 
 // Stop a sound effect, no idea why it doesn't support stopping music
 
@@ -364,7 +364,7 @@ void xyStopSound(Uint32 sound) {
 			Mix_HaltChannel(i);
 		}
 	}
-};
+}
 
 // Stop all audio on an audio channel
 

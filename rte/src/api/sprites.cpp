@@ -29,19 +29,16 @@ namespace BruxAPI {
 /////////////
 
 std::string spriteName(int sprite) {
-	if(static_cast<int>(vcSprites.size()) <= sprite || sprite < 0 || vcSprites[sprite] == 0)
+	if (static_cast<int>(vcSprites.size()) <= sprite || sprite < 0 || vcSprites[sprite] == 0) {
 		return "N/A";
+	}
 
 	return vcSprites[sprite]->name;
 }
 
 int findSprite(const std::string& name) {
-	//xyPrint(0, "Searching for sprite: %s", name.c_str());
-	//xyPrint(0, "Number of sprites to search: %i", vcSprites.size());
-
 	for (size_t i = 0; i < vcSprites.size(); i++) {
 		if (vcSprites[i] != 0) {
-			//xyPrint(0, "Current sprite name: %s", vcSprites[i]->getname());
 			if (vcSprites[i]->getname() == name) {
 				return vcSprites[i]->getnum();
 			}
@@ -53,15 +50,18 @@ int findSprite(const std::string& name) {
 
 int newSprite(const std::string& i, int w, int h, int m, int p, float px, float py) {
 	xySprite* newsprite = new xySprite(i, w, h, m, p, px, py);
+
 	return newsprite->getnum();
 }
 
 int newSpriteFT(int t, int w, int h, int m, int p, float px, float py) {
 	xySprite* newsprite = new xySprite(t, w, h, m, p, px, py);
+
 	return newsprite->getnum();
 }
 
-/** Macros to help easily check if a sprite is valid. **/
+// Macros to help easily check if a sprite is valid.
+
 #define SPRITE_CHECK_VALID       if (static_cast<int>(vcSprites.size()) <= i || vcSprites[i] == 0)
 #define SPRITE_CHECK_VALID_VOID  SPRITE_CHECK_VALID return
 #define SPRITE_CHECK_VALID_INT   SPRITE_CHECK_VALID return 0
@@ -102,14 +102,16 @@ int spriteH(int i) {
 }
 
 void replaceSprite(int s, const std::string& f, int w, int h, int m, int p, float x, float y) {
-	if (s <= 0 || s >= static_cast<int>(vcSprites.size())) return;
+	if (s <= 0 || s >= static_cast<int>(vcSprites.size())) {
+		return;
+	}
 
 	if (vcSprites[s] != 0) {
 		vcSprites[s]->replaceSprite(f, w, h, m, p, x, y);
+		return;
 	}
-	else {
-		vcSprites[s] = new xySprite(f, w, h, m, p, x, y);
-	}
+	
+	vcSprites[s] = new xySprite(f, w, h, m, p, x, y);
 }
 
 void spriteSetBlendMode(int sprite, int blend) {
@@ -118,6 +120,7 @@ void spriteSetBlendMode(int sprite, int blend) {
 	}
 
 	SDL_BlendMode mode;
+
 	switch (blend) {
 		case 0:
 			mode = SDL_BLENDMODE_NONE;
@@ -137,7 +140,7 @@ void spriteSetBlendMode(int sprite, int blend) {
 		default:
 			mode = SDL_BLENDMODE_NONE;
 			break;
-	};
+	}
 
 	SDL_SetTextureBlendMode(vcTextures[vcSprites[sprite]->gettex()], mode);
 }

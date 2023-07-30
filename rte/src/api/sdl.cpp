@@ -26,22 +26,25 @@ namespace BruxAPI {
 // SDL_GFX //
 /////////////
 
-void drawCircle(int x, int y, int r, bool f) {
-	if (f)
-		filledCircleColor(gvRender, x, y, r, gvDrawColor);
-	else
-		circleColor(gvRender, x, y, r, gvDrawColor);
+void drawCircle(int x, int y, int radius, bool filled) {
+	if (filled) {
+		filledCircleColor(gvRender, x, y, radius, gvDrawColor);
+		return;
+	}
+	
+	circleColor(gvRender, x, y, radius, gvDrawColor);
 }
 
-void drawRec(int x, int y, int w, int h, bool f) {
-	drawRect(x, y, w, h, f);
+void drawRec(int x, int y, int w, int h, bool filled) {
+	drawRect(x, y, w, h, filled);
 }
 
-void drawRect(int x, int y, int w, int h, bool f) {
-	if (f)
+void drawRect(int x, int y, int w, int h, bool filled) {
+	if (filled) {
 		boxColor(gvRender, x, y, x + w, y + h, gvDrawColor);
-	else
-		rectangleColor(gvRender, x, y, x + w, y + h, gvDrawColor);
+	}
+	
+	rectangleColor(gvRender, x, y, x + w, y + h, gvDrawColor);
 }
 
 void drawPoint(int x, int y) {

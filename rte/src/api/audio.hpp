@@ -27,7 +27,10 @@
 
 namespace BruxAPI {
 
-// Audio
+///////////
+// AUDIO //
+///////////
+
 int loadSound(const std::string& s); // Doc'd
 int loadMusic(const std::string& m); // Doc'd
 int playSound(int s, int l); // Doc'd

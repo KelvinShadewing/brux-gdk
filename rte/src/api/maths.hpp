@@ -26,7 +26,10 @@
 
 namespace BruxAPI {
 
-// Maths
+///////////
+// MATHS //
+///////////
+
 float randFloat(float a); // Doc'd
 int randInt(int a); // Doc'd
 float distance2(float x1, float y1, float x2, float y2); // Doc'd

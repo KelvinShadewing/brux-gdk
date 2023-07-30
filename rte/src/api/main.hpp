@@ -26,7 +26,10 @@
 
 namespace BruxAPI {
 
-// Main
+//////////
+// MAIN //
+//////////
+
 void wait(int seconds); // Doc'd
 void update(); // Doc'd
 std::string getOS(); // Doc'd

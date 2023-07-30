@@ -1,4 +1,4 @@
-# **XYG Tutorials**
+# **Brux GDK	 Tutorials**
 
 
 

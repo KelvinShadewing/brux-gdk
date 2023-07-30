@@ -26,7 +26,10 @@
 
 namespace BruxAPI {
 
-// Input
+///////////
+// INPUT //
+///////////
+
 int keyPress(int key); // Doc'd
 int keyDown(int key); // Doc'd
 int keyRelease(int key); // Doc'd

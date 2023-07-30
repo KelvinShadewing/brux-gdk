@@ -42,7 +42,7 @@
 xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, int _kern) {
 	//If there is no sprite that can be used, then cancel
 	if(vcSprites.size() <= index || vcSprites[index] == 0) {
-		xyPrint(0, "The sprite does not exist!");
+		xyPrint("The sprite does not exist!");
 		delete this;
 		return;
 	}

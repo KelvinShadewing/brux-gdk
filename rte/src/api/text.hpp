@@ -28,7 +28,10 @@
 
 namespace BruxAPI {
 
-// Text
+//////////
+// TEXT //
+//////////
+
 int newFont(int i, int c, int t, bool m, int k); // Doc'd
 void drawText(int f, float x, float y, const std::string& s); // Doc'd
 SQInteger chint(HSQUIRRELVM v, int i); // Doc'd
