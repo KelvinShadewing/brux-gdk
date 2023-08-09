@@ -35,7 +35,7 @@ void wait(int seconds) {
 
 void update() {
 	if (!gvUpdateDeprecationWarningShown) {
-		xyPrint(0, "WARNING: update() is deprecated and will be removed in a future release.");
+		xyPrint("WARNING: update() is deprecated and will be removed in a future release.");
 		gvUpdateDeprecationWarningShown = true;
 	}
 
