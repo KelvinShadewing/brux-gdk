@@ -30,6 +30,7 @@ private:
 	Uint32 *format;
 public:
 	std::string name;
+	std::string source;
 	xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
 	xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
 	~xySprite();

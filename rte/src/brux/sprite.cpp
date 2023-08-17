@@ -34,7 +34,8 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 	numero(0),
 	frames(),
 	tex(xyLoadImage(filename)),
-	name(filename)
+	name(filename),
+	source(filename)
 {
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
 
@@ -88,6 +89,7 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 	frames(),
 	tex(),
 	name("texture")
+	source("texture")
 {
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
 
