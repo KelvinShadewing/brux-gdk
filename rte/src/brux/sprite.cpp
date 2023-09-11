@@ -24,7 +24,7 @@
 #include "brux/sprite.hpp"
 #include "brux/maths.hpp"
 
-xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY) :
+xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY):
 	w(width),
 	h(height),
 	mar(margin),
@@ -34,7 +34,8 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 	numero(0),
 	frames(),
 	tex(xyLoadImage(filename)),
-	name(filename)
+	name(filename),
+	source(filename)
 {
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
 
@@ -87,7 +88,8 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 	numero(0),
 	frames(),
 	tex(),
-	name("texture")
+	name("texture"),
+	source("texture")
 {
 	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
 
