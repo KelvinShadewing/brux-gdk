@@ -40,11 +40,10 @@ void drawRec(int x, int y, int w, int h, bool filled) {
 }
 
 void drawRect(int x, int y, int w, int h, bool filled) {
-	if (filled) {
+	if (filled)
 		boxColor(gvRender, x, y, x + w, y + h, gvDrawColor);
-	}
-	
-	rectangleColor(gvRender, x, y, x + w, y + h, gvDrawColor);
+	else
+		rectangleColor(gvRender, x, y, x + w, y + h, gvDrawColor);
 }
 
 void drawPoint(int x, int y) {
