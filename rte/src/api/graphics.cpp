@@ -191,12 +191,36 @@ int findTexture(const std::string& name) {
 	return 0;
 }
 
+void deleteTexture(int tex) {
+	xyDeleteImage(tex);
+}
+
 std::string getTextureName(int texture) {
 	if (texture > 0 && texture < vcTextureNames.size()) {
 		return vcTextureNames[texture];
 	}
 	
 	return "";
+}
+
+int getTextureFilter(int tex) {
+	SDL_ScaleMode sm = (SDL_ScaleMode)0;
+
+	if(tex > 0 && tex < vcTextures.size() && vcTextures[tex] != 0)
+		SDL_GetTextureScaleMode(vcTextures[tex], &sm);
+	else
+		xyPrint("WARNING: Texture not found!");
+
+	return (int)sm;
+}
+
+void setTextureFilter(int tex, int filter) {
+	SDL_ScaleMode sm = (SDL_ScaleMode)min(max(filter, 0), 2);
+
+	if(tex > 0 && tex < vcTextures.size() && vcTextures[tex] != 0)
+		SDL_SetTextureScaleMode(vcTextures[tex], sm);
+	else
+		xyPrint("WARNING: Texture not found!");
 }
 
 void printTextureNames() {

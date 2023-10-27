@@ -466,7 +466,7 @@ Uint32 xyNewTexture(Uint32 w, Uint32 h) {
 
 	// Return the texture index
 
-	vcTextureNames.push_back("new-texture-" + std::to_string(vcTextures.size() - 1));
+	vcTextureNames.push_back("new-texture-" + std::to_string(vcTextures.size()));
 	vcTextures.push_back(nimg);
 
 	return vcTextures.size() - 1;

@@ -134,10 +134,10 @@ int main(int argc, char* argv[]) {
 	
 	// Handle situations where a main file can't be found
 	
-	if (!shouldLoad) {
-		puts("ERROR: Unable to load the main file. Make sure that it exists.");
-		return 1;
-	}
+	// if (!shouldLoad) {
+	// 	puts("ERROR: Unable to load the main file. Make sure that it exists.");
+	// 	return 1;
+	// }
 	
 	// Initialize everything
 	

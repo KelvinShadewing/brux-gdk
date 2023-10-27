@@ -1508,6 +1508,29 @@ static SQInteger findTexture_wrapper(HSQUIRRELVM vm)
 
 }
 
+static SQInteger deleteTexture_wrapper(HSQUIRRELVM vm)
+{
+  SQInteger arg0;
+  if(SQ_FAILED(sq_getinteger(vm, 2, &arg0))) {
+    sq_throwerror(vm, _SC("Argument 1 not an integer"));
+    return SQ_ERROR;
+  }
+
+  try {
+    BruxAPI::deleteTexture(static_cast<int> (arg0));
+
+    return 0;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'deleteTexture'"));
+    return SQ_ERROR;
+  }
+
+}
+
 static SQInteger getTextureName_wrapper(HSQUIRRELVM vm)
 {
   SQInteger arg0;
@@ -1528,6 +1551,58 @@ static SQInteger getTextureName_wrapper(HSQUIRRELVM vm)
     return SQ_ERROR;
   } catch(...) {
     sq_throwerror(vm, _SC("Unexpected exception while executing function 'getTextureName'"));
+    return SQ_ERROR;
+  }
+
+}
+
+static SQInteger getTextureFilter_wrapper(HSQUIRRELVM vm)
+{
+  SQInteger arg0;
+  if(SQ_FAILED(sq_getinteger(vm, 2, &arg0))) {
+    sq_throwerror(vm, _SC("Argument 1 not an integer"));
+    return SQ_ERROR;
+  }
+
+  try {
+    int return_value = BruxAPI::getTextureFilter(static_cast<int> (arg0));
+
+    sq_pushinteger(vm, return_value);
+    return 1;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'getTextureFilter'"));
+    return SQ_ERROR;
+  }
+
+}
+
+static SQInteger setTextureFilter_wrapper(HSQUIRRELVM vm)
+{
+  SQInteger arg0;
+  if(SQ_FAILED(sq_getinteger(vm, 2, &arg0))) {
+    sq_throwerror(vm, _SC("Argument 1 not an integer"));
+    return SQ_ERROR;
+  }
+  SQInteger arg1;
+  if(SQ_FAILED(sq_getinteger(vm, 3, &arg1))) {
+    sq_throwerror(vm, _SC("Argument 2 not an integer"));
+    return SQ_ERROR;
+  }
+
+  try {
+    BruxAPI::setTextureFilter(static_cast<int> (arg0), static_cast<int> (arg1));
+
+    return 0;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'setTextureFilter'"));
     return SQ_ERROR;
   }
 
@@ -4536,11 +4611,32 @@ void register_brux_wrapper(HSQUIRRELVM v)
     throw SquirrelError(v, "Couldn't register function 'findTexture'");
   }
 
+  sq_pushstring(v, "deleteTexture", -1);
+  sq_newclosure(v, &deleteTexture_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'deleteTexture'");
+  }
+
   sq_pushstring(v, "getTextureName", -1);
   sq_newclosure(v, &getTextureName_wrapper, 0);
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'getTextureName'");
+  }
+
+  sq_pushstring(v, "getTextureFilter", -1);
+  sq_newclosure(v, &getTextureFilter_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|n");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'getTextureFilter'");
+  }
+
+  sq_pushstring(v, "setTextureFilter", -1);
+  sq_newclosure(v, &setTextureFilter_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".b|nb|n");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'setTextureFilter'");
   }
 
   sq_pushstring(v, "printTextureNames", -1);
