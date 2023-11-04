@@ -98,10 +98,15 @@ int main(int argc, char* argv[]) {
 					
 					size_t found = xygapp.find_last_of("/\\");
 					
-					gvWorkDir = xygapp.substr(0, found);
+					//If local file provided without ./ before it, use local directory
+					if(found != -1)
+						gvWorkDir = xygapp.substr(0, found);
+					else
+						gvWorkDir = ".";
 					
 					if (chdir(gvWorkDir.c_str()) != 0) {
-						xyPrint("Error initiating Brux: Cannot change to input file working directory: %d", errno);
+						xyPrint("Error initializing Brux: Cannot change to input file working directory: %d", errno);
+						xyPrint(gvWorkDir.c_str());
 						xyEnd();
 						return 1;
 					}
@@ -146,7 +151,8 @@ int main(int argc, char* argv[]) {
 	try {
 		initResult = xyInit();
 	} catch (std::exception& err) {
-		xyPrint("Error initiating Brux: %s", err.what());
+		xyPrint("Error initializing Brux: %s", err.what());
+		xyPrint(gvWorkDir.c_str());
 		xyEnd();
 		return 1;
 	}
