@@ -21,6 +21,10 @@
 
   Loads and runs a script file local to the current game. If ".nut" is not included in the file name given, it will add it automatically.
 
+  * <a name="require"></a>**`require( file )`**
+
+  Loads and runs a script file local to the current game. If ".nut" is not included in the file name given, it will add it automatically. Unlike with `donut`, `require` will close the program if there is an error in the file.
+
 * <a name="getFrames"></a>**`getFrames()`**
 
   Returns the number of frames that have passed since the game began. Frames are counted by the number of calls to [update()][#update].

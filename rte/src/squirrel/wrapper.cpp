@@ -583,6 +583,29 @@ static SQInteger donut_wrapper(HSQUIRRELVM vm)
 
 }
 
+static SQInteger require_wrapper(HSQUIRRELVM vm)
+{
+  const SQChar* arg0;
+  if(SQ_FAILED(sq_getstring(vm, 2, &arg0))) {
+    sq_throwerror(vm, _SC("Argument 1 not a string"));
+    return SQ_ERROR;
+  }
+
+  try {
+    BruxAPI::require(arg0);
+
+    return 0;
+
+  } catch(std::exception& e) {
+    sq_throwerror(vm, e.what());
+    return SQ_ERROR;
+  } catch(...) {
+    sq_throwerror(vm, _SC("Unexpected exception while executing function 'require'"));
+    return SQ_ERROR;
+  }
+
+}
+
 static SQInteger dostr_wrapper(HSQUIRRELVM vm)
 {
   const SQChar* arg0;
@@ -4357,6 +4380,13 @@ void register_brux_wrapper(HSQUIRRELVM v)
   sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".s");
   if(SQ_FAILED(sq_createslot(v, -3))) {
     throw SquirrelError(v, "Couldn't register function 'donut'");
+  }
+
+  sq_pushstring(v, "require", -1);
+  sq_newclosure(v, &require_wrapper, 0);
+  sq_setparamscheck(v, SQ_MATCHTYPEMASKSTRING, ".s");
+  if(SQ_FAILED(sq_createslot(v, -3))) {
+    throw SquirrelError(v, "Couldn't register function 'require'");
   }
 
   sq_pushstring(v, "dostr", -1);

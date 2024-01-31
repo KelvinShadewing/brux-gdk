@@ -129,6 +129,7 @@ Uint32 gvVolumeMusic = 128;
 Uint32 gvVolumeSound = 128;
 Uint32 gvDrawTarget = 0;
 bool gvUpdateDeprecationWarningShown = false;
+bool gvDidError = false;
 
 // Gamepad
 // NOTE: I don't know why, I don't want to know why, but *somehow* this entirely breaks if we use the Uint32 type for this

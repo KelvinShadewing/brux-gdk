@@ -271,7 +271,7 @@ int xyInit() {
 	gvSquirrel = sq_open(1024);
 
 
-	sq_setprintfunc(gvSquirrel, sqPrint, sqPrint);
+	sq_setprintfunc(gvSquirrel, sqPrint, sqError);
 	sq_pushroottable(gvSquirrel);
 
 	sqstd_register_iolib(gvSquirrel);
@@ -378,6 +378,21 @@ void xyPrint(const SQChar *s, ...) {
 }
 
 void sqPrint(HSQUIRRELVM v, const SQChar *s, ...) {
+	va_list argv;
+	va_start(argv, s);
+
+	SQChar buffer[100*100] = _SC("");
+
+	vsnprintf(buffer, sizeof(buffer), s, argv);
+	va_end(argv);
+
+	cout << buffer << endl;
+	gvLog << buffer << endl;
+}
+
+void sqError(HSQUIRRELVM v, const SQChar *s, ...) {
+	gvDidError = true;
+
 	va_list argv;
 	va_start(argv, s);
 

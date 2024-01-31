@@ -34,6 +34,7 @@ namespace BruxAPI {
 
 void import(const std::string& file); // Clone of `donut()`
 void donut(const std::string& file); // Doc'd
+void require(const std::string& file);
 void dostr(const std::string& str); // Doc'd
 void mount(const std::string& dir, const std::string& mountpoint, bool prepend); // Doc'd
 void unmount(const std::string& dir); // Doc'd

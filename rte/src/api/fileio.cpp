@@ -37,6 +37,16 @@ void donut(const std::string& file) {
 	sqstd_dofile(gvSquirrel, file.c_str(), 0, 1);
 }
 
+void require(const std::string& file) {
+	gvDidError = false;
+
+	xyPrint("Running %s...", file.c_str());
+	sqstd_dofile(gvSquirrel, file.c_str(), 0, 1);
+
+	if(gvDidError)
+		xyEnd();
+}
+
 void dostr(const std::string& str) {
 	SQInteger oldtop = sq_gettop(gvSquirrel);
 

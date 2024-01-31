@@ -104,6 +104,7 @@ void xyStart();
 void xyEnd();
 void xyPrint(const SQChar *s, ...);
 void sqPrint(HSQUIRRELVM v, const SQChar *s, ...);
+void sqError(HSQUIRRELVM v, const SQChar *s, ...);
 int xyGetOS();
 void xyUpdate();
 
