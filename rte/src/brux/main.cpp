@@ -98,6 +98,7 @@ int main(int argc, char* argv[]) {
 					if (found != -1) {
 						gvWorkDir = xygapp.substr(0, found);
 
+						// Remove dir from xygapp so we can actually find the file
 						xygapp = xygapp.substr(found+1);
 						
 						if (chdir(gvWorkDir.c_str()) != 0) {
