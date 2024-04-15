@@ -99,14 +99,15 @@ int main(int argc, char* argv[]) {
 						gvWorkDir = xygapp.substr(0, found);
 
 						xygapp = xygapp.substr(found+1);
-					} else
+						
+						if (chdir(gvWorkDir.c_str()) != 0) {
+							xyPrint("Error initializing Brux: Cannot change to input file working directory: %d", errno);
+							xyPrint(gvWorkDir.c_str());
+							xyEnd();
+							return 1;
+						}
+					} else {
 						gvWorkDir = ".";
-					
-					if (chdir(gvWorkDir.c_str()) != 0) {
-						xyPrint("Error initializing Brux: Cannot change to input file working directory: %d", errno);
-						xyPrint(gvWorkDir.c_str());
-						xyEnd();
-						return 1;
 					}
 					
 					const std::string curdir = xyGetDir();
