@@ -55,18 +55,14 @@ int main(int argc, char* argv[]) {
 		FS.chdir('/bin');
 	);
 #endif
-
 	// Initialize the file system (PhysFS)
-	
 	xyFSInit();
 	
 	// Mount the current working directory.
-		 
 	xyFSMount(xyGetDir(), "/", true);
 
 	// Set the current write directory to a default for Brux.
 	// Can be changed later by the game.
-		
 	xySetWriteDir(xyGetPrefDir("brux", "brux"));
 
 	// Process arguments
@@ -99,16 +95,20 @@ int main(int argc, char* argv[]) {
 					size_t found = xygapp.find_last_of("/\\");
 					
 					//If local file provided without ./ before it, use local directory
-					if(found != -1)
+					if (found != -1) {
 						gvWorkDir = xygapp.substr(0, found);
-					else
+
+						// Remove dir from xygapp so we can actually find the file
+						xygapp = xygapp.substr(found+1);
+						
+						if (chdir(gvWorkDir.c_str()) != 0) {
+							xyPrint("Error initializing Brux: Cannot change to input file working directory: %d", errno);
+							xyPrint(gvWorkDir.c_str());
+							xyEnd();
+							return 1;
+						}
+					} else {
 						gvWorkDir = ".";
-					
-					if (chdir(gvWorkDir.c_str()) != 0) {
-						xyPrint("Error initializing Brux: Cannot change to input file working directory: %d", errno);
-						xyPrint(gvWorkDir.c_str());
-						xyEnd();
-						return 1;
 					}
 					
 					const std::string curdir = xyGetDir();
@@ -127,7 +127,6 @@ int main(int argc, char* argv[]) {
 		shouldLoad = true;
 	} else {
 		// If the filename is blank, attempt to load game.brx or test.nut as a fallback.
-		
 		if (xyFileExists("game.brx")) {
 			xygapp = "game.brx";
 			shouldLoad = true;
