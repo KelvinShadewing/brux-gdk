@@ -27,15 +27,15 @@ SDL_Texture* xyLoadTexture(const std::string& path);
 void xyClearScreen();
 void xyWait(int ticks);
 void xySetDrawTarget(Uint32 tex);
+int xyGetDrawTarget();
 void xyResetDrawTarget();
 void xyDrawImage(Uint32 tex, int x, int y);
 void xyDrawImagePart(Uint32 tex, int x, int y, int ox, int oy, int w, int h);
-void xyDrawImageEx(Uint32 tex, int x, int y, float angle, SDL_RendererFlip flip, int xscale, int yscale, int alpha, Uint32 color);
-Uint32 xyLoadImage(const std::string& path, Uint32 key);
-void xySetDrawColor(int r, int g, int b, int a);
-void xySetDrawColor(SQInteger color);
+void xyDrawImageEx(Uint32 tex, int x, int y, float angle, int flip, int xscale, int yscale, Uint32 color);
 Uint32 xyLoadImage(const std::string& path);
 Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key);
+void xySetDrawColor(int r, int g, int b, int a);
+void xySetDrawColor(int color);
 void xySetBackgroundColor(Uint32 color);
 void xyDeleteImage(Uint32 img);
 Uint8 xyGetRed(Uint32 color);
@@ -43,5 +43,27 @@ Uint8 xyGetGreen(Uint32 color);
 Uint8 xyGetBlue(Uint32 color);
 Uint8 xyGetAlpha(Uint32 color);
 Uint32 xyNewTexture(Uint32 w, Uint32 h);
+void xySetScaling(float scale);
+void xySetScalingFilter(int hint);
+void xySetResolution(int w, int h);
+int xyScreenW();
+int xyScreenH();
+int xyWindowW();
+int xyWindowH();
+void xyTextureSetBlendMode(int texture, int blend);
+int xyFindTexture(const std::string& name);
+std::string xyGetTextureName(int texture);
+int xyGetTextureFilter(int tex);
+void xySetTextureFilter(int tex, int filter);
+void xyPrintTextureNames();
+
+/** SHAPES */
+void xyDrawCircle(int x, int y, int radius, bool filled);
+void xyDrawRect(int x, int y, int w, int h, bool filled);
+void xyDrawPoint(int x, int y);
+void xyDrawLine(int x1, int y1, int x2, int y2);
+void xyDrawLineWide(int x1, int y1, int x2, int y2, int w);
+
+void xyRegisterGraphicsAPI(ssq::VM& vm);
 
 #endif

@@ -19,6 +19,8 @@
 
 #ifdef USE_SDL2_MIXER
 
+#include <SDL2/SDL_mixer.h>
+
 std::vector<Mix_Chunk*> vcSounds;
 std::vector<Mix_Music*> vcMusic;
 
@@ -27,7 +29,7 @@ std::vector<Uint32> unloadedSounds;
 std::vector<Uint32> unloadedMusic;
 #endif
 
-const std::string& gvAudioDriver = "SDL2";
+const std::string gvAudioDriver = "SDL2";
 
 bool isAudioLoaded = false;
 bool didAudioLoadFail = false;
@@ -423,6 +425,7 @@ int xyGetAudioChannels() {
 // Set the music volume
 
 void xySetMusicVolume(int volume) {
+	gvVolumeMusic = volume;
 	Mix_VolumeMusic(volume);
 }
 

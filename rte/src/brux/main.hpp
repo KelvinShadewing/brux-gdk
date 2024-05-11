@@ -77,17 +77,14 @@ void __stack_chk_fail(void);
 #include <SDL2/SDL2_gfxPrimitives.h>
 
 #include <squirrel.h>
-#include <sqstdio.h>
-#include <sqstdaux.h>
-#include <sqstdmath.h>
-#include <sqstdstring.h>
-#include <sqstdsystem.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
 #endif
 
-using namespace std;
+namespace ssq {
+	class VM;
+}
 
 // Defines
 
@@ -105,7 +102,18 @@ void xyEnd();
 void xyPrint(const SQChar *s, ...);
 void sqPrint(HSQUIRRELVM v, const SQChar *s, ...);
 void sqError(HSQUIRRELVM v, const SQChar *s, ...);
-int xyGetOS();
 void xyUpdate();
+int xyGetOS();
+int xyGetFPS();
+void xySetFPS(int max_fps);
+void xySetWindowTitle(const std::string& title);
+void xySetWindowIcon(const std::string& file);
+int xyGetFrames();
+int xyDisplayW();
+int xyDisplayH();
+std::string xyBruxVersion();
+void xyToggleFullscreen();
+
+void xyRegisterMainAPI(ssq::VM& vm);
 
 #endif

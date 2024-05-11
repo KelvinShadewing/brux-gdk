@@ -20,11 +20,7 @@
 
 #include "brux/global.hpp"
 
-#ifdef USE_SDL2_MIXER
-#include <SDL2/SDL_mixer.h>
-#endif
-
-extern const std::string& gvAudioDriver;
+extern const std::string gvAudioDriver;
 
 // Checks if audio playback is currently available
 
@@ -110,8 +106,27 @@ bool xyCheckMusic();
 
 int xyGetAudioChannels();
 
+// Get the current music volume
+
+int xyGetMusicVolume();
+
 // Set the music volume
 
 void xySetMusicVolume(int volume);
+
+// Get the current sound volume
+
+int xyGetSoundVolume();
+
+// Set the sound volume
+
+void xySetSoundVolume(int volume);
+
+// Get the current audio driver
+
+std::string xyGetAudioDriver();
+
+
+void xyRegisterAudioAPI(ssq::VM& vm);
 
 #endif

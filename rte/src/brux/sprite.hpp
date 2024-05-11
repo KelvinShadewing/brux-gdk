@@ -21,6 +21,8 @@
 #ifndef _SPRITE_H_
 #define _SPRITE_H_
 
+#include "brux/main.hpp"
+
 class xySprite {
 private:
 	Uint32 numero, mar, pad, w, h, tex, col, row, frames = 0;
@@ -47,5 +49,22 @@ public:
 	Uint32 geth() const { return h; }
 	const char* getname() const { return name.c_str(); }
 };
+
+/** API */
+std::string xySpriteName(int sprite);
+int xyFindSprite(const std::string& name);
+int xyNewSprite(const std::string& i, int w, int h, int m, int p, float px, float py);
+int xyNewSpriteFT(int t, int w, int h, int m, int p, float px, float py);
+void xyDrawSprite(int i, int f, int x, int y);
+void xyDrawSpriteEx(int i, int f, int x, int y, int a, int l, float sx, float sy, float p);
+void xyDrawSpriteMod(int i, int f, int x, int y, int c);
+void xyDrawSpriteExMod(int i, int f, int x, int y, int a, int l, float sx, float sy, float p, int c);
+void xyDeleteSprite(int i);
+int xySpriteW(int i);
+int xySpriteH(int i);
+void xyReplaceSprite(int s, const std::string& f, int w, int h, int m, int p, float x, float y);
+void xySpriteSetBlendMode(int sprite, int blend);
+
+void xyRegisterSpriteAPI(ssq::VM& vm);
 
 #endif

@@ -19,13 +19,14 @@
 | FILE I/O SOURCE |
 \*===============*/
 
-#include <physfs.h>
+#include "brux/fileio.hpp"
 
 #include <filesystem>
 
+#include <physfs.h>
+
 #include "brux/main.hpp"
 #include "brux/global.hpp"
-#include "brux/fileio.hpp"
 
 // Initalize a PhysicsFS error.
 
@@ -66,7 +67,6 @@ void xyFSUnmount(const std::string& dir) {
 
 std::string xyGetDir() {
 	// Get the current working directory
-
 	return getcwd(0, 0);
 }
 
@@ -121,8 +121,7 @@ void xyCreateDir(const std::string& name) {
 		throw PhysFSError("Could not create directory '" + name + "'", "mkdir");
 }
 
-std::string xyFileRead(const std::string& file)
-{
+std::string xyFileRead(const std::string& file) {
 	// Check if the file exists.
 	if (!xyFileExists(file))
 		throw std::runtime_error("File '" + file + "' doesn't exist.");
@@ -143,8 +142,16 @@ std::string xyFileRead(const std::string& file)
 	return result;
 }
 
-void xyFileWrite(const std::string& file, const std::string& data)
-{
+std::string xyFileReadAPI(const std::string& file) {
+	if (xyFileExists(file)) {
+		return xyFileRead(file);
+	}
+
+	xyPrint("WARNING: '%s' does not exist!", file.c_str());
+	return "";
+}
+
+void xyFileWrite(const std::string& file, const std::string& data) {
 	// If the full path to the file's directory isn't available, create it.
 	xyCreateDir(std::filesystem::path(file).parent_path().string());
 
@@ -158,8 +165,7 @@ void xyFileWrite(const std::string& file, const std::string& data)
 	PHYSFS_close(handle);
 }
 
-void xyFileAppend(const std::string& file, const std::string& data)
-{
+void xyFileAppend(const std::string& file, const std::string& data) {
 	// If the file currently exists, read its data.
 	std::string file_data;
 	if (xyFileExists(file))
@@ -181,8 +187,7 @@ bool xyLegacyFileExists(const std::string& file) {
 	return stat(file.c_str(), &buff) != -1;
 }
 
-void xyFileDelete(const std::string& name)
-{
+void xyFileDelete(const std::string& name) {
 	// If a directory is provided, delete all files inside of it.
 	if (xyIsDirectory(name)) {
 		std::filesystem::path dir_path = name;
@@ -224,7 +229,6 @@ std::vector<std::string> xyListDirectory(const std::string& dir) {
 		throw PhysFSError(err.str(), "enumerateFiles");
 	}
 	char **i;
-
 	for (i = rc; *i != NULL; i++)
 		result.push_back(*i);
 
@@ -236,7 +240,7 @@ std::vector<std::string> xyListDirectory(const std::string& dir) {
 // JSON encoding / decoding.
 // Originally implemented by Nova Storm.
 
-void sqDecodeJSONTable(HSQUIRRELVM v, cJSON* item) {
+static void sqDecodeJSONTable(HSQUIRRELVM v, cJSON* item) {
 	if (!item) {
 		return;
 	}
@@ -285,36 +289,61 @@ void sqDecodeJSONTable(HSQUIRRELVM v, cJSON* item) {
 	}
 }
 
-void sqDecodeJSON(HSQUIRRELVM v, const char* str) {
-	if (str[0] != '{' && str[0] != '[') {
-		if (!strcmp(str, "true")) {
-			sq_pushbool(v, SQTrue);
-		}
+SQInteger sqDecodeJSON(HSQUIRRELVM v, const std::string& str) {
+	if (str.empty()) {
+		sq_pushnull(v);
+		return 1;
+	}
 
-		if (!strcmp(str, "false")) {
+	if (str[0] != '{' && str[0] != '[') {
+		if (str == "true") {
+			sq_pushbool(v, SQTrue);
+			return 1;
+		}
+		if (str == "false") {
 			sq_pushbool(v, SQFalse);
+			return 1;
 		}
 
 		// FIXME: This code doesn't handle multi-digit integers and floating-point numbers properly.
-
 		if (std::isdigit(str[0]) || (str[0] == '-' && std::isdigit(str[1]))) {
-			sq_pushinteger(v, strtol(str, NULL, 0));
+			sq_pushinteger(v, strtol(str.c_str(), NULL, 0));
+			return 1;
 		}
-		
-		sq_pushstring(v, str, -1);
-		return;
+
+		sq_pushstring(v, str.c_str(), -1);
+		return 1;
 	}
 
-	cJSON* root = cJSON_Parse(str);
+	cJSON* root = cJSON_Parse(str.c_str());
 
 	if (!root || !root->child) {
 		sq_pushnull(v);
-		return;
+		return 1;
 	}
 
 	sq_newtable(v);
 	sqDecodeJSONTable(v, root->child);
 	cJSON_Delete(root);
 
-	return;
+	return 1;
+}
+
+
+void xyRegisterFileIOAPI(ssq::VM& vm) {
+	vm.addFunc("mount", xyFSMount); // Doc'd
+	vm.addFunc("unmount", xyFSUnmount); // Doc'd
+	vm.addFunc("getdir", xyGetDir); // Doc'd
+	vm.addFunc("getWriteDir", xyGetWriteDir); // Doc'd
+	vm.addFunc("getPrefDir", xyGetPrefDir); // Doc'd
+	vm.addFunc("setWriteDir", xySetWriteDir); // Doc'd
+	vm.addFunc("createDir", xyCreateDir); // Doc'd
+	vm.addFunc("fileRead", xyFileReadAPI); // Doc'd
+	vm.addFunc("fileWrite", xyFileWrite); // Doc'd
+	vm.addFunc("fileAppend", xyFileAppend); // Doc'd
+	vm.addFunc("fileExists", xyFileExists); // Doc'd
+	vm.addFunc("fileDelete", xyFileDelete); // Doc'd
+	vm.addFunc("isdir", xyIsDirectory); // Doc'd
+	vm.addFunc("lsdir", xyListDirectory); // Doc'd
+	vm.addFunc("jsonRead", sqDecodeJSON); // Doc'd
 }

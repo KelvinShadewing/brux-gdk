@@ -18,10 +18,13 @@
 | SPRITE SOURCE |
 \*=============*/
 
-#include "brux/main.hpp"
+#include "brux/sprite.hpp"
+
+#include <simplesquirrel/vm.hpp>
+
 #include "brux/global.hpp"
 #include "brux/graphics.hpp"
-#include "brux/sprite.hpp"
+#include "brux/main.hpp"
 #include "brux/maths.hpp"
 
 xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY):
@@ -321,3 +324,142 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 
 	delete piv;
 };
+
+
+/** API */
+
+std::string xySpriteName(int sprite) {
+	if (static_cast<int>(vcSprites.size()) <= sprite || sprite < 0 || vcSprites[sprite] == 0) {
+		return "N/A";
+	}
+
+	return vcSprites[sprite]->name;
+}
+
+int xyFindSprite(const std::string& name) {
+	for (size_t i = 0; i < vcSprites.size(); i++) {
+		if (vcSprites[i] != 0) {
+			if (vcSprites[i]->getname() == name) {
+				return vcSprites[i]->getnum();
+			}
+		}
+	}
+
+	return 0;
+}
+
+int xyNewSprite(const std::string& i, int w, int h, int m, int p, float px, float py) {
+	xySprite* newsprite = new xySprite(i, w, h, m, p, px, py);
+
+	return newsprite->getnum();
+}
+
+int xyNewSpriteFT(int t, int w, int h, int m, int p, float px, float py) {
+	xySprite* newsprite = new xySprite(t, w, h, m, p, px, py);
+
+	return newsprite->getnum();
+}
+
+#define SPRITE_CHECK_VALID       if (static_cast<int>(vcSprites.size()) <= i || vcSprites[i] == 0)
+#define SPRITE_CHECK_VALID_VOID  SPRITE_CHECK_VALID return
+#define SPRITE_CHECK_VALID_INT   SPRITE_CHECK_VALID return 0
+
+void xyDrawSprite(int i, int f, int x, int y) {
+	SPRITE_CHECK_VALID_VOID;
+	vcSprites[i]->draw(f, x, y);
+}
+
+void xyDrawSpriteEx(int i, int f, int x, int y, int a, int l, float sx, float sy, float p) {
+	SPRITE_CHECK_VALID_VOID;
+	vcSprites[i]->drawex(f, x, y, a, static_cast<SDL_RendererFlip>(l), sx, sy, p);
+}
+
+void xyDrawSpriteMod(int i, int f, int x, int y, int c) {
+	SPRITE_CHECK_VALID_VOID;
+	vcSprites[i]->drawmod(f, x, y, c);
+}
+
+void xyDrawSpriteExMod(int i, int f, int x, int y, int a, int l, float sx, float sy, float p, int c) {
+	SPRITE_CHECK_VALID_VOID;
+	vcSprites[i]->drawexmod(f, x, y, a, static_cast<SDL_RendererFlip>(l), sx, sy, p, c);
+}
+
+void xyDeleteSprite(int i) {
+	SPRITE_CHECK_VALID_VOID;
+	delete vcSprites[i];
+}
+
+int xySpriteW(int i) {
+	SPRITE_CHECK_VALID_INT;
+	return vcSprites[i]->getw();
+}
+
+int xySpriteH(int i) {
+	SPRITE_CHECK_VALID_INT;
+	return vcSprites[i]->geth();
+}
+
+#undef SPRITE_CHECK_VALID
+#undef SPRITE_CHECK_VALID_VOID
+#undef SPRITE_CHECK_VALID_INT
+
+void xyReplaceSprite(int s, const std::string& f, int w, int h, int m, int p, float x, float y) {
+	if (s <= 0 || s >= static_cast<int>(vcSprites.size())) {
+		return;
+	}
+
+	if (vcSprites[s] != 0) {
+		vcSprites[s]->replaceSprite(f, w, h, m, p, x, y);
+		return;
+	}
+
+	vcSprites[s] = new xySprite(f, w, h, m, p, x, y);
+}
+
+void xySpriteSetBlendMode(int sprite, int blend) {
+	if (sprite < 0 || sprite > static_cast<int>(vcSprites.size()) - 1) {
+		throw std::runtime_error("Invalid sprite ID. Cannot set blend mode");
+	}
+
+	SDL_BlendMode mode;
+
+	switch (blend) {
+		case 0:
+			mode = SDL_BLENDMODE_NONE;
+			break;
+		case 1:
+			mode = SDL_BLENDMODE_BLEND;
+			break;
+		case 2:
+			mode = SDL_BLENDMODE_ADD;
+			break;
+		case 3:
+			mode = SDL_ComposeCustomBlendMode(SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT, SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT);
+			break;
+		case 4:
+			mode = SDL_BLENDMODE_MOD;
+			break;
+		default:
+			mode = SDL_BLENDMODE_NONE;
+			break;
+	}
+
+	SDL_SetTextureBlendMode(vcTextures[vcSprites[sprite]->gettex()], mode);
+}
+
+
+void xyRegisterSpriteAPI(ssq::VM& vm) {
+	vm.addFunc("spriteName", xySpriteName); // Doc'd
+	vm.addFunc("findSprite", xyFindSprite); // Doc'd
+	vm.addFunc("newSprite", xyNewSprite); // Doc'd
+	vm.addFunc("newSpriteFT", xyNewSpriteFT);
+	vm.addFunc("drawSprite", xyDrawSprite); // Doc'd
+	vm.addFunc("drawSpriteEx", xyDrawSpriteEx); // Doc'd
+	vm.addFunc("drawSpriteMod", xyDrawSpriteMod); // Doc'd
+	vm.addFunc("drawSpriteExMod", xyDrawSpriteExMod); // Doc'd
+	vm.addFunc("deleteSprite", xyDeleteSprite); // Doc'd
+	vm.addFunc("spriteW", xySpriteW); // Doc'd
+	vm.addFunc("spriteH", xySpriteH); // Doc'd
+	vm.addFunc("replaceSprite", xyReplaceSprite);
+	vm.addFunc("spriteSetBlendMode", xySpriteSetBlendMode); // Doc'd
+}

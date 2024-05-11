@@ -24,7 +24,7 @@
 #include "brux/core.hpp"
 
 void xyLoadCore() {
-	const SQChar *cmd =R"rew(
+	const char* cmd =R"rew(
 	const k__0 = 0;
 	const k__1 = 1;
 	const k__2 = 2;
@@ -502,9 +502,37 @@ void xyLoadCore() {
 
 	print("Imported core lib.");)rew";
 
-	SQInteger oldtop = sq_gettop(gvSquirrel);
-	sq_compilebuffer(gvSquirrel, cmd, (int)strlen(cmd) * sizeof(SQChar), "core", 1);
-	sq_pushroottable(gvSquirrel);
-	sq_call(gvSquirrel, 1, SQFalse, SQTrue);
-	sq_settop(gvSquirrel, oldtop);
+	ssq::Script script = gvSquirrel.compileSource(cmd, "core.nut");
+	gvSquirrel.run(script);
+}
+
+
+/** General API functions */
+
+void xyDonut(const std::string& file) {
+	xyPrint("Running %s...", file.c_str());
+	ssq::Script script = gvSquirrel.compileFile(file.c_str());
+	gvSquirrel.run(script);
+}
+
+void xyRequire(const std::string& file) {
+	gvDidError = false;
+
+	xyDonut(file);
+
+	if(gvDidError)
+		xyEnd();
+}
+
+void xyDostr(const std::string& str) {
+	ssq::Script script = gvSquirrel.compileSource(str.c_str(), "std::string");
+	gvSquirrel.run(script);
+}
+
+
+void xyRegisterCoreAPI(ssq::VM& vm) {
+	vm.addFunc("import", xyDonut); // Clone of `donut()`
+	vm.addFunc("donut", xyDonut); // Doc'd
+	vm.addFunc("require", xyRequire);
+	vm.addFunc("dostr", xyDostr); // Doc'd
 }

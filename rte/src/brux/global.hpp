@@ -22,10 +22,12 @@
 #ifndef _GLOBALS_H_
 #define _GLOBALS_H_
 
+#include <simplesquirrel/vm.hpp>
+
 #include "brux/main.hpp"
+#include "brux/shapes.hpp"
 #include "brux/sprite.hpp"
 #include "brux/text.hpp"
-#include "brux/shapes.hpp"
 
 #define pi 3.14159265f
 #define OS_WINDOWS 0
@@ -40,7 +42,7 @@ extern int gvMouseX;
 extern int gvMouseY;
 extern Uint32 gvScrW, gvScrH;
 extern Uint32 gvWinW, gvWinH;
-extern HSQUIRRELVM gvSquirrel;
+extern ssq::VM gvSquirrel;
 extern std::ofstream gvLog;
 extern SDL_Window *gvWindow;
 extern SDL_Renderer *gvRender;
@@ -83,6 +85,7 @@ extern Uint32 gvVolumeSound;
 extern Uint32 gvDrawTarget;
 extern bool gvUpdateDeprecationWarningShown;
 extern bool gvDidError;
+extern bool gvQuitRequested;
 
 // Gamepad
 

@@ -1,9 +1,6 @@
-[submodule "rte/external/miniswig"]
-	path = rte/external/miniswig
-	url = https://github.com/WindstilleTeam/miniswig
-[submodule "rte/external/squirrel"]
-	path = rte/external/squirrel
-	url = https://github.com/albertodemichelis/squirrel.git
 [submodule "rte/external/physfs"]
 	path = rte/external/physfs
 	url = https://github.com/icculus/physfs
+[submodule "rte/external/simplesquirrel"]
+	path = rte/external/simplesquirrel
+	url = https://github.com/SuperTux/simplesquirrel

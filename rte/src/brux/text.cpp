@@ -18,11 +18,14 @@
 | TEXT SOURCE |
 \*===========*/
 
-#include "brux/main.hpp"
+#include "brux/text.hpp"
+
+#include <simplesquirrel/vm.hpp>
+
 #include "brux/global.hpp"
 #include "brux/graphics.hpp"
+#include "brux/main.hpp"
 #include "brux/sprite.hpp"
-#include "brux/text.hpp"
 
 //New bitmap font format to replace SDL_ttf.
 //
@@ -156,3 +159,42 @@ void xyFont::draw(int x, int y, std::string text) {
 Uint32 xyFont::getnum() {
 	return numero;
 };
+
+
+/** API */
+
+int xyNewFont(int i, int c, int t, bool m, int k) {
+	// Sanitize inputs
+	if (i < 0) {
+		i = 0;
+	}
+	else if (t > 255) {
+		t = 255;
+	}
+	else if (c > 255) {
+		c = 255;
+	}
+
+	xyFont* newfont = new xyFont(i, static_cast<char>(c), static_cast<unsigned char>(t), m, k);
+	return newfont->getnum();
+}
+
+#define FONT_CHECK_VALID  if (f >= static_cast<int>(vcFonts.size()) || vcFonts[f] == 0) return
+
+void xyDrawText(int f, float x, float y, const std::string& s) {
+	FONT_CHECK_VALID;
+	vcFonts[f]->draw(static_cast<int>(x), static_cast<int>(y), s);
+}
+
+#undef FONT_CHECK_VALID
+
+std::string xyChint(int i) {
+	return std::string(1, static_cast<char>(i));
+}
+
+
+void xyRegisterTextAPI(ssq::VM& vm) {
+	vm.addFunc("newFont", xyNewFont); // Doc'd
+	vm.addFunc("drawText", xyDrawText); // Doc'd
+	vm.addFunc("chint", xyChint); // Doc'd
+}
