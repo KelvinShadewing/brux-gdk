@@ -94,6 +94,11 @@ namespace ssq {
 	#define scvprintf vprintf
 #endif
 
+#ifdef _MSC_VER
+	#undef min // Fixes a std::min "illegal token on right side of '::'" error
+	#undef max // Fixes a std::max "illegal token on right side of '::'" error
+#endif
+
 // Prototypes
 
 int xyInit();
