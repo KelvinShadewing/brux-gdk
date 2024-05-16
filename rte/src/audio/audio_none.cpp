@@ -1,4 +1,4 @@
-//  Brux - Audio Portability API - None
+//  Brux - Audio Portability API - Generic Fallback
 //  Copyright (C) 2016 KelvinShadewing
 //  Copyright (C) 2023 hexaheximal
 //
