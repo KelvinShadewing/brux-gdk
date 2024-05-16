@@ -19,7 +19,7 @@
 
 #ifndef USE_SDL2_MIXER
 
-const std::string& gvAudioDriver = "None";
+const std::string gvAudioDriver = "None";
 
 // Checks if audio playback is currently available
 
@@ -152,6 +152,7 @@ int xyGetAudioChannels() {
 // Set the music volume
 
 void xySetMusicVolume(int volume) {
+	gvVolumeMusic = volume;
 	// We don't need to do anything here, as this doesn't actually play any audio
 }
 

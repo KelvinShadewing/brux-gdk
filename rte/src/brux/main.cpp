@@ -31,14 +31,18 @@
 
 #include "brux/main.hpp"
 
+#include <simplesquirrel/simplesquirrel.hpp>
+
 #include "audio/audio.hpp"
-#include "api/input.hpp"
 #include "brux/core.hpp"
 #include "brux/fileio.hpp"
 #include "brux/global.hpp"
 #include "brux/graphics.hpp"
 #include "brux/input.hpp"
-#include "squirrel/wrapper.hpp"
+#include "brux/maths.hpp"
+#include "brux/shapes.hpp"
+#include "brux/sprite.hpp"
+#include "brux/text.hpp"
 
 /////////////////
 //MAIN FUNCTION//
@@ -55,16 +59,6 @@ int main(int argc, char* argv[]) {
 		FS.chdir('/bin');
 	);
 #endif
-	// Initialize the file system (PhysFS)
-	xyFSInit();
-	
-	// Mount the current working directory.
-	xyFSMount(xyGetDir(), "/", true);
-
-	// Set the current write directory to a default for Brux.
-	// Can be changed later by the game.
-	xySetWriteDir(xyGetPrefDir("brux", "brux"));
-
 	// Process arguments
 
 	std::string xygapp = "";
@@ -119,6 +113,16 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
+	// Initialize the file system (PhysFS)
+	xyFSInit();
+
+	// Mount the current working directory.
+	xyFSMount(xyGetDir(), "/", true);
+
+	// Set the current write directory to a default for Brux.
+	// Can be changed later by the game.
+	xySetWriteDir(xyGetPrefDir("brux", "brux"));
+
 	bool shouldLoad = false;
 	
 	if (xygapp != "") {
@@ -164,8 +168,12 @@ int main(int argc, char* argv[]) {
 		
 	SDL_ShowCursor(0);
 	
-	xyPrint("Running %s...", xygapp.c_str());
-	sqstd_dofile(gvSquirrel, xygapp.c_str(), 0, 1);
+	try {
+		xyDonut(xygapp);
+	}
+	catch (const std::exception& err) {
+		xyPrint("Error running '%s': %s", xygapp.c_str(), err.what());
+	}
 	
 	// Unload everything once the squirrel code is finished running
 	
@@ -189,7 +197,7 @@ int xyInit() {
 	// Initiate log file
 
 	remove("log.txt");
-	gvLog.open("log.txt", ios_base::out);
+	gvLog.open("log.txt", std::ios_base::out);
 
 	// Print opening message
 	
@@ -267,27 +275,28 @@ int xyInit() {
 
 	// Initiate Squirrel
 
-	gvSquirrel = sq_open(1024);
+	gvSquirrel = ssq::VM(1024, ssq::Libs::IO | ssq::Libs::SYSTEM | ssq::Libs::MATH | ssq::Libs::STRING);
 
+	gvSquirrel.setPrintFunc(sqPrint, sqError);
 
-	sq_setprintfunc(gvSquirrel, sqPrint, sqError);
-	sq_pushroottable(gvSquirrel);
-
-	sqstd_register_iolib(gvSquirrel);
-	sqstd_register_systemlib(gvSquirrel);
-	sqstd_register_mathlib(gvSquirrel);
-	sqstd_register_stringlib(gvSquirrel);
-
-	// Bind all Brux API functions to Squirrel, using the miniswig generated wrapper.
+	// Bind all Brux API functions to Squirrel
 
 	xyPrint("Embedding API...");
-	BruxAPI::register_brux_wrapper(gvSquirrel);
+	xyRegisterAudioAPI(gvSquirrel);
+	xyRegisterCoreAPI(gvSquirrel);
+	xyRegisterFileIOAPI(gvSquirrel);
+	xyRegisterGraphicsAPI(gvSquirrel);
+	xyRegisterInputAPI(gvSquirrel);
+	xyRegisterMainAPI(gvSquirrel);
+	xyRegisterMathsAPI(gvSquirrel);
+	xyRegisterShapesAPI(gvSquirrel);
+	xyRegisterSpriteAPI(gvSquirrel);
+	xyRegisterTextAPI(gvSquirrel);
 
 	// The error handler does not seem to print compile-time errors.
 	// I haven't been able to figure out why, as the same code works in my other apps,
 	// and is taken from the sq.c example included with Squirrel.
-
-	sqstd_seterrorhandlers(gvSquirrel);
+	gvSquirrel.setStdErrorFunc();
 
 	xyPrint("Squirrel initialized successfully!");
 
@@ -334,10 +343,9 @@ void xyEnd() {
 	// Run Squirrel's garbage collector, and then close the Squirrel VM.
 	
 	xyPrint("Closing Squirrel...");
-	SQInteger garbage = sq_collectgarbage(gvSquirrel);
+	SQInteger garbage = sq_collectgarbage(gvSquirrel.getHandle());
 	xyPrint("Collected %i junk obects.", garbage);
-	sq_pop(gvSquirrel, 1);
-	sq_close(gvSquirrel);
+	gvSquirrel.destroy();
 
 	// Unload all of the audio stuff
 
@@ -372,8 +380,8 @@ void xyPrint(const SQChar *s, ...) {
 	vsnprintf(buffer, sizeof(buffer), s, argv);
 	va_end(argv);
 
-	cout << buffer << endl;
-	gvLog << buffer << endl;
+	std::cout << buffer << std::endl;
+	gvLog << buffer << std::endl;
 }
 
 void sqPrint(HSQUIRRELVM v, const SQChar *s, ...) {
@@ -385,8 +393,8 @@ void sqPrint(HSQUIRRELVM v, const SQChar *s, ...) {
 	vsnprintf(buffer, sizeof(buffer), s, argv);
 	va_end(argv);
 
-	cout << buffer << endl;
-	gvLog << buffer << endl;
+	std::cout << buffer << std::endl;
+	gvLog << buffer << std::endl;
 }
 
 void sqError(HSQUIRRELVM v, const SQChar *s, ...) {
@@ -400,11 +408,16 @@ void sqError(HSQUIRRELVM v, const SQChar *s, ...) {
 	vsnprintf(buffer, sizeof(buffer), s, argv);
 	va_end(argv);
 
-	cout << buffer << endl;
-	gvLog << buffer << endl;
+	std::cout << buffer << std::endl;
+	gvLog << buffer << std::endl;
 }
 
 void xyUpdate() {
+	if (!gvUpdateDeprecationWarningShown) {
+		xyPrint("WARNING: update() is deprecated and will be removed in a future release.");
+		gvUpdateDeprecationWarningShown = true;
+	}
+
 	// Update last button state
 
 	int i;
@@ -629,6 +642,58 @@ void xyUpdate() {
 	gvFrames++;
 }
 
+int xyGetFPS() {
+	return static_cast<int>(std::round(gvFPS));
+}
+
+void xySetFPS(int max_fps) {
+	if (max_fps < 0) {
+		throw std::runtime_error("Maximum FPS cannot be negative");
+	}
+
+	gvMaxFPS = max_fps;
+}
+
+void xySetWindowTitle(const std::string& title) {
+	SDL_SetWindowTitle(gvWindow, title.c_str());
+}
+
+void xySetWindowIcon(const std::string& file) {
+	if (!xyFileExists(file)) {
+		return;
+	}
+
+	SDL_Surface* icon = IMG_Load(file.c_str());
+	SDL_SetWindowIcon(gvWindow, icon);
+	SDL_FreeSurface(icon);
+}
+
+int xyGetFrames() {
+	return gvFrames;
+}
+
+int xyDisplayW() {
+	SDL_DisplayMode DM;
+	SDL_GetCurrentDisplayMode(0, &DM);
+
+	return DM.w;
+}
+
+int xyDisplayH() {
+	SDL_DisplayMode DM;
+	SDL_GetCurrentDisplayMode(0, &DM);
+
+	return DM.h;
+}
+
+std::string xyBruxVersion() {
+	return gvVNo;
+}
+
+void xyToggleFullscreen() {
+	SDL_SetWindowFullscreen(gvWindow, (SDL_GetWindowFlags(gvWindow) & SDL_WINDOW_FULLSCREEN_DESKTOP) ? 0 : SDL_WINDOW_FULLSCREEN_DESKTOP);
+}
+
 int xyGetOS() {
 #ifdef _WIN32
 	return OS_WINDOWS;
@@ -649,4 +714,21 @@ int xyGetOS() {
 
 void __stack_chk_fail(void) {
 	xyPrint("Stack smash detected.");
+}
+
+
+void xyRegisterMainAPI(ssq::VM& vm) {
+	vm.addFunc("wait", xyWait); // Doc'd
+	vm.addFunc("update", xyUpdate); // Doc'd
+	vm.addFunc("getOS", xyGetOS); // Doc'd
+	vm.addFunc("getTicks", SDL_GetTicks); // Doc'd
+	vm.addFunc("getFPS", xyGetFPS); // Doc'd
+	vm.addFunc("setFPS", xySetFPS); // Doc'd
+	vm.addFunc("setWindowTitle", xySetWindowTitle); // Doc'd
+	vm.addFunc("setWindowIcon", xySetWindowIcon); // Doc'd
+	vm.addFunc("getFrames", xyGetFrames); // Doc'd
+	vm.addFunc("displayW", xyDisplayW); // Doc'd
+	vm.addFunc("displayH", xyDisplayH); // Doc'd
+	vm.addFunc("bruxVersion", xyBruxVersion); // Doc'd
+	vm.addFunc("toggleFullscreen", xyToggleFullscreen); // Doc'd
 }

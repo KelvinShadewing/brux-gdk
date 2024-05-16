@@ -30,12 +30,6 @@ if (USE_SDL2_MIXER)
   option(USE_FASTFILL "Use an O(1) algorithm for replacing unloaded sounds with new sounds instead of the original O(n) algorithm" ON)
 endif()
 
-if (USE_SDL2_MIXER)
-  set(AUDIO_SOURCE src/audio/audio_sdl2.cpp)
-else()
-  set(AUDIO_SOURCE src/audio/audio_none.cpp)
-endif()
-
 # preprocess config.hpp, used for optional libraries
 
 configure_file(src/config.hpp.in config.hpp)
@@ -73,8 +67,9 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_gfx REQUIRED)
 
+add_subdirectory("${CMAKE_SOURCE_DIR}/external/simplesquirrel/")
+
 include(ProvidePhysFS)
-include(ProvideSquirrel)
 
 # If static linking is enabled, link additional libraries
 # Also, look at all of the dependencies it uses. This is one of the reasons why the portability API exists.
@@ -104,20 +99,14 @@ if(BUILD_STATIC_LIBS)
   endif()
 endif()
 
-# Include additional scripts
-include(BuildMiniswigWrapper)
-
 # Set include directories
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 # Search for source files and copy the test suite to the output directory
-file(GLOB SRCFILES src/api/*.cpp
+file(GLOB SRCFILES src/audio/*.cpp
                    src/brux/*.cpp
-                   ${AUDIO_SOURCE}
-                   src/external/*.c
-                   src/squirrel/*.cpp
-                   src/squirrel/wrapper.cpp)
+                   src/external/*.c)
 add_executable(brux ${SRCFILES})
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/test/" DESTINATION "${RUNTIME_OUTPUT_DIR}")
 
@@ -131,6 +120,8 @@ if(WIN32) # FIXME: Proper way of having the SDL2 libraries copied over to binary
   if (USE_SDL2_MIXER)
     target_link_libraries(brux PUBLIC ${SDL2_MIXER_LIBRARIES})
   endif()
+
+  target_link_libraries(brux PUBLIC simplesquirrel_static)
 else()
   target_link_libraries(brux PUBLIC SDL2)
   target_link_libraries(brux PUBLIC SDL2::Image)
@@ -139,8 +130,8 @@ else()
   if (USE_SDL2_MIXER)
     target_link_libraries(brux PUBLIC SDL2::Mixer)
   endif()
+
+  target_link_libraries(brux PUBLIC simplesquirrel)
 endif()
 
 target_link_libraries(brux PUBLIC LibPhysfs)
-target_link_libraries(brux PUBLIC LibSquirrel)
-target_link_libraries(brux PUBLIC LibSqstdlib)

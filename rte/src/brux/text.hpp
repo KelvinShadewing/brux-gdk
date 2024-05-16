@@ -21,6 +21,8 @@
 #ifndef _TEXT_H_
 #define _TEXT_H_
 
+#include "brux/sprite.hpp"
+
 class xyFont
 {
 private:
@@ -37,5 +39,12 @@ public:
 	Uint32 getnum();
 	void draw(int x, int y, std::string text);
 };
+
+/** API */
+int xyNewFont(int i, int c, int t, bool m, int k);
+void xyDrawText(int f, float x, float y, const std::string& s);
+std::string xyChint(int i);
+
+void xyRegisterTextAPI(ssq::VM& vm);
 
 #endif

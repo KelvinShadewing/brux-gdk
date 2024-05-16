@@ -20,6 +20,10 @@
 
 #include "brux/input.hpp"
 
+#include <simplesquirrel/vm.hpp>
+
+#include "brux/global.hpp"
+
 bool xyKeyPress(Uint32 key) {
 	// Ignore invalid keys
 
@@ -28,6 +32,19 @@ bool xyKeyPress(Uint32 key) {
 	}
 
 	return keystate[key] && !keylast[key];
+}
+
+int xyKeyPressAny() {
+	int key = -1;
+
+	for (int i = 0; i < 322; i++) {
+		if (xyKeyPress(i)) {
+			key = i;
+			break;
+		}
+	}
+
+	return key;
 }
 
 bool xyKeyRelease(Uint32 key) {
@@ -48,6 +65,14 @@ bool xyKeyDown(Uint32 key) {
 	}
 
 	return keystate[key];
+}
+
+int xyMouseX() {
+	return gvMouseX;
+}
+
+int xyMouseY() {
+	return gvMouseY;
 }
 
 bool xyMouseArea(SDL_Rect* area) {
@@ -146,4 +171,136 @@ int xyJoyAxisRelease(int pad, int axis, int dz) {
 	// Return 0 if axis has moved into deadzone
 
 	return 0;
+}
+
+std::string xyJoyName(int i) {
+	return gvPadName[i];
+}
+
+int xyJoyX(int i) {
+	return gvPadX[i];
+}
+
+int xyJoyY(int i) {
+	return gvPadY[i];
+}
+
+int xyJoyZ(int i) {
+	return gvPadZ[i];
+}
+
+int xyJoyH(int i) {
+	return gvPadH[i];
+}
+
+int xyJoyV(int i) {
+	return gvPadV[i];
+}
+
+int xyJoyR(int i) {
+	return gvPadR[i];
+}
+
+int xyJoyL(int i) {
+	return gvPadL[i];
+}
+
+int xyJoyAxis(int i, int j) {
+	return gvPadAxis[i][j];
+}
+
+bool xyJoyHatDown(int i, int d) {
+	return gvPadHat[i] & (1 << (d - 1));
+}
+
+bool xyJoyHatPress(int i, int d) {
+	return (gvPadHat[i] & (1 << (d - 1))) && !(gvPadHatLast[i] & (1 << (d - 1)));
+}
+
+bool xyJoyHatRelease(int i, int d) {
+	return !(gvPadHat[i] & (1 << (d - 1))) && (gvPadHatLast[i] & (1 << (d - 1)));
+}
+
+int xyJoyButtonDown(int i, int b) {
+	return gvPadButton[i][b];
+}
+
+int xyJoyButtonPress(int i, int b) {
+	return (gvPadButton[i][b] && !gvPadLastButton[i][b]);
+}
+
+int xyJoyButtonRelease(int i, int b) {
+	return (!gvPadButton[i][b] && gvPadLastButton[i][b]);
+}
+
+int xyJoyPressAny(int p) {
+	int button = -1;
+
+	for (int i = 0; i < 32; i++) {
+		if (gvPadButton[p][i] && !gvPadLastButton[p][i]) {
+			button = i;
+			break;
+		}
+	}
+
+	return button;
+}
+
+bool xyGetQuit() {
+	return gvQuit || gvQuitRequested;
+}
+
+void xyQuitGame() {
+	gvQuitRequested = true;
+}
+
+std::string xyKeyString() {
+	const std::string input = gvInputString;
+	gvInputString = ""; // Clean input.
+	return input;
+}
+
+int xyMouseWheelX() {
+	return mouseWheelX;
+}
+
+int xyMouseWheelY() {
+	return mouseWheelY;
+}
+
+
+void xyRegisterInputAPI(ssq::VM& vm) {
+	vm.addFunc("keyPress", xyKeyPress); // Doc'd
+	vm.addFunc("keyDown", xyKeyDown); // Doc'd
+	vm.addFunc("keyRelease", xyKeyRelease); // Doc'd
+	vm.addFunc("keyPressAny", xyKeyPressAny); // Doc'd
+	vm.addFunc("mouseDown", xyMouseButton); // Doc'd
+	vm.addFunc("mousePress", xyMousePress); // Doc'd
+	vm.addFunc("mouseRelease", xyMouseRelease); // Doc'd
+	vm.addFunc("mouseX", xyMouseX); // Doc'd
+	vm.addFunc("mouseY", xyMouseY); // Doc'd
+	vm.addFunc("getQuit", xyGetQuit); // Doc'd
+	vm.addFunc("quitGame", xyQuitGame); // Doc'd
+	vm.addFunc("joyCount", SDL_NumJoysticks); // Doc'd
+	vm.addFunc("joyName", xyJoyName); // Doc'd
+	vm.addFunc("joyX", xyJoyX); // Doc'd
+	vm.addFunc("joyY", xyJoyY); // Doc'd
+	vm.addFunc("joyZ", xyJoyZ); // Doc'd
+	vm.addFunc("joyH", xyJoyH); // Doc'd
+	vm.addFunc("joyV", xyJoyV); // Doc'd
+	vm.addFunc("joyR", xyJoyR); // Doc'd
+	vm.addFunc("joyL", xyJoyL); // Doc'd
+	vm.addFunc("joyAxis", xyJoyAxis); // Doc'd
+	vm.addFunc("joyHatDown", xyJoyHatDown); // Doc'd
+	vm.addFunc("joyHatPress", xyJoyHatPress); // Doc'd
+	vm.addFunc("joyHatRelease", xyJoyHatRelease); // Doc'd
+	vm.addFunc("joyButtonPress", xyJoyButtonPress); // Doc'd
+	vm.addFunc("joyButtonDown", xyJoyButtonDown); // Doc'd
+	vm.addFunc("joyButtonRelease", xyJoyButtonRelease); // Doc'd
+	vm.addFunc("joyPressAny", xyJoyPressAny); // Doc'd
+	vm.addFunc("joyAxisPress", xyJoyAxisPress); // Doc'd
+	vm.addFunc("joyAxisRelease", xyJoyAxisRelease); // Doc'd
+	vm.addFunc("keyString", xyKeyString); // Doc'd
+	vm.addFunc("mouseWheelX", xyMouseWheelX); // Doc'd
+	vm.addFunc("mouseWheelY", xyMouseWheelY); // Doc'd
 }

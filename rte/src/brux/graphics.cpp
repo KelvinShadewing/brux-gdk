@@ -18,9 +18,12 @@
 | GRAPHICS SOURCE |
 \*===============*/
 
+#include "brux/graphics.hpp"
+
+#include <simplesquirrel/vm.hpp>
+
 #include "brux/main.hpp"
 #include "brux/global.hpp"
-#include "brux/graphics.hpp"
 #include "brux/fileio.hpp"
 
 //////////
@@ -77,7 +80,7 @@ void xySetDrawColor(int r, int g, int b, int a) {
 
 // Set draw color from 24- or 32-bit integer
 
-void xySetDrawColor(SQInteger color) {
+void xySetDrawColor(int color) {
 	// If the value of color is too big for a 24-bit integer, then treat it as 32-bit
 
 	Uint8 r;
@@ -144,9 +147,16 @@ void xyWait(int ticks) {
 // Set draw target to a texture
 
 void xySetDrawTarget(Uint32 tex) {
+	gvDrawTarget = tex;
 	if (vcTextures.size() >= tex || vcTextures[tex] != 0) {
 		SDL_SetRenderTarget(gvRender, vcTextures[tex]);
 	}
+}
+
+// Get the draw target texture
+
+int xyGetDrawTarget() {
+	return gvDrawTarget;
 }
 
 // Set draw target back to screen
@@ -361,7 +371,7 @@ void xyDrawImagePart(Uint32 tex, int x, int y, int ox, int oy, int w, int h) {
 	SDL_RenderCopy(gvRender, vcTextures[tex], &slice, &rec);
 }
 
-void xyDrawImageEx(Uint32 tex, int x, int y, float angle, SDL_RendererFlip flip, int xscale, int yscale, int alpha, Uint32 color) {
+void xyDrawImageEx(Uint32 tex, int x, int y, float angle, int flip, int xscale, int yscale, Uint32 color) {
 	SDL_Rect rec;
 
 	rec.x = 0;
@@ -403,9 +413,7 @@ void xyDrawImageEx(Uint32 tex, int x, int y, float angle, SDL_RendererFlip flip,
 	des.h = rec.h * yscale;
 	
 	SDL_SetTextureColorMod(vcTextures[tex], r, g, b);
-	SDL_SetTextureAlphaMod(vcTextures[tex], alpha * 255);
-	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
-	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
+	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, static_cast<SDL_RendererFlip>(flip));
 	SDL_SetTextureColorMod(vcTextures[tex], 255, 255, 255);
 }
 
@@ -426,12 +434,6 @@ void xyDeleteImage(Uint32 tex) {
 
 	vcTextures.pop_back();
 	vcTextureNames.pop_back();
-}
-
-// Get the current FPS
-
-Uint32 xyGetFPS() {
-	return static_cast<int>(std::round(gvFPS));
 }
 
 // Load a texture and assign it to a slot in the textures list
@@ -472,7 +474,215 @@ Uint32 xyNewTexture(Uint32 w, Uint32 h) {
 	return vcTextures.size() - 1;
 }
 
+// Set the scale of drawing coordinates
 
+void xySetScaling(float scale) {
+	if (scale <= 0) {
+		return;
+	}
+
+	SDL_RenderSetScale(gvRender, scale, scale);
+}
+
+// Set the scaling filter
+
+void xySetScalingFilter(int hint) {
+	if (hint > 2) {
+		hint = 2;
+	}
+	else if (hint < 0) {
+		hint = 0;
+	}
+
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, std::to_string(hint).c_str());
+}
+
+// Set the screen resolution
+
+void xySetResolution(int w, int h) {
+	// Don't allow the width and/or height to be 0
+	if (w < 1 || h < 1) {
+		throw std::runtime_error("Window dimensions cannot be 0");
+	}
+
+	SDL_Rect screensize;
+
+	screensize.x = 0;
+	screensize.y = 0;
+	screensize.w = w;
+	screensize.h = h;
+
+	SDL_RenderSetViewport(gvRender, &screensize);
+	SDL_RenderSetLogicalSize(gvRender, w, h);
+	SDL_SetWindowSize(gvWindow, w, h);
+	SDL_SetWindowMinimumSize(gvWindow, w, h);
+}
+
+// Get the screen width
+
+int xyScreenW() {
+	SDL_Rect vp;
+
+	SDL_RenderGetViewport(gvRender, &vp);
+
+	return vp.w;
+}
+
+// Get the screen height
+
+int xyScreenH() {
+	SDL_Rect vp;
+
+	SDL_RenderGetViewport(gvRender, &vp);
+
+	return vp.h;
+}
+
+// Get the window width
+
+int xyWindowW() {
+	int w;
+
+	SDL_GetWindowSize(gvWindow, &w, 0);
+
+	return w;
+}
+
+// Get the window height
+
+int xyWindowH() {
+	int h;
+
+	SDL_GetWindowSize(gvWindow, 0, &h);
+
+	return h;
+}
+
+// Set a texture's blend mode
+
+void xyTextureSetBlendMode(int texture, int blend) {
+	if (texture < 0 || texture > static_cast<int>(vcTextures.size()) - 1) {
+		throw std::runtime_error("Invalid texture ID. Cannot set blend mode");
+	}
+
+	SDL_BlendMode mode;
+
+	switch (blend) {
+		case 0:
+			mode = SDL_BLENDMODE_NONE;
+			break;
+		case 1:
+			mode = SDL_BLENDMODE_BLEND;
+			break;
+		case 2:
+			mode = SDL_BLENDMODE_ADD;
+			break;
+		case 3:
+			mode = SDL_ComposeCustomBlendMode(SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT, SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_SUBTRACT);
+			break;
+		case 4:
+			mode = SDL_BLENDMODE_MOD;
+			break;
+		default:
+			mode = SDL_BLENDMODE_NONE;
+			break;
+	}
+
+	SDL_SetTextureBlendMode(vcTextures[texture], mode);
+}
+
+// Find a texture's ID by its name
+
+int xyFindTexture(const std::string& name) {
+	for (int i = 0; i < vcTextureNames.size(); i++) {
+		if (vcTextureNames[i] == name) {
+			return i;
+		}
+	}
+
+	return 0;
+}
+
+// Get the name of a texture
+
+std::string xyGetTextureName(int texture) {
+	if (texture > 0 && texture < vcTextureNames.size()) {
+		return vcTextureNames[texture];
+	}
+
+	return "";
+}
+
+// Get a texture's filter
+
+int xyGetTextureFilter(int tex) {
+	SDL_ScaleMode sm = (SDL_ScaleMode)0;
+
+	if(tex > 0 && tex < vcTextures.size() && vcTextures[tex] != 0)
+		SDL_GetTextureScaleMode(vcTextures[tex], &sm);
+	else
+		xyPrint("WARNING: Texture not found!");
+
+	return (int)sm;
+}
+
+// Set a texture's filter
+
+void xySetTextureFilter(int tex, int filter) {
+	SDL_ScaleMode sm = (SDL_ScaleMode)std::min(std::max(filter, 0), 2);
+
+	if(tex > 0 && tex < vcTextures.size() && vcTextures[tex] != 0)
+		SDL_SetTextureScaleMode(vcTextures[tex], sm);
+	else
+		xyPrint("WARNING: Texture not found!");
+}
+
+// Print the names of all loaded textures
+
+void xyPrintTextureNames() {
+	for (int i = 0; i < vcTextureNames.size(); i++) {
+		xyPrint("%d - %s", i, vcTextureNames[i].c_str());
+	}
+}
+
+
+/** SHAPES */
+
+// Draw a circle
+
+void xyDrawCircle(int x, int y, int radius, bool filled) {
+	if (filled)
+		filledCircleColor(gvRender, x, y, radius, gvDrawColor);
+	else
+		circleColor(gvRender, x, y, radius, gvDrawColor);
+}
+
+// Draw a rectangle
+
+void xyDrawRect(int x, int y, int w, int h, bool filled) {
+	if (filled)
+		boxColor(gvRender, x, y, x + w, y + h, gvDrawColor);
+	else
+		rectangleColor(gvRender, x, y, x + w, y + h, gvDrawColor);
+}
+
+// Draw a pixel
+
+void xyDrawPoint(int x, int y) {
+	pixelColor(gvRender, x, y, gvDrawColor);
+}
+
+// Draw a line
+
+void xyDrawLine(int x1, int y1, int x2, int y2) {
+	thickLineColor(gvRender, x1, y1, x2, y2, 1, gvDrawColor);
+}
+
+// Draw a thick line
+
+void xyDrawLineWide(int x1, int y1, int x2, int y2, int w) {
+	thickLineColor(gvRender, x1, y1, x2, y2, w, gvDrawColor);
+}
 
 //////////////
 // GEOMETRY //
@@ -481,3 +691,39 @@ Uint32 xyNewTexture(Uint32 w, Uint32 h) {
 
 
 
+void xyRegisterGraphicsAPI(ssq::VM& vm) {
+	vm.addFunc("clearScreen", xyClearScreen); // Doc'd
+	vm.addFunc("setDrawTarget", xySetDrawTarget); // Doc'd
+	vm.addFunc("getDrawTarget", xyGetDrawTarget); // Doc'd
+	vm.addFunc("resetDrawTarget", xyResetDrawTarget);
+	vm.addFunc("drawImage", xyDrawImage); // Doc'd
+	vm.addFunc("drawImagePart", xyDrawImagePart);
+	vm.addFunc("drawImageEx", xyDrawImageEx);
+	vm.addFunc("setDrawColor", static_cast<void(*)(int)>(xySetDrawColor)); // Doc'd
+	vm.addFunc("loadImage", xyLoadImage); // Doc'd
+	vm.addFunc("loadImageKeyed", xyLoadImageKeyed); // Doc'd
+	vm.addFunc("setBackgroundColor", xySetBackgroundColor); // Doc'd
+	vm.addFunc("setScaling", xySetScaling);
+	vm.addFunc("setScalingFilter", xySetScalingFilter); // Doc'd
+	vm.addFunc("setResolution", xySetResolution); // Doc'd
+	vm.addFunc("screenW", xyScreenW); // Doc'd
+	vm.addFunc("screenH", xyScreenH); // Doc'd
+	vm.addFunc("windowW", xyWindowW);
+	vm.addFunc("windowH", xyWindowH);
+	vm.addFunc("newTexture", xyNewTexture); // Doc'd
+	vm.addFunc("textureSetBlendMode", xyTextureSetBlendMode); // Doc'd
+	vm.addFunc("findTexture", xyFindTexture);
+	vm.addFunc("deleteTexture", xyDeleteImage);
+	vm.addFunc("getTextureName", xyGetTextureName);
+	vm.addFunc("getTextureFilter", xyGetTextureFilter);
+	vm.addFunc("setTextureFilter", xySetTextureFilter);
+	vm.addFunc("printTextureNames", xyPrintTextureNames);
+
+	/** SHAPES */
+	vm.addFunc("drawCircle", xyDrawCircle); // Doc'd
+	vm.addFunc("drawRec", xyDrawRect); // Clone of `drawRect()`
+	vm.addFunc("drawRect", xyDrawRect); // Doc'd
+	vm.addFunc("drawPoint", xyDrawPoint); // Doc'd
+	vm.addFunc("drawLine", xyDrawLine); // Doc'd
+	vm.addFunc("drawLineWide", xyDrawLineWide); // Doc'd
+}
