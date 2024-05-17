@@ -1,18 +1,22 @@
 # Directories
+## VS Editors
+.vs/
 .vscode/
-ide/.kdev4/*
-ide/build/*
-ide/.cache/*
-rte/bin/xyg
-rte/bin/release/*
-rte/obj/*
+
+## Clangd Cache
+*/.cache
+
+## KDevelop
+*/.kdev4/
+
 # Files
-*.o
-*.dll
-*.exe
+## KDevelop
 *.kdev4
+
+## Brux Runtime Output
 */log.txt
-log.txt
+
+## IDE Meson User Files
 ide/meson.build.user
 rte/*.layout
 rte/bin/brux
