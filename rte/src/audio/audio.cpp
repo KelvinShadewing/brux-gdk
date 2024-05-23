@@ -167,7 +167,7 @@ void xyRegisterAudioAPI(ssq::VM& vm) {
 	vm.addFunc("getMusicVolume", xyGetMusicVolume); // Doc'd
 	vm.addFunc("getSoundVolume", xyGetSoundVolume); // Doc'd
 	vm.addFunc("getAudioDriver", xyGetAudioDriver); // Doc'd
-	vm.addFunc("getAudioDriverName", xyGetAudioDriverName);
-	vm.addFunc("setAudioDriver", xySetAudioDriver);
+	vm.addFunc("getAudioDriverName", xyGetAudioDriverName); // Doc'd
+	vm.addFunc("setAudioDriver", xySetAudioDriver); // Doc'd
 	vm.addFunc("isAudioAvailable", xyIsAudioAvailable); // Doc'd
 }

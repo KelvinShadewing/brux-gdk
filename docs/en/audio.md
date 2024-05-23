@@ -91,11 +91,20 @@
 
 * <a name="getAudioDriver"></a>**`getAudioDriver()`**
 
+  Deprecated alternate name for getAudioDriverName.
+
+* <a name="getAudioDriverName"></a>**`getAudioDriverName()`**
+
   Returns the name of the currently active audio driver.  
 
-  If no audio driver is present, this will return the string `None`.  
-  
-  Note that `None` actually is an audio driver (see `src/audio/audio_none.cpp`), but it does not actually handle audio and is only used as a fallback.
+  If no audio driver is present, this will return the string `Null`.  
+
+* <a name="setAudioDriver"></a>**`setAudioDriver( kind )`**
+
+  > [!IMPORTANT]  
+  > This should only be run BEFORE loading files
+
+  Sets the audio driver to whatever value is specified. 0 is Null, 1 is SDL2.
 
 * <a name="isAudioAvailable"></a>**`isAudioAvailable()`**
 
