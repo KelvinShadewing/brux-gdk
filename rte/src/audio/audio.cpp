@@ -15,33 +15,128 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "audio/audio.hpp"
+#include "brux/main.hpp"
+
+#include "backend/audio_sdl2.hpp"
+#include "backend/audio_null.hpp"
 
 #include <simplesquirrel/vm.hpp>
 
-// Get the current music volume
+BaseAudioAPI* gvAudioDriver = nullptr;
 
+// Checks if audio playback is currently available
+bool xyIsAudioAvailable() { return gvAudioDriver->isAudioAvailable(); }
+
+// Initialize audio
+void xyInitAudio() {
+	xySetAudioDriver(1); // SDL2 as the default, 0 would be null backend
+}
+
+// Unload audio
+void xyUnloadAudio() {
+	if (gvAudioDriver != nullptr) delete gvAudioDriver;
+}
+
+// Allocate a specific amount of channels
+void xyAllocateChannels(int channels) {
+	gvAudioDriver->allocateChannels(channels);
+}
+
+// Load a sound effect file from a filename
+Uint32 xyLoadSound(const std::string& filename) { return gvAudioDriver->loadSound(filename); }
+
+// Load a music file from a filename
+Uint32 xyLoadMusic(const std::string& filename) { return gvAudioDriver->loadMusic(filename); }
+
+// Unload a sound effect
+void xyDeleteSound(Uint32 sound) { gvAudioDriver->deleteSound(sound); }
+
+// Unload a song
+void xyDeleteMusic(Uint32 music) { gvAudioDriver->deleteMusic(music); }
+
+// Play a sound effect
+int xyPlaySound(Uint32 sound, Uint32 loops) { return gvAudioDriver->playSound(sound, loops); }
+
+// Play a sound effect on a specific channel
+int xyPlaySoundChannel(Uint32 sound, Uint32 loops, Uint32 channel) { return gvAudioDriver->playSoundChannel(sound, loops, channel); }
+
+// Play a song
+int xyPlayMusic(Uint32 music, Uint32 loops) { return gvAudioDriver->playMusic(music, loops); }
+
+// Stop a sound effect
+void xyStopSound(Uint32 sound) { gvAudioDriver->stopSound(sound); }
+
+// Stop all audio on an audio channel
+void xyStopChannel(Uint32 channel) { gvAudioDriver->stopSound(channel); }
+
+// Stop the currently playing music, if any
+void xyStopMusic() { gvAudioDriver->stopMusic(); }
+
+// Fade out the currently playing music, if any
+void xyFadeMusic(int f) { gvAudioDriver->fadeMusic(f); }
+
+// Pause the currently playing music, if any
+void xyPauseMusic() { gvAudioDriver->pauseMusic(); }
+
+// Resume the currently playing music, if any
+void xyResumeMusic() { gvAudioDriver->resumeMusic(); }
+
+// Check if the music is currently paused
+bool xyIsMusicPaused() { return gvAudioDriver->isMusicPaused(); }
+
+// Check if any sound is playing on a specific channel
+bool xyCheckSound(Uint32 channel) { return gvAudioDriver->isSoundPlaying(channel); }
+
+// Check if any music is currently being played
+bool xyCheckMusic() { return gvAudioDriver->isMusicPlaying(); }
+
+// Get the number of audio channels
+int xyGetAudioChannels() {
+	if (gvAudioDriver == nullptr) return 0;
+	return gvAudioDriver->getChannelCount();
+}
+
+// Get the current music volume
 int xyGetMusicVolume() {
 	return gvVolumeMusic;
 }
 
 // Get the current sound volume
-
 int xyGetSoundVolume() {
 	return gvVolumeSound;
 }
 
 // Set the sound volume
-
 void xySetSoundVolume(int volume) {
 	gvVolumeSound = volume;
 }
-
-// Get the current audio driver
-
-std::string xyGetAudioDriver() {
-	return gvAudioDriver;
+void xySetMusicVolume(int volume) {
+	gvVolumeMusic = volume;
+	gvAudioDriver->setMusicVolume(volume);
 }
 
+// Same as below
+std::string xyGetAudioDriver() {
+	xyPrint("'getAudioDriver' is deprecated, use 'getAudioDriverName' instead.");
+	return xyGetAudioDriverName();
+}
+
+// Get the current audio driver
+std::string xyGetAudioDriverName() {
+	if (gvAudioDriver == nullptr) return "None";
+	return gvAudioDriver->mAudioDriverName;
+}
+
+void xySetAudioDriver(int kind) {
+	if (gvAudioDriver != nullptr) delete gvAudioDriver;
+
+	switch (kind) {
+	default:
+		gvAudioDriver = new SDL2AudioBackend;
+	case 0:
+		gvAudioDriver = new NullAudioBackend;
+	}
+}
 
 void xyRegisterAudioAPI(ssq::VM& vm) {
 	vm.addFunc("loadSound", xyLoadSound); // Doc'd
@@ -66,5 +161,7 @@ void xyRegisterAudioAPI(ssq::VM& vm) {
 	vm.addFunc("getMusicVolume", xyGetMusicVolume); // Doc'd
 	vm.addFunc("getSoundVolume", xyGetSoundVolume); // Doc'd
 	vm.addFunc("getAudioDriver", xyGetAudioDriver); // Doc'd
+	vm.addFunc("getAudioDriverName", xyGetAudioDriverName);
+	vm.addFunc("setAudioDriver", xySetAudioDriver);
 	vm.addFunc("isAudioAvailable", xyIsAudioAvailable); // Doc'd
 }

@@ -15,21 +15,10 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "audio_sdl2.hpp"
 #include "audio/audio.hpp"
-
-#ifdef USE_SDL2_MIXER
-
-#include <SDL2/SDL_mixer.h>
-
-std::vector<Mix_Chunk*> vcSounds;
-std::vector<Mix_Music*> vcMusic;
-
-#ifdef USE_FASTFILL
-std::vector<Uint32> unloadedSounds;
-std::vector<Uint32> unloadedMusic;
-#endif
-
-const std::string gvAudioDriver = "SDL2";
+#include <SDL_mixer.h>
+#include <SDL_version.h>
 
 bool isAudioLoaded = false;
 bool didAudioLoadFail = false;
@@ -37,13 +26,15 @@ bool didAudioLoadFail = false;
 // Checks if audio playback is currently available
 // NOTE: It doesn't appear to be possible to get the system volume using SDL2.
 
-bool xyIsAudioAvailable() {
-	return isAudioLoaded && !didAudioLoadFail;
+
+
+// JANK
+std::string SDLVersionToString(const SDL_version* ver) {
+	return (char)ver->major + (std::string)"." + (char)ver->minor + (std::string) + "." + (char)ver->patch;
 }
 
 // Initialize audio
-
-void xyInitAudio() {
+SDL2AudioBackend::SDL2AudioBackend() : BaseAudioAPI("SDL2", SDLVersionToString(Mix_Linked_Version())) {
 	#ifdef USE_FASTFILL
 	xyPrint("Audio system: SDL2 (fastfill enabled)");
 	#else
@@ -59,33 +50,41 @@ void xyInitAudio() {
 		return;
 	}
 
+	didAudioLoadFail = false;
+
 	isAudioLoaded = true;
 
-	vcSounds.push_back(0);
-	vcMusic.push_back(0);
+	mVcSounds.push_back(0);
+	mVcMusic.push_back(0);
 }
 
-void xyUnloadAudio() {
-	for (int i = 0; i < static_cast<int>(vcSounds.size()); i++) {
-		xyDeleteSound(i);
+SDL2AudioBackend::~SDL2AudioBackend() {
+	for (int i = 0; i < static_cast<int>(mVcSounds.size()); i++) {
+		deleteSound(i);
 	}
 
-	for (int i = 0; i < static_cast<int>(vcMusic.size()); i++) {
-		xyDeleteMusic(i);
+	for (int i = 0; i < static_cast<int>(mVcMusic.size()); i++) {
+		deleteMusic(i);
 	}
 
 	Mix_Quit();
 }
 
+bool SDL2AudioBackend::isAudioAvailable() {
+	return isAudioLoaded && !didAudioLoadFail;
+}
+
 // Allocate a specific amount of channels
 
-void xyAllocateChannels(int channels) {
+void SDL2AudioBackend::allocateChannels(int channels) {
 	Mix_AllocateChannels(channels);
+
+	
 }
 
 // Load a sound effect file from a filename
 
-Uint32 xyLoadSound(const std::string& filename) {
+Uint32 SDL2AudioBackend::loadSound(const std::string& filename) {
 	// Load the sound file with Mix_LoadWAV()
 
 	Mix_Chunk* newSnd = Mix_LoadWAV(filename.c_str());
@@ -96,28 +95,31 @@ Uint32 xyLoadSound(const std::string& filename) {
 
 	// If the array is empty, push the sound onto it and return the first index.
 
-	if (vcSounds.empty()) {
-		vcSounds.push_back(newSnd);
+	if (mVcSounds.empty()) {
+		mVcSounds.push_back(newSnd);
+		mLoadedSoundFiles.push_back(filename);
 		return 0;
 	}
 
-	// Fastfill works by using a vector of integers to store the last unloaded IDs.
+	// Fastfill works by using a vector of integers to store the last mUnloaded IDs.
 	// Once we need a new sound to be loaded, we can just use the first ID in the array and pop it from the array when we're done.
 
 	#ifdef USE_FASTFILL
-	if (!unloadedSounds.empty()) {
-		int id = unloadedSounds[0];
+	if (!mUnloadedSounds.empty()) {
+		int id = mUnloadedSounds[0];
 
-		unloadedSounds.erase(unloadedSounds.begin());
+		mUnloadedSounds.erase(mUnloadedSounds.begin());
 
-		vcSounds[id] = newSnd;
+		mVcSounds[id] = newSnd;
+		mLoadedSoundFiles[id] = filename;
+
 		return id;
 	}
 	#endif
 
-	int arraySize = static_cast<int>(vcSounds.size());
+	int arraySize = static_cast<int>(mVcSounds.size());
 
-	// If the array isn't empty, try to figure out if there are any unloaded sounds that we can replace with a new sound.
+	// If the array isn't empty, try to figure out if there are any mUnloaded sounds that we can replace with a new sound.
 	// Note that i has to start at 1, or it will overwrite the first element that it pushes onto the array, which causes some things (most notably the star powerup in SuperTux Advance) to break.
 	// This is disabled by default, and the fastfill algorithm is used instead.
 
@@ -126,8 +128,8 @@ Uint32 xyLoadSound(const std::string& filename) {
 	int i;
 
 	for (i = 1; i < arraySize - 1; i++) {
-		if (vcSounds[i] == NULL) {
-			vcSounds[i] = newSnd;
+		if (mVcSounds[i] == NULL) {
+			mVcSounds[i] = newSnd;
 			return i;
 			break;
 		}
@@ -135,9 +137,10 @@ Uint32 xyLoadSound(const std::string& filename) {
 
 	#endif
 
-	// However, if we can't find an unloaded slot to use we'll need to add it as a new array element.
+	// However, if we can't find an mUnloaded slot to use we'll need to add it as a new array element.
 
-	vcSounds.push_back(newSnd);
+	mVcSounds.push_back(newSnd);
+	mLoadedSoundFiles.push_back(filename);
 
 	// Yes, I know that this was originally supposed to subtract 1 from the length, and no, this is not a bug. We're using the length value before we added the element, so it ends up being correct.
 
@@ -146,7 +149,7 @@ Uint32 xyLoadSound(const std::string& filename) {
 
 // Load a music file from a filename
 
-Uint32 xyLoadMusic(const std::string& filename) {
+Uint32 SDL2AudioBackend::loadMusic(const std::string& filename) {
 	// Load the music file with Mix_LoadMUS()
 
 	Mix_Music* newMsc = Mix_LoadMUS(filename.c_str());
@@ -159,34 +162,36 @@ Uint32 xyLoadMusic(const std::string& filename) {
 
 	// If the array is empty, push the sound onto it and return the first index.
 
-	if (vcMusic.empty()) {
-		vcMusic.push_back(newMsc);
+	if (mVcMusic.empty()) {
+		mVcMusic.push_back(newMsc);
+		mLoadedMusicFiles.push_back(filename);
 		return 0;
 	}
 
-	// Fastfill works by using an integer to store the last unloaded ID.
+	// Fastfill works by using an integer to store the last mUnloaded ID.
 	// Once we need a new sound to be loaded, we can just use that ID and set the variable to -1 when we're done.
 	// This approach breaks when you need to unload multiple sounds at once, in which case you will need to use the original algorithm.
-	// While I don't know of any brux-gdk-based games that do that, it will eventually be solved later by using a vector to store multiple unloaded sound IDs.
+	// While I don't know of any brux-gdk-based games that do that, it will eventually be solved later by using a vector to store multiple mUnloaded sound IDs.
 	// In the meantime, you can just disable fastfill.
 
-	// Fastfill works by using a vector of integers to store the last unloaded IDs.
+	// Fastfill works by using a vector of integers to store the last mUnloaded IDs.
 	// Once we need a new sound to be loaded, we can just use the first ID in the array and pop it from the array when we're done.
 
 	#ifdef USE_FASTFILL
-	if (!unloadedMusic.empty()) {
-		int id = unloadedMusic[0];
+	if (!mUnloadedMusic.empty()) {
+		int id = mUnloadedMusic[0];
 
-		unloadedMusic.erase(unloadedMusic.begin());
+		mUnloadedMusic.erase(mUnloadedMusic.begin());
 
-		vcMusic[id] = newMsc;
+		mVcMusic[id] = newMsc;
+		mLoadedMusicFiles[id] = filename;
 		return id;
 	}
 	#endif
 
-	int arraySize = static_cast<int>(vcMusic.size());
+	int arraySize = static_cast<int>(mVcMusic.size());
 
-	// If the array isn't empty, try to figure out if there are any unloaded sounds that we can replace with a new sound.
+	// If the array isn't empty, try to figure out if there are any mUnloaded sounds that we can replace with a new sound.
 	// Note that i has to start at 1, or it will overwrite the first element that it pushes onto the array, which causes some things (most notably the star powerup in SuperTux Advance) to break.
 	// This is disabled by default, and the fastfill algorithm is used instead.
 
@@ -195,8 +200,9 @@ Uint32 xyLoadMusic(const std::string& filename) {
 	int i;
 
 	for (i = 1; i < arraySize - 1; i++) {
-		if (vcMusic[i] == NULL) {
-			vcMusic[i] = newMsc;
+		if (mVcMusic[i] == NULL) {
+			mVcMusic[i] = newMsc;
+			mLoadedMusicFiles[i] = filename;
 			return i;
 			break;
 		}
@@ -204,9 +210,10 @@ Uint32 xyLoadMusic(const std::string& filename) {
 
 	#endif
 
-	// However, if we can't find an unloaded slot to use we'll need to add it as a new array element.
+	// However, if we can't find an mUnloaded slot to use we'll need to add it as a new array element.
 
-	vcMusic.push_back(newMsc);
+	mVcMusic.push_back(newMsc);
+	mLoadedMusicFiles.push_back(filename);
 
 	// Yes, I know that this was originally supposed to subtract 1 from the length, and no, this is not a bug. We're using the length value before we added the element, so it ends up being correct.
 
@@ -215,10 +222,10 @@ Uint32 xyLoadMusic(const std::string& filename) {
 
 // Unload a sound effect
 
-void xyDeleteSound(Uint32 sound) {
+void SDL2AudioBackend::deleteSound(Uint32 sound) {
 	// If the index is more than or equal to the length of the array (and is thus invalid), don't attempt to unload it.
 
-	if (sound >= vcSounds.size()) {
+	if (sound >= mVcSounds.size()) {
 		return;
 	}
 
@@ -229,31 +236,31 @@ void xyDeleteSound(Uint32 sound) {
 		return;
 	}
 
-	// If the audio data has already been unloaded, don't attempt to unload it.
+	// If the audio data has already been mUnloaded, don't attempt to unload it.
 	// Note that Kelvin originally wrote this code to check if it's 0 instead of NULL. It does work, but it's a bad practice. Don't do that.
 
-	if (vcSounds[sound] == NULL) {
+	if (mVcSounds[sound] == NULL) {
 		return;
 	}
 
-	// If it is a valid sound, unload it with Mix_FreeChunk and set the pointer in vcSounds to NULL.
+	// If it is a valid sound, unload it with Mix_FreeChunk and set the pointer in mVcSounds to NULL.
 
-	Mix_FreeChunk(vcSounds[sound]);
-	vcSounds[sound] = NULL;
+	Mix_FreeChunk(mVcSounds[sound]);
+	mVcSounds[sound] = NULL;
 
-	// If fastfill is enabled, push the ID to unloadedSounds
+	// If fastfill is enabled, push the ID to mUnloadedSounds
 
 	#ifdef USE_FASTFILL
-	unloadedSounds.push_back(sound);
+	mUnloadedSounds.push_back(sound);
 	#endif
 }
 
 // Unload a song
 
-void xyDeleteMusic(Uint32 music) {
+void SDL2AudioBackend::deleteMusic(Uint32 music) {
 	// If the index is more than or equal to the length of the array (and is thus invalid), don't attempt to unload it.
 
-	if (music >= vcMusic.size()) {
+	if (music >= mVcMusic.size()) {
 		return;
 	}
 
@@ -264,31 +271,31 @@ void xyDeleteMusic(Uint32 music) {
 		return;
 	}
 
-	// If the audio data has already been unloaded, don't attempt to unload it.
+	// If the audio data has already been mUnloaded, don't attempt to unload it.
 	// Note that Kelvin originally wrote this code to check if it's 0 instead of NULL. It does work, but it's a bad practice. Don't do that.
 
-	if (vcMusic[music] == NULL) {
+	if (mVcMusic[music] == NULL) {
 		return;
 	}
 
-	// If it is a valid song, unload it with Mix_FreeChunk and set the pointer in vcMusic to NULL.
+	// If it is a valid song, unload it with Mix_FreeChunk and set the pointer in mVcMusic to NULL.
 
-	Mix_FreeMusic(vcMusic[music]);
-	vcMusic[music] = NULL;
+	Mix_FreeMusic(mVcMusic[music]);
+	mVcMusic[music] = NULL;
 
-	// If fastfill is enabled, push the ID to unloadedMusic
+	// If fastfill is enabled, push the ID to mUnloadedMusic
 
 	#ifdef USE_FASTFILL
-	unloadedMusic.push_back(music);
+	mUnloadedMusic.push_back(music);
 	#endif
 }
 
 // Play a sound effect
 
-int xyPlaySound(Uint32 sound, Uint32 loops) {
+int SDL2AudioBackend::playSound(Uint32 sound, Uint32 loops) {
 	// Play the audio with Mix_PlayChannel()
 
-	int i = Mix_PlayChannel(-1, vcSounds[sound], loops);
+	int i = Mix_PlayChannel(-1, mVcSounds[sound], loops);
 
 	// If it failed, log the error with xyPrint()
 
@@ -304,8 +311,8 @@ int xyPlaySound(Uint32 sound, Uint32 loops) {
 
 // Play a sound effect on a specific channel
 
-int xyPlaySoundChannel(Uint32 sound, Uint32 loops, Uint32 channel) {
-	const int i = Mix_PlayChannel(channel, vcSounds[sound], loops);
+int SDL2AudioBackend::playSoundChannel(Uint32 sound, Uint32 loops, Uint32 channel) {
+	const int i = Mix_PlayChannel(channel, mVcSounds[sound], loops);
 
 	if (i == -1) {
 		xyPrint("Error playing sound! SDL_Mixer Error: %s\n", Mix_GetError());
@@ -319,10 +326,10 @@ int xyPlaySoundChannel(Uint32 sound, Uint32 loops, Uint32 channel) {
 
 // Play a song
 
-int xyPlayMusic(Uint32 music, Uint32 loops) {
+int SDL2AudioBackend::playMusic(Uint32 music, Uint32 loops) {
 	// Play the audio with Mix_PlayChannel()
 
-	int i = Mix_PlayMusic(vcMusic[music], loops);
+	int i = Mix_PlayMusic(mVcMusic[music], loops);
 
 	// If it failed, log the error with xyPrint()
 
@@ -338,10 +345,10 @@ int xyPlayMusic(Uint32 music, Uint32 loops) {
 
 // Stop a sound effect, no idea why it doesn't support stopping music
 
-void xyStopSound(Uint32 sound) {
+void SDL2AudioBackend::stopSound(Uint32 sound) {
 	// If the index is more than or equal to the length of the array (and is thus invalid), don't attempt to stop it.
 
-	if (sound >= vcSounds.size()) {
+	if (sound >= mVcSounds.size()) {
 		return;
 	}
 
@@ -351,9 +358,9 @@ void xyStopSound(Uint32 sound) {
 		return;
 	}
 
-	// If the audio data has already been unloaded, don't attempt to unload it.
+	// If the audio data has already been mUnloaded, don't attempt to unload it.
 
-	if (vcSounds[sound] == NULL) {
+	if (mVcSounds[sound] == NULL) {
 		return;
 	}
 
@@ -362,7 +369,7 @@ void xyStopSound(Uint32 sound) {
 	int i;
 
 	for (i = 0; i < gvMixChannels; i++) {
-		if (Mix_GetChunk(i) == vcSounds[sound]) {
+		if (Mix_GetChunk(i) == mVcSounds[sound]) {
 			Mix_HaltChannel(i);
 		}
 	}
@@ -370,63 +377,61 @@ void xyStopSound(Uint32 sound) {
 
 // Stop all audio on an audio channel
 
-void xyStopChannel(Uint32 channel) {
+void SDL2AudioBackend::stopChannel(Uint32 channel) {
 	Mix_HaltChannel(channel);
 }
 
 // Stop the currently playing music, if any
 
-void xyStopMusic() {
+void SDL2AudioBackend::stopMusic() {
 	Mix_HaltMusic();
 }
 
 // Fade out the currently playing music, if any
 
-void xyFadeMusic(int f) {
+void SDL2AudioBackend::fadeMusic(int f) {
 	Mix_FadeOutMusic(f * 1000);
 }
 
 // Pause the currently playing music, if any
 
-void xyPauseMusic() {
+void SDL2AudioBackend::pauseMusic() {
 	Mix_PauseMusic();
 }
 
 // Resume the currently playing music, if any
 
-void xyResumeMusic() {
+void SDL2AudioBackend::resumeMusic() {
 	Mix_ResumeMusic();
 }
 
 // Check if the music is currently paused
 
-bool xyIsMusicPaused() {
+bool SDL2AudioBackend::isMusicPaused() {
 	return Mix_PlayingMusic() && Mix_PausedMusic();
 }
 
 // Check if any sound is playing on a specific channel
 
-bool xyCheckSound(Uint32 channel) {
+bool SDL2AudioBackend::isSoundPlaying(int channel) {
 	return Mix_Playing(channel);
 }
 
 // Check if any music is currently being played
 
-bool xyCheckMusic() {
+bool SDL2AudioBackend::isMusicPlaying() {
 	return Mix_PlayingMusic();
 }
 
 // Get the number of audio channels
 
-int xyGetAudioChannels() {
+int SDL2AudioBackend::getChannelCount() {
 	return Mix_AllocateChannels(-8);
 }
 
 // Set the music volume
 
-void xySetMusicVolume(int volume) {
+void SDL2AudioBackend::setMusicVolume(uint32_t volume) {
 	gvVolumeMusic = volume;
 	Mix_VolumeMusic(volume);
 }
-
-#endif

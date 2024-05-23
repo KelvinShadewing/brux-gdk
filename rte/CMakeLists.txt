@@ -4,17 +4,16 @@ project(brux)
 set(CMAKE_CXX_STANDARD 17)
 
 # Set initial variables
-
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(INSTALL_SUBDIR_BIN "/")
 
 # Define options
-
 option(BUILD_STATIC_LIBS "Link libraries statically whenever possible" OFF)
 
 find_package(SDL2_mixer QUIET)
 
-# Enable USE_SDL2_MIXER by default if SDL2_mixer is found
+# Please don't disable this unless you have a specific reason to.
+# fastfill is significantly faster than the original algorithm, as it's O(1) instead of O(n).
 
 if (SDL2_mixer_FOUND)
   option(USE_SDL2_MIXER "Use SDL2 to provide audio support" ON)
@@ -104,11 +103,21 @@ include_directories(${SDL2_INCLUDE_DIRS})
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 # Search for source files and copy the test suite to the output directory
-file(GLOB SRCFILES src/audio/*.cpp
+file(GLOB SRCFILES src/audio/audio.cpp src/audio/backend/audio_null.cpp
                    src/brux/*.cpp
                    src/external/*.c)
 add_executable(brux ${SRCFILES})
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/test/" DESTINATION "${RUNTIME_OUTPUT_DIR}")
+
+if (USE_SDL2_MIXER)
+  add_library(brux_audio_sdl2 SHARED src/audio/backend/audio_sdl2.cpp)
+
+  if(WIN32)
+    target_link_libraries(brux_audio_sdl2 PUBLIC ${SDL2_MIXER_LIBRARIES})
+  else()
+    target_link_libraries(brux_audio_sdl2 PUBLIC SDL2::Mixer)
+  endif()
+endif()
 
 # Link libraries
 
@@ -117,21 +126,17 @@ if(WIN32) # FIXME: Proper way of having the SDL2 libraries copied over to binary
   target_link_libraries(brux PUBLIC ${SDL2_IMAGE_LIBRARIES})
   target_link_libraries(brux PUBLIC ${SDL2_GFX_LIBRARIES})
 
-  if (USE_SDL2_MIXER)
-    target_link_libraries(brux PUBLIC ${SDL2_MIXER_LIBRARIES})
-  endif()
-
   target_link_libraries(brux PUBLIC simplesquirrel_static)
 else()
   target_link_libraries(brux PUBLIC SDL2)
   target_link_libraries(brux PUBLIC SDL2::Image)
   target_link_libraries(brux PUBLIC SDL2::GFX)
 
-  if (USE_SDL2_MIXER)
-    target_link_libraries(brux PUBLIC SDL2::Mixer)
-  endif()
-
   target_link_libraries(brux PUBLIC simplesquirrel)
 endif()
 
 target_link_libraries(brux PUBLIC LibPhysfs)
+
+if (USE_SDL2_MIXER)
+  target_link_libraries(brux PUBLIC brux_audio_sdl2)
+endif()
