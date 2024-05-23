@@ -44,9 +44,12 @@ SDL2AudioBackend::SDL2AudioBackend() : BaseAudioAPI("SDL2", SDLVersionToString(M
 	// Historically, brux-gdk used a 22050Hz sampling rate.
 	// I can't think of any good reason for that, and it makes the audio quality worse, so I've changed it to a more reasonable 44.1kHz.
 
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+	SDL_InitSubSystem(SDL_INIT_AUDIO);
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) != 0) {
 		xyPrint("SDL_mixer could not initialize! SDL_mixer error: %s\n", Mix_GetError());
 		didAudioLoadFail = true;
+		isAudioLoaded = false;
 		return;
 	}
 
@@ -68,9 +71,12 @@ SDL2AudioBackend::~SDL2AudioBackend() {
 	}
 
 	Mix_Quit();
+
+	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 }
 
 bool SDL2AudioBackend::isAudioAvailable() {
+	xyPrint("Audio Available: %d, %d", isAudioLoaded, !didAudioLoadFail);
 	return isAudioLoaded && !didAudioLoadFail;
 }
 
@@ -78,8 +84,6 @@ bool SDL2AudioBackend::isAudioAvailable() {
 
 void SDL2AudioBackend::allocateChannels(int channels) {
 	Mix_AllocateChannels(channels);
-
-	
 }
 
 // Load a sound effect file from a filename

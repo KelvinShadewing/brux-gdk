@@ -209,7 +209,7 @@ int xyInit() {
 #ifdef __EMSCRIPTEN__
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS) < 0) {
 #else
-	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+	if(SDL_Init(SDL_INIT_EVERYTHING - SDL_INIT_AUDIO) < 0) {
 #endif
 		xyPrint("Failed to initialize! %s", SDL_GetError());
 		return 0;
@@ -305,7 +305,6 @@ int xyInit() {
 	vcTextures.push_back(0);
 	vcTextureNames.push_back("");
 	vcSprites.push_back(0);
-	xyInitAudio();
 	vcFonts.push_back(0);
 
 	// Squirrel-side definitions
