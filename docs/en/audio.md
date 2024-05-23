@@ -99,6 +99,8 @@
 
   If no audio driver is present, this will return the string `Null`.  
 
+  Note that `Null` actually is an audio driver (see `src/audio/backend/audio_null.cpp`), but it does not actually handle audio and is only used as a fallback.
+
 * <a name="setAudioDriver"></a>**`setAudioDriver( kind )`**
 
   > NOTE: This should only be run BEFORE loading files. Otherwise you lose audio completely!
@@ -109,4 +111,4 @@
 
   Checks if audio playback is currently available.  
 
-  Note that this function's implementation currently does not check that the audio stack is working, it only checks that a real audio driver (not the fallback `None` driver, which doesn't actually handle audio) is present.
+  Note that this function's implementation currently does not check that the audio stack is working, it only checks that a real audio driver (not the fallback `Null` driver, which doesn't actually handle audio) is present.
