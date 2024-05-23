@@ -209,8 +209,12 @@
 
 print("Checking if audio playback is available...")
 
+print("Audio driver is " + getAudioDriverName())
+
 if (getAudioDriverName() != "Null" && isAudioAvailable()) {
 	score += 1;
+} else {
+	print("Audio Available test failed. Driver: " + getAudioDriverName())
 }
 
 ::batchAPITest <- function(names) {

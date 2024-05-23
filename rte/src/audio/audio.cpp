@@ -123,19 +123,25 @@ std::string xyGetAudioDriver() {
 
 // Get the current audio driver
 std::string xyGetAudioDriverName() {
-	if (gvAudioDriver == nullptr) return "None";
+	if (gvAudioDriver == nullptr) return "Null";
 	return gvAudioDriver->mAudioDriverName;
 }
 
 void xySetAudioDriver(int kind) {
+	//xyPrint("setAudioDriver(%d)", kind);
 	if (gvAudioDriver != nullptr) delete gvAudioDriver;
 
 	switch (kind) {
 	default:
+	case 1:
 		gvAudioDriver = new SDL2AudioBackend;
+		break;
 	case 0:
 		gvAudioDriver = new NullAudioBackend;
+		break;
 	}
+
+	xyPrint("Audio driver set to '%s'", gvAudioDriver->mAudioDriverName.c_str());
 }
 
 void xyRegisterAudioAPI(ssq::VM& vm) {
