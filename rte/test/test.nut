@@ -52,7 +52,8 @@
 	"setMusicVolume",
 	"setSoundVolume",
 	"getMusicVolume",
-	"getAudioDriver",
+	"getAudioDriverName",
+	"setAudioDriver",
 	"isAudioAvailable",
 
 	// File I/O
@@ -208,7 +209,7 @@
 
 print("Checking if audio playback is available...")
 
-if (getAudioDriver() != "None" && isAudioAvailable()) {
+if (getAudioDriverName() != "Null" && isAudioAvailable()) {
 	score += 1;
 }
 
