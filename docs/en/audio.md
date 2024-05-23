@@ -101,8 +101,8 @@
 
 * <a name="setAudioDriver"></a>**`setAudioDriver( kind )`**
 
-  > [!IMPORTANT]  
-  > This should only be run BEFORE loading files
+  > [!NOTE]  
+  > This should only be run BEFORE loading files. Otherwise you lose audio completely!
 
   Sets the audio driver to whatever value is specified. 0 is Null, 1 is SDL2.
 
