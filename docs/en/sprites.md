@@ -17,21 +17,9 @@
 
   `pivotX` and `pivotY` are the points around which the sprite is rotated and offsets where it will appear when drawn. Margin and padding are not taken into account with these it only applies to the frame itself.
 
-* <a name="drawSprite"></a>**`drawSprite( sprite, frame, x, y )`**
+* <a name="drawSprite"></a>**`drawSprite( sprite, frame, x, y, angle = 0, flip = 0, xscale = 1.0, yscale = 1.0, alpha = 1.0, color = 0xffffffff )`**
 
-  Draws a given frame of a sprite to `x`,`y`. If a value above the sprite's maximum frame number or below zero is given, then the value will wrap around.
-
-* <a name="drawSpriteEx"></a>**`drawSpriteEx( sprite, frame, x, y, angle, flip, xscale, yscale, alpha )`**
-
-  Draws a sprite that is also transformed and blended with the given `alpha` value. `alpha` should be a float between `0.0` and `1.0`.
-
-* <a name="drawSpriteMod"></a>**`drawSpriteMod( sprite, frame, x, y, color )`**
-
-  Draws a sprite with color modulation. Color value format is `0xRRGGBBAA`.
-
-* <a name="drawSpriteExMod"></a>**`drawSpriteExMod( sprite, frame, x, y, angle, flip, xscale, yscale, alpha, color)`**
-
-  Mix of the previous two.
+  Draws a given frame of a sprite to `x`,`y`. If a value above the sprite's maximum frame number or below zero is given, then the value will wrap around. Sprites can also be transformed and blended with the given `alpha` value. `alpha` should be a float between `0.0` and `1.0`. You can also use `color` to modulate the texture (think Game Maker's color blending).
 
 * <a name="deleteSprite"></a>**`deleteSprite( sprite )`**
 

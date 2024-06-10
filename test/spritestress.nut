@@ -1,4 +1,4 @@
-::sprMidi <- newSprite("res/sprMidiP.png", 32, 32, 0, 0, 16, 16)
+::sprMidi <- newSprite("res/midi.png", 32, 32, 0, 0, 16, 16)
 ::sprFont <- newSprite("res/font.png", 6, 8, 0, 0, 0, 0)
 ::font <- newFont(sprFont, 0, 0, false, 0)
 

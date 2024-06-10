@@ -24,11 +24,11 @@
         {
          "columns":32,
          "firstgid":1,
-         "image":"sprMidiP.png",
+         "image":"midi.png",
          "imageheight":256,
          "imagewidth":512,
          "margin":0,
-         "name":"sprMidiP",
+         "name":"midi",
          "spacing":0,
          "tilecount":512,
          "tileheight":16,
