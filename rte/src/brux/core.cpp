@@ -488,6 +488,28 @@ void xyLoadCore() {
 		return vargv[randInt(vargv.len())]
 	}
 
+	::wavg <- function(a, b, w) {
+		return (1 - w) * a + w * b;
+	}
+
+	::deepClone <- function(obj) {
+	if (typeof obj == "array") {
+		local result = []
+		foreach (item in obj) {
+			result.append(deepClone(item))
+		}
+		return result
+	} else if (typeof obj == "table") {
+		local result = {}
+		foreach (key, value in obj) {
+			result[key] <- deepClone(value)
+		}
+		return result
+	} else {
+		return obj
+	}
+}
+
 	::system <- function(var) { print("I can't let you do that, Dave.") }
 
 	::int <- function(var) { return var.tointeger() }

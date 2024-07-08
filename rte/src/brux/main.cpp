@@ -627,7 +627,7 @@ void xyUpdate() {
 
 	gvTickLast = std::chrono::steady_clock::now();
 #else
-	gvTicks = SDL_GetTicks();
+	gvTicks = SDL_GetTicks64();
 	Uint32 fLength = gvTicks - gvTickLast;
 	Uint32 max_delay = (1000 / gvMaxFPS);
 
@@ -637,7 +637,7 @@ void xyUpdate() {
 	}
 
 	if (fLength != 0) gvFPS = 1000 / static_cast<float>(SDL_GetTicks() - gvTickLast);
-	gvTickLast = SDL_GetTicks();
+	gvTickLast = SDL_GetTicks64();
 #endif
 	gvFrames++;
 }
