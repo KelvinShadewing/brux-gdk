@@ -53,8 +53,8 @@ public:
 /** API */
 std::string xySpriteName(int sprite);
 int xyFindSprite(const std::string& name);
-int xyNewSprite(const std::string& i, int w, int h, int m, int p, float px, float py);
-int xyNewSpriteFT(int t, int w, int h, int m, int p, float px, float py);
+int xyNewSprite(const std::string& i, int w, int h, float px, float py, int m, int p);
+int xyNewSpriteFT(int t, int w, int h, float px, float py, int m, int p);
 void xyDrawSprite(int i, int f, int x, int y);
 void xyDrawSpriteEx(int i, int f, int x, int y, int a, int l, float sx, float sy, float p);
 void xyDrawSpriteMod(int i, int f, int x, int y, int c);

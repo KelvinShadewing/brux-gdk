@@ -24,3 +24,4 @@ rte/XYG_Runtime.layout
 rte/XYG_Runtime.depend
 test/log.txt
 .vscode/*
+test/ignore.nut

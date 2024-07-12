@@ -249,12 +249,12 @@ batchAPITest(apiList)
 
 print("Now entering graphical test...")
 
-setResolution(400, 240)
+setResolution(426, 240)
 setWindowTitle("Brux GDK Test Suite")
 
-::sprFont <- newSprite("res/font.png", 6, 8, 0, 0, 0, 0)
-::sprMidi <- newSprite("res/midi.png", 32, 32, 0, 0, 16, 19)
-::sprOcean <- newSprite("res/ocean.png", 480, 240, 0, 0, 0, 0)
+::sprFont <- newSprite("res/font.png", 6, 8)
+::sprMidi <- newSprite("res/midi.png", 32, 32, 16, 19)
+::sprOcean <- newSprite("res/ocean.png", 480, 240)
 ::font <- newFont(sprFont, 0, 0, false, 0)
 
 ::musTest <- loadMusic("res/bossa-nova.mp3")

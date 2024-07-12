@@ -521,6 +521,8 @@ void xyLoadCore() {
 	::eval <- function(expression) { return compilestring("return ("+expression+");")() }
 
 	::drawSprite <- function(i, f, x, y, a = 0, l = 0, sx = 1.0, sy = 1.0, p = 1.0, c = 0xffffffff) { drawSpriteExMod(i, f, x, y, a, l, float(sx), float(sy), p, c)}
+	::newSprite <- function(i, w = 0, h = 0, px = 0, py = 0, m = 0, p = 0) { return __newSprite__OP__(i, w, h, px, py, m, p) }
+	::newSpriteFT <- function(t, w = 0, h = 0, px = 0, py = 0, m = 0, p = 0) { return __newSpriteFT__OP__(t, w, h, px, py, m, p) }
 
 	print("Imported core lib.");)rew";
 

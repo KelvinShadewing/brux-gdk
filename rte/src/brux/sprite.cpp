@@ -74,6 +74,10 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
+	if(w <= 0)
+		w = origW;
+	if(h <= 0)
+		h = origH;
 	col = static_cast<int>(std::floor(origW / (w + pad)));
 	row = static_cast<int>(std::floor(origH / (h + pad)));
 	if(col < 1) col = 1;
@@ -129,6 +133,10 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
+	if(w <= 0)
+		w = origW;
+	if(h <= 0)
+		h = origH;
 	col = static_cast<int>(std::floor(origW / (w + pad)));
 	row = static_cast<int>(std::floor(origH / (h + pad)));
 	if(col < 1) col = 1;
@@ -348,13 +356,13 @@ int xyFindSprite(const std::string& name) {
 	return 0;
 }
 
-int xyNewSprite(const std::string& i, int w, int h, int m, int p, float px, float py) {
+int xyNewSprite(const std::string& i, int w, int h, float px, float py, int m, int p) {
 	xySprite* newsprite = new xySprite(i, w, h, m, p, px, py);
 
 	return newsprite->getnum();
 }
 
-int xyNewSpriteFT(int t, int w, int h, int m, int p, float px, float py) {
+int xyNewSpriteFT(int t, int w, int h, float px, float py, int m, int p) {
 	xySprite* newsprite = new xySprite(t, w, h, m, p, px, py);
 
 	return newsprite->getnum();
@@ -451,8 +459,11 @@ void xySpriteSetBlendMode(int sprite, int blend) {
 void xyRegisterSpriteAPI(ssq::VM& vm) {
 	vm.addFunc("spriteName", xySpriteName); // Doc'd
 	vm.addFunc("findSprite", xyFindSprite); // Doc'd
-	vm.addFunc("newSprite", xyNewSprite); // Doc'd
-	vm.addFunc("newSpriteFT", xyNewSpriteFT);
+	//Binding functions that use optional parameters under a hidden name
+	//then defining the user-facing name in Squirrel, since SimpleSquirrel
+	//does not seem to support optional parameters.
+	vm.addFunc("__newSprite__OP__", xyNewSprite); // Doc'd
+	vm.addFunc("__newSpriteFT__OP__", xyNewSpriteFT);
 	vm.addFunc("drawSprite", xyDrawSprite); // Doc'd
 	vm.addFunc("drawSpriteEx", xyDrawSpriteEx); // Doc'd
 	vm.addFunc("drawSpriteMod", xyDrawSpriteMod); // Doc'd
