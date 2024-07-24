@@ -16,7 +16,7 @@ then
 echo "Chaotic AUR installation guide is available at 'https://aur.chaotic.cx/'"
 elif [[ -f /usr/bin/yay ]]
 then
-    echo "Installing build dependencies for AGAME (Arch/Garuda/ArcoLinux/Manjaro/EndeavourOS)..."
+    echo "Installing build dependencies through pacman..."
     sudo pacman -Sy sdl2 sdl2_image sdl2_mixer sdl2_net sdl2_gfx physfs
     echo "Let's build a Squirrel!"
     yay -S squirrel
