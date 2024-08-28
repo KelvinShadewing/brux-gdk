@@ -117,7 +117,6 @@ int xyGetFrames();
 int xyDisplayW();
 int xyDisplayH();
 std::string xyBruxVersion();
-void xyToggleFullscreen();
 
 void xyRegisterMainAPI(ssq::VM& vm);
 

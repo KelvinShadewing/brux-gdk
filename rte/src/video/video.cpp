@@ -49,6 +49,8 @@ void xySetDrawColor(int r, int g, int b, int a) {
 // Set draw color from 24- or 32-bit integer
 
 void xySetDrawColor(int color) {
+	if (gvVideoDriver == nullptr)
+		return;
 	// If the value of color is too big for a 24-bit integer, then treat it as 32-bit
 
 	Uint8 r;
@@ -105,24 +107,32 @@ void xySetBackgroundColor(Uint32 color) {
 // Currently just a wrapper for SDL_Delay
 
 void xyWait(int ticks) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->wait(ticks);
 }
 
 // Set draw target to a texture
 
 void xySetDrawTarget(Uint32 tex) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->setDrawTarget(tex);
 }
 
 // Get the draw target texture
 
 int xyGetDrawTarget() {
+	if (gvVideoDriver == nullptr)
+		return -1;
 	return gvDrawTarget;
 }
 
 // Set draw target back to screen
 
 void xyResetDrawTarget() {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->resetDrawTarget();
 }
 
@@ -135,45 +145,61 @@ void xyResetDrawTarget() {
 // Load a texture and assign it to a slot in the textures list
 
 Uint32 xyLoadImage(const std::string& path) {
+	if (gvVideoDriver == nullptr)
+		return 0;
 	return gvVideoDriver->loadImage(path);
 }
 
 Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key) {
+	if (gvVideoDriver == nullptr)
+		return 0;
 	return gvVideoDriver->loadImageKeyed(path, key);
 }
 
 // Draw image
 
 void xyDrawImage(Uint32 tex, int x, int y) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->drawImage(tex, x, y);
 }
 
 void xyDrawImagePart(Uint32 tex, int x, int y, int ox, int oy, int w, int h) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->drawImagePart(tex, x, y, ox, oy, w, h);
 }
 
 void xyDrawImageEx(Uint32 tex, int x, int y, float angle, int flip, int xscale, int yscale, Uint32 color) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->drawImageEx(tex, x, y, angle, flip, xscale, yscale, color);
 }
 
 // Delete image
 
 void xyDeleteImage(Uint32 tex) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->deleteImage(tex);
 }
 
 // Load a texture and assign it to a slot in the textures list
 
 Uint32 xyNewTexture(Uint32 w, Uint32 h) {
+	if (gvVideoDriver == nullptr)
+		return 0;
 	return gvVideoDriver->newTexture(w, h);
 }
 
 // Set the scale of drawing coordinates
 
 void xySetScaling(float scale) {
-	if (scale <= 0) {
+	if (gvVideoDriver == nullptr)
 		return;
-	}
+
+	if (scale <= 0)
+		return;
 
 	gvVideoDriver->setScaling(scale);
 }
@@ -181,72 +207,102 @@ void xySetScaling(float scale) {
 // Set the scaling filter
 
 void xySetScalingFilter(int hint) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->setScalingFilter(hint);
 }
 
 // Set the screen resolution
 
 void xySetResolution(int w, int h) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->setResolution(w, h);
 }
 
 // Get the screen width
 
 int xyScreenW() {
+	if (gvVideoDriver == nullptr)
+		return 0;
 	return gvVideoDriver->screenW();
 }
 
 // Get the screen height
 
 int xyScreenH() {
+	if (gvVideoDriver == nullptr)
+		return 0;
 	return gvVideoDriver->screenH();
 }
 
 // Get the window width
 
 int xyWindowW() {
+	if (gvVideoDriver == nullptr)
+		return 0;
 	return gvVideoDriver->windowW();
 }
 
 // Get the window height
 
 int xyWindowH() {
+	if (gvVideoDriver == nullptr)
+		return 0;
 	return gvVideoDriver->windowH();
+}
+
+void xyToggleFullscreen() {
+	if (gvVideoDriver == nullptr)
+		return;
+	gvVideoDriver->toggleFullscreen();
 }
 
 // Set a texture's blend mode
 
 void xyTextureSetBlendMode(int texture, int blend) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->setTextureBlendMode(texture, blend);
 }
 
 // Find a texture's ID by its name
 
 int xyFindTexture(const std::string& name) {
+	if (gvVideoDriver == nullptr)
+		return 0;
 	return gvVideoDriver->findTexture(name);
 }
 
 // Get the name of a texture
 
 std::string xyGetTextureName(int texture) {
+	if (gvVideoDriver == nullptr)
+		return "";
 	return gvVideoDriver->getTextureName(texture);
 }
 
 // Get a texture's filter
 
 int xyGetTextureFilter(int tex) {
+	if (gvVideoDriver == nullptr)
+		return 0;
 	return gvVideoDriver->getTextureFilter(tex);
 }
 
 // Set a texture's filter
 
 void xySetTextureFilter(int tex, int filter) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->setTextureFilter(tex, filter);
 }
 
 // Print the names of all loaded textures
 
 void xyPrintTextureNames() {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->printTextureNames();
 }
 
@@ -256,30 +312,40 @@ void xyPrintTextureNames() {
 // Draw a circle
 
 void xyDrawCircle(int x, int y, int radius, bool filled) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->drawCircle(x, y, radius, filled);
 }
 
 // Draw a rectangle
 
 void xyDrawRect(int x, int y, int w, int h, bool filled) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->drawRect(x, y, w, h, filled);
 }
 
 // Draw a pixel
 
 void xyDrawPoint(int x, int y) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->drawPoint(x, y);
 }
 
 // Draw a line
 
 void xyDrawLine(int x1, int y1, int x2, int y2) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->drawLine(x1, y1, x2, y2);
 }
 
 // Draw a thick line
 
 void xyDrawLineWide(int x1, int y1, int x2, int y2, int w) {
+	if (gvVideoDriver == nullptr)
+		return;
 	gvVideoDriver->drawLineWide(x1, y1, x2, y2, w);
 }
 

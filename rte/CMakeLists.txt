@@ -103,7 +103,7 @@ include_directories(${SDL2_INCLUDE_DIRS})
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 # Search for source files and copy the test suite to the output directory
-file(GLOB SRCFILES src/audio/audio.cpp src/audio/backend/audio_null.cpp
+file(GLOB SRCFILES src/audio/audio.cpp src/audio/backend/audio_null.cpp src/video/video.cpp
                    src/brux/*.cpp
                    src/external/*.c)
 add_executable(brux ${SRCFILES})
@@ -117,6 +117,13 @@ if (USE_SDL2_MIXER)
   else()
     target_link_libraries(brux_audio_sdl2 PUBLIC SDL2::Mixer)
   endif()
+endif()
+
+add_library(brux_video_sdl2 SHARED src/video/backend/video_sdl2.cpp)
+if(WIN32)
+	target_link_libraries(brux_video_sdl2 PUBLIC ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_GFX_LIBRARIES})
+else()
+	target_link_libraries(brux_video_sdl2 PUBLIC SDL2 SDL2::Image SDL2::GFX)
 endif()
 
 # Link libraries
@@ -140,3 +147,5 @@ target_link_libraries(brux PUBLIC LibPhysfs)
 if (USE_SDL2_MIXER)
   target_link_libraries(brux PUBLIC brux_audio_sdl2)
 endif()
+
+target_link_libraries(brux PUBLIC brux_video_sdl2)

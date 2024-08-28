@@ -54,12 +54,6 @@ ssq::VM gvSquirrel;
 
 std::ofstream gvLog;
 
-// SDL2-specific variables
-
-SDL_Window *gvWindow;
-SDL_Renderer *gvRender;
-SDL_Texture *gvScreen;
-
 // Used for FPS limiting
 
 #ifdef USE_CHRONO_STEADY_CLOCK
@@ -90,8 +84,6 @@ bool gvClearScreen = 1;
 // SDL2-related vectors
 // The audio-specific ones have been moved to src/audio/audio_sdl2.cpp though.
 
-std::vector<SDL_Texture*> vcTextures;
-std::vector<std::string> vcTextureNames;
 std::vector<xySprite*> vcSprites;
 std::vector<xyFont*> vcFonts;
 

@@ -37,7 +37,8 @@
 #include "brux/core.hpp"
 #include "brux/fileio.hpp"
 #include "brux/global.hpp"
-#include "brux/graphics.hpp"
+#include "video/backend/video_sdl2.hpp"
+#include "video/video.hpp"
 #include "brux/input.hpp"
 #include "brux/maths.hpp"
 #include "brux/shapes.hpp"
@@ -70,7 +71,7 @@ int main(int argc, char* argv[]) {
 		// Handle arguments
 		
 		if (curarg == "-f" || curarg == "--fullscreen") {
-			SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+			xyToggleFullscreen();
 		}
 		
 		// Check if the argument is long enough to be a source file
@@ -216,48 +217,8 @@ int xyInit() {
 	}
 
 	// Create window
-	
-	gvWindow = SDL_CreateWindow("Brux GDK", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
 
-	if (gvWindow == 0) {
-		xyPrint("Window could not be created! SDL Error: %s\n", SDL_GetError());
-		return 0;
-	} else {
-		// Create renderer for window
-
-		gvRender = SDL_CreateRenderer(gvWindow, -1, SDL_RENDERER_ACCELERATED);
-
-		if (gvRender == 0) {
-			xyPrint("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
-			return 0;
-		} else {
-			// Initialize renderer color
-
-			SDL_SetRenderDrawColor(gvRender, 0xFF, 0xFF, 0xFF, 0xFF);
-
-			// Initialize PNG loading
-
-			if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-				xyPrint("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-				return 0;
-			}
-
-			// Set up the viewport
-
-			SDL_Rect screensize;
-			screensize.x = 0;
-			screensize.y = 0;
-			screensize.w = gvScrW;
-			screensize.h = gvScrH;
-			SDL_RenderSetViewport(gvRender, &screensize);
-			SDL_RenderSetLogicalSize(gvRender, gvScrW, gvScrH);
-
-			// Set the mimumum window size
-			// No idea why it didn't do this before.
-
-			SDL_SetWindowMinimumSize(gvWindow, gvScrW, gvScrH);
-		}
-	}
+	gvVideoDriver = new SDL2VideoBackend();
 
 	// Initialize audio
 
@@ -301,9 +262,6 @@ int xyInit() {
 	xyPrint("Squirrel initialized successfully!");
 
 	// Initiate other things
-
-	vcTextures.push_back(0);
-	vcTextureNames.push_back("");
 	vcSprites.push_back(0);
 	vcFonts.push_back(0);
 
@@ -325,17 +283,16 @@ void xyEnd() {
 	// Cleanup all resources (except for audio)
 
 	xyPrint("Cleaning up all resources...");
-	xyPrint("Cleaning textures...");
-
-	for (int i = 0; i < vcTextures.size(); i++) {
-		xyDeleteImage(i);
-	}
 
 	xyPrint("Cleaning sprites...");
 	
 	for (int i = 0; i < vcSprites.size(); i++) {
 		delete vcSprites[i];
 	}
+
+	xyPrint("Cleaning textures...");
+	
+	if (gvVideoDriver != nullptr) delete gvVideoDriver;
 
 	xyPrint("Finished cleanup.");
 
@@ -354,8 +311,7 @@ void xyEnd() {
 	// Close SDL
 
 	xyPrint("Closing SDL...");
-	SDL_DestroyRenderer(gvRender);
-	SDL_DestroyWindow(gvWindow);
+
 	IMG_Quit();
 	SDL_Quit();
 
@@ -496,13 +452,13 @@ void xyUpdate() {
 
 	// Update the game window
 
-	SDL_RenderPresent(gvRender);
+	gvVideoDriver->renderPresent();
 
 	Uint32 olddraw = gvDrawColor;
 
 	xySetDrawColor(gvBackColor);
 
-	SDL_RenderClear(gvRender);
+	xyClearScreen();
 
 	xySetDrawColor(olddraw);
 
@@ -579,7 +535,7 @@ void xyUpdate() {
 
 	float sx, sy;
 
-	SDL_RenderGetScale(gvRender, &sx, &sy);
+	gvVideoDriver->getScale(&sx, &sy);
 
 	// This code was originally broken in a way that could cause a crash because it didn't properly handle floating-point numbers.
 	// Should be fixed now.
@@ -654,17 +610,15 @@ void xySetFPS(int max_fps) {
 }
 
 void xySetWindowTitle(const std::string& title) {
-	SDL_SetWindowTitle(gvWindow, title.c_str());
+	gvVideoDriver->setTitle(title);
 }
 
 void xySetWindowIcon(const std::string& file) {
 	if (!xyFileExists(file)) {
 		return;
 	}
-
-	SDL_Surface* icon = IMG_Load(file.c_str());
-	SDL_SetWindowIcon(gvWindow, icon);
-	SDL_FreeSurface(icon);
+	
+	gvVideoDriver->setIcon(file);
 }
 
 int xyGetFrames() {
@@ -687,10 +641,6 @@ int xyDisplayH() {
 
 std::string xyBruxVersion() {
 	return gvVNo;
-}
-
-void xyToggleFullscreen() {
-	SDL_SetWindowFullscreen(gvWindow, (SDL_GetWindowFlags(gvWindow) & SDL_WINDOW_FULLSCREEN_DESKTOP) ? 0 : SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
 int xyGetOS() {

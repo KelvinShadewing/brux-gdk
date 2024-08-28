@@ -23,7 +23,7 @@
 #include <simplesquirrel/vm.hpp>
 
 #include "brux/global.hpp"
-#include "brux/graphics.hpp"
+#include "video/video.hpp"
 #include "brux/main.hpp"
 #include "brux/maths.hpp"
 
@@ -40,7 +40,7 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 	name(filename),
 	source(filename)
 {
-	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
+	//SDL_QueryTexture(tex, format, 0, 0, 0); //// DO NOT USE! ////
 
 	//Extract short file name
 	std::string::size_type slashnum = name.find_last_of("/");
@@ -71,7 +71,7 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 
 	//Parse the image for rows and colums
 	int origW, origH;
-	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
+	gvVideoDriver->queryTexture(tex, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
 	if(w <= 0)
@@ -98,11 +98,11 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 	name("texture"),
 	source("texture")
 {
-	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
+	//SDL_QueryTexture(tex, format, 0, 0, 0); //// DO NOT USE! ////
 
 	//Load texture
-	if(texture >= 0 && texture < vcTextures.size()) {
-		if(vcTextures[texture] != 0) tex = texture;
+	if (texture >= 0 && texture < gvVideoDriver->textureCount()) {
+		if (gvVideoDriver->getTextureAddr(texture) != 0) tex = texture;
 		else tex = 0;
 	}
 
@@ -130,7 +130,7 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 
 	//Parse the image for rows and colums
 	int origW, origH;
-	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
+	gvVideoDriver->queryTexture(tex, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
 	if(w <= 0)
@@ -155,7 +155,7 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 	numero = 0;
 	frames = 0; //Obsolete, will untangle later
 	Uint32 newtex = xyLoadImage(filename);
-	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
+	//SDL_QueryTexture(tex, format, 0, 0, 0); //// DO NOT USE! ////
 
 	//Delete old texture
 	xyDeleteImage(tex);
@@ -169,7 +169,7 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 
 	//Parse the image for rows and colums
 	int origW, origH;
-	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
+	gvVideoDriver->queryTexture(tex, &origW, &origH);
 	origW -= mar;
 	origH -= mar;
 	col = static_cast<int>(std::floor(origW / (w + pad)));
@@ -204,7 +204,7 @@ void xySprite::draw(int f, int x, int y) {
 	rec.w = w;
 	rec.h = h;
 
-	SDL_RenderCopy(gvRender, vcTextures[tex], &rec, &des);
+	gvVideoDriver->renderCopy(tex, &rec, &des);
 };
 
 void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha) {
@@ -244,9 +244,9 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	piv->x = static_cast<int>(npvX * xscale);
 	piv->y = static_cast<int>(npvY * yscale);
 
-	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<Uint8>(alpha * 255));
-	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
-	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
+	gvVideoDriver->setTextureAlphaMod(tex, static_cast<Uint8>(alpha * 255));
+	gvVideoDriver->renderCopyEx(tex, &rec, &des, (double)angle, piv, flip);
+	gvVideoDriver->setTextureAlphaMod(tex, 255);
 
 	delete piv;
 };
@@ -276,9 +276,9 @@ void xySprite::drawmod(int f, int x, int y, Uint32 color) {
 	g = (color >> 16) & 0xFF;
 	b = (color >> 8) & 0xFF;
 
-	SDL_SetTextureColorMod(vcTextures[tex], r, g, b);
-	SDL_RenderCopy(gvRender, vcTextures[tex], &rec, &des);
-	SDL_SetTextureColorMod(vcTextures[tex], 255, 255, 255);
+	gvVideoDriver->setTextureColorMod(tex, r, g, b);
+	gvVideoDriver->renderCopy(tex, &rec, &des);
+	gvVideoDriver->setTextureColorMod(tex, 255, 255, 255);
 };
 
 void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha, Uint32 color) {
@@ -324,11 +324,11 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	g = (color >> 16) & 0xFF;
 	b = (color >> 8) & 0xFF;
 
-	SDL_SetTextureColorMod(vcTextures[tex], r, g, b);
-	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<Uint8>(alpha * 255));
-	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
-	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
-	SDL_SetTextureColorMod(vcTextures[tex], 255, 255, 255);
+	gvVideoDriver->setTextureColorMod(tex, r, g, b);
+	gvVideoDriver->setTextureAlphaMod(tex, static_cast<Uint8>(alpha * 255));
+	gvVideoDriver->renderCopyEx(tex, &rec, &des, (double)angle, piv, flip);
+	gvVideoDriver->setTextureAlphaMod(tex, 255);
+	gvVideoDriver->setTextureColorMod(tex, 255, 255, 255);
 
 	delete piv;
 };
@@ -452,7 +452,7 @@ void xySpriteSetBlendMode(int sprite, int blend) {
 			break;
 	}
 
-	SDL_SetTextureBlendMode(vcTextures[vcSprites[sprite]->gettex()], mode);
+	gvVideoDriver->setTextureBlendMode(vcSprites[sprite]->gettex(), mode);
 }
 
 

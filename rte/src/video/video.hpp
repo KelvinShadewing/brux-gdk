@@ -10,8 +10,12 @@
 class BaseVideoAPI {
 public:
 	BaseVideoAPI(std::string driverName, std::string driverVersion) : mVideoDriverName(driverName), mVideoDriverVers(driverVersion) {}
+	virtual ~BaseVideoAPI() = default;
 
-	virtual void wait(int ticks);
+	virtual void setTitle(const std::string& title) = 0;
+	virtual void setIcon(const std::string& path) = 0;
+
+	virtual void wait(int ticks) = 0;
 
 	virtual void clearScreen() = 0;
 
@@ -20,6 +24,8 @@ public:
 	virtual int getDrawTarget() = 0;
 	virtual void setDrawTarget(Uint32 tex) = 0;
 	virtual void resetDrawTarget() = 0;
+
+	virtual int textureCount() = 0;
 
 	virtual Uint32 newTexture(Uint32 w, Uint32 h) = 0;
 	virtual void deleteImage(Uint32 img) = 0;
@@ -41,13 +47,24 @@ public:
 	virtual int windowW() = 0;
 	virtual int windowH() = 0;
 
+	virtual void toggleFullscreen() = 0;
+
 	virtual void setTextureBlendMode(int texture, int blend) = 0;
+	virtual void setTextureBlendMode(SDL_Texture* texture, int blend) = 0;
 
 	virtual int findTexture(const std::string& name) = 0;
 	virtual std::string getTextureName(int texture) = 0;
 
+	virtual void* getTextureAddr(int tex) = 0;
 	virtual int getTextureFilter(int tex) = 0;
 	virtual void setTextureFilter(int tex, int filter) = 0;
+	virtual void setTextureColorMod(int tex, uint8_t r, uint8_t g, uint8_t b) = 0;
+	virtual void setTextureAlphaMod(int tex, uint8_t alpha) = 0;
+
+	virtual void renderCopy(int tex, SDL_Rect* rec, SDL_Rect* des) = 0;
+	virtual void renderCopyEx(int tex, SDL_Rect* rec, SDL_Rect* des, double angle, SDL_Point* piv, SDL_RendererFlip flip) = 0;
+
+	virtual void queryTexture(int tex, int* width, int* height) = 0;
 
 	virtual void printTextureNames() = 0;
 
@@ -57,6 +74,10 @@ public:
 	virtual void drawPoint(int x, int y) = 0;
 	virtual void drawLine(int x1, int y1, int x2, int y2) = 0;
 	virtual void drawLineWide(int x1, int y1, int x2, int y2, int w) = 0;
+
+	virtual void getScale(float* x, float* y) = 0;
+
+	virtual void renderPresent() = 0;
 
 	virtual const bool supportsShaders() { return false; }
 
@@ -93,6 +114,8 @@ int xyScreenW();
 int xyScreenH();
 int xyWindowW();
 int xyWindowH();
+
+void xyToggleFullscreen();
 void xyTextureSetBlendMode(int texture, int blend);
 int xyFindTexture(const std::string& name);
 std::string xyGetTextureName(int texture);

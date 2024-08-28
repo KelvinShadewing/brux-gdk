@@ -23,7 +23,7 @@
 #include <simplesquirrel/vm.hpp>
 
 #include "brux/global.hpp"
-#include "brux/graphics.hpp"
+#include "video/video.hpp"
 #include "brux/main.hpp"
 #include "brux/sprite.hpp"
 

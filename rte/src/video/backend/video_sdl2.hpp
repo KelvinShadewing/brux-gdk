@@ -9,6 +9,9 @@ public:
 	SDL2VideoBackend();
 	~SDL2VideoBackend();
 
+	void setTitle(const std::string& title) override;
+	void setIcon(const std::string& path) override;
+
 	void wait(int ticks) override;
 
 	void clearScreen() override;
@@ -18,6 +21,8 @@ public:
 	int getDrawTarget() override;
 	void setDrawTarget(Uint32 tex) override;
 	void resetDrawTarget() override;
+
+	int textureCount() override;
 
 	Uint32 newTexture(Uint32 w, Uint32 h) override;
 	void deleteImage(Uint32 img) override;
@@ -39,13 +44,24 @@ public:
 	int windowW() override;
 	int windowH() override;
 
+	void toggleFullscreen() override;
+
 	void setTextureBlendMode(int texture, int blend) override;
+	void setTextureBlendMode(SDL_Texture* texture, int blend) override;
+
+	void renderCopy(int tex, SDL_Rect* rec, SDL_Rect* des) override;
+	void renderCopyEx(int tex, SDL_Rect* rec, SDL_Rect* des, double angle, SDL_Point* piv, SDL_RendererFlip flip) override;
 
 	int findTexture(const std::string& name) override;
 	std::string getTextureName(int texture) override;
 
+	void* getTextureAddr(int tex) override;
 	int getTextureFilter(int tex) override;
 	void setTextureFilter(int tex, int filter) override;
+	void setTextureColorMod(int tex, uint8_t r, uint8_t g, uint8_t b) override;
+	void setTextureAlphaMod(int tex, uint8_t alpha) override;
+
+	void queryTexture(int tex, int* width, int* height) override;
 
 	void printTextureNames() override;
 
@@ -56,8 +72,15 @@ public:
 	void drawLine(int x1, int y1, int x2, int y2) override;
 	void drawLineWide(int x1, int y1, int x2, int y2, int w) override;
 
+	void getScale(float* x, float* y) override;
+
+	void renderPresent() override;
+
 	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;
+
+	std::vector<SDL_Texture*> mTextures;
+	std::vector<std::string> mTextureNames;
 private:
 	SDL_Texture* loadTexture(const std::string& path);
 	SDL_Texture* loadTextureKeyed(const std::string& path, Uint32 key);
