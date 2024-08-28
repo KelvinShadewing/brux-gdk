@@ -5,11 +5,17 @@
 BaseVideoAPI* gvVideoDriver = nullptr;
 
 void xyClearScreen() {
+	if (gvVideoDriver == nullptr)
+		return;
+	
 	gvVideoDriver->clearScreen();
 }
 
 // Set draw color based on RGBA data
 void xySetDrawColor(int r, int g, int b, int a) {
+	if (gvVideoDriver == nullptr)
+		return;
+
 	// Set color correction
 	if (r > 255) {
 		r = 255;
@@ -51,6 +57,7 @@ void xySetDrawColor(int r, int g, int b, int a) {
 void xySetDrawColor(int color) {
 	if (gvVideoDriver == nullptr)
 		return;
+
 	// If the value of color is too big for a 24-bit integer, then treat it as 32-bit
 
 	Uint8 r;
@@ -70,7 +77,12 @@ void xySetDrawColor(int color) {
 	// Set the color
 
 	gvVideoDriver->setDrawColor(r, g, b, a);
-	
+
+	gvDrawColor = static_cast<int>(color);
+
+	if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
+		gvDrawColor = SDL_Swap32(gvDrawColor);
+	}
 }
 
 
@@ -195,10 +207,7 @@ Uint32 xyNewTexture(Uint32 w, Uint32 h) {
 // Set the scale of drawing coordinates
 
 void xySetScaling(float scale) {
-	if (gvVideoDriver == nullptr)
-		return;
-
-	if (scale <= 0)
+	if (gvVideoDriver == nullptr || scale <= 0)
 		return;
 
 	gvVideoDriver->setScaling(scale);

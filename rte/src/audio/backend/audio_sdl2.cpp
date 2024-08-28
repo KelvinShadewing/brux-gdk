@@ -185,11 +185,14 @@ Uint32 SDL2AudioBackend::loadMusic(const std::string& filename) {
 	if (!mUnloadedMusic.empty()) {
 		int id = mUnloadedMusic[0];
 
-		mUnloadedMusic.erase(mUnloadedMusic.begin());
+		if (id < mLoadedMusicFiles.size()) {
+			mUnloadedMusic.erase(mUnloadedMusic.begin());
 
-		mVcMusic[id] = newMsc;
-		mLoadedMusicFiles[id] = filename;
-		return id;
+
+			mVcMusic[id] = newMsc;
+			mLoadedMusicFiles[id] = filename;
+			return id;
+		}
 	}
 	#endif
 
@@ -271,7 +274,7 @@ void SDL2AudioBackend::deleteMusic(Uint32 music) {
 	// If the index is less than 0, don't attempt to unload it.
 	// The squirrel function does not seem to actually allow negative values to be passed (likely due to how squirrel handles it), but it's still unsafe to assume that it's not negative.
 
-	if (0 > music) {
+	if (music == 0) {
 		return;
 	}
 

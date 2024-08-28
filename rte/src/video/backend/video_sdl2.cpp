@@ -24,8 +24,6 @@ SDL2VideoBackend::SDL2VideoBackend() : BaseVideoAPI("SDL2", getSDLVer()) {
 		throw std::runtime_error("SDL2 Renderer Creation Error");
 	}
 
-	setDrawColor(0xFF, 0xFF, 0xFF, 0xFF);
-
 	// Initialize PNG loading
 	if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
 		xyPrint("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
@@ -82,6 +80,7 @@ void SDL2VideoBackend::clearScreen() {
 }
 
 void SDL2VideoBackend::setDrawColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+	//xyPrint("DrawCol{%d, %d, %d, %d}", r, g, b, a);
 	SDL_SetRenderDrawColor(mRenderer, r, g, b, a);
 }
 
@@ -90,9 +89,8 @@ int SDL2VideoBackend::getDrawTarget() {
 }
 
 void SDL2VideoBackend::setDrawTarget(Uint32 tex) {
-	gvDrawTarget = tex;
-
-	if (mTextures.size() >= tex || mTextures[tex] != 0) {
+	if (tex >= mTextures.size() || mTextures[tex] != 0) {
+		gvDrawTarget = tex;
 		SDL_SetRenderTarget(mRenderer, mTextures[tex]);
 	}
 }
@@ -283,7 +281,7 @@ Uint32 SDL2VideoBackend::loadImage(const std::string& path) {
 		gvQuit = 1;
 	}
 
-	// Make sure vcTextures[0] == 0
+	// Make sure mTextures[0] == 0
 
 	if (mTextures.size() == 1) {
 		mTextures.push_back(0);
@@ -326,7 +324,7 @@ Uint32 SDL2VideoBackend::loadImageKeyed(const std::string& path, Uint32 key) {
 		gvQuit = 1;
 	}
 
-	// Make sure vcTextures[0] == 0
+	// Make sure mTextures[0] == 0
 
 	if (mTextures.size() == 1) {
 		mTextures.push_back(0);
@@ -386,7 +384,7 @@ Uint32 SDL2VideoBackend::newTexture(Uint32 w, Uint32 h) {
 		gvQuit = 1;
 	}
 
-	// Make sure vcTextures[0] == 0
+	// Make sure mTextures[0] == 0
 
 	if (mTextures.size() == 1) {
 		mTextures.push_back(0);
@@ -517,9 +515,6 @@ void SDL2VideoBackend::setTextureBlendMode(int texture, int blend) {
 	SDL_BlendMode mode;
 
 	switch (blend) {
-		case 0:
-			mode = SDL_BLENDMODE_NONE;
-			break;
 		case 1:
 			mode = SDL_BLENDMODE_BLEND;
 			break;

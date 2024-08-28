@@ -220,6 +220,8 @@ int xyInit() {
 
 	gvVideoDriver = new SDL2VideoBackend();
 
+	xySetDrawColor(0xFF, 0xFF, 0xFF, 0xFF);
+
 	// Initialize audio
 
 	xyInitAudio();
