@@ -51,8 +51,8 @@ extern uint32_t gvMaxFPS;
 extern std::chrono::time_point<std::chrono::steady_clock> gvTicks;
 extern std::chrono::time_point<std::chrono::steady_clock> gvTickLast;
 #else
-extern uint32_t gvTicks;
-extern uint32_t gvTickLast;
+extern uint64_t gvTicks;
+extern uint64_t gvTickLast;
 #endif
 extern uint32_t gvFrames;
 extern const char *gvVNo;

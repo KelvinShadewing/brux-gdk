@@ -585,15 +585,15 @@ void xyUpdate() {
 	gvTickLast = std::chrono::steady_clock::now();
 #else
 	gvTicks = SDL_GetTicks64();
-	uint32_t frameLength = gvTicks - gvTickLast;
-	uint32_t minDelay = (1000 / gvMaxFPS);
+	uint64_t frameLength = gvTicks - gvTickLast;
+	uint64_t minDelay = (1000 / gvMaxFPS);
 
 	if (frameLength < minDelay) {
 		if (gvMaxFPS != 0)
 			SDL_Delay(minDelay - frameLength);
 	}
 
-	if (frameLength != 0) gvFPS = 1000 / static_cast<float>(SDL_GetTicks() - gvTickLast);
+	if (frameLength != 0) gvFPS = 1000 / static_cast<float>(SDL_GetTicks64() - gvTickLast);
 	gvTickLast = SDL_GetTicks64();
 #endif
 	gvFrames++;
@@ -669,7 +669,7 @@ void xyRegisterMainAPI(ssq::VM& vm) {
 	vm.addFunc("wait", xyWait); // Doc'd
 	vm.addFunc("update", xyUpdate); // Doc'd
 	vm.addFunc("getOS", xyGetOS); // Doc'd
-	vm.addFunc("getTicks", SDL_GetTicks); // Doc'd
+	vm.addFunc("getTicks", SDL_GetTicks64); // Doc'd
 	vm.addFunc("getFPS", xyGetFPS); // Doc'd
 	vm.addFunc("setFPS", xySetFPS); // Doc'd
 	vm.addFunc("setWindowTitle", xySetWindowTitle); // Doc'd

@@ -60,8 +60,8 @@ std::ofstream gvLog;
 std::chrono::time_point<std::chrono::steady_clock> gvTicks = std::chrono::steady_clock::now();
 std::chrono::time_point<std::chrono::steady_clock> gvTickLast = std::chrono::steady_clock::now();
 #else
-uint32_t gvTicks = 1;
-uint32_t gvTickLast = 0;
+uint64_t gvTicks = 1;
+uint64_t gvTickLast = 0;
 #endif
 
 // Current game FPS
@@ -77,6 +77,7 @@ uint32_t gvFrames = 0;
 
 const char *gvVNo = "v0.3.6";
 
+// Question for Kelvin: why is this here? its not used
 // Should it clear the screen? If true, then the answer is yes.
 
 bool gvClearScreen = 1;

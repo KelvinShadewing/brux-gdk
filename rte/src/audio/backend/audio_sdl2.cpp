@@ -29,12 +29,12 @@ bool didAudioLoadFail = false;
 
 
 // JANK
-std::string SDLVersionToString(const SDL_version* ver) {
+std::string SDL2VersionToString(const SDL_version* ver) {
 	return (char)ver->major + (std::string)"." + (char)ver->minor + (std::string) + "." + (char)ver->patch;
 }
 
 // Initialize audio
-SDL2AudioBackend::SDL2AudioBackend() : BaseAudioAPI("SDL2", SDLVersionToString(Mix_Linked_Version())) {
+SDL2AudioBackend::SDL2AudioBackend() : BaseAudioAPI("SDL2", SDL2VersionToString(Mix_Linked_Version())) {
 	#ifdef USE_FASTFILL
 	xyPrint("Audio system: SDL2 (fastfill enabled)");
 	#else

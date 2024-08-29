@@ -358,12 +358,9 @@ void xyDrawLineWide(int x1, int y1, int x2, int y2, int w) {
 	gvVideoDriver->drawLineWide(x1, y1, x2, y2, w);
 }
 
-//////////////
-// GEOMETRY //
-//////////////
-
-
-
+/////////////
+//   API   //
+/////////////
 
 void xyRegisterGraphicsAPI(ssq::VM& vm) {
 	vm.addFunc("clearScreen", xyClearScreen); // Doc'd
