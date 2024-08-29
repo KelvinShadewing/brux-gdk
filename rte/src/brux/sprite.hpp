@@ -25,28 +25,28 @@
 
 class xySprite {
 private:
-	Uint32 numero, mar, pad, w, h, tex, col, row, frames = 0;
+	uint32_t numero, mar, pad, w, h, tex, col, row, frames = 0;
 	bool didLoad;
 	int osX, osY;
 	float pvX, pvY;
-	Uint32 *format;
+	uint32_t *format;
 public:
 	std::string name;
 	std::string source;
-	xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
-	xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
+	xySprite(const std::string& filename, uint32_t width, uint32_t height, uint32_t margin, uint32_t padding, float pivotX, float pivotY);
+	xySprite(uint32_t texture, uint32_t width, uint32_t height, uint32_t margin, uint32_t padding, float pivotX, float pivotY);
 	~xySprite();
-	void replaceSprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
+	void replaceSprite(const std::string& filename, uint32_t width, uint32_t height, uint32_t margin, uint32_t padding, float pivotX, float pivotY);
 	void draw(int f, int x, int y);
 	void drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha);
-	void drawmod(int f, int x, int y, Uint32 color);
-	void drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha, Uint32 color);\
+	void drawmod(int f, int x, int y, uint32_t color);
+	void drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha, uint32_t color);\
 
-	Uint32 getnum() const { return numero; }
-	Uint32 gettex() const { return tex; }
-	Uint32 getframes() const { return frames; }
-	Uint32 getw() const { return w; }
-	Uint32 geth() const { return h; }
+	uint32_t getnum() const { return numero; }
+	uint32_t gettex() const { return tex; }
+	uint32_t getframes() const { return frames; }
+	uint32_t getw() const { return w; }
+	uint32_t geth() const { return h; }
 	const char* getname() const { return name.c_str(); }
 };
 

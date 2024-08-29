@@ -28,7 +28,7 @@ bool NullAudioBackend::isAudioAvailable() { return false; }
 
 void NullAudioBackend::allocateChannels(int channels) { mChannels = channels; }
 
-Uint32 NullAudioBackend::loadSound(const std::string& filename) {
+uint32_t NullAudioBackend::loadSound(const std::string& filename) {
 	if (mLoadedSoundFiles.empty()) {
 		mLoadedSoundFiles.push_back(filename);
 		return 0;
@@ -73,7 +73,7 @@ Uint32 NullAudioBackend::loadSound(const std::string& filename) {
 	return arraySize;
 }
 
-Uint32 NullAudioBackend::loadMusic(const std::string& filename) {
+uint32_t NullAudioBackend::loadMusic(const std::string& filename) {
 	if (mLoadedMusicFiles.empty()) {
 		mLoadedMusicFiles.push_back(filename);
 		return 0;
@@ -118,7 +118,7 @@ Uint32 NullAudioBackend::loadMusic(const std::string& filename) {
 	return arraySize;
 }
 
-void NullAudioBackend::deleteSound(Uint32 sound) {
+void NullAudioBackend::deleteSound(uint32_t sound) {
 	if (sound >= mLoadedSoundFiles.size()) return;
 
 	mLoadedSoundFiles[sound] = "";
@@ -128,7 +128,7 @@ void NullAudioBackend::deleteSound(Uint32 sound) {
 	#endif
 }
 
-void NullAudioBackend::deleteMusic(Uint32 music) {
+void NullAudioBackend::deleteMusic(uint32_t music) {
 	if (music >= mLoadedMusicFiles.size()) return;
 
 	mLoadedMusicFiles[music] = "";
@@ -138,15 +138,15 @@ void NullAudioBackend::deleteMusic(Uint32 music) {
 	#endif
 }
 
-int NullAudioBackend::playSound(Uint32 sound, Uint32 loops) { return 0; }
+int NullAudioBackend::playSound(uint32_t sound, uint32_t loops) { return 0; }
 
-int NullAudioBackend::playSoundChannel(Uint32 sound, Uint32 loops, Uint32 channel) { return 0; }
+int NullAudioBackend::playSoundChannel(uint32_t sound, uint32_t loops, uint32_t channel) { return 0; }
 
-int NullAudioBackend::playMusic(Uint32 music, Uint32 loops) { return 0; }
+int NullAudioBackend::playMusic(uint32_t music, uint32_t loops) { return 0; }
 
-void NullAudioBackend::stopSound(Uint32 sound) {}
+void NullAudioBackend::stopSound(uint32_t sound) {}
 
-void NullAudioBackend::stopChannel(Uint32 channel) {}
+void NullAudioBackend::stopChannel(uint32_t channel) {}
 
 void NullAudioBackend::stopMusic() {}
 

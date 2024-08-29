@@ -456,7 +456,7 @@ void xyUpdate() {
 
 	gvVideoDriver->renderPresent();
 
-	Uint32 olddraw = gvDrawColor;
+	uint32_t olddraw = gvDrawColor;
 
 	xySetDrawColor(gvBackColor);
 
@@ -585,8 +585,8 @@ void xyUpdate() {
 	gvTickLast = std::chrono::steady_clock::now();
 #else
 	gvTicks = SDL_GetTicks64();
-	Uint32 fLength = gvTicks - gvTickLast;
-	Uint32 max_delay = (1000 / gvMaxFPS);
+	uint32_t fLength = gvTicks - gvTickLast;
+	uint32_t max_delay = (1000 / gvMaxFPS);
 
 	if (fLength < max_delay) {
 		if (gvMaxFPS != 0)

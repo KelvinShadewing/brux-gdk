@@ -88,7 +88,7 @@ int SDL2VideoBackend::getDrawTarget() {
 	return gvDrawTarget;
 }
 
-void SDL2VideoBackend::setDrawTarget(Uint32 tex) {
+void SDL2VideoBackend::setDrawTarget(uint32_t tex) {
 	if (tex >= mTextures.size() || mTextures[tex] != 0) {
 		gvDrawTarget = tex;
 		SDL_SetRenderTarget(mRenderer, mTextures[tex]);
@@ -103,7 +103,7 @@ int SDL2VideoBackend::textureCount() {
 	return mTextures.size();
 }
 
-void SDL2VideoBackend::drawImage(Uint32 tex, int x, int y) {
+void SDL2VideoBackend::drawImage(uint32_t tex, int x, int y) {
 	SDL_Rect rec;
 	
 	rec.x = x;
@@ -125,7 +125,7 @@ void SDL2VideoBackend::drawImage(Uint32 tex, int x, int y) {
 	SDL_RenderCopy(mRenderer, mTextures[tex], 0, &rec);
 }
 
-void SDL2VideoBackend::drawImagePart(Uint32 tex, int x, int y, int ox, int oy, int w, int h) {
+void SDL2VideoBackend::drawImagePart(uint32_t tex, int x, int y, int ox, int oy, int w, int h) {
 	SDL_Rect rec;
 
 	rec.x = x;
@@ -155,7 +155,7 @@ void SDL2VideoBackend::drawImagePart(Uint32 tex, int x, int y, int ox, int oy, i
 	SDL_RenderCopy(mRenderer, mTextures[tex], &slice, &rec);
 }
 
-void SDL2VideoBackend::drawImageEx(Uint32 tex, int x, int y, float angle, int flip, int xscale, int yscale, Uint32 color) {
+void SDL2VideoBackend::drawImageEx(uint32_t tex, int x, int y, float angle, int flip, int xscale, int yscale, uint32_t color) {
 	SDL_Rect rec;
 
 	rec.x = 0;
@@ -168,7 +168,7 @@ void SDL2VideoBackend::drawImageEx(Uint32 tex, int x, int y, float angle, int fl
 
 	// Break color into 8-bit versions
 
-	Uint8 r, g, b;
+	uint8_t r, g, b;
 
 	r = (color >> 24) & 0xFF;
 	g = (color >> 16) & 0xFF;
@@ -208,13 +208,13 @@ void SDL2VideoBackend::renderCopy(int tex, SDL_Rect* rec, SDL_Rect* des) {
 	SDL_RenderCopy(mRenderer, mTextures[tex], rec, des);
 }
 
-void SDL2VideoBackend::renderCopyEx(int tex, SDL_Rect* rec, SDL_Rect* des, double angle, SDL_Point* piv, SDL_RendererFlip flip) {
+void SDL2VideoBackend::renderCopyEx(int tex, SDL_Rect* rec, SDL_Rect* des, double angle, SDL_Point* piv, int flip) {
 	if (tex < 0 || tex > static_cast<int>(mTextures.size()) - 1)
 		return;
 
 	SDL_RendererFlip a;
 
-	SDL_RenderCopyEx(mRenderer, mTextures[tex], rec, des, angle, piv, flip);
+	SDL_RenderCopyEx(mRenderer, mTextures[tex], rec, des, angle, piv, (SDL_RendererFlip)flip);
 }
 
 SDL_Texture* SDL2VideoBackend::loadTexture(const std::string& path) {
@@ -244,7 +244,7 @@ SDL_Texture* SDL2VideoBackend::loadTexture(const std::string& path) {
 	return newTexture;
 }
 
-SDL_Texture* SDL2VideoBackend::loadTextureKeyed(const std::string& path, Uint32 key) {
+SDL_Texture* SDL2VideoBackend::loadTextureKeyed(const std::string& path, uint32_t key) {
 	SDL_Texture* newTexture = NULL;
 
 	// Load the surface
@@ -256,9 +256,9 @@ SDL_Texture* SDL2VideoBackend::loadTextureKeyed(const std::string& path, Uint32 
 		return NULL;
 	}
 	
-	Uint8 r = xyGetRed(key);
-	Uint8 g = xyGetGreen(key);
-	Uint8 b = xyGetBlue(key);
+	uint8_t r = xyGetRed(key);
+	uint8_t g = xyGetGreen(key);
+	uint8_t b = xyGetBlue(key);
 	
 	SDL_SetColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, r, g, b));
 	
@@ -273,7 +273,7 @@ SDL_Texture* SDL2VideoBackend::loadTextureKeyed(const std::string& path, Uint32 
 	return newTexture;
 }
 
-Uint32 SDL2VideoBackend::loadImage(const std::string& path) {
+uint32_t SDL2VideoBackend::loadImage(const std::string& path) {
 	SDL_Texture* nimg = loadTexture(path.c_str());
 
 	if (!nimg) {
@@ -300,7 +300,7 @@ Uint32 SDL2VideoBackend::loadImage(const std::string& path) {
 		name = path.substr(slashnum + 1, name.length() - 1);
 	}
 
-	for (Uint32 i = 1; i < mTextureNames.size(); i++) {
+	for (uint32_t i = 1; i < mTextureNames.size(); i++) {
 		if (mTextureNames[i] == "") {
 			mTextureNames[i] = name;
 			mTextures[i] = nimg;
@@ -316,7 +316,7 @@ Uint32 SDL2VideoBackend::loadImage(const std::string& path) {
 	return mTextures.size() - 1;
 }
 
-Uint32 SDL2VideoBackend::loadImageKeyed(const std::string& path, Uint32 key) {
+uint32_t SDL2VideoBackend::loadImageKeyed(const std::string& path, uint32_t key) {
 	SDL_Texture* nimg = loadTextureKeyed(path, key);
 
 	if (!nimg) {
@@ -343,7 +343,7 @@ Uint32 SDL2VideoBackend::loadImageKeyed(const std::string& path, Uint32 key) {
 		name = path.substr(slashnum + 1, name.length() - 1);
 	}
 
-	for (Uint32 i = 1; i < mTextureNames.size(); i++) {
+	for (uint32_t i = 1; i < mTextureNames.size(); i++) {
 		if (mTextureNames[i] == "") {
 			mTextureNames[i] = name;
 			mTextures[i] = nimg;
@@ -359,7 +359,7 @@ Uint32 SDL2VideoBackend::loadImageKeyed(const std::string& path, Uint32 key) {
 	return mTextures.size() - 1;
 }
 
-void SDL2VideoBackend::deleteImage(Uint32 img) {
+void SDL2VideoBackend::deleteImage(uint32_t img) {
 	if (img >= mTextures.size() || mTextures[img] == 0) {
 		return;
 	}
@@ -376,7 +376,7 @@ void SDL2VideoBackend::deleteImage(Uint32 img) {
 	mTextureNames.pop_back();
 }
 
-Uint32 SDL2VideoBackend::newTexture(Uint32 w, Uint32 h) {
+uint32_t SDL2VideoBackend::newTexture(uint32_t w, uint32_t h) {
 	SDL_Texture* nimg = SDL_CreateTexture(mRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w, h);
 
 	if (!nimg) {
@@ -396,7 +396,7 @@ Uint32 SDL2VideoBackend::newTexture(Uint32 w, Uint32 h) {
 		mTextureNames.push_back("");
 	}
 
-	for (Uint32 i = 1; i < mTextureNames.size(); i++) {
+	for (uint32_t i = 1; i < mTextureNames.size(); i++) {
 		if (mTextureNames[i] == "") {
 			mTextureNames[i] = "new-texture-" + std::to_string(i);
 			mTextures[i] = nimg;

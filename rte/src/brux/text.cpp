@@ -42,7 +42,7 @@
 //to create bitmap fonts but use the same
 //system either way to render.
 
-xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, int _kern) {
+xyFont::xyFont(uint32_t index, uint32_t firstchar, uint8_t threshold, bool monospace, int _kern) {
 	//If there is no sprite that can be used, then cancel
 	if(vcSprites.size() <= index || vcSprites[index] == 0) {
 		xyPrint("The sprite does not exist!");
@@ -80,7 +80,7 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 	cw.resize(source->getframes());
 
 	if(cx.size() > 0) {
-		for(Uint32 i = 0; i < source->getframes(); i++) {
+		for(uint32_t i = 0; i < source->getframes(); i++) {
 			cx[i] = 0;
 			cw[i] = source->getw();
 		}
@@ -100,27 +100,27 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 	SDL_SetRenderTarget(gvRender, worktex);
 
 	//For each frame in the source sprite
-	for(Uint32 i = 0; i < source->getframes(); i++) {
+	for(uint32_t i = 0; i < source->getframes(); i++) {
 		//Render current frame
 		SDL_RenderClear(gvRender);
 		source->draw(i, 0, 0);
 
 		//For each column in source width
-		for(Uint32 j = 0; j < source->getw(); j++) {
+		for(uint32_t j = 0; j < source->getw(); j++) {
 			bool found = 0;
 
 			//For each pixel in the column
-			for(Uint32 k = 0; k < source->geth(); k++) {
+			for(uint32_t k = 0; k < source->geth(); k++) {
 				//If pixel alpha is above threshold, set cx here, then break
 			}
 		}
 
 		//For each column in source width
-		for(Uint32 j = 0; j < source->getw(); j++) {
+		for(uint32_t j = 0; j < source->getw(); j++) {
 			bool found = 0;
 
 			//For each pixel in the column
-			for(Uint32 k = 0; k < source->geth(); k++) {
+			for(uint32_t k = 0; k < source->geth(); k++) {
 				//If pixel alpha is above threshold, update cw to this coord minus cx, then break
 			}
 		}
@@ -156,7 +156,7 @@ void xyFont::draw(int x, int y, std::string text) {
 	}
 };
 
-Uint32 xyFont::getnum() {
+uint32_t xyFont::getnum() {
 	return numero;
 };
 

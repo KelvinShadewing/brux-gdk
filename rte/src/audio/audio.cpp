@@ -43,31 +43,31 @@ void xyAllocateChannels(int channels) {
 }
 
 // Load a sound effect file from a filename
-Uint32 xyLoadSound(const std::string& filename) { return gvAudioDriver->loadSound(filename); }
+uint32_t xyLoadSound(const std::string& filename) { return gvAudioDriver->loadSound(filename); }
 
 // Load a music file from a filename
-Uint32 xyLoadMusic(const std::string& filename) { return gvAudioDriver->loadMusic(filename); }
+uint32_t xyLoadMusic(const std::string& filename) { return gvAudioDriver->loadMusic(filename); }
 
 // Unload a sound effect
-void xyDeleteSound(Uint32 sound) { gvAudioDriver->deleteSound(sound); }
+void xyDeleteSound(uint32_t sound) { gvAudioDriver->deleteSound(sound); }
 
 // Unload a song
-void xyDeleteMusic(Uint32 music) { gvAudioDriver->deleteMusic(music); }
+void xyDeleteMusic(uint32_t music) { gvAudioDriver->deleteMusic(music); }
 
 // Play a sound effect
-int xyPlaySound(Uint32 sound, Uint32 loops) { return gvAudioDriver->playSound(sound, loops); }
+int xyPlaySound(uint32_t sound, uint32_t loops) { return gvAudioDriver->playSound(sound, loops); }
 
 // Play a sound effect on a specific channel
-int xyPlaySoundChannel(Uint32 sound, Uint32 loops, Uint32 channel) { return gvAudioDriver->playSoundChannel(sound, loops, channel); }
+int xyPlaySoundChannel(uint32_t sound, uint32_t loops, uint32_t channel) { return gvAudioDriver->playSoundChannel(sound, loops, channel); }
 
 // Play a song
-int xyPlayMusic(Uint32 music, Uint32 loops) { return gvAudioDriver->playMusic(music, loops); }
+int xyPlayMusic(uint32_t music, uint32_t loops) { return gvAudioDriver->playMusic(music, loops); }
 
 // Stop a sound effect
-void xyStopSound(Uint32 sound) { gvAudioDriver->stopSound(sound); }
+void xyStopSound(uint32_t sound) { gvAudioDriver->stopSound(sound); }
 
 // Stop all audio on an audio channel
-void xyStopChannel(Uint32 channel) { gvAudioDriver->stopSound(channel); }
+void xyStopChannel(uint32_t channel) { gvAudioDriver->stopSound(channel); }
 
 // Stop the currently playing music, if any
 void xyStopMusic() { gvAudioDriver->stopMusic(); }
@@ -85,7 +85,7 @@ void xyResumeMusic() { gvAudioDriver->resumeMusic(); }
 bool xyIsMusicPaused() { return gvAudioDriver->isMusicPaused(); }
 
 // Check if any sound is playing on a specific channel
-bool xyCheckSound(Uint32 channel) { return gvAudioDriver->isSoundPlaying(channel); }
+bool xyCheckSound(uint32_t channel) { return gvAudioDriver->isSoundPlaying(channel); }
 
 // Check if any music is currently being played
 bool xyCheckMusic() { return gvAudioDriver->isMusicPlaying(); }

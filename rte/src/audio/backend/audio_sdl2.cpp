@@ -88,7 +88,7 @@ void SDL2AudioBackend::allocateChannels(int channels) {
 
 // Load a sound effect file from a filename
 
-Uint32 SDL2AudioBackend::loadSound(const std::string& filename) {
+uint32_t SDL2AudioBackend::loadSound(const std::string& filename) {
 	// Load the sound file with Mix_LoadWAV()
 
 	Mix_Chunk* newSnd = Mix_LoadWAV(filename.c_str());
@@ -153,7 +153,7 @@ Uint32 SDL2AudioBackend::loadSound(const std::string& filename) {
 
 // Load a music file from a filename
 
-Uint32 SDL2AudioBackend::loadMusic(const std::string& filename) {
+uint32_t SDL2AudioBackend::loadMusic(const std::string& filename) {
 	// Load the music file with Mix_LoadMUS()
 
 	Mix_Music* newMsc = Mix_LoadMUS(filename.c_str());
@@ -229,7 +229,7 @@ Uint32 SDL2AudioBackend::loadMusic(const std::string& filename) {
 
 // Unload a sound effect
 
-void SDL2AudioBackend::deleteSound(Uint32 sound) {
+void SDL2AudioBackend::deleteSound(uint32_t sound) {
 	// If the index is more than or equal to the length of the array (and is thus invalid), don't attempt to unload it.
 
 	if (sound >= mVcSounds.size()) {
@@ -264,7 +264,7 @@ void SDL2AudioBackend::deleteSound(Uint32 sound) {
 
 // Unload a song
 
-void SDL2AudioBackend::deleteMusic(Uint32 music) {
+void SDL2AudioBackend::deleteMusic(uint32_t music) {
 	// If the index is more than or equal to the length of the array (and is thus invalid), don't attempt to unload it.
 
 	if (music >= mVcMusic.size()) {
@@ -299,7 +299,7 @@ void SDL2AudioBackend::deleteMusic(Uint32 music) {
 
 // Play a sound effect
 
-int SDL2AudioBackend::playSound(Uint32 sound, Uint32 loops) {
+int SDL2AudioBackend::playSound(uint32_t sound, uint32_t loops) {
 	// Play the audio with Mix_PlayChannel()
 
 	int i = Mix_PlayChannel(-1, mVcSounds[sound], loops);
@@ -318,7 +318,7 @@ int SDL2AudioBackend::playSound(Uint32 sound, Uint32 loops) {
 
 // Play a sound effect on a specific channel
 
-int SDL2AudioBackend::playSoundChannel(Uint32 sound, Uint32 loops, Uint32 channel) {
+int SDL2AudioBackend::playSoundChannel(uint32_t sound, uint32_t loops, uint32_t channel) {
 	const int i = Mix_PlayChannel(channel, mVcSounds[sound], loops);
 
 	if (i == -1) {
@@ -333,7 +333,7 @@ int SDL2AudioBackend::playSoundChannel(Uint32 sound, Uint32 loops, Uint32 channe
 
 // Play a song
 
-int SDL2AudioBackend::playMusic(Uint32 music, Uint32 loops) {
+int SDL2AudioBackend::playMusic(uint32_t music, uint32_t loops) {
 	// Play the audio with Mix_PlayChannel()
 
 	int i = Mix_PlayMusic(mVcMusic[music], loops);
@@ -352,7 +352,7 @@ int SDL2AudioBackend::playMusic(Uint32 music, Uint32 loops) {
 
 // Stop a sound effect, no idea why it doesn't support stopping music
 
-void SDL2AudioBackend::stopSound(Uint32 sound) {
+void SDL2AudioBackend::stopSound(uint32_t sound) {
 	// If the index is more than or equal to the length of the array (and is thus invalid), don't attempt to stop it.
 
 	if (sound >= mVcSounds.size()) {
@@ -384,7 +384,7 @@ void SDL2AudioBackend::stopSound(Uint32 sound) {
 
 // Stop all audio on an audio channel
 
-void SDL2AudioBackend::stopChannel(Uint32 channel) {
+void SDL2AudioBackend::stopChannel(uint32_t channel) {
 	Mix_HaltChannel(channel);
 }
 

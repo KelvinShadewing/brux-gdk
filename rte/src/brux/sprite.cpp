@@ -27,7 +27,7 @@
 #include "brux/main.hpp"
 #include "brux/maths.hpp"
 
-xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY):
+xySprite::xySprite(const std::string& filename, uint32_t width, uint32_t height, uint32_t margin, uint32_t padding, float pivotX, float pivotY):
 	w(width),
 	h(height),
 	mar(margin),
@@ -85,7 +85,7 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 	frames = col * row;
 };
 
-xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY) :
+xySprite::xySprite(uint32_t texture, uint32_t width, uint32_t height, uint32_t margin, uint32_t padding, float pivotX, float pivotY) :
 	w(width),
 	h(height),
 	mar(margin),
@@ -144,7 +144,7 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 	frames = col * row;
 };
 
-void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY) {
+void xySprite::replaceSprite(const std::string& filename, uint32_t width, uint32_t height, uint32_t margin, uint32_t padding, float pivotX, float pivotY) {
 	//Set variables
 	w = width;
 	h = height;
@@ -154,7 +154,7 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 	pvY = pivotY;
 	numero = 0;
 	frames = 0; //Obsolete, will untangle later
-	Uint32 newtex = xyLoadImage(filename);
+	uint32_t newtex = xyLoadImage(filename);
 	//SDL_QueryTexture(tex, format, 0, 0, 0); //// DO NOT USE! ////
 
 	//Delete old texture
@@ -244,14 +244,14 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	piv->x = static_cast<int>(npvX * xscale);
 	piv->y = static_cast<int>(npvY * yscale);
 
-	gvVideoDriver->setTextureAlphaMod(tex, static_cast<Uint8>(alpha * 255));
+	gvVideoDriver->setTextureAlphaMod(tex, static_cast<uint8_t>(alpha * 255));
 	gvVideoDriver->renderCopyEx(tex, &rec, &des, (double)angle, piv, flip);
 	gvVideoDriver->setTextureAlphaMod(tex, 255);
 
 	delete piv;
 };
 
-void xySprite::drawmod(int f, int x, int y, Uint32 color) {
+void xySprite::drawmod(int f, int x, int y, uint32_t color) {
 	int fd = static_cast<int>(xyWrap(static_cast<float>(f), 0, static_cast<float>(frames) - 1));
 
 	SDL_Rect rec;
@@ -271,7 +271,7 @@ void xySprite::drawmod(int f, int x, int y, Uint32 color) {
 	rec.h = h;
 
 	//Break color into 8-bit versions
-	Uint8 r, g, b;
+	uint8_t r, g, b;
 	r = (color >> 24) & 0xFF;
 	g = (color >> 16) & 0xFF;
 	b = (color >> 8) & 0xFF;
@@ -281,7 +281,7 @@ void xySprite::drawmod(int f, int x, int y, Uint32 color) {
 	gvVideoDriver->setTextureColorMod(tex, 255, 255, 255);
 };
 
-void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha, Uint32 color) {
+void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha, uint32_t color) {
 	//Do nothing if scaling is set to 0 on either dimension
 	if(xscale == 0 || yscale == 0) return;
 
@@ -319,13 +319,13 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	piv->y = static_cast<int>(npvY * yscale);
 
 	//Break color into 8-bit versions
-	Uint8 r, g, b;
+	uint8_t r, g, b;
 	r = (color >> 24) & 0xFF;
 	g = (color >> 16) & 0xFF;
 	b = (color >> 8) & 0xFF;
 
 	gvVideoDriver->setTextureColorMod(tex, r, g, b);
-	gvVideoDriver->setTextureAlphaMod(tex, static_cast<Uint8>(alpha * 255));
+	gvVideoDriver->setTextureAlphaMod(tex, static_cast<uint8_t>(alpha * 255));
 	gvVideoDriver->renderCopyEx(tex, &rec, &des, (double)angle, piv, flip);
 	gvVideoDriver->setTextureAlphaMod(tex, 255);
 	gvVideoDriver->setTextureColorMod(tex, 255, 255, 255);

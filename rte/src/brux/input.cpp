@@ -24,7 +24,7 @@
 
 #include "brux/global.hpp"
 
-bool xyKeyPress(Uint32 key) {
+bool xyKeyPress(uint32_t key) {
 	// Ignore invalid keys
 
 	if (key >= 322) {
@@ -47,7 +47,7 @@ int xyKeyPressAny() {
 	return key;
 }
 
-bool xyKeyRelease(Uint32 key) {
+bool xyKeyRelease(uint32_t key) {
 	// Ignore invalid keys
 	
 	if (key >= 322) {
@@ -57,7 +57,7 @@ bool xyKeyRelease(Uint32 key) {
 	return !keystate[key] && keylast[key];
 }
 
-bool xyKeyDown(Uint32 key) {
+bool xyKeyDown(uint32_t key) {
 	// Ignore invalid keys
 	
 	if (key >= 322) {

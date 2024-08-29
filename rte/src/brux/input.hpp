@@ -23,10 +23,10 @@
 
 #include "brux/main.hpp"
 
-bool xyKeyPress(Uint32 key); // Check if a key was pressed
+bool xyKeyPress(uint32_t key); // Check if a key was pressed
 int xyKeyPressAny(); // Get the next pressed key
-bool xyKeyRelease(Uint32 key); // Check if a key was released
-bool xyKeyDown(Uint32 key); // Check if a key is down
+bool xyKeyRelease(uint32_t key); // Check if a key was released
+bool xyKeyDown(uint32_t key); // Check if a key is down
 int xyMouseX(); // Get the mouse cursor X position
 int xyMouseY(); // Get the mouse cursor Y position
 bool xyMouseArea(SDL_Rect* area); // Check if the mouse is in an area

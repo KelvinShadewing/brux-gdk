@@ -22,20 +22,20 @@ public:
 	virtual void setDrawColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) = 0;
 
 	virtual int getDrawTarget() = 0;
-	virtual void setDrawTarget(Uint32 tex) = 0;
+	virtual void setDrawTarget(uint32_t tex) = 0;
 	virtual void resetDrawTarget() = 0;
 
 	virtual int textureCount() = 0;
 
-	virtual Uint32 newTexture(Uint32 w, Uint32 h) = 0;
-	virtual void deleteImage(Uint32 img) = 0;
+	virtual uint32_t newTexture(uint32_t w, uint32_t h) = 0;
+	virtual void deleteImage(uint32_t img) = 0;
 
-	virtual Uint32 loadImage(const std::string& path) = 0;
-	virtual Uint32 loadImageKeyed(const std::string& path, Uint32 key) = 0;
+	virtual uint32_t loadImage(const std::string& path) = 0;
+	virtual uint32_t loadImageKeyed(const std::string& path, uint32_t key) = 0;
 
-	virtual void drawImage(Uint32 tex, int x, int y) = 0;
-	virtual void drawImagePart(Uint32 tex, int x, int y, int ox, int oy, int w, int h) = 0;
-	virtual void drawImageEx(Uint32 tex, int x, int y, float angle, int flip, int xscale, int yscale, Uint32 color) = 0;
+	virtual void drawImage(uint32_t tex, int x, int y) = 0;
+	virtual void drawImagePart(uint32_t tex, int x, int y, int ox, int oy, int w, int h) = 0;
+	virtual void drawImageEx(uint32_t tex, int x, int y, float angle, int flip, int xscale, int yscale, uint32_t color) = 0;
 
 	virtual void setScaling(float scale) = 0;
 	virtual void setScalingFilter(int hint) = 0;
@@ -62,7 +62,7 @@ public:
 	virtual void setTextureAlphaMod(int tex, uint8_t alpha) = 0;
 
 	virtual void renderCopy(int tex, SDL_Rect* rec, SDL_Rect* des) = 0;
-	virtual void renderCopyEx(int tex, SDL_Rect* rec, SDL_Rect* des, double angle, SDL_Point* piv, SDL_RendererFlip flip) = 0;
+	virtual void renderCopyEx(int tex, SDL_Rect* rec, SDL_Rect* des, double angle, SDL_Point* piv, int flip) = 0;
 
 	virtual void queryTexture(int tex, int* width, int* height) = 0;
 
@@ -90,23 +90,23 @@ extern BaseVideoAPI* gvVideoDriver;
 SDL_Texture* xyLoadTexture(const std::string& path);
 void xyClearScreen();
 void xyWait(int ticks);
-void xySetDrawTarget(Uint32 tex);
+void xySetDrawTarget(uint32_t tex);
 int xyGetDrawTarget();
 void xyResetDrawTarget();
-void xyDrawImage(Uint32 tex, int x, int y);
-void xyDrawImagePart(Uint32 tex, int x, int y, int ox, int oy, int w, int h);
-void xyDrawImageEx(Uint32 tex, int x, int y, float angle, int flip, int xscale, int yscale, Uint32 color);
-Uint32 xyLoadImage(const std::string& path);
-Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key);
+void xyDrawImage(uint32_t tex, int x, int y);
+void xyDrawImagePart(uint32_t tex, int x, int y, int ox, int oy, int w, int h);
+void xyDrawImageEx(uint32_t tex, int x, int y, float angle, int flip, int xscale, int yscale, uint32_t color);
+uint32_t xyLoadImage(const std::string& path);
+uint32_t xyLoadImageKeyed(const std::string& path, uint32_t key);
 void xySetDrawColor(int r, int g, int b, int a);
 void xySetDrawColor(int color);
-void xySetBackgroundColor(Uint32 color);
-void xyDeleteImage(Uint32 img);
-Uint8 xyGetRed(Uint32 color);
-Uint8 xyGetGreen(Uint32 color);
-Uint8 xyGetBlue(Uint32 color);
-Uint8 xyGetAlpha(Uint32 color);
-Uint32 xyNewTexture(Uint32 w, Uint32 h);
+void xySetBackgroundColor(uint32_t color);
+void xyDeleteImage(uint32_t img);
+uint8_t xyGetRed(uint32_t color);
+uint8_t xyGetGreen(uint32_t color);
+uint8_t xyGetBlue(uint32_t color);
+uint8_t xyGetAlpha(uint32_t color);
+uint32_t xyNewTexture(uint32_t w, uint32_t h);
 void xySetScaling(float scale);
 void xySetScalingFilter(int hint);
 void xySetResolution(int w, int h);

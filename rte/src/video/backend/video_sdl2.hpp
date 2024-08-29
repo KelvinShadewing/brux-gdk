@@ -19,20 +19,20 @@ public:
 	void setDrawColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) override;
 
 	int getDrawTarget() override;
-	void setDrawTarget(Uint32 tex) override;
+	void setDrawTarget(uint32_t tex) override;
 	void resetDrawTarget() override;
 
 	int textureCount() override;
 
-	Uint32 newTexture(Uint32 w, Uint32 h) override;
-	void deleteImage(Uint32 img) override;
+	uint32_t newTexture(uint32_t w, uint32_t h) override;
+	void deleteImage(uint32_t img) override;
 
-	Uint32 loadImage(const std::string& path) override;
-	Uint32 loadImageKeyed(const std::string& path, Uint32 key) override;
+	uint32_t loadImage(const std::string& path) override;
+	uint32_t loadImageKeyed(const std::string& path, uint32_t key) override;
 
-	void drawImage(Uint32 tex, int x, int y) override;
-	void drawImagePart(Uint32 tex, int x, int y, int ox, int oy, int w, int h) override;
-	void drawImageEx(Uint32 tex, int x, int y, float angle, int flip, int xscale, int yscale, Uint32 color) override;
+	void drawImage(uint32_t tex, int x, int y) override;
+	void drawImagePart(uint32_t tex, int x, int y, int ox, int oy, int w, int h) override;
+	void drawImageEx(uint32_t tex, int x, int y, float angle, int flip, int xscale, int yscale, uint32_t color) override;
 
 	void setScaling(float scale) override;
 	void setScalingFilter(int hint) override;
@@ -50,7 +50,7 @@ public:
 	void setTextureBlendMode(SDL_Texture* texture, int blend) override;
 
 	void renderCopy(int tex, SDL_Rect* rec, SDL_Rect* des) override;
-	void renderCopyEx(int tex, SDL_Rect* rec, SDL_Rect* des, double angle, SDL_Point* piv, SDL_RendererFlip flip) override;
+	void renderCopyEx(int tex, SDL_Rect* rec, SDL_Rect* des, double angle, SDL_Point* piv, int flip) override;
 
 	int findTexture(const std::string& name) override;
 	std::string getTextureName(int texture) override;
@@ -83,5 +83,5 @@ public:
 	std::vector<std::string> mTextureNames;
 private:
 	SDL_Texture* loadTexture(const std::string& path);
-	SDL_Texture* loadTextureKeyed(const std::string& path, Uint32 key);
+	SDL_Texture* loadTextureKeyed(const std::string& path, uint32_t key);
 };

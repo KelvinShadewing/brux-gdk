@@ -60,18 +60,18 @@ void xySetDrawColor(int color) {
 
 	// If the value of color is too big for a 24-bit integer, then treat it as 32-bit
 
-	Uint8 r;
+	uint8_t r;
 	r = ((color & 0xFF000000) >> 24);
 
 	// Do the same for each color value
 
-	Uint8 g;
-	g = static_cast<Uint8>((color & 0x00FF0000) >> 16);
+	uint8_t g;
+	g = static_cast<uint8_t>((color & 0x00FF0000) >> 16);
 
-	Uint8 b;
+	uint8_t b;
 	b = ((color & 0x0000FF00) >> 8);
 
-	Uint8 a;
+	uint8_t a;
 	a = color & 0x000000FF;
 
 	// Set the color
@@ -88,31 +88,31 @@ void xySetDrawColor(int color) {
 
 // Extract color value from a single integer
 
-Uint8 xyGetRed(Uint32 color) {
-	Uint8 r;
+uint8_t xyGetRed(uint32_t color) {
+	uint8_t r;
 	r = (color & 0xFF000000) >> 24;
 	return r;
 }
 
-Uint8 xyGetGreen(Uint32 color) {
-	Uint8 g;
+uint8_t xyGetGreen(uint32_t color) {
+	uint8_t g;
 	g = (color & 0x00FF0000) >> 16;
 	return g;
 }
 
-Uint8 xyGetBlue(Uint32 color) {
-	Uint8 b;
+uint8_t xyGetBlue(uint32_t color) {
+	uint8_t b;
 	b = (color & 0x0000FF00) >> 8;
 	return b;
 }
 
-Uint8 xyGetAlpha(Uint32 color) {
-	Uint8 a;
+uint8_t xyGetAlpha(uint32_t color) {
+	uint8_t a;
 	a = color & 0x000000FF;
 	return a;
 }
 
-void xySetBackgroundColor(Uint32 color) {
+void xySetBackgroundColor(uint32_t color) {
 	gvBackColor = color;
 }
 
@@ -126,7 +126,7 @@ void xyWait(int ticks) {
 
 // Set draw target to a texture
 
-void xySetDrawTarget(Uint32 tex) {
+void xySetDrawTarget(uint32_t tex) {
 	if (gvVideoDriver == nullptr)
 		return;
 	gvVideoDriver->setDrawTarget(tex);
@@ -156,13 +156,13 @@ void xyResetDrawTarget() {
 
 // Load a texture and assign it to a slot in the textures list
 
-Uint32 xyLoadImage(const std::string& path) {
+uint32_t xyLoadImage(const std::string& path) {
 	if (gvVideoDriver == nullptr)
 		return 0;
 	return gvVideoDriver->loadImage(path);
 }
 
-Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key) {
+uint32_t xyLoadImageKeyed(const std::string& path, uint32_t key) {
 	if (gvVideoDriver == nullptr)
 		return 0;
 	return gvVideoDriver->loadImageKeyed(path, key);
@@ -170,19 +170,19 @@ Uint32 xyLoadImageKeyed(const std::string& path, Uint32 key) {
 
 // Draw image
 
-void xyDrawImage(Uint32 tex, int x, int y) {
+void xyDrawImage(uint32_t tex, int x, int y) {
 	if (gvVideoDriver == nullptr)
 		return;
 	gvVideoDriver->drawImage(tex, x, y);
 }
 
-void xyDrawImagePart(Uint32 tex, int x, int y, int ox, int oy, int w, int h) {
+void xyDrawImagePart(uint32_t tex, int x, int y, int ox, int oy, int w, int h) {
 	if (gvVideoDriver == nullptr)
 		return;
 	gvVideoDriver->drawImagePart(tex, x, y, ox, oy, w, h);
 }
 
-void xyDrawImageEx(Uint32 tex, int x, int y, float angle, int flip, int xscale, int yscale, Uint32 color) {
+void xyDrawImageEx(uint32_t tex, int x, int y, float angle, int flip, int xscale, int yscale, uint32_t color) {
 	if (gvVideoDriver == nullptr)
 		return;
 	gvVideoDriver->drawImageEx(tex, x, y, angle, flip, xscale, yscale, color);
@@ -190,7 +190,7 @@ void xyDrawImageEx(Uint32 tex, int x, int y, float angle, int flip, int xscale, 
 
 // Delete image
 
-void xyDeleteImage(Uint32 tex) {
+void xyDeleteImage(uint32_t tex) {
 	if (gvVideoDriver == nullptr)
 		return;
 	gvVideoDriver->deleteImage(tex);
@@ -198,7 +198,7 @@ void xyDeleteImage(Uint32 tex) {
 
 // Load a texture and assign it to a slot in the textures list
 
-Uint32 xyNewTexture(Uint32 w, Uint32 h) {
+uint32_t xyNewTexture(uint32_t w, uint32_t h) {
 	if (gvVideoDriver == nullptr)
 		return 0;
 	return gvVideoDriver->newTexture(w, h);

@@ -29,14 +29,14 @@ private:
 	xySprite* source;
 	std::vector<int> cx;
 	std::vector<int> cw;
-	Uint32 start;
-	Uint32 numero;
+	uint32_t start;
+	uint32_t numero;
 	bool mono;
 	int kern; //Kerning can be negative since some fonts need to overlap a bit
 
 public:
-	xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, int _kern);
-	Uint32 getnum();
+	xyFont(uint32_t index, uint32_t firstchar, uint8_t threshold, bool monospace, int _kern);
+	uint32_t getnum();
 	void draw(int x, int y, std::string text);
 };
 

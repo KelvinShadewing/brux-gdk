@@ -38,13 +38,13 @@ int gvMouseY = 0;
 
 // Game screen size
 
-Uint32 gvScrW = 320;
-Uint32 gvScrH = 240;
+uint32_t gvScrW = 320;
+uint32_t gvScrH = 240;
 
 // Window size
 
-Uint32 gvWinW = 320;
-Uint32 gvWinH = 240;
+uint32_t gvWinW = 320;
+uint32_t gvWinH = 240;
 
 // Squirrel VM
 
@@ -60,8 +60,8 @@ std::ofstream gvLog;
 std::chrono::time_point<std::chrono::steady_clock> gvTicks = std::chrono::steady_clock::now();
 std::chrono::time_point<std::chrono::steady_clock> gvTickLast = std::chrono::steady_clock::now();
 #else
-Uint32 gvTicks = 1;
-Uint32 gvTickLast = 0;
+uint32_t gvTicks = 1;
+uint32_t gvTickLast = 0;
 #endif
 
 // Current game FPS
@@ -70,8 +70,8 @@ float gvFPS = 0;
 
 // Maximum FPS limit, this can be changed by the game
 
-Uint32 gvMaxFPS = 60;
-Uint32 gvFrames = 0;
+uint32_t gvMaxFPS = 60;
+uint32_t gvFrames = 0;
 
 // Brux version string
 
@@ -93,8 +93,8 @@ bool gvDebug = true;
 
 // Draw colors
 
-Uint32 gvBackColor;
-Uint32 gvDrawColor;
+uint32_t gvBackColor;
+uint32_t gvDrawColor;
 
 // Stores the current working directory that the engine is running from
 
@@ -106,26 +106,26 @@ std::string gvWorkDir;
 
 // misc
 
-const Uint8 *sdlKeys;
-std::vector<Uint8> keystate(322);
-std::vector<Uint8> keylast(322);
-Uint32 buttonstate[5];
-Uint32 buttonlast[5];
-Uint32 mouseWheelX = 0;
-Uint32 mouseWheelY = 0;
-Uint8 fileMax = 128;
+const uint8_t *sdlKeys;
+std::vector<uint8_t> keystate(322);
+std::vector<uint8_t> keylast(322);
+uint32_t buttonstate[5];
+uint32_t buttonlast[5];
+uint32_t mouseWheelX = 0;
+uint32_t mouseWheelY = 0;
+uint8_t fileMax = 128;
 std::vector<xyShape*> gvShape;
 std::string gvInputString;
-Uint32 gvMixChannels = 0;
-Uint32 gvVolumeMusic = 128;
-Uint32 gvVolumeSound = 128;
-Uint32 gvDrawTarget = 0;
+uint32_t gvMixChannels = 0;
+uint32_t gvVolumeMusic = 128;
+uint32_t gvVolumeSound = 128;
+uint32_t gvDrawTarget = 0;
 bool gvUpdateDeprecationWarningShown = false;
 bool gvDidError = false;
 bool gvQuitRequested = false;
 
 // Gamepad
-// NOTE: I don't know why, I don't want to know why, but *somehow* this entirely breaks if we use the Uint32 type for this
+// NOTE: I don't know why, I don't want to know why, but *somehow* this entirely breaks if we use the uint32_t type for this
 
 SDL_Joystick* gvGamepad[8] = {0};
 int gvPadButton[8][32] = {0};
