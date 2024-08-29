@@ -568,11 +568,11 @@ void xyUpdate() {
 #ifdef USE_CHRONO_STEADY_CLOCK
 	gvTicks = std::chrono::steady_clock::now();
 
-	std::chrono::duration<float> fLength = gvTicks - gvTickLast;
-	std::chrono::duration<float> max_delay = std::chrono::duration<float>(1.0f / gvMaxFPS);
-	if (fLength < max_delay) {
+	std::chrono::duration<float> frameLength = gvTicks - gvTickLast;
+	std::chrono::duration<float> minDelay = std::chrono::duration<float>(1.0f / gvMaxFPS);
+	if (frameLength < minDelay) {
 		if (gvMaxFPS != 0)
-			std::this_thread::sleep_for((max_delay - fLength) - std::chrono::duration<float>(0.0001f));
+			std::this_thread::sleep_for((minDelay - frameLength) - std::chrono::duration<float>(0.0001f));
 	}
 
 	// Calculate time since previous tick and adjust framerate
@@ -585,15 +585,15 @@ void xyUpdate() {
 	gvTickLast = std::chrono::steady_clock::now();
 #else
 	gvTicks = SDL_GetTicks64();
-	uint32_t fLength = gvTicks - gvTickLast;
-	uint32_t max_delay = (1000 / gvMaxFPS);
+	uint32_t frameLength = gvTicks - gvTickLast;
+	uint32_t minDelay = (1000 / gvMaxFPS);
 
-	if (fLength < max_delay) {
+	if (frameLength < minDelay) {
 		if (gvMaxFPS != 0)
-			SDL_Delay(max_delay - fLength);
+			SDL_Delay(minDelay - frameLength);
 	}
 
-	if (fLength != 0) gvFPS = 1000 / static_cast<float>(SDL_GetTicks() - gvTickLast);
+	if (frameLength != 0) gvFPS = 1000 / static_cast<float>(SDL_GetTicks() - gvTickLast);
 	gvTickLast = SDL_GetTicks64();
 #endif
 	gvFrames++;
@@ -603,12 +603,12 @@ int xyGetFPS() {
 	return static_cast<int>(std::round(gvFPS));
 }
 
-void xySetFPS(int max_fps) {
-	if (max_fps < 0) {
+void xySetFPS(int maxFPS) {
+	if (maxFPS < 0) {
 		throw std::runtime_error("Maximum FPS cannot be negative");
 	}
 
-	gvMaxFPS = max_fps;
+	gvMaxFPS = maxFPS;
 }
 
 void xySetWindowTitle(const std::string& title) {
@@ -648,25 +648,22 @@ std::string xyBruxVersion() {
 int xyGetOS() {
 #ifdef _WIN32
 	return OS_WINDOWS;
-#endif
-#ifdef __gnu_linux__
+#elif defined(__gnu_linux__)
 	return OS_LINUX;
-#endif
-#ifdef __ANDROID__
+#elif defined(__ANDROID__)
 	return OS_ANDROID;
-#endif
-#ifdef __APPLE__
+#elif defined(__APPLE__)
 	return OS_MAC;
-#endif
-#ifdef _DINGUX
+#elif defined(_DINGUX)
 	return OS_DINGUX;
+#else
+	return -1;
 #endif
 }
 
 void __stack_chk_fail(void) {
 	xyPrint("Stack smash detected.");
 }
-
 
 void xyRegisterMainAPI(ssq::VM& vm) {
 	vm.addFunc("wait", xyWait); // Doc'd
