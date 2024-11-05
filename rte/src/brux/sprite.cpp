@@ -455,6 +455,14 @@ void xySpriteSetBlendMode(int sprite, int blend) {
 	SDL_SetTextureBlendMode(vcTextures[vcSprites[sprite]->gettex()], mode);
 }
 
+void xyFlushSprites() {
+	for(int i = 0; i < vcSprites.size(); i++) {
+		if (vcSprites[i] != 0 && vcSprites[i]->gettex() != 0 && vcSprites[i]->didLoad) {
+			//Do not flush sprites that were created from textures
+		}
+	}
+}
+
 
 void xyRegisterSpriteAPI(ssq::VM& vm) {
 	vm.addFunc("spriteName", xySpriteName); // Doc'd
@@ -473,4 +481,5 @@ void xyRegisterSpriteAPI(ssq::VM& vm) {
 	vm.addFunc("spriteH", xySpriteH); // Doc'd
 	vm.addFunc("replaceSprite", xyReplaceSprite);
 	vm.addFunc("spriteSetBlendMode", xySpriteSetBlendMode); // Doc'd
+	vm.addFunc("flushSprites", xyFlushSprites);
 }

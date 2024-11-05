@@ -10,7 +10,8 @@ set(INSTALL_SUBDIR_BIN "/")
 
 # Define options
 
-option(BUILD_STATIC_LIBS "Link libraries statically whenever possible" OFF)
+option(BUILD_STATIC_LIBS "Link libraries statically whenever possible" ON)
+set(BUILD_SHARED_LIBS OFF)
 
 find_package(SDL2_mixer QUIET)
 
@@ -113,25 +114,25 @@ file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/test/" DESTINATION "${RUNTIME_OUTPUT_DIR}
 # Link libraries
 
 if(WIN32) # FIXME: Proper way of having the SDL2 libraries copied over to binary on Windows?
-  target_link_libraries(brux PUBLIC ${SDL2_LIBRARIES})
-  target_link_libraries(brux PUBLIC ${SDL2_IMAGE_LIBRARIES})
-  target_link_libraries(brux PUBLIC ${SDL2_GFX_LIBRARIES})
+	target_link_libraries(brux PUBLIC simplesquirrel_static)
+	target_link_libraries(brux PUBLIC ${SDL2_LIBRARIES})
+	target_link_libraries(brux PUBLIC ${SDL2_IMAGE_LIBRARIES})
+	target_link_libraries(brux PUBLIC ${SDL2_GFX_LIBRARIES})
 
-  if (USE_SDL2_MIXER)
-    target_link_libraries(brux PUBLIC ${SDL2_MIXER_LIBRARIES})
-  endif()
+	if (USE_SDL2_MIXER)
+		target_link_libraries(brux PUBLIC ${SDL2_MIXER_LIBRARIES})
+	endif()
 
-  target_link_libraries(brux PUBLIC simplesquirrel_static)
 else()
-  target_link_libraries(brux PUBLIC SDL2)
-  target_link_libraries(brux PUBLIC SDL2::Image)
-  target_link_libraries(brux PUBLIC SDL2::GFX)
+	target_link_libraries(brux PUBLIC simplesquirrel_static)
+	target_link_libraries(brux PUBLIC SDL2)
+	target_link_libraries(brux PUBLIC SDL2::Image)
+	target_link_libraries(brux PUBLIC SDL2::GFX)
 
-  if (USE_SDL2_MIXER)
-    target_link_libraries(brux PUBLIC SDL2::Mixer)
-  endif()
+	if (USE_SDL2_MIXER)
+		target_link_libraries(brux PUBLIC SDL2::Mixer)
+	endif()
 
-  target_link_libraries(brux PUBLIC simplesquirrel)
 endif()
 
 target_link_libraries(brux PUBLIC LibPhysfs)

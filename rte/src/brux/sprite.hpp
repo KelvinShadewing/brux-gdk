@@ -26,11 +26,11 @@
 class xySprite {
 private:
 	Uint32 numero, mar, pad, w, h, tex, col, row, frames = 0;
-	bool didLoad;
 	int osX, osY;
 	float pvX, pvY;
 	Uint32 *format;
 public:
+	bool didLoad;
 	std::string name;
 	std::string source;
 	xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
@@ -64,6 +64,7 @@ int xySpriteW(int i);
 int xySpriteH(int i);
 void xyReplaceSprite(int s, const std::string& f, int w, int h, int m, int p, float x, float y);
 void xySpriteSetBlendMode(int sprite, int blend);
+void xyFlushSprites();
 
 void xyRegisterSpriteAPI(ssq::VM& vm);
 
