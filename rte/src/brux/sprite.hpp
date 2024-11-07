@@ -33,14 +33,19 @@ public:
 	bool didLoad;
 	std::string name;
 	std::string source;
+	bool needsReload = false;
+	SDL_BlendMode mode = SDL_BLENDMODE_BLEND;
 	xySprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
 	xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
 	~xySprite();
 	void replaceSprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
-	void draw(int f, int x, int y);
+	void draw(int f, int x, int y, int angle = 0, SDL_RendererFlip flip = SDL_FLIP_NONE, float xscale = 1.0, float yscale = 1.0, float alpha = 1.0, Uint32 color = 0xFFFFFFFF);
 	void drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha);
 	void drawmod(int f, int x, int y, Uint32 color);
-	void drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha, Uint32 color);\
+	void drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha, Uint32 color);
+
+	void reload();
+	void deload();
 
 	Uint32 getnum() const { return numero; }
 	Uint32 gettex() const { return tex; }
@@ -56,7 +61,7 @@ int xyFindSprite(const std::string& name);
 int xyNewSprite(const std::string& i, int w, int h, float px, float py, int m, int p);
 int xyNewSpriteFT(int t, int w, int h, float px, float py, int m, int p);
 void xyDrawSprite(int i, int f, int x, int y);
-void xyDrawSpriteEx(int i, int f, int x, int y, int a, int l, float sx, float sy, float p);
+void xyDrawSpriteEx(int i, int f, int x, int y, int a, int l, float sx, float sy, float p, int c);
 void xyDrawSpriteMod(int i, int f, int x, int y, int c);
 void xyDrawSpriteExMod(int i, int f, int x, int y, int a, int l, float sx, float sy, float p, int c);
 void xyDeleteSprite(int i);
