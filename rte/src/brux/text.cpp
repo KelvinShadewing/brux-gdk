@@ -86,49 +86,43 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 		}
 	}
 
-#ifdef DO_NOT_INCLUDE //Dynamic (ignored until character scanning is done)
-	//TODO: Get individual character width
+	if(!monospace) {
+		SDL_Surface* ts = IMG_Load(source->source.c_str());
 
-	//Get and store current render target
-	SDL_Texture* ttex;
-	ttex = SDL_GetRenderTarget(gvRender);
+		//Scan each frame to find the minimum and maximum X coordinates
+		//with non-transparent pixels. This is done by scanning left to right
+		//for the minimum and right to left for the maximum.
 
-	//Make temporary texture
-	SDL_Texture* worktex = SDL_CreateTexture(gvRender, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, source->getw(), source->geth());
-
-	//Set render target to temp
-	SDL_SetRenderTarget(gvRender, worktex);
-
-	//For each frame in the source sprite
-	for(Uint32 i = 0; i < source->getframes(); i++) {
-		//Render current frame
-		SDL_RenderClear(gvRender);
-		source->draw(i, 0, 0);
-
-		//For each column in source width
-		for(Uint32 j = 0; j < source->getw(); j++) {
-			bool found = 0;
-
-			//For each pixel in the column
-			for(Uint32 k = 0; k < source->geth(); k++) {
-				//If pixel alpha is above threshold, set cx here, then break
+		//Loop through each frame
+		for(Uint32 i = 1; i < source->getframes(); i++) {
+			//Find the minimum X coordinate with non-transparent pixels
+			Uint32 minx = source->getw();
+			for(Uint32 j = 0; j < source->getw(); j++) {
+				for(Uint32 k = 0; k < source->geth(); k++) {
+					Uint8 a = xyGetAlpha(xyGetSurfacePixel(ts, j + ((i % source->getcol()) * source->getw()), k + (i / source->getcol() * source->geth())));
+					if(a > threshold && j < minx) {
+						minx = j;
+						break;
+					}
+				}
 			}
+			cx[i] = minx;
+
+			//Find the maximum X coordinate with non-transparent pixels
+			Uint32 maxx = 0;
+			for(Uint32 j = source->getw(); j > 0; j--) {
+				for(Uint32 k = 0; k < source->geth(); k++) {
+					Uint8 a = xyGetAlpha(xyGetSurfacePixel(ts, j + ((i % source->getcol()) * source->getw()), k + (i / source->getcol() * source->geth())));
+					if(a > threshold && j > maxx) {
+						maxx = j;
+					}
+				}
+			}
+			cw[i] = maxx + 1;
 		}
 
-		//For each column in source width
-		for(Uint32 j = 0; j < source->getw(); j++) {
-			bool found = 0;
-
-			//For each pixel in the column
-			for(Uint32 k = 0; k < source->geth(); k++) {
-				//If pixel alpha is above threshold, update cw to this coord minus cx, then break
-			}
-		}
-		//Clear texture
+		SDL_FreeSurface(ts);
 	}
-	//Delete temp texture
-	//Reset render target to stored texture
-#endif
 
 	start = firstchar;
 	kern = _kern;
@@ -143,15 +137,49 @@ void xyFont::draw(int x, int y, std::string text) {
 		if (text[i] == '\n') {
 			dy += source->geth();
 			dx = x;
-		} else {
-			c = (int)text[i] - start; //Get current character and apply font offset
-			if (c >= 0 && c < static_cast<int>(cw.size())){ //Is this character defined in the font?
-				source->draw(c, dx, dy);
-				dx += cw[c] + kern;
-			} else {
-				// undefined characters should be blank
-				dx += source->getw() + kern;
+		} /* else if(text[i] == '$' && i < text.length() - 2 && text[i + 1] == '{') {
+			//Special character support using frames from other sprites
+			//Syntax: ${sprite,frame}
+
+			std::string s = "";
+			std::string f = "";
+			SQInteger snum = 0;
+
+			i += 2;
+
+			xyPrint("Print A");
+
+			while(text[i] != '}') {
+				//Get the sprite and frame number
+				while(text[i] != ',' && text[i] != '}') {
+					s += text[i];
+					i++;
+				}
+				i++;
+				while(text[i] != '}') {
+					f += text[i];
+					i++;
+				}
+				i++;
 			}
+
+			xyPrint("Print B");
+
+			//Translate the sprite variable name to a number
+			sq_pushstring(gvSquirrel.getHandle(), s.c_str(), -1);
+			sq_get(gvSquirrel.getHandle(), -1);
+			sq_getinteger(gvSquirrel.getHandle(), -1, &snum);
+			sq_pop(gvSquirrel.getHandle(), 2);
+
+			xySprite* tempSrc = vcSprites[snum];
+			c = std::stoi(f);
+			tempSrc->draw(c, dx, dy);
+			dx += tempSrc->getw() + kern;
+		}*/
+		else {
+			c = (int)text[i] - start; //Get current character and apply font offset
+			source->draw(c, dx, dy);
+			dx += cw[std::min(c, (int)cw.size() - 1)] + kern - cx[std::min(c, (int)cx.size() - 1)];
 		}
 	}
 };

@@ -56,6 +56,7 @@ std::string xyGetTextureName(int texture);
 int xyGetTextureFilter(int tex);
 void xySetTextureFilter(int tex, int filter);
 void xyPrintTextureNames();
+Uint32 xyGetSurfacePixel(SDL_Surface* surface, int x, int y);
 
 /** SHAPES */
 void xyDrawCircle(int x, int y, int radius, bool filled);

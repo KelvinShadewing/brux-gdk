@@ -71,6 +71,9 @@
 		"variant": "cpp",
 		"*.ipp": "cpp",
 		"forward_list": "cpp",
-		"future": "cpp"
+		"future": "cpp",
+		"numbers": "cpp",
+		"span": "cpp",
+		"semaphore": "cpp"
 	}
 }

@@ -52,6 +52,8 @@ public:
 	Uint32 getframes() const { return frames; }
 	Uint32 getw() const { return w; }
 	Uint32 geth() const { return h; }
+	Uint32 getrow() const { return row; }
+	Uint32 getcol() const { return col; }
 	const char* getname() const { return name.c_str(); }
 };
 
