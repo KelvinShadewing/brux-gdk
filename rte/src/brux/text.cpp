@@ -18,6 +18,7 @@
 | TEXT SOURCE |
 \*===========*/
 
+#include <cctype>
 #include "brux/text.hpp"
 
 #include <simplesquirrel/vm.hpp>
@@ -128,9 +129,13 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 	kern = _kern;
 };
 
-void xyFont::draw(int x, int y, std::string text) {
+void xyFont::draw(int x, int y, std::string text, Uint32 color) {
 	int dx = x, dy = y; //Set cursor start position
 	int c; //Current character by font index
+	float alpha = (1.0f / 255.0f) * (color & 0xff);
+
+	Uint32 curcol = color;
+	Uint32 invcol = ~color | 0xff;
 
 	//Loop to end of std::string
 	for(int i = 0; i < static_cast<int>(text.length()); i++) {
@@ -176,9 +181,75 @@ void xyFont::draw(int x, int y, std::string text) {
 			tempSrc->draw(c, dx, dy);
 			dx += tempSrc->getw() + kern;
 		}*/
+		else if(text[i] == '§' && i < text.length() - 1) {
+			//Get next character for color code
+			i++;
+			if(isalnum(text[i])) {
+				switch (text[i]) {
+					case '0':
+						curcol = color; // Normal
+						break;
+					case '1':
+						curcol = 0x0000a8ff; // Dark Blue
+						break;
+					case '2':
+						curcol = 0x00a800ff; // Dark Green
+						break;
+					case '3':
+						curcol = 0xa80000ff; // Dark Red
+						break;
+					case '4':
+						curcol = 0x006060ff; // Shadewing Teal
+						break;
+					case '5':
+						curcol = 0xa800a8ff; // Dark Purple
+						break;
+					case '6':
+						curcol = 0xf8a800ff; // Gold
+						break;
+					case '7':
+						curcol = 0x808080ff; // Gray
+						break;
+					case '8':
+						curcol = 0x505050ff; // Dark Gray
+						break;
+					case '9':
+						curcol = 0x5050f8ff; // Blue
+						break;
+					case 'a':
+					case 'A':
+						curcol = 0x50f850ff; // Green
+						break;
+					case 'b':
+					case 'B':
+						curcol = 0x58f8f8ff; // Aqua
+						break;
+					case 'c':
+					case 'C':
+						curcol = 0xf85058ff; // Red
+						break;
+					case 'd':
+					case 'D':
+						curcol = 0xf850f8ff; // Light Purple
+						break;
+					case 'e':
+					case 'E':
+						curcol = 0xf8f850ff; // Yellow
+						break;
+					case 'f':
+					case 'F':
+						curcol = invcol; // Invert
+						break;
+					default:
+						curcol = color;
+						break;
+				}
+			}
+			else i--;
+		}
 		else {
 			c = (int)text[i] - start; //Get current character and apply font offset
-			source->draw(c, dx, dy);
+			source->draw(c, dx, dy, 0, SDL_FLIP_NONE, 1, 1, alpha, curcol);
 			dx += cw[std::min(c, (int)cw.size() - 1)] + kern - cx[std::min(c, (int)cx.size() - 1)];
 		}
 	}
@@ -209,9 +280,9 @@ int xyNewFont(int i, int c, int t, bool m, int k) {
 
 #define FONT_CHECK_VALID  if (f >= static_cast<int>(vcFonts.size()) || vcFonts[f] == 0) return
 
-void xyDrawText(int f, float x, float y, const std::string& s) {
+void xyDrawText(int f, float x, float y, const std::string& s, Uint32 c) {
 	FONT_CHECK_VALID;
-	vcFonts[f]->draw(static_cast<int>(x), static_cast<int>(y), s);
+	vcFonts[f]->draw(static_cast<int>(x), static_cast<int>(y), s, c);
 }
 
 #undef FONT_CHECK_VALID
@@ -223,6 +294,6 @@ std::string xyChint(int i) {
 
 void xyRegisterTextAPI(ssq::VM& vm) {
 	vm.addFunc("newFont", xyNewFont); // Doc'd
-	vm.addFunc("drawText", xyDrawText); // Doc'd
+	vm.addFunc("drawText", xyDrawText, ssq::DefaultArguments<Uint32>(0xffffffff)); // Doc'd
 	vm.addFunc("chint", xyChint); // Doc'd
 }

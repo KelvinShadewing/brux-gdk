@@ -37,12 +37,12 @@ private:
 public:
 	xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, int _kern);
 	Uint32 getnum();
-	void draw(int x, int y, std::string text);
+	void draw(int x, int y, std::string text, Uint32 color = 0xffffffff);
 };
 
 /** API */
 int xyNewFont(int i, int c, int t, bool m, int k);
-void xyDrawText(int f, float x, float y, const std::string& s);
+void xyDrawText(int f, float x, float y, const std::string& s, Uint32 c = 0xffffffff);
 std::string xyChint(int i);
 
 void xyRegisterTextAPI(ssq::VM& vm);

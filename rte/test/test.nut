@@ -265,7 +265,7 @@ setFPS(60)
 
 ::frame <- 0
 ::text <- "Hello, World!"
-::text2 <- "Press Enter (or up on the first joystick) to exit."
+::text2 <- "Press §4Enter§0 (or up on the first joystick) to exit."
 ::x <- 0.0
 ::y <- 0.0
 ::x2 <- 0.0
