@@ -4,6 +4,3 @@
 [submodule "rte/external/simplesquirrel"]
 	path = rte/external/simplesquirrel
 	url = https://github.com/SuperTux/simplesquirrel
-[submodule "libs/squirrel"]
-	path = rte/external/squirrel
-	url = https://github.com/albertodemichelis/squirrel.git
