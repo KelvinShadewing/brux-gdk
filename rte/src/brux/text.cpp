@@ -120,6 +120,11 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 				}
 			}
 			cw[i] = maxx + 1;
+
+			if(i + start == ' ') {
+				cx[i] = 0;
+				cw[i] = source->getw();
+			}
 		}
 
 		SDL_FreeSurface(ts);
@@ -181,7 +186,7 @@ void xyFont::draw(int x, int y, std::string text, Uint32 color) {
 			tempSrc->draw(c, dx, dy);
 			dx += tempSrc->getw() + kern;
 		}*/
-		else if(text[i] == '§' && i < text.length() - 1) {
+		else if(text[i] == '~' && i < text.length() - 1) {
 			//Get next character for color code
 			i++;
 			if(isalnum(text[i])) {
@@ -250,7 +255,7 @@ void xyFont::draw(int x, int y, std::string text, Uint32 color) {
 		else {
 			c = (int)text[i] - start; //Get current character and apply font offset
 			source->draw(c, dx, dy, 0, SDL_FLIP_NONE, 1, 1, alpha, curcol);
-			dx += cw[std::min(c, (int)cw.size() - 1)] + kern - cx[std::min(c, (int)cx.size() - 1)];
+			dx += (cw[std::min(c, (int)cw.size() - 1)] + kern) - (cx[std::min(c, (int)cx.size() - 1)] * (text[i] != ' '));
 		}
 	}
 };
