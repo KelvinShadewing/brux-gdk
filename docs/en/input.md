@@ -125,6 +125,10 @@
 
   Returns whether a given axis was moved into a deadzone. Return values are the same as with `joyAxisPress`. For example, with the X axis, `1` would mean the player stopped pressing right, and `-1` would mean they stopped pressing left.
 
+* <a name="joyRumble"></a>**`joyRumble( id, low_freq, hi_freq, duration_ms )`**
+
+  Begins rumble on the gamepad, for the specified `duration_ms`, with `low_freq` and `hi_freq` controlling the intensity of the left and right motors respectively. Intensity is clamped between `0` and `1`. `0` stops the motor. Returns `-1` if rumble is unsupported.
+
 * <a name="keyString"></a>**`keyString()`**
 
   Returns the current text string from the keyboard.
