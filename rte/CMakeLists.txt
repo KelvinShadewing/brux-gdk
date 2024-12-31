@@ -118,6 +118,8 @@ if(WIN32) # FIXME: Proper way of having the SDL2 libraries copied over to binary
 	target_link_libraries(brux PUBLIC ${SDL2_LIBRARIES})
 	target_link_libraries(brux PUBLIC ${SDL2_IMAGE_LIBRARIES})
 	target_link_libraries(brux PUBLIC ${SDL2_GFX_LIBRARIES})
+	target_link_libraries(brux PUBLIC ${TIFF_LIBRARIES})
+	target_link_libraries(brux PUBLIC ${WEBP_LIBRARIES})
 
 	if (USE_SDL2_MIXER)
 		target_link_libraries(brux PUBLIC ${SDL2_MIXER_LIBRARIES})
@@ -128,6 +130,8 @@ else()
 	target_link_libraries(brux PUBLIC SDL2)
 	target_link_libraries(brux PUBLIC SDL2::Image)
 	target_link_libraries(brux PUBLIC SDL2::GFX)
+	target_link_libraries(brux PUBLIC ${TIFF_LIBRARIES})
+	target_link_libraries(brux PUBLIC ${WEBP_LIBRARIES})
 
 	if (USE_SDL2_MIXER)
 		target_link_libraries(brux PUBLIC SDL2::Mixer)
