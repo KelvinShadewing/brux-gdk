@@ -52,6 +52,7 @@ int xyJoyButtonDown(int i, int b);
 int xyJoyButtonPress(int i, int b);
 int xyJoyButtonRelease(int i, int b);
 int xyJoyPressAny(int p);
+int xyJoyRumble(int pad, float low_freq, float hi_freq, Uint32 duration_ms);
 bool xyGetQuit(); // Check if game quit has been requested
 void xyQuitGame(); // Request game quit
 std::string xyKeyString(); // Get and clear string of last pressed key

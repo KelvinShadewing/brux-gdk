@@ -246,6 +246,16 @@ int xyJoyPressAny(int p) {
 	return button;
 }
 
+int xyJoyRumble(int pad, float low_freq, float hi_freq, Uint32 duration_ms) {
+	if (pad <= 7 && pad >= 0 && SDL_JoystickGetAttached(gvGamepad[pad])) {
+		Uint16 real_low_freq = 0xFFFF * std::clamp<float>(low_freq, 0, 1);
+		Uint16 real_hi_freq = 0xFFFF * std::clamp<float>(hi_freq, 0, 1);
+		return SDL_JoystickRumble(gvGamepad[pad], real_low_freq, real_hi_freq, duration_ms);
+	}
+
+	return -1;
+}
+
 bool xyGetQuit() {
 	return gvQuit || gvQuitRequested;
 }
@@ -300,6 +310,7 @@ void xyRegisterInputAPI(ssq::VM& vm) {
 	vm.addFunc("joyPressAny", xyJoyPressAny); // Doc'd
 	vm.addFunc("joyAxisPress", xyJoyAxisPress); // Doc'd
 	vm.addFunc("joyAxisRelease", xyJoyAxisRelease); // Doc'd
+	vm.addFunc("joyRumble", xyJoyRumble); // Doc'd
 	vm.addFunc("keyString", xyKeyString); // Doc'd
 	vm.addFunc("mouseWheelX", xyMouseWheelX); // Doc'd
 	vm.addFunc("mouseWheelY", xyMouseWheelY); // Doc'd
