@@ -24,6 +24,8 @@
 
 #include "brux/global.hpp"
 
+float gvRumbleMult = 1.0f;
+
 bool xyKeyPress(Uint32 key) {
 	// Ignore invalid keys
 
@@ -250,10 +252,18 @@ int xyJoyRumble(int pad, float low_freq, float hi_freq, Uint32 duration_ms) {
 	if (pad <= 7 && pad >= 0 && SDL_JoystickGetAttached(gvGamepad[pad])) {
 		Uint16 real_low_freq = 0xFFFF * std::clamp<float>(low_freq, 0, 1);
 		Uint16 real_hi_freq = 0xFFFF * std::clamp<float>(hi_freq, 0, 1);
-		return SDL_JoystickRumble(gvGamepad[pad], real_low_freq, real_hi_freq, duration_ms);
+		return SDL_JoystickRumble(gvGamepad[pad], real_low_freq * gvRumbleMult, real_hi_freq * gvRumbleMult, duration_ms);
 	}
 
 	return -1;
+}
+
+float xyGetJoyRumbleMult() {
+	return gvRumbleMult;
+}
+
+void xySetJoyRumbleMult(float mult) {
+	gvRumbleMult = std::clamp<float>(mult, 0, 1);
 }
 
 bool xyGetQuit() {
@@ -311,6 +321,8 @@ void xyRegisterInputAPI(ssq::VM& vm) {
 	vm.addFunc("joyAxisPress", xyJoyAxisPress); // Doc'd
 	vm.addFunc("joyAxisRelease", xyJoyAxisRelease); // Doc'd
 	vm.addFunc("joyRumble", xyJoyRumble); // Doc'd
+	vm.addFunc("joySetRumble", xySetJoyRumbleMult);
+	vm.addFunc("joyGetRumble", xyGetJoyRumbleMult);
 	vm.addFunc("keyString", xyKeyString); // Doc'd
 	vm.addFunc("mouseWheelX", xyMouseWheelX); // Doc'd
 	vm.addFunc("mouseWheelY", xyMouseWheelY); // Doc'd

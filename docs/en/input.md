@@ -129,6 +129,14 @@
 
   Begins rumble on the gamepad, for the specified `duration_ms`, with `low_freq` and `hi_freq` controlling the intensity of the left and right motors respectively. Intensity is clamped between `0` and `1`. `0` stops the motor. Returns `-1` if rumble is unsupported.
 
+* <a name="joyGetRumble"></a>**`joyGetRumble()`**
+
+  Gets the current rumble multiplier. All instances of `low_freq` and `hi_freq` are multiplied by this value.
+
+* <a name="joySetRumble"></a>**joySetRumble( multiplier )`**
+
+  Sets the rumble multiplier. The value is clamped between `0` and `1`.
+
 * <a name="keyString"></a>**`keyString()`**
 
   Returns the current text string from the keyboard.

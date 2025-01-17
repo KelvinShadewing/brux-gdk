@@ -81,7 +81,7 @@ Uint32 gvFrames = 0;
 
 // Brux version string
 
-const char *gvVNo = "v0.3.8";
+const char *gvVNo = "v0.3.9";
 
 // Should it clear the screen? If true, then the answer is yes.
 

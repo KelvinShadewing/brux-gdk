@@ -87,6 +87,9 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 		}
 	}
 
+	start = firstchar;
+	kern = _kern;
+
 	if(!monospace) {
 		SDL_Surface* ts = IMG_Load(source->source.c_str());
 
@@ -129,9 +132,6 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 
 		SDL_FreeSurface(ts);
 	}
-
-	start = firstchar;
-	kern = _kern;
 };
 
 void xyFont::draw(int x, int y, std::string text, Uint32 color) {
