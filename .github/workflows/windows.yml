@@ -46,7 +46,7 @@ jobs:
         run: |
           vcpkg integrate install
           vcpkg install sdl2:$Env:ARCH-windows
-          vcpkg install sdl2-image:$Env:ARCH-windows
+          vcpkg install sdl2-image[libjpeg-turbo]:$Env:ARCH-windows
           vcpkg install sdl2-gfx:$Env:ARCH-windows
           vcpkg install sdl2-mixer:$Env:ARCH-windows
           vcpkg install sdl2-net:$Env:ARCH-windows
