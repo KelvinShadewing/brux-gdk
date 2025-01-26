@@ -24,6 +24,7 @@
 
 #include "brux/main.hpp"
 #include "brux/global.hpp"
+#include <time.h>
 
 float xyDistance(float x1, float y1, float x2, float y2) {
 	//2D distance formula
@@ -216,8 +217,11 @@ std::string xyBinstr(int i) {
 	return s;
 }
 
-void xyRandomSeed() {
-	srand(SDL_GetTicks());
+void xyRandomSeed(int seed = -1) {
+	if(seed != -1)
+		srand(time(NULL));
+	else
+		srand(seed);
 }
 
 
@@ -236,5 +240,5 @@ void xyRegisterMathsAPI(ssq::VM& vm) {
 	vm.addFunc("lendirX", xyLenDirX); // Doc'd
 	vm.addFunc("lendirY", xyLenDirY); // Doc'd
 	vm.addFunc("binstr", xyBinstr); // Doc'd
-	vm.addFunc("randSeed", xyRandomSeed);
+	vm.addFunc("randSeed", xyRandomSeed, ssq::DefaultArguments<int>(-1));
 }
