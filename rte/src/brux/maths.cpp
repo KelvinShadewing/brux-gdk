@@ -216,6 +216,10 @@ std::string xyBinstr(int i) {
 	return s;
 }
 
+void xyRandomSeed() {
+	srand(SDL_GetTicks());
+}
+
 
 void xyRegisterMathsAPI(ssq::VM& vm) {
 	vm.addFunc("randFloat", xyRandomFloat); // Doc'd
@@ -232,4 +236,5 @@ void xyRegisterMathsAPI(ssq::VM& vm) {
 	vm.addFunc("lendirX", xyLenDirX); // Doc'd
 	vm.addFunc("lendirY", xyLenDirY); // Doc'd
 	vm.addFunc("binstr", xyBinstr); // Doc'd
+	vm.addFunc("randSeed", xyRandomSeed);
 }
