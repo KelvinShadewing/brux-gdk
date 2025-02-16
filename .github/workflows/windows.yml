@@ -52,6 +52,7 @@ jobs:
           vcpkg install sdl2-net:$Env:ARCH-windows
           vcpkg install physfs:$Env:ARCH-windows
           vcpkg install tiff:$Env:ARCH-windows
+          vcpkg install zstd:$Env:ARCH-windows
 
       - name: Configure bulid
         env:
