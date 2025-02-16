@@ -113,7 +113,7 @@ jobs:
           make
 
       - name: Package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "Brux-GNULinux-${{ matrix.arch }}-${{ matrix.build_type }}-binary"
           path: "rte/build/bin"
