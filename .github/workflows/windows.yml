@@ -55,7 +55,8 @@ jobs:
           vcpkg install zstd:$Env:ARCH-windows
           vcpkg install jbigkit:$Env:ARCH-windows
           vcpkg install libdeflate:$Env:ARCH-windows
-
+          vcpkg install libwebp:$Env:ARCH-windows
+          
       - name: Configure bulid
         env:
           ARCH: ${{ matrix.arch }}
