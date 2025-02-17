@@ -61,7 +61,8 @@ jobs:
             libopusfile-dev \
             libzstd-dev \
             libjbig-dev \
-            liblerc-dev
+            liblerc-dev \
+            libsharpyuv-dev
             
 #      - name: Install 32-bit dependencies
 #        if: ${{ matrix.arch == 32 }}
