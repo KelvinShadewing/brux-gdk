@@ -54,6 +54,7 @@ jobs:
           vcpkg install tiff:$Env:ARCH-windows
           vcpkg install zstd:$Env:ARCH-windows
           vcpkg install jbigkit:$Env:ARCH-windows
+          vcpkg install libdeflate:$Env:ARCH-windows
 
       - name: Configure bulid
         env:
