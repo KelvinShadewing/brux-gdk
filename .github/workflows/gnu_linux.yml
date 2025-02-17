@@ -60,8 +60,9 @@ jobs:
             libvorbis-dev \
             libopusfile-dev \
             libzstd-dev \
-            libjbig-dev
-
+            libjbig-dev \
+            liblerc-dev
+            
 #      - name: Install 32-bit dependencies
 #        if: ${{ matrix.arch == 32 }}
 #        run: |
