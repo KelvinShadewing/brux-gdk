@@ -60,6 +60,7 @@ jobs:
           vcpkg install libjpeg-turbo:$Env:ARCH-windows
           vcpkg install libpng:$Env:ARCH-windows
           vcpkg install libmodplug:$Env:ARCH-windows
+          vcpkg install mpg123:$Env:ARCH-windows
           
       - name: Configure bulid
         env:
