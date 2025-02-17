@@ -85,7 +85,8 @@ if(BUILD_STATIC_LIBS)
   find_package(JBIG REQUIRED)
   find_package(Deflate REQUIRED)
   find_package(WebP REQUIRED)
-  target_link_libraries(SDL2::Image INTERFACE ${JPEG_LIBRARIES} ${PNG_LIBRARIES} ${TIFF_LIBRARIES} ${LZMA_LIBRARIES} ${zstd_LIBRARIES} ${JBIG_LIBRARIES} ${Deflate_LIBRARIES} ${WebP_LIBRARIES})
+  find_package(Lerc REQUIRED)
+  target_link_libraries(SDL2::Image INTERFACE ${JPEG_LIBRARIES} ${PNG_LIBRARIES} ${TIFF_LIBRARIES} ${LZMA_LIBRARIES} ${zstd_LIBRARIES} ${JBIG_LIBRARIES} ${Deflate_LIBRARIES} ${WebP_LIBRARIES} ${Lerc_LIBRARIES})
 
   # SDL2::Mixer libraries
 
