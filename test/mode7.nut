@@ -4,7 +4,7 @@ setResolution(424, 240)
 
 tex <- newTexture(320, 240)
 land <- newSprite("res/terrain.png", 800, 800, 0, 0, 400, 400)
-midi <- newSprite("res/sprMidiP.png", 32, 32, 0, 0, 16, 32)
+midi <- newSprite("res/midi.png", 32, 32, 0, 0, 16, 32)
 ocean <- newSprite("res/ocean.png", 480, 240, 0, 0, 240, 120)
 view <- newSpriteFT(tex, 3200, 1, 0, 0, 1600, 0)
 sprFont <- newSprite("res/font.png", 6, 8, 0, 0, 0, 0)

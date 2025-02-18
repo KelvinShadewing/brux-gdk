@@ -14,7 +14,7 @@ jobs:
   windows:
     strategy:
       matrix:
-        arch: [x64]
+        arch: [x64,x86]
         build_type: [Release]
         include:
           - build_type: Release
@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
-          submodules: true
+          submodules: recursive
 
       - name: Use cached dependencies
         id: cache-dependencies
@@ -46,12 +46,23 @@ jobs:
         run: |
           vcpkg integrate install
           vcpkg install sdl2:$Env:ARCH-windows
-          vcpkg install sdl2-image:$Env:ARCH-windows
+          vcpkg install sdl2-image[libjpeg-turbo]:$Env:ARCH-windows
           vcpkg install sdl2-gfx:$Env:ARCH-windows
           vcpkg install sdl2-mixer:$Env:ARCH-windows
           vcpkg install sdl2-net:$Env:ARCH-windows
           vcpkg install physfs:$Env:ARCH-windows
-
+          vcpkg install tiff:$Env:ARCH-windows
+          vcpkg install zstd:$Env:ARCH-windows
+          vcpkg install jbigkit:$Env:ARCH-windows
+          vcpkg install libdeflate:$Env:ARCH-windows
+          vcpkg install libwebp:$Env:ARCH-windows
+          vcpkg install libflac:$Env:ARCH-windows
+          vcpkg install libjpeg-turbo:$Env:ARCH-windows
+          vcpkg install libpng:$Env:ARCH-windows
+          vcpkg install libmodplug:$Env:ARCH-windows
+          vcpkg install mpg123:$Env:ARCH-windows
+          vcpkg install opusfile:$Env:ARCH-windows
+          
       - name: Configure bulid
         env:
           ARCH: ${{ matrix.arch }}
@@ -72,7 +83,7 @@ jobs:
           cmake --install .
 
       - name: Package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "Brux-Windows-${{ matrix.arch }}-${{ matrix.build_type }}-binary"
           path: "rte/build/${{ matrix.build_type }}"

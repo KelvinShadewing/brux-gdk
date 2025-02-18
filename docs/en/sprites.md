@@ -5,11 +5,11 @@
 
 &nbsp;
 
-* <a name="newSprite"></a>**`newSprite( file, width, height, margin, padding, pivotX, pivotY )`**
+* <a name="newSprite"></a>**`newSprite( file, width = 0, height = 0, pivotX = 0, pivotY = 0, margin = 0, padding = 0 )`**
 
   Creates a new sprite from a grid of frames in an image file. The filename for a sprite is stored internally for use with [Tiled](https://mapeditor.org) maps.
 
-* <a name="newSpriteFT"></a>**`newSpriteFT( texture, width, height, margin, padding, pivotX, pivotY )`**
+* <a name="newSpriteFT"></a>**`newSpriteFT( texture, width = 0, height = 0, pivotX = 0, pivotY = 0, margin = 0, padding = 0 )`**
 
   Creates a new sprite, but instead of loading an image file, it uses a previously created texture. This allows you to make sprites you can draw on and edit.
 
@@ -17,21 +17,11 @@
 
   `pivotX` and `pivotY` are the points around which the sprite is rotated and offsets where it will appear when drawn. Margin and padding are not taken into account with these it only applies to the frame itself.
 
-* <a name="drawSprite"></a>**`drawSprite( sprite, frame, x, y )`**
+  If `width` and/or `height` are left at zero, then the entire respective width or height will be used. This is useful for when you want to use an entire image as a single frame and still have certain sprite-related functions available.
 
-  Draws a given frame of a sprite to `x`,`y`. If a value above the sprite's maximum frame number or below zero is given, then the value will wrap around.
+* <a name="drawSprite"></a>**`drawSprite( sprite, frame, x, y, angle = 0, flip = 0, xscale = 1.0, yscale = 1.0, alpha = 1.0, color = 0xffffffff )`**
 
-* <a name="drawSpriteEx"></a>**`drawSpriteEx( sprite, frame, x, y, angle, flip, xscale, yscale, alpha )`**
-
-  Draws a sprite that is also transformed and blended with the given `alpha` value. `alpha` should be a float between `0.0` and `1.0`.
-
-* <a name="drawSpriteMod"></a>**`drawSpriteMod( sprite, frame, x, y, color )`**
-
-  Draws a sprite with color modulation. Color value format is `0xRRGGBBAA`.
-
-* <a name="drawSpriteExMod"></a>**`drawSpriteExMod( sprite, frame, x, y, angle, flip, xscale, yscale, alpha, color)`**
-
-  Mix of the previous two.
+  Draws a given frame of a sprite to `x`,`y`. If a value above the sprite's maximum frame number or below zero is given, then the value will wrap around. Sprites can also be transformed and blended with the given `alpha` value. `alpha` should be a float between `0.0` and `1.0`. You can also use `color` to modulate the texture (think Game Maker's color blending).
 
 * <a name="deleteSprite"></a>**`deleteSprite( sprite )`**
 

@@ -21,7 +21,20 @@
 #ifndef _CORE_H_
 #define _CORE_H_
 
+#include <string>
+
+namespace ssq {
+	class VM;
+}
+
 void xyLoadCore();
 void xyLoadActors();
+
+/** General API functions */
+void xyDonut(const std::string& file);
+void xyRequire(const std::string& file);
+void xyDostr(const std::string& str);
+
+void xyRegisterCoreAPI(ssq::VM& vm);
 
 #endif

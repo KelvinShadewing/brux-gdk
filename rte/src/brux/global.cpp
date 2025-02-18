@@ -25,8 +25,6 @@
 #include "brux/text.hpp"
 #include "brux/shapes.hpp"
 
-// Not sure why this is here.
-
 int __stack_chk_guard = 0xdeadbeef;
 
 // Used to detect a request to close the application
@@ -50,7 +48,7 @@ Uint32 gvWinH = 240;
 
 // Squirrel VM
 
-HSQUIRRELVM gvSquirrel;
+ssq::VM gvSquirrel;
 
 // Log buffer
 
@@ -83,7 +81,7 @@ Uint32 gvFrames = 0;
 
 // Brux version string
 
-const char *gvVNo = "v0.3.4";
+const char *gvVNo = "v0.3.9";
 
 // Should it clear the screen? If true, then the answer is yes.
 
@@ -114,6 +112,8 @@ std::string gvAppDir;
 
 std::string gvWorkDir;
 
+// misc
+
 const Uint8 *sdlKeys;
 std::vector<Uint8> keystate(322);
 std::vector<Uint8> keylast(322);
@@ -128,6 +128,9 @@ Uint32 gvMixChannels = 0;
 Uint32 gvVolumeMusic = 128;
 Uint32 gvVolumeSound = 128;
 Uint32 gvDrawTarget = 0;
+bool gvUpdateDeprecationWarningShown = false;
+bool gvDidError = false;
+bool gvQuitRequested = false;
 
 // Gamepad
 // NOTE: I don't know why, I don't want to know why, but *somehow* this entirely breaks if we use the Uint32 type for this

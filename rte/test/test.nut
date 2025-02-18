@@ -249,31 +249,28 @@ batchAPITest(apiList)
 
 print("Now entering graphical test...")
 
-setResolution(400, 240)
+setResolution(426, 240)
 setWindowTitle("Brux GDK Test Suite")
 
-::sprFont <- newSprite("res/font.png", 6, 8, 0, 0, 0, 0)
-::sprMidi <- newSprite("res/midi.png", 32, 32, 0, 0, 16, 19)
-::sprOcean <- newSprite("res/ocean.png", 480, 240, 0, 0, 0, 0)
+::sprFont <- newSprite("res/font.png", 6, 8)
+::sprMidi <- newSprite("res/midi.png", 32, 32, 16, 19)
+::sprOcean <- newSprite("res/ocean.png", 480, 240)
 ::font <- newFont(sprFont, 0, 0, false, 0)
 
 ::musTest <- loadMusic("res/bossa-nova.mp3")
 
-playMusic(musTest, -1)
+//playMusic(musTest, -1)
 
 setFPS(60)
 
-::frame <- 0
-::text <- "Hello, World!"
-::text2 <- "Press Enter (or up on the first joystick) to exit."
+::text <- "Hello, ~1W~2o~3r~4l~5d~6!"
+::text2 <- "Press ~4Enter~0 (or up on the first joystick) to exit."
 ::x <- 0.0
 ::y <- 0.0
 ::x2 <- 0.0
 ::y2 <- 0.0
 ::midiX <- 0.0
 ::midiY <- 0.0
-::midiFrame <- 0.0
-::rspeed <- 3.98
 
 while (!getQuit()) {
 	x = (400 / 2) - ((6 * text.len()) / 2)
@@ -285,16 +282,14 @@ while (!getQuit()) {
 	midiX = (400 / 2)
 	midiY = (240 / 2)
 
-	x += sin(frame / 10.0) * 16.0;
+	x += sin(getFrames() / 10.0) * 16.0;
 
 	drawSprite(sprOcean, 0, 0, 0)
-	drawSprite(sprMidi, 48 + (midiFrame % 7), midiX, midiY)
+	drawSprite(sprMidi, 48 + ((getFrames() / 4) % 7), midiX, midiY)
 	drawText(font, x, y, text)
 	drawText(font, x2, y2, text2)
 
 	update()
-	frame++;
-	midiFrame += abs(rspeed) / (8 + abs(rspeed))
 
 	if (keyPress(k_enter) || joyAxisPress(0, js_up, js_max / 4)) {
 		break;

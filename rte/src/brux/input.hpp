@@ -21,17 +21,44 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
 
-#include "brux/global.hpp"
+#include "brux/main.hpp"
 
-bool xyKeyPress(Uint32 key); //Check if a key was pressed
-bool xyKeyRelease(Uint32 key); //Check if a key was released
-bool xyKeyDown(Uint32 key); //Check if a key is down
-bool xyMouseArea(SDL_Rect* area); //Check if the mouse is in an area
-bool xyMouseButton(int button); //Check if a mouse button is down
+bool xyKeyPress(Uint32 key); // Check if a key was pressed
+int xyKeyPressAny(); // Get the next pressed key
+bool xyKeyRelease(Uint32 key); // Check if a key was released
+bool xyKeyDown(Uint32 key); // Check if a key is down
+int xyMouseX(); // Get the mouse cursor X position
+int xyMouseY(); // Get the mouse cursor Y position
+bool xyMouseArea(SDL_Rect* area); // Check if the mouse is in an area
+bool xyMouseButton(int button); // Check if a mouse button is down
 bool xyMousePress(int button);
 bool xyMouseRelease(int button);
-void xyInitInput(); //Set up input
-int xyJoyAxisPress (int pad, int axis, int dz); //Check if an axis was pressed
-int xyJoyAxisRelease (int pad, int axis, int dz); //Check if an axis was released
+void xyInitInput(); // Set up input
+int xyJoyAxisPress (int pad, int axis, int dz); // Check if an axis was pressed
+int xyJoyAxisRelease (int pad, int axis, int dz); // Check if an axis was released
+std::string xyJoyName(int i);
+int xyJoyX(int i);
+int xyJoyY(int i);
+int xyJoyZ(int i);
+int xyJoyH(int i);
+int xyJoyV(int i);
+int xyJoyR(int i);
+int xyJoyL(int i);
+int xyJoyAxis(int i, int j);
+bool xyJoyHatDown(int i, int d);
+bool xyJoyHatPress(int i, int d);
+bool xyJoyHatRelease(int i, int d);
+int xyJoyButtonDown(int i, int b);
+int xyJoyButtonPress(int i, int b);
+int xyJoyButtonRelease(int i, int b);
+int xyJoyPressAny(int p);
+int xyJoyRumble(int pad, float low_freq, float hi_freq, Uint32 duration_ms);
+bool xyGetQuit(); // Check if game quit has been requested
+void xyQuitGame(); // Request game quit
+std::string xyKeyString(); // Get and clear string of last pressed key
+int xyMouseWheelX(); // Get mouse wheel X movement
+int xyMouseWheelY(); // Get mouse wheel Y movement
+
+void xyRegisterInputAPI(ssq::VM& vm);
 
 #endif

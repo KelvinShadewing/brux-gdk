@@ -20,77 +20,310 @@
 
 #include "brux/input.hpp"
 
+#include <simplesquirrel/vm.hpp>
+
+#include "brux/global.hpp"
+
+float gvRumbleMult = 1.0f;
+
 bool xyKeyPress(Uint32 key) {
-	if(key >= 322) return 0;
+	// Ignore invalid keys
+
+	if (key >= 322) {
+		return false;
+	}
 
 	return keystate[key] && !keylast[key];
-};
+}
+
+int xyKeyPressAny() {
+	int key = -1;
+
+	for (int i = 0; i < 322; i++) {
+		if (xyKeyPress(i)) {
+			key = i;
+			break;
+		}
+	}
+
+	return key;
+}
 
 bool xyKeyRelease(Uint32 key) {
-	if(key >= 322) return 0;
+	// Ignore invalid keys
+	
+	if (key >= 322) {
+		return false;
+	}
 
 	return !keystate[key] && keylast[key];
-};
+}
 
 bool xyKeyDown(Uint32 key) {
-	if(key >= 322) return 0;
+	// Ignore invalid keys
+	
+	if (key >= 322) {
+		return false;
+	}
 
 	return keystate[key];
-};
+}
+
+int xyMouseX() {
+	return gvMouseX;
+}
+
+int xyMouseY() {
+	return gvMouseY;
+}
 
 bool xyMouseArea(SDL_Rect* area) {
-	return((gvMouseX >= area->x) && (gvMouseX <= area->x + area->w) && (gvMouseY >= area->y) && (gvMouseY <= area->y + area->h));
-};
+	return ((gvMouseX >= area->x) && (gvMouseX <= area->x + area->w) && (gvMouseY >= area->y) && (gvMouseY <= area->y + area->h));
+}
 
 bool xyMouseButton(int button) {
-	if(button >= 0 && button <= 4) return buttonstate[button];
-	else return 0;
-};
+	// Ignore invalid buttons
+
+	if (button < 0 || button > 4) {
+		return false;
+	}
+
+	return buttonstate[button];
+}
 
 bool xyMousePress(int button) {
-	if(button < 0 || button > 4) return 0;
+	// Ignore invalid buttons
+
+	if (button < 0 || button > 4) {
+		return false;
+	}
+
 	return buttonstate[button] && !buttonlast[button];
-};
+}
 
 bool xyMouseRelease(int button) {
-	if(button < 0 || button > 4) return 0;
+	// Ignore invalid buttons
+
+	if (button < 0 || button > 4) {
+		return false;
+	}
+
 	return !buttonstate[button] && buttonlast[button];
-};
+}
 
 void xyInitInput() {
 	SDL_GetMouseState(&gvMouseX, &gvMouseY);
-	for(int i = 0; i < 5; i++) {
+
+	for (int i = 0; i < 5; i++) {
 		buttonstate[i] = 0;
 		buttonlast[i] = 0;
-	};
+	}
+
 	sdlKeys = SDL_GetKeyboardState(0);
-	for(int i = 0; i < 322; i++) {
+
+	for (int i = 0; i < 322; i++) {
 		keystate[i] = 0;
 		keylast[i] = 0;
-	};
-	xyPrint(0, "Input initialized.");
-};
+	}
 
-int xyJoyAxisPress (int pad, int axis, int dz) {
-	if(pad >= 8 || pad < 0 || axis >= 10 || axis < 0) return 0;
+	xyPrint("Input initialized.");
+}
 
-	//If the axis is further from 0 than the dead zone but wasn't before
-	//Return 1 if positive or -1 if negative
-	if(gvPadAxis[pad][axis] > dz && gvPadLastAxis[pad][axis] <= dz) return 1;
-	if(gvPadAxis[pad][axis] < -dz && gvPadLastAxis[pad][axis] >= -dz) return -1;
+int xyJoyAxisPress(int pad, int axis, int dz) {
+	// Ignore invalid inputs
 
-	//Return 0 if axis has moved into deadzone
+	if (pad >= 8 || pad < 0 || axis >= 10 || axis < 0) {
+		return 0;
+	}
+
+	// If the axis is further from 0 than the dead zone but wasn't before
+	// Return 1 if positive or -1 if negative
+
+	if (gvPadAxis[pad][axis] > dz && gvPadLastAxis[pad][axis] <= dz) {
+		return 1;
+	}
+
+	if (gvPadAxis[pad][axis] < -dz && gvPadLastAxis[pad][axis] >= -dz) {
+		return -1;
+	}
+	
+	// Return 0 if axis has moved into deadzone
+
 	return 0;
-};
+}
 
-int xyJoyAxisRelease (int pad, int axis, int dz) {
-	if(pad >= 8 || pad < 0 || axis >= 10 || axis < 0) return 0;
+int xyJoyAxisRelease(int pad, int axis, int dz) {
+	// Ignore invalid inputs
+	
+	if (pad >= 8 || pad < 0 || axis >= 10 || axis < 0) {
+		return 0;
+	}
 
-	//If the axis has returned to the dead zone
-	//Return 1 if positive or -1 if negative
-	if(gvPadAxis[pad][axis] < dz && gvPadLastAxis[pad][axis] >= dz) return 1;
-	if(gvPadAxis[pad][axis] > -dz && gvPadLastAxis[pad][axis] <= -dz) return -1;
+	// If the axis has returned to the dead zone,
+	// return 1 if positive or -1 if negative
 
-	//Return 0 if axis has moved into deadzone
+	if (gvPadAxis[pad][axis] < dz && gvPadLastAxis[pad][axis] >= dz) {
+		return 1;
+	}
+
+	if (gvPadAxis[pad][axis] > -dz && gvPadLastAxis[pad][axis] <= -dz) {
+		return -1;
+	}
+
+	// Return 0 if axis has moved into deadzone
+
 	return 0;
-};
+}
+
+std::string xyJoyName(int i) {
+	return gvPadName[i];
+}
+
+int xyJoyX(int i) {
+	return gvPadX[i];
+}
+
+int xyJoyY(int i) {
+	return gvPadY[i];
+}
+
+int xyJoyZ(int i) {
+	return gvPadZ[i];
+}
+
+int xyJoyH(int i) {
+	return gvPadH[i];
+}
+
+int xyJoyV(int i) {
+	return gvPadV[i];
+}
+
+int xyJoyR(int i) {
+	return gvPadR[i];
+}
+
+int xyJoyL(int i) {
+	return gvPadL[i];
+}
+
+int xyJoyAxis(int i, int j) {
+	return gvPadAxis[i][j];
+}
+
+bool xyJoyHatDown(int i, int d) {
+	return gvPadHat[i] & (1 << (d - 1));
+}
+
+bool xyJoyHatPress(int i, int d) {
+	return (gvPadHat[i] & (1 << (d - 1))) && !(gvPadHatLast[i] & (1 << (d - 1)));
+}
+
+bool xyJoyHatRelease(int i, int d) {
+	return !(gvPadHat[i] & (1 << (d - 1))) && (gvPadHatLast[i] & (1 << (d - 1)));
+}
+
+int xyJoyButtonDown(int i, int b) {
+	return gvPadButton[i][b];
+}
+
+int xyJoyButtonPress(int i, int b) {
+	return (gvPadButton[i][b] && !gvPadLastButton[i][b]);
+}
+
+int xyJoyButtonRelease(int i, int b) {
+	return (!gvPadButton[i][b] && gvPadLastButton[i][b]);
+}
+
+int xyJoyPressAny(int p) {
+	int button = -1;
+
+	for (int i = 0; i < 32; i++) {
+		if (gvPadButton[p][i] && !gvPadLastButton[p][i]) {
+			button = i;
+			break;
+		}
+	}
+
+	return button;
+}
+
+int xyJoyRumble(int pad, float low_freq, float hi_freq, Uint32 duration_ms) {
+	if (pad <= 7 && pad >= 0 && SDL_JoystickGetAttached(gvGamepad[pad])) {
+		Uint16 real_low_freq = 0xFFFF * std::clamp<float>(low_freq, 0, 1);
+		Uint16 real_hi_freq = 0xFFFF * std::clamp<float>(hi_freq, 0, 1);
+		return SDL_JoystickRumble(gvGamepad[pad], real_low_freq * gvRumbleMult, real_hi_freq * gvRumbleMult, duration_ms);
+	}
+
+	return -1;
+}
+
+float xyGetJoyRumbleMult() {
+	return gvRumbleMult;
+}
+
+void xySetJoyRumbleMult(float mult) {
+	gvRumbleMult = std::clamp<float>(mult, 0, 1);
+}
+
+bool xyGetQuit() {
+	return gvQuit || gvQuitRequested;
+}
+
+void xyQuitGame() {
+	gvQuitRequested = true;
+}
+
+std::string xyKeyString() {
+	const std::string input = gvInputString;
+	gvInputString = ""; // Clean input.
+	return input;
+}
+
+int xyMouseWheelX() {
+	return mouseWheelX;
+}
+
+int xyMouseWheelY() {
+	return mouseWheelY;
+}
+
+
+void xyRegisterInputAPI(ssq::VM& vm) {
+	vm.addFunc("keyPress", xyKeyPress); // Doc'd
+	vm.addFunc("keyDown", xyKeyDown); // Doc'd
+	vm.addFunc("keyRelease", xyKeyRelease); // Doc'd
+	vm.addFunc("keyPressAny", xyKeyPressAny); // Doc'd
+	vm.addFunc("mouseDown", xyMouseButton); // Doc'd
+	vm.addFunc("mousePress", xyMousePress); // Doc'd
+	vm.addFunc("mouseRelease", xyMouseRelease); // Doc'd
+	vm.addFunc("mouseX", xyMouseX); // Doc'd
+	vm.addFunc("mouseY", xyMouseY); // Doc'd
+	vm.addFunc("getQuit", xyGetQuit); // Doc'd
+	vm.addFunc("quitGame", xyQuitGame); // Doc'd
+	vm.addFunc("joyCount", SDL_NumJoysticks); // Doc'd
+	vm.addFunc("joyName", xyJoyName); // Doc'd
+	vm.addFunc("joyX", xyJoyX); // Doc'd
+	vm.addFunc("joyY", xyJoyY); // Doc'd
+	vm.addFunc("joyZ", xyJoyZ); // Doc'd
+	vm.addFunc("joyH", xyJoyH); // Doc'd
+	vm.addFunc("joyV", xyJoyV); // Doc'd
+	vm.addFunc("joyR", xyJoyR); // Doc'd
+	vm.addFunc("joyL", xyJoyL); // Doc'd
+	vm.addFunc("joyAxis", xyJoyAxis); // Doc'd
+	vm.addFunc("joyHatDown", xyJoyHatDown); // Doc'd
+	vm.addFunc("joyHatPress", xyJoyHatPress); // Doc'd
+	vm.addFunc("joyHatRelease", xyJoyHatRelease); // Doc'd
+	vm.addFunc("joyButtonPress", xyJoyButtonPress); // Doc'd
+	vm.addFunc("joyButtonDown", xyJoyButtonDown); // Doc'd
+	vm.addFunc("joyButtonRelease", xyJoyButtonRelease); // Doc'd
+	vm.addFunc("joyPressAny", xyJoyPressAny); // Doc'd
+	vm.addFunc("joyAxisPress", xyJoyAxisPress); // Doc'd
+	vm.addFunc("joyAxisRelease", xyJoyAxisRelease); // Doc'd
+	vm.addFunc("joyRumble", xyJoyRumble); // Doc'd
+	vm.addFunc("joySetRumble", xySetJoyRumbleMult);
+	vm.addFunc("joyGetRumble", xyGetJoyRumbleMult);
+	vm.addFunc("keyString", xyKeyString); // Doc'd
+	vm.addFunc("mouseWheelX", xyMouseWheelX); // Doc'd
+	vm.addFunc("mouseWheelY", xyMouseWheelY); // Doc'd
+}

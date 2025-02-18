@@ -45,6 +45,10 @@
 
   Returns if the exit button on the window or the OS's exit shortcut has been pressed.
 
+* <a name="quitGame"></a>**`quitGame()`**
+
+  Sets gvQuit to true, causing the game to exit.
+
 * <a name="joyCount"></a>**`joyCount()`**
 
   Returns number of gamepads detected.
@@ -120,6 +124,18 @@
 * <a name="joyAxisRelease"></a>**`joyAxisRelease( id, axis, deadzone )`**
 
   Returns whether a given axis was moved into a deadzone. Return values are the same as with `joyAxisPress`. For example, with the X axis, `1` would mean the player stopped pressing right, and `-1` would mean they stopped pressing left.
+
+* <a name="joyRumble"></a>**`joyRumble( id, low_freq, hi_freq, duration_ms )`**
+
+  Begins rumble on the gamepad, for the specified `duration_ms`, with `low_freq` and `hi_freq` controlling the intensity of the left and right motors respectively. Intensity is clamped between `0` and `1`. `0` stops the motor. Returns `-1` if rumble is unsupported.
+
+* <a name="joyGetRumble"></a>**`joyGetRumble()`**
+
+  Gets the current rumble multiplier. All instances of `low_freq` and `hi_freq` are multiplied by this value.
+
+* <a name="joySetRumble"></a>**joySetRumble( multiplier )`**
+
+  Sets the rumble multiplier. The value is clamped between `0` and `1`.
 
 * <a name="keyString"></a>**`keyString()`**
 

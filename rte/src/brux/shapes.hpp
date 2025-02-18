@@ -21,6 +21,12 @@
 #ifndef _SHAPES_H_
 #define _SHAPES_H_
 
+#include <vector>
+
+namespace ssq {
+	class VM;
+}
+
 const int _SHP = 0; //Formless shape
 const int _LIN = 1; //Line
 const int _CIR = 2; //Circle
@@ -108,9 +114,13 @@ public:
 };
 
 bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d);
+bool xyLineLineAPI(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 bool xyPointLine(xyPnt* a, xyPnt* b, xyPnt* c);
 bool xyLineCircle(xyPnt* a, xyPnt* b, xyPnt* c, float r);
+bool xyLineCircleAPI(float x0, float y0, float x1, float y1, float x2, float y2, float r);
 bool xyLinePoint(float lx0, float ly0, float lx1, float ly1, float px, float py);
 bool xyHitTest(xyShape* a, xyShape* b);
+
+void xyRegisterShapesAPI(ssq::VM& vm);
 
 #endif

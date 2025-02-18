@@ -18,10 +18,13 @@
 | SHAPES SOURCE |
 \*=============*/
 
+#include "brux/shapes.hpp"
+
+#include <simplesquirrel/vm.hpp>
+
 #include "brux/main.hpp"
 #include "brux/global.hpp"
 #include "brux/maths.hpp"
-#include "brux/shapes.hpp"
 
 /*\
 This part is being put on hold.
@@ -209,6 +212,15 @@ bool xyLineLine(xyPnt* a, xyPnt* b, xyPnt* c, xyPnt* d) {
 	return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
 }
 
+bool xyLineLineAPI(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) {
+	xyPnt a(x0, y0);
+	xyPnt b(x1, y1);
+	xyPnt c(x2, y2);
+	xyPnt d(x3, y3);
+
+	return xyLineLine(&a, &b, &c, &d);
+}
+
 bool xyPointLine(xyPnt* a, xyPnt* b, xyPnt* c) {
 	return false; //TODO: Fill this in
 }
@@ -232,6 +244,14 @@ bool xyLineCircle(xyPnt* a, xyPnt* b, xyPnt* c, float r) {
 	len = sqrt((distX * distX) + (distY * distY));
 
 	return (len <= r);
+}
+
+bool xyLineCircleAPI(float x0, float y0, float x1, float y1, float x2, float y2, float r) {
+	xyPnt a(x0, y0);
+	xyPnt b(x1, y1);
+	xyPnt c(x2, y2);
+
+	return xyLineCircle(&a, &b, &c, r);
 }
 
 bool xyLinePoint(float lx0, float ly0, float lx1, float ly1, float px, float py) {
@@ -555,4 +575,11 @@ bool xyHitTest(xyShape* a, xyShape* b) {
 			return 0;
 			break;
 	};
-};
+}
+
+
+void xyRegisterShapesAPI(ssq::VM& vm) {
+	vm.addFunc("hitLineLine", xyLineLineAPI); // Doc'd
+	vm.addFunc("hitLineCircle", xyLineCircleAPI); // Doc'd
+	vm.addFunc("hitLinePoint", xyLinePoint); // Doc'd
+}

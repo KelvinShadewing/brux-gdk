@@ -22,8 +22,10 @@
 #define _MAIN_H_
 
 // Toggle features based on conditions
+
 #ifndef _MSC_VER
 	// If the compiler isn't MSVC, use std::chrono::steady_clock
+	
 	#define USE_CHRONO_STEADY_CLOCK
 #endif
 
@@ -75,17 +77,14 @@ void __stack_chk_fail(void);
 #include <SDL2/SDL2_gfxPrimitives.h>
 
 #include <squirrel.h>
-#include <sqstdio.h>
-#include <sqstdaux.h>
-#include <sqstdmath.h>
-#include <sqstdstring.h>
-#include <sqstdsystem.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
 #endif
 
-using namespace std;
+namespace ssq {
+	class VM;
+}
 
 // Defines
 
@@ -95,13 +94,31 @@ using namespace std;
 	#define scvprintf vprintf
 #endif
 
+#ifdef _MSC_VER
+	#undef min // Fixes a std::min "illegal token on right side of '::'" error
+	#undef max // Fixes a std::max "illegal token on right side of '::'" error
+#endif
+
 // Prototypes
 
 int xyInit();
 void xyStart();
 void xyEnd();
-void xyPrint(HSQUIRRELVM v, const SQChar *s, ...);
-int xyGetOS();
+void xyPrint(const SQChar *s, ...);
+void sqPrint(HSQUIRRELVM v, const SQChar *s, ...);
+void sqError(HSQUIRRELVM v, const SQChar *s, ...);
 void xyUpdate();
+int xyGetOS();
+int xyGetFPS();
+void xySetFPS(int max_fps);
+void xySetWindowTitle(const std::string& title);
+void xySetWindowIcon(const std::string& file);
+int xyGetFrames();
+int xyDisplayW();
+int xyDisplayH();
+std::string xyBruxVersion();
+void xyToggleFullscreen();
+
+void xyRegisterMainAPI(ssq::VM& vm);
 
 #endif

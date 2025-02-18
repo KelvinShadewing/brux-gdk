@@ -31,7 +31,7 @@
 \*/
 
 void xyLoadActors() {
-	const SQChar *cmd = R"rew(::actor <- {}
+	const char* cmd = R"rew(::actor <- {}
 	::__actlast__ <- 0
 	::__actor_delete_list__ <- []
 
@@ -136,9 +136,6 @@ void xyLoadActors() {
 
 	print("Imported actors lib."))rew";
 
-	SQInteger oldtop = sq_gettop(gvSquirrel);
-	sq_compilebuffer(gvSquirrel, cmd, (int)strlen(cmd) * sizeof(SQChar), "actors.nut", 1);
-	sq_pushroottable(gvSquirrel);
-	sq_call(gvSquirrel, 1, SQFalse, SQTrue);
-	sq_settop(gvSquirrel, oldtop);
-};
+	ssq::Script script = gvSquirrel.compileSource(cmd, "actors.nut");
+	gvSquirrel.run(script);
+}

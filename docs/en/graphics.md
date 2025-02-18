@@ -15,7 +15,7 @@
 
 * <a name="getDrawTarget"></a>**`getDrawTarget()`**
 
-  Returns the ID of the current texture being drawn to; 0 if drawing directly to the screen.
+  Returns the ID of the current texture being drawn to; 0 if drawing directly to the screen. Images created with `loadImage` or `newTexture` are valid drawing targets. Mixing them with [`newSpriteFT`](sprites.md#newSpriteFT) will allow you to create sprites you can edit in runtime.
 
 * <a name="drawImage"></a>**`drawImage( image, x, y )`**
 
