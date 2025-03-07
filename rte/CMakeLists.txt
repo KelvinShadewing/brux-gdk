@@ -68,7 +68,7 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_gfx REQUIRED)
 
-add_subdirectory("${CMAKE_SOURCE_DIR}/external/simplesquirrel/")
+add_subdirectory("${PROJECT_SOURCE_DIR}/external/simplesquirrel/")
 
 include(ProvidePhysFS)
 
