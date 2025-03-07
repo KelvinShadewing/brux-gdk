@@ -524,6 +524,30 @@ void xyLoadCore() {
 	::newSprite <- function(i, w = 0, h = 0, px = 0, py = 0, m = 0, p = 0) { return __newSprite__OP__(i, w, h, px, py, m, p) }
 	::newSpriteFT <- function(t, w = 0, h = 0, px = 0, py = 0, m = 0, p = 0) { return __newSpriteFT__OP__(t, w, h, px, py, m, p) }
 
+	::shuffle <- function(arr) {
+		if(typeof arr == "table") {
+			local na = []
+			foreach(i in arr) {
+				na.push(i)
+			}
+			return shuffle(na)
+		}
+
+		if(typeof arr != "array")
+			return [arr]
+
+		local na = clone(arr)
+
+		for(local i = na.len() - 1; i >= 1; i--) {
+			local j = floor(randInt(na.len()) % (i + 1))
+			local t = na[i]
+			na[i] = na[j]
+			na[j] = t
+		}
+
+		return na
+	}
+
 	print("Imported core lib.");)rew";
 
 	ssq::Script script = gvSquirrel.compileSource(cmd, "core.nut");
