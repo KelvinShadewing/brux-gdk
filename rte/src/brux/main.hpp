@@ -108,7 +108,7 @@ void xyPrint(const SQChar *s, ...);
 void sqPrint(HSQUIRRELVM v, const SQChar *s, ...);
 void sqError(HSQUIRRELVM v, const SQChar *s, ...);
 void xyUpdate();
-int xyGetOS();
+std::string xyGetOS();
 int xyGetFPS();
 void xySetFPS(int max_fps);
 void xySetWindowTitle(const std::string& title);

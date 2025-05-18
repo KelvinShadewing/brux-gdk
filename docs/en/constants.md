@@ -653,18 +653,6 @@ For use when drawing sprites/textures/geometry. Currently unsupported.
 
 * bm_mod
 
-### Operating systems
-
-Used to identify what system Brux is currently running on. May not work perfectly.
-
-* os_windows
-
-* os_linux
-
-* os_android
-
-* os_mac
-
 ### <a name="joystick"></a>Joystick
 
 * js_max (Maximum value of a joystick axis)
