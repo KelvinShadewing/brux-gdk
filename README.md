@@ -1,4 +1,4 @@
-# **Brux Game Engine**
+# ![Brux GDK Logo](docs/img/brux-icon.png) **Brux Game Development Kit**
 
 &nbsp;
 

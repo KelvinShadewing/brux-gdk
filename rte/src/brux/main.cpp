@@ -259,6 +259,12 @@ int xyInit() {
 		}
 	}
 
+	// Initialize SDL_net
+	if (SDLNet_Init() == -1) {
+		xyPrint("SDL_net could not initialize! SDL_net Error: %s\n", SDLNet_GetError());
+		return 0;
+	}
+
 	// Initialize audio
 
 	xyInitAudio();
@@ -352,8 +358,10 @@ void xyEnd() {
 	xyPrint("Unloading audio system...");
 	xyUnloadAudio();
 
-	// Close SDL
+	// Close SDL_net before SDL
+	SDLNet_Quit();
 
+	// Close SDL
 	xyPrint("Closing SDL...");
 	SDL_DestroyRenderer(gvRender);
 	SDL_DestroyWindow(gvWindow);
