@@ -702,22 +702,8 @@ void xyToggleFullscreen() {
 	SDL_SetWindowFullscreen(gvWindow, (SDL_GetWindowFlags(gvWindow) & SDL_WINDOW_FULLSCREEN_DESKTOP) ? 0 : SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
-int xyGetOS() {
-#ifdef _WIN32
-	return OS_WINDOWS;
-#endif
-#ifdef __gnu_linux__
-	return OS_LINUX;
-#endif
-#ifdef __ANDROID__
-	return OS_ANDROID;
-#endif
-#ifdef __APPLE__
-	return OS_MAC;
-#endif
-#ifdef _DINGUX
-	return OS_DINGUX;
-#endif
+std::string xyGetOS() {
+	return SDL_GetPlatform(); // TODO: Implement an SDL-agnostic way of doing this as well
 }
 
 void __stack_chk_fail(void) {

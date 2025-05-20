@@ -387,12 +387,6 @@ void xyLoadCore() {
 	const bm_sub = 3;
 	const bm_mod = 4;
 
-	const os_windows = 0;
-	const os_linux = 1;
-	const os_android = 2;
-	const os_mac = 3;
-	const os_dingux = 4;
-
 	const js_max = 32768;
 	const js_up = 1;
 	const js_right = 2;

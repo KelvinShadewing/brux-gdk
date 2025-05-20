@@ -30,11 +30,6 @@
 #include "brux/text.hpp"
 
 #define pi 3.14159265f
-#define OS_WINDOWS 0
-#define OS_LINUX 1
-#define OS_ANDROID 2
-#define OS_MAC 3
-#define OS_DINGUX 4
 
 extern int __stack_chk_guard;
 extern bool gvQuit;
