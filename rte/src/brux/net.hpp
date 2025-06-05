@@ -25,6 +25,10 @@
 #include <string>
 #include <queue>
 
+namespace ssq {
+	class VM;
+}
+
 // Socket connection handle
 typedef struct NetSocket {
 	TCPsocket socket;
@@ -43,5 +47,6 @@ bool xyReceiveSocketMessages(NetSocket* sock);
 bool xyHasSocketMessage(NetSocket* sock);
 const char* xyGetNextSocketMessage(NetSocket* sock);
 void xyClearSocketMessages(NetSocket* sock);
+void xyRegisterNetworkAPI(ssq::VM& vm);
 
 #endif // BRUX_NET_HPP

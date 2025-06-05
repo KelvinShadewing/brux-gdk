@@ -224,6 +224,25 @@ void xyRandomSeed(int seed = -1) {
 		srand(seed);
 }
 
+float xyClamp(float val, float min, float max) {
+	if(min > max) {
+		if(val > min)
+			return min;
+		if(val < max)
+			return max;
+	}
+
+	if(val < min)
+		return min;
+	if(val > max)
+		return max;
+
+	return val;
+}
+
+float xyLerp(float a, float b, float t) {
+	return a + (b - a) * t;
+}
 
 void xyRegisterMathsAPI(ssq::VM& vm) {
 	vm.addFunc("randFloat", xyRandomFloat); // Doc'd
@@ -241,4 +260,6 @@ void xyRegisterMathsAPI(ssq::VM& vm) {
 	vm.addFunc("lendirY", xyLenDirY); // Doc'd
 	vm.addFunc("binstr", xyBinstr); // Doc'd
 	vm.addFunc("randSeed", xyRandomSeed, ssq::DefaultArguments<int>(-1));
+	vm.addFunc("clamp", xyClamp);
+	vm.addFunc("lerp", xyLerp);
 }

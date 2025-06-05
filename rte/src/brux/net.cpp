@@ -21,7 +21,6 @@
 #include "brux/net.hpp"
 #include "brux/global.hpp"
 
-#include <SDL2/SDL_net.h>
 #include <cstring>
 #include <cstdio>
 #include <queue>
@@ -140,78 +139,6 @@ void xyClearSocketMessages(NetSocket* sock) {
 	}
 }
 
-void xyRegisterNetAPI(ssq::VM& vm) {
-	// Register NetSocket class
-	vm.addClass("NetSocket");
-	vm.addClassFunc("NetSocket", "connect", [](HSQUIRRELVM v) -> SQInteger {
-		NetSocket* sock = new NetSocket();
-		xyInitSocket(sock);
-		const SQChar* host;
-		SQInteger port;
-		if (SQ_FAILED(sq_getstring(v, 2, &host)) || SQ_FAILED(sq_getinteger(v, 3, &port))) {
-			delete sock;
-			return sq_throwerror(v, "Expected string and integer parameters");
-		}
-		bool result = xyConnectSocket(sock, host, static_cast<int>(port));
-		if (!result) {
-			delete sock;
-			sq_pushbool(v, SQFalse);
-		} else {
-			sq_pushbool(v, SQTrue);
-		}
-		return 1;
-	});
-	vm.addClassFunc("NetSocket", "disconnect", [](HSQUIRRELVM v) -> SQInteger {
-		NetSocket* sock;
-		if (SQ_FAILED(sq_getinstanceup(v, 1, (SQUserPointer*)&sock, nullptr))) {
-			return sq_throwerror(v, "Failed to get socket instance");
-		}
-		bool result = xyDisconnectSocket(sock);
-		sq_pushbool(v, result ? SQTrue : SQFalse);
-		return 1;
-	});
-	vm.addClassFunc("NetSocket", "send", [](HSQUIRRELVM v) -> SQInteger {
-		NetSocket* sock;
-		if (SQ_FAILED(sq_getinstanceup(v, 1, (SQUserPointer*)&sock, nullptr))) {
-			return sq_throwerror(v, "Failed to get socket instance");
-		}
-		const SQChar* message;
-		if (SQ_FAILED(sq_getstring(v, 2, &message))) {
-			return sq_throwerror(v, "Expected string parameter");
-		}
-		bool result = xySendSocketMessage(sock, message);
-		sq_pushbool(v, result ? SQTrue : SQFalse);
-		return 1;
-	});
-	vm.addClassFunc("NetSocket", "receive", [](HSQUIRRELVM v) -> SQInteger {
-		NetSocket* sock;
-		if (SQ_FAILED(sq_getinstanceup(v, 1, (SQUserPointer*)&sock, nullptr))) {
-			return sq_throwerror(v, "Failed to get socket instance");
-		}
-		bool result = xyReceiveSocketMessages(sock);
-		sq_pushbool(v, result ? SQTrue : SQFalse);
-		return 1;
-	});
-	vm.addClassFunc("NetSocket", "hasMessage", [](HSQUIRRELVM v) -> SQInteger {
-		NetSocket* sock;
-		if (SQ_FAILED(sq_getinstanceup(v, 1, (SQUserPointer*)&sock, nullptr))) {
-			return sq_throwerror(v, "Failed to get socket instance");
-		}
-		bool result = xyHasSocketMessage(sock);
-		sq_pushbool(v, result ? SQTrue : SQFalse);
-		return 1;
-	});
-	vm.addClassFunc("NetSocket", "getNextMessage", [](HSQUIRRELVM v) -> SQInteger {
-		NetSocket* sock;
-		if (SQ_FAILED(sq_getinstanceup(v, 1, (SQUserPointer*)&sock, nullptr))) {
-			return sq_throwerror(v, "Failed to get socket instance");
-		}
-		const char* message = xyGetNextSocketMessage(sock);
-		if (message) {
-			sq_pushstring(v, message, -1);
-		} else {
-			sq_pushnull(v);
-		}
-		return 1;
-	});
-}
+void xyRegisterNetworkAPI(ssq::VM& vm) {
+
+};

@@ -60,7 +60,6 @@ int main(int argc, char* argv[]) {
 	);
 #endif
 	// Process arguments
-
 	std::string xygapp = "";
 	std::string curarg = "";
 	
@@ -68,7 +67,6 @@ int main(int argc, char* argv[]) {
 		curarg = argv[i];
 
 		// Handle arguments
-		
 		if (curarg == "-f" || curarg == "--fullscreen") {
 			SDL_SetWindowFullscreen(gvWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		}
@@ -77,13 +75,10 @@ int main(int argc, char* argv[]) {
 		
 		if (curarg.length() > 4) {
 			// Check if the argument is a source file
-			
 			if (curarg.substr(curarg.find_last_of('.')) == ".sq" || curarg.substr(curarg.find_last_of('.')) == ".nut" || curarg.substr(curarg.find_last_of('.')) == ".brx") {
 				// Check if the file actually exists
-
 				if (xyLegacyFileExists(curarg)) {
 					// If everything looks good, set it as the main file.
-					
 					xygapp = curarg;
 					
 					size_t found = xygapp.find_last_of("/\\");
@@ -127,7 +122,6 @@ int main(int argc, char* argv[]) {
 	
 	if (xygapp != "") {
 		// If xygapp is not a blank string at this point, we can safely assume that it exists.
-		
 		shouldLoad = true;
 	} else {
 		// If the filename is blank, attempt to load game.brx or test.nut as a fallback.
@@ -148,7 +142,6 @@ int main(int argc, char* argv[]) {
 	// }
 	
 	// Initialize everything
-	
 	int initResult = 0;
 		
 	try {
@@ -176,7 +169,6 @@ int main(int argc, char* argv[]) {
 	}
 	
 	// Unload everything once the squirrel code is finished running
-	
 	try {
 		xyEnd();
 	} catch (std::exception& err) {
@@ -192,19 +184,15 @@ int main(int argc, char* argv[]) {
 ///////////////////
 
 // Handles initialization of SDL2 and Squirrel
-
 int xyInit() {
 	// Initiate log file
-
 	remove("log.txt");
 	gvLog.open("log.txt", std::ios_base::out);
 
 	// Print opening message
-	
 	xyPrint("\n/========================\\\n| BRUX GAME RUNTIME LOG |\n\\========================/\n\n");
 
 	// Initiate SDL2
-
 	SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
 #ifdef __EMSCRIPTEN__
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS) < 0) {
@@ -216,7 +204,6 @@ int xyInit() {
 	}
 
 	// Create window
-	
 	gvWindow = SDL_CreateWindow("Brux GDK", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, gvScrW, gvScrH, SDL_WINDOW_RESIZABLE);
 
 	if (gvWindow == 0) {
@@ -224,7 +211,6 @@ int xyInit() {
 		return 0;
 	} else {
 		// Create renderer for window
-
 		gvRender = SDL_CreateRenderer(gvWindow, -1, SDL_RENDERER_ACCELERATED);
 
 		if (gvRender == 0) {
@@ -232,18 +218,15 @@ int xyInit() {
 			return 0;
 		} else {
 			// Initialize renderer color
-
 			SDL_SetRenderDrawColor(gvRender, 0xFF, 0xFF, 0xFF, 0xFF);
 
 			// Initialize PNG loading
-
 			if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
 				xyPrint("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 				return 0;
 			}
 
 			// Set up the viewport
-
 			SDL_Rect screensize;
 			screensize.x = 0;
 			screensize.y = 0;
@@ -254,7 +237,6 @@ int xyInit() {
 
 			// Set the mimumum window size
 			// No idea why it didn't do this before.
-
 			SDL_SetWindowMinimumSize(gvWindow, gvScrW, gvScrH);
 		}
 	}
@@ -266,27 +248,22 @@ int xyInit() {
 	}
 
 	// Initialize audio
-
 	xyInitAudio();
 
 	// Get channel count
-
 	gvMixChannels = xyGetAudioChannels();
 
 	// Initialize input
-
 	xyInitInput();
 
 	xyPrint("SDL initialized successfully!");
 
 	// Initiate Squirrel
-
 	gvSquirrel = ssq::VM(1024, ssq::Libs::IO | ssq::Libs::SYSTEM | ssq::Libs::MATH | ssq::Libs::STRING);
 
 	gvSquirrel.setPrintFunc(sqPrint, sqError);
 
 	// Bind all Brux API functions to Squirrel
-
 	xyPrint("Embedding API...");
 	xyRegisterAudioAPI(gvSquirrel);
 	xyRegisterCoreAPI(gvSquirrel);
@@ -307,7 +284,6 @@ int xyInit() {
 	xyPrint("Squirrel initialized successfully!");
 
 	// Initiate other things
-
 	vcTextures.push_back(0);
 	vcTextureNames.push_back("");
 	vcSprites.push_back(0);
@@ -315,14 +291,12 @@ int xyInit() {
 	vcFonts.push_back(0);
 
 	// Squirrel-side definitions
-
 	xyLoadCore();
 	xyLoadActors();
 
 	xyPrint("\n================\n");
 
 	// Return success
-
 	return 1;
 }
 
@@ -330,7 +304,6 @@ void xyEnd() {
 	xyPrint("\n\n================\n");
 
 	// Cleanup all resources (except for audio)
-
 	xyPrint("Cleaning up all resources...");
 	xyPrint("Cleaning textures...");
 
@@ -347,14 +320,12 @@ void xyEnd() {
 	xyPrint("Finished cleanup.");
 
 	// Run Squirrel's garbage collector, and then close the Squirrel VM.
-	
 	xyPrint("Closing Squirrel...");
 	SQInteger garbage = sq_collectgarbage(gvSquirrel.getHandle());
 	xyPrint("Collected %i junk obects.", garbage);
 	gvSquirrel.destroy();
 
 	// Unload all of the audio stuff
-
 	xyPrint("Unloading audio system...");
 	xyUnloadAudio();
 
@@ -369,12 +340,10 @@ void xyEnd() {
 	SDL_Quit();
 
 	// Destroy the file system (PhysFS)
-
 	xyPrint("Closing file system...");
 	xyFSDeinit();
 
 	// Close log file
-
 	xyPrint("System closed successfully!");
 	gvLog.close();
 }

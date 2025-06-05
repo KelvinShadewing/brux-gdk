@@ -4,11 +4,14 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
-                "/usr/include"
+                "/usr/include",
+                "${workspaceFolder}/rte/src",
+                "${workspaceFolder}/rte/external/simplesquirrel/include"
             ],
             "defines": [],
             "cStandard": "c17",
-            "cppStandard": "c++14"
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4

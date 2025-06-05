@@ -67,6 +67,7 @@ include(CheckSymbolExists)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_gfx REQUIRED)
+find_package(SDL2_net REQUIRED)
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/external/simplesquirrel/")
 
@@ -77,6 +78,7 @@ include(ProvidePhysFS)
 
 if(BUILD_STATIC_LIBS)
   # SDL2::Image libraries
+
   find_package(JPEG REQUIRED)
   find_package(PNG REQUIRED)
   find_package(TIFF REQUIRED)
@@ -86,6 +88,7 @@ if(BUILD_STATIC_LIBS)
   find_package(Deflate REQUIRED)
   find_package(WebP REQUIRED)
   target_link_libraries(SDL2::Image INTERFACE ${JPEG_LIBRARIES} ${PNG_LIBRARIES} ${TIFF_LIBRARIES} ${LZMA_LIBRARIES} ${zstd_LIBRARIES} ${JBIG_LIBRARIES} ${Deflate_LIBRARIES} ${WebP_LIBRARIES} -lLerc -lwebpmux -lwebpdemux -lsharpyuv)
+  target_link_libraries(SDL2::Net)
 
   # SDL2::Mixer libraries
 
@@ -118,6 +121,7 @@ if(WIN32) # FIXME: Proper way of having the SDL2 libraries copied over to binary
 	target_link_libraries(brux PUBLIC ${SDL2_LIBRARIES})
 	target_link_libraries(brux PUBLIC ${SDL2_IMAGE_LIBRARIES})
 	target_link_libraries(brux PUBLIC ${SDL2_GFX_LIBRARIES})
+	target_link_libraries(brux PUBLIC ${SDL2_NET_LIBRARIES})
 	target_link_libraries(brux PUBLIC ${TIFF_LIBRARIES})
 	target_link_libraries(brux PUBLIC ${WEBP_LIBRARIES})
 
@@ -130,6 +134,7 @@ else()
 	target_link_libraries(brux PUBLIC SDL2)
 	target_link_libraries(brux PUBLIC SDL2::Image)
 	target_link_libraries(brux PUBLIC SDL2::GFX)
+	target_link_libraries(brux PUBLIC SDL2::Net)
 	target_link_libraries(brux PUBLIC ${TIFF_LIBRARIES})
 	target_link_libraries(brux PUBLIC ${WEBP_LIBRARIES})
 

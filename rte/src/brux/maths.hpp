@@ -41,6 +41,8 @@ bool xyPointInBox(float x1, float y1, float x2, float y2, float px, float py);
 float xyLenDirX(float l, float d);
 float xyLenDirY(float l, float d);
 std::string xyBinstr(int i);
+float xyClamp(float val, float min, float max);
+float xyLerp(float a, float b, float t);
 
 void xyRegisterMathsAPI(ssq::VM& vm);
 

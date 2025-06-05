@@ -1,0 +1,14 @@
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kelvin/Code/brux/rte/build
+[  9%] Built target sqstdlib_static
+[ 24%] Built target squirrel_static
+[ 38%] Built target simplesquirrel_static
+[ 39%] Building CXX object CMakeFiles/brux.dir/src/brux/main.cpp.o
+[ 40%] Linking CXX executable brux
+[ 57%] Built target brux
+[ 71%] Built target simplesquirrel
+[ 85%] Built target squirrel
+[ 95%] Built target sqstdlib
+[ 97%] Built target sq
+[100%] Built target sq_static
