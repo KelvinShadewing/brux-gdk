@@ -25,8 +25,15 @@
 #include <cstdio>
 #include <queue>
 
-bool xyInitSocket(NetSocket* sock) {
-	if (!sock) return false;
+std::vector<NetSocket*> vcSockets;
+
+bool xyInitSocket(int wsid) {
+	//Guarding clauses
+	if(vcSockets.size() <= wsid)
+		return false;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock) 
+		return false;
 	
 	sock->socket = nullptr;
 	sock->connected = false;
@@ -36,22 +43,70 @@ bool xyInitSocket(NetSocket* sock) {
 	return true;
 }
 
-void xyCloseSocket(NetSocket* sock) {
-	if (!sock) return;
+int xyNewSocket() {
+	NetSocket* nsock = new NetSocket;
+
+	//Fill blank list
+	if(vcSockets.size() == 0) {
+		vcSockets.push_back(nsock);
+		nsock->id = 0;
+		return 0;
+	}
+
+	//Search for empty slot
+	for(int i = 0; i < vcSockets.size(); i++) {
+		if(vcSockets[i] == 0) {
+			vcSockets[i] = nsock;
+			nsock->id = i;
+			return i;
+		}
+	}
+
+	vcSockets.push_back(nsock);
+	nsock->id = vcSockets.size() - 1;
+	return vcSockets.size() - 1;
+}
+
+void xyCloseSocket(int wsid) {
+	//Guarding clauses
+	if(vcSockets.size() <= wsid)
+		return;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock)
+		return;
 	
 	if (sock->connected) {
-		xyDisconnectSocket(sock);
+		xyDisconnectSocket(wsid);
 	}
 	while (!sock->messageQueue.empty()) {
 		sock->messageQueue.pop();
 	}
 }
 
-bool xyConnectSocket(NetSocket* sock, const char* host, int port) {
-	if (!sock || !host) return false;
+void xyDeleteSocket(int wsid) {
+	//Guarding clauses
+	if(vcSockets.size() <= wsid)
+		return;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock)
+		return;
+
+	xyCloseSocket(wsid);
+	delete vcSockets[wsid];
+	vcSockets[wsid] = 0;
+}
+
+// Internal implementation using std::string
+bool xyConnectSocketImpl(int wsid, const std::string& host, int port) {
+	//Guarding clauses
+	if(vcSockets.size() <= wsid)
+		return false;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock)
+		return false;
 	
 	IPaddress ip;
-	if (SDLNet_ResolveHost(&ip, host, port) == -1) {
+	if (SDLNet_ResolveHost(&ip, host.c_str(), port) == -1) {
 		fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
 		return false;
 	}
@@ -66,8 +121,18 @@ bool xyConnectSocket(NetSocket* sock, const char* host, int port) {
 	return true;
 }
 
-bool xyDisconnectSocket(NetSocket* sock) {
-	if (!sock || !sock->connected) return false;
+// Public interface for Squirrel bindings
+bool xyConnectSocket(int wsid, const char* host, int port) {
+	return xyConnectSocketImpl(wsid, host ? std::string(host) : std::string(), port);
+}
+
+bool xyDisconnectSocket(int wsid) {
+	//Guarding clauses
+	if(vcSockets.size() <= wsid)
+		return false;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock || !sock->connected)
+		return false;
 	
 	if (sock->socket) {
 		SDLNet_TCP_Close(sock->socket);
@@ -81,11 +146,16 @@ bool xyDisconnectSocket(NetSocket* sock) {
 	return true;
 }
 
-bool xySendSocketMessage(NetSocket* sock, const char* message) {
-	if (!sock || !sock->connected || !sock->socket || !message) return false;
+// Internal implementation using std::string
+bool xySendSocketMessageImpl(int wsid, const std::string& message) {
+	//Guarding clauses
+	if(vcSockets.size() <= wsid)
+		return false;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock || !sock->connected || !sock->socket) return false;
 
-	int len = strlen(message);
-	int sent = SDLNet_TCP_Send(sock->socket, message, len);
+	int len = message.length();
+	int sent = SDLNet_TCP_Send(sock->socket, message.c_str(), len);
 	
 	if (sent < len) {
 		fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
@@ -95,7 +165,17 @@ bool xySendSocketMessage(NetSocket* sock, const char* message) {
 	return true;
 }
 
-bool xyReceiveSocketMessages(NetSocket* sock) {
+// Public interface for Squirrel bindings
+bool xySendSocketMessage(int wsid, const char* message) {
+	if (!message) return false;
+	return xySendSocketMessageImpl(wsid, std::string(message));
+}
+
+bool xyReceiveSocketMessages(int wsid) {
+	//Guarding clauses
+	if(vcSockets.size() <= wsid)
+		return false;
+	NetSocket* sock = vcSockets[wsid];
 	if (!sock || !sock->connected || !sock->socket) return false;
 
 	char buffer[1024];
@@ -119,20 +199,36 @@ bool xyReceiveSocketMessages(NetSocket* sock) {
 	return true;
 }
 
-bool xyHasSocketMessage(NetSocket* sock) {
+bool xyHasSocketMessage(int wsid) {
+	//Guarding clauses
+	if(vcSockets.size() <= wsid)
+		return false;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock)
+		return false;
+
 	return sock && !sock->messageQueue.empty();
 }
 
-const char* xyGetNextSocketMessage(NetSocket* sock) {
-	if (!xyHasSocketMessage(sock)) return nullptr;
-	
-	static std::string message;  // Static to ensure the string persists after return
-	message = sock->messageQueue.front();
+std::string xyGetNextSocketMessageImpl(int wsid) {
+	//Guarding clauses
+	if(vcSockets.size() <= wsid)
+		return "";
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock)
+		return "";
+
+	if (!xyHasSocketMessage(wsid)) return "";
+	std::string message = sock->messageQueue.front();
 	sock->messageQueue.pop();
-	return message.c_str();
+	return message;
 }
 
-void xyClearSocketMessages(NetSocket* sock) {
+void xyClearSocketMessages(int wsid) {
+	//Guarding clauses
+	if(vcSockets.size() <= wsid)
+		return;
+	NetSocket* sock = vcSockets[wsid];
 	if (!sock) return;
 	while (!sock->messageQueue.empty()) {
 		sock->messageQueue.pop();
@@ -140,5 +236,19 @@ void xyClearSocketMessages(NetSocket* sock) {
 }
 
 void xyRegisterNetworkAPI(ssq::VM& vm) {
-
+	vm.addFunc("newSocket", xyNewSocket);
+	vm.addFunc("initSocket", xyInitSocket);
+	vm.addFunc("closeSocket", xyCloseSocket);
+	vm.addFunc("connectSocket", [](int wsid, const std::string& host, int port) {
+		return xyConnectSocketImpl(wsid, host, port);
+	});
+	vm.addFunc("sendSocketMessage", [](int wsid, const std::string& message) {
+		return xySendSocketMessageImpl(wsid, message);
+	});
+	vm.addFunc("receiveSocketMessage", xyReceiveSocketMessages);
+	vm.addFunc("socketHasMessage", xyHasSocketMessage);
+	vm.addFunc("getSocketMessage", [](int wsid) {
+		return xyGetNextSocketMessageImpl(wsid);
+	});
+	vm.addFunc("clearSocket", xyClearSocketMessages);
 };

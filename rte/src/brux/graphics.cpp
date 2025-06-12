@@ -583,6 +583,12 @@ void xyTextureSetBlendMode(int texture, int blend) {
 		case 4:
 			mode = SDL_BLENDMODE_MOD;
 			break;
+		case 5:
+			mode = SDL_ComposeCustomBlendMode(
+				SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_ADD,  // RGB: Add white
+				SDL_BLENDFACTOR_ZERO, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_ADD  // Alpha: Preserve original
+			);
+			break;
 		default:
 			mode = SDL_BLENDMODE_NONE;
 			break;

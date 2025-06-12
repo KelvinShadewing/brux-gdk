@@ -386,6 +386,7 @@ void xyLoadCore() {
 	const bm_add = 2;
 	const bm_sub = 3;
 	const bm_mod = 4;
+	const bm_white = 5;
 
 	const js_max = 32768;
 	const js_up = 1;

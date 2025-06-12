@@ -31,22 +31,27 @@ namespace ssq {
 
 // Socket connection handle
 typedef struct NetSocket {
+	int id;
 	TCPsocket socket;
 	bool connected;
 	std::queue<std::string> messageQueue;
 	static const size_t MAX_QUEUE_SIZE = 100;
 } NetSocket;
 
+extern std::vector<NetSocket*> vcSockets;
+
 // Basic socket functions
-bool xyInitSocket(NetSocket* sock);
-void xyCloseSocket(NetSocket* sock);
-bool xyConnectSocket(NetSocket* sock, const char* host, int port);
-bool xyDisconnectSocket(NetSocket* sock);
-bool xySendSocketMessage(NetSocket* sock, const char* message);
-bool xyReceiveSocketMessages(NetSocket* sock);
-bool xyHasSocketMessage(NetSocket* sock);
-const char* xyGetNextSocketMessage(NetSocket* sock);
-void xyClearSocketMessages(NetSocket* sock);
+bool xyInitSocket(int wsid);
+void xyCloseSocket(int wsid);
+bool xyConnectSocket(int wsid, const std::string& host, int port);
+bool xyDisconnectSocket(int wsid);
+void xyDeleteSocket(int wsid);
+int xyNewSocket();
+bool xySendSocketMessage(int wsid, const std::string& message);
+bool xyReceiveSocketMessages(int wsid);
+bool xyHasSocketMessage(int wsid);
+const char* xyGetNextSocketMessage(int wsid);
+void xyClearSocketMessages(int wsid);
 void xyRegisterNetworkAPI(ssq::VM& vm);
 
 #endif // BRUX_NET_HPP
