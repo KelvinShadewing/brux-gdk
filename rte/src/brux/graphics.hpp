@@ -51,6 +51,7 @@ int xyScreenH();
 int xyWindowW();
 int xyWindowH();
 void xyTextureSetBlendMode(int texture, int blend);
+int xyGetTextureBlendMode(int texture);
 int xyFindTexture(const std::string& name);
 std::string xyGetTextureName(int texture);
 int xyGetTextureFilter(int tex);

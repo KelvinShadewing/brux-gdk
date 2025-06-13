@@ -3,6 +3,13 @@ cmake_minimum_required(VERSION 3.10)
 project(brux)
 set(CMAKE_CXX_STANDARD 17)
 
+# Add debug symbols
+if(MSVC)
+	add_compile_options(/Zi)
+else()
+	add_compile_options(-g)
+endif()
+
 # Set initial variables
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")

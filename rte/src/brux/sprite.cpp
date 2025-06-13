@@ -486,8 +486,8 @@ void xyReplaceSprite(int s, const std::string& f, int w, int h, int m, int p, fl
 }
 
 void xySpriteSetBlendMode(int sprite, int blend) {
-	if (sprite < 0 || sprite > static_cast<int>(vcSprites.size()) - 1) {
-		throw std::runtime_error("Invalid sprite ID. Cannot set blend mode");
+	if (sprite < 0 || sprite > static_cast<int>(vcSprites.size()) - 1 || vcSprites[sprite] == 0) {
+		return;
 	}
 
 	SDL_BlendMode mode;

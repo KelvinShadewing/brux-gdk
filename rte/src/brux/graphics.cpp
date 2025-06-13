@@ -561,8 +561,8 @@ int xyWindowH() {
 // Set a texture's blend mode
 
 void xyTextureSetBlendMode(int texture, int blend) {
-	if (texture < 0 || texture > static_cast<int>(vcTextures.size()) - 1) {
-		throw std::runtime_error("Invalid texture ID. Cannot set blend mode");
+	if (texture < 0 || texture > static_cast<int>(vcTextures.size()) - 1 || vcTextures[texture] == 0) {
+		return;
 	}
 
 	SDL_BlendMode mode;
@@ -583,18 +583,36 @@ void xyTextureSetBlendMode(int texture, int blend) {
 		case 4:
 			mode = SDL_BLENDMODE_MOD;
 			break;
-		case 5:
-			mode = SDL_ComposeCustomBlendMode(
-				SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_ADD,  // RGB: Add white
-				SDL_BLENDFACTOR_ZERO, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_ADD  // Alpha: Preserve original
-			);
-			break;
 		default:
 			mode = SDL_BLENDMODE_NONE;
 			break;
 	}
 
 	SDL_SetTextureBlendMode(vcTextures[texture], mode);
+}
+
+// Get a texture's blend mode
+
+int xyGetTextureBlendMode(int texture) {
+	if (texture < 0 || texture > static_cast<int>(vcTextures.size()) - 1) {
+		throw std::runtime_error("Invalid texture ID. Cannot get blend mode");
+	}
+
+	SDL_BlendMode mode;
+	SDL_GetTextureBlendMode(vcTextures[texture], &mode);
+
+	// Compare with predefined blend modes
+	if (mode == SDL_BLENDMODE_NONE)
+		return 0;
+	if (mode == SDL_BLENDMODE_BLEND)
+		return 1;
+	if (mode == SDL_BLENDMODE_ADD)
+		return 2;
+	if (mode == SDL_BLENDMODE_MOD)
+		return 4;
+
+	// The only custom blend mode is the subtract blend mode
+	return 3;
 }
 
 // Find a texture's ID by its name
@@ -749,6 +767,7 @@ void xyRegisterGraphicsAPI(ssq::VM& vm) {
 	vm.addFunc("windowH", xyWindowH);
 	vm.addFunc("newTexture", xyNewTexture); // Doc'd
 	vm.addFunc("textureSetBlendMode", xyTextureSetBlendMode); // Doc'd
+	vm.addFunc("textureGetBlendMode", xyGetTextureBlendMode);
 	vm.addFunc("findTexture", xyFindTexture);
 	vm.addFunc("deleteTexture", xyDeleteImage);
 	vm.addFunc("getTextureName", xyGetTextureName);
