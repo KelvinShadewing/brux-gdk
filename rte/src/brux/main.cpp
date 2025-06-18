@@ -43,6 +43,7 @@
 #include "brux/shapes.hpp"
 #include "brux/sprite.hpp"
 #include "brux/text.hpp"
+#include "brux/net.hpp"
 
 /////////////////
 //MAIN FUNCTION//
@@ -275,6 +276,7 @@ int xyInit() {
 	xyRegisterShapesAPI(gvSquirrel);
 	xyRegisterSpriteAPI(gvSquirrel);
 	xyRegisterTextAPI(gvSquirrel);
+	xyRegisterNetworkAPI(gvSquirrel);
 
 	// The error handler does not seem to print compile-time errors.
 	// I haven't been able to figure out why, as the same code works in my other apps,

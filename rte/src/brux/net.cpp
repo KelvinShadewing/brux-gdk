@@ -29,7 +29,7 @@ std::vector<NetSocket*> vcSockets;
 
 bool xyInitSocket(int wsid) {
 	//Guarding clauses
-	if(vcSockets.size() <= wsid)
+	if(wsid < 0 || vcSockets.size() <= wsid)
 		return false;
 	NetSocket* sock = vcSockets[wsid];
 	if (!sock) 
@@ -94,6 +94,18 @@ void xyDeleteSocket(int wsid) {
 	xyCloseSocket(wsid);
 	delete vcSockets[wsid];
 	vcSockets[wsid] = 0;
+}
+
+void xyFlushSockets() {
+	if(vcSockets.size() == 0)
+		return;
+
+	for(int i = 0; i < vcSockets.size(); i++) {
+		xyDeleteSocket(i);
+	}
+
+	vcSockets.clear();
+	vcSockets.shrink_to_fit();
 }
 
 // Internal implementation using std::string
@@ -251,4 +263,5 @@ void xyRegisterNetworkAPI(ssq::VM& vm) {
 		return xyGetNextSocketMessageImpl(wsid);
 	});
 	vm.addFunc("clearSocket", xyClearSocketMessages);
+	vm.addFunc("flushSockets", xyFlushSockets);
 };
