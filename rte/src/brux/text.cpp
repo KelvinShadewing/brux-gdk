@@ -140,7 +140,6 @@ void xyFont::draw(int x, int y, std::string text, Uint32 color) {
 	float alpha = (1.0f / 255.0f) * (color & 0xff);
 
 	Uint32 curcol = color;
-	Uint32 invcol = ~color | 0xff;
 
 	//Loop to end of std::string
 	for(int i = 0; i < static_cast<int>(text.length()); i++) {
@@ -243,14 +242,17 @@ void xyFont::draw(int x, int y, std::string text, Uint32 color) {
 						break;
 					case 'f':
 					case 'F':
-						curcol = invcol; // Invert
-						break;
-					default:
-						curcol = color;
+						curcol = 0x000000ff; // Black
 						break;
 				}
 			}
-			else i--;
+			else if(text[i] != '~')
+				i--;
+			else {
+				c = (int)text[i] - start; //Get current character and apply font offset
+				source->draw(c, dx, dy, 0, SDL_FLIP_NONE, 1, 1, alpha, curcol);
+				dx += (cw[std::min(c, (int)cw.size() - 1)] + kern) - (cx[std::min(c, (int)cx.size() - 1)] * (text[i] != ' '));
+			}
 		}
 		else {
 			c = (int)text[i] - start; //Get current character and apply font offset

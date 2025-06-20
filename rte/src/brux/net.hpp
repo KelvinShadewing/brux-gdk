@@ -35,6 +35,7 @@ typedef struct NetSocket {
 	TCPsocket socket;
 	bool connected;
 	std::queue<std::string> messageQueue;
+	SDLNet_SocketSet set;
 	static const size_t MAX_QUEUE_SIZE = 100;
 } NetSocket;
 

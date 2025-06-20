@@ -45,6 +45,12 @@ bool xyInitSocket(int wsid) {
 
 int xyNewSocket() {
 	NetSocket* nsock = new NetSocket;
+	nsock->set = SDLNet_AllocSocketSet(1);
+	if (!nsock->set) {
+		fprintf(stderr, "SDLNet_AllocSocketSet: %s\n", SDLNet_GetError());
+		delete nsock;
+		return -1;
+	}
 
 	//Fill blank list
 	if(vcSockets.size() == 0) {
@@ -92,6 +98,9 @@ void xyDeleteSocket(int wsid) {
 		return;
 
 	xyCloseSocket(wsid);
+	if (sock->set) {
+		SDLNet_FreeSocketSet(sock->set);
+	}
 	delete vcSockets[wsid];
 	vcSockets[wsid] = 0;
 }
@@ -128,12 +137,20 @@ bool xyConnectSocketImpl(int wsid, const std::string& host, int port) {
 		fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
 		return false;
 	}
-	
+
+	//Set socket to non-blocking mode
+	if (SDLNet_TCP_AddSocket(sock->set, sock->socket) == -1) {
+		fprintf(stderr, "SDLNet_TCP_AddSocket: %s\n", SDLNet_GetError());
+		SDLNet_TCP_Close(sock->socket);
+		sock->socket = nullptr;
+		return false;
+	}
+
 	sock->connected = true;
 	return true;
 }
 
-// Public interface for Squirrel bindings
+//Public interface for Squirrel bindings
 bool xyConnectSocket(int wsid, const char* host, int port) {
 	return xyConnectSocketImpl(wsid, host ? std::string(host) : std::string(), port);
 }
@@ -190,6 +207,17 @@ bool xyReceiveSocketMessages(int wsid) {
 	NetSocket* sock = vcSockets[wsid];
 	if (!sock || !sock->connected || !sock->socket) return false;
 
+	//Check if there's data ready to be read
+	int numReady = SDLNet_CheckSockets(sock->set, 0);  // 0 timeout = don't wait
+	if (numReady <= 0) {
+		return true; //No data available, not an error
+	}
+
+	//Only try to receive if this socket is ready
+	if (!SDLNet_SocketReady(sock->socket)) {
+		return true; //This socket isn't ready, not an error
+	}
+
 	char buffer[1024];
 	int received = SDLNet_TCP_Recv(sock->socket, buffer, sizeof(buffer) - 1);
 	
@@ -201,14 +229,29 @@ bool xyReceiveSocketMessages(int wsid) {
 	}
 	
 	buffer[received] = '\0';
+
+	// Check for non-empty, non-whitespace message
+	std::string msg(buffer);
+	// Trim from start (in place)
+	msg.erase(msg.begin(), std::find_if(msg.begin(), msg.end(), [](unsigned char ch) {
+		return !std::isspace(ch);
+	}));
+	// Trim from end (in place)
+	msg.erase(std::find_if(msg.rbegin(), msg.rend(), [](unsigned char ch) {
+		return !std::isspace(ch);
+	}).base(), msg.end());
 	
 	// Store message in queue, removing oldest if full
-	if (sock->messageQueue.size() >= NetSocket::MAX_QUEUE_SIZE) {
-		sock->messageQueue.pop();
-	}
-	sock->messageQueue.push(buffer);
-	
-	return true;
+	if(!msg.empty()) {
+		if (sock->messageQueue.size() >= NetSocket::MAX_QUEUE_SIZE) {
+			sock->messageQueue.pop();
+		}
+		sock->messageQueue.push(buffer);
+		
+		return true;
+	};
+
+	return false;
 }
 
 bool xyHasSocketMessage(int wsid) {
