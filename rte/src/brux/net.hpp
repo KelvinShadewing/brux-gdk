@@ -42,17 +42,17 @@ typedef struct NetSocket {
 extern std::vector<NetSocket*> vcSockets;
 
 // Basic socket functions
-bool xyInitSocket(int wsid);
-void xyCloseSocket(int wsid);
-bool xyConnectSocket(int wsid, const std::string& host, int port);
-bool xyDisconnectSocket(int wsid);
-void xyDeleteSocket(int wsid);
-int xyNewSocket();
-bool xySendSocketMessage(int wsid, const std::string& message);
-bool xyReceiveSocketMessages(int wsid);
-bool xyHasSocketMessage(int wsid);
-const char* xyGetNextSocketMessage(int wsid);
-void xyClearSocketMessages(int wsid);
+bool xyInitTCP(int wsid);
+void xyCloseTCP(int wsid);
+bool xyConnectTCP(int wsid, const std::string& host, int port);
+bool xyDisconnectTCP(int wsid);
+void xyDeleteTCP(int wsid);
+int xyNewTCP();
+bool xySendTCP(int wsid, const std::string& message);
+bool xyReceiveTCP(int wsid);
+bool xyQueuedTCP(int wsid);
+const char* xyGetTCP(int wsid);
+void xyClearTCP(int wsid);
 void xyRegisterNetworkAPI(ssq::VM& vm);
 
 #endif // BRUX_NET_HPP

@@ -27,7 +27,7 @@
 
 std::vector<NetSocket*> vcSockets;
 
-bool xyInitSocket(int wsid) {
+bool xyInitTCP(int wsid) {
 	//Guarding clauses
 	if(wsid < 0 || vcSockets.size() <= wsid)
 		return false;
@@ -43,7 +43,7 @@ bool xyInitSocket(int wsid) {
 	return true;
 }
 
-int xyNewSocket() {
+int xyNewTCP() {
 	NetSocket* nsock = new NetSocket;
 	nsock->set = SDLNet_AllocSocketSet(1);
 	if (!nsock->set) {
@@ -73,7 +73,7 @@ int xyNewSocket() {
 	return vcSockets.size() - 1;
 }
 
-void xyCloseSocket(int wsid) {
+void xyCloseTCP(int wsid) {
 	//Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return;
@@ -82,14 +82,14 @@ void xyCloseSocket(int wsid) {
 		return;
 	
 	if (sock->connected) {
-		xyDisconnectSocket(wsid);
+		xyDisconnectTCP(wsid);
 	}
 	while (!sock->messageQueue.empty()) {
 		sock->messageQueue.pop();
 	}
 }
 
-void xyDeleteSocket(int wsid) {
+void xyDeleteTCP(int wsid) {
 	//Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return;
@@ -97,7 +97,7 @@ void xyDeleteSocket(int wsid) {
 	if (!sock)
 		return;
 
-	xyCloseSocket(wsid);
+	xyCloseTCP(wsid);
 	if (sock->set) {
 		SDLNet_FreeSocketSet(sock->set);
 	}
@@ -110,7 +110,7 @@ void xyFlushSockets() {
 		return;
 
 	for(int i = 0; i < vcSockets.size(); i++) {
-		xyDeleteSocket(i);
+		xyDeleteTCP(i);
 	}
 
 	vcSockets.clear();
@@ -118,7 +118,7 @@ void xyFlushSockets() {
 }
 
 // Internal implementation using std::string
-bool xyConnectSocketImpl(int wsid, const std::string& host, int port) {
+bool xyConnectTCPImpl(int wsid, const std::string& host, int port) {
 	//Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return false;
@@ -151,11 +151,11 @@ bool xyConnectSocketImpl(int wsid, const std::string& host, int port) {
 }
 
 //Public interface for Squirrel bindings
-bool xyConnectSocket(int wsid, const char* host, int port) {
-	return xyConnectSocketImpl(wsid, host ? std::string(host) : std::string(), port);
+bool xyConnectTCP(int wsid, const char* host, int port) {
+	return xyConnectTCPImpl(wsid, host ? std::string(host) : std::string(), port);
 }
 
-bool xyDisconnectSocket(int wsid) {
+bool xyDisconnectTCP(int wsid) {
 	//Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return false;
@@ -176,7 +176,7 @@ bool xyDisconnectSocket(int wsid) {
 }
 
 // Internal implementation using std::string
-bool xySendSocketMessageImpl(int wsid, const std::string& message) {
+bool xySendTCPImpl(int wsid, const std::string& message) {
 	//Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return false;
@@ -195,12 +195,12 @@ bool xySendSocketMessageImpl(int wsid, const std::string& message) {
 }
 
 // Public interface for Squirrel bindings
-bool xySendSocketMessage(int wsid, const char* message) {
+bool xySendTCP(int wsid, const char* message) {
 	if (!message) return false;
-	return xySendSocketMessageImpl(wsid, std::string(message));
+	return xySendTCPImpl(wsid, std::string(message));
 }
 
-bool xyReceiveSocketMessages(int wsid) {
+bool xyReceiveTCP(int wsid) {
 	//Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return false;
@@ -254,7 +254,7 @@ bool xyReceiveSocketMessages(int wsid) {
 	return false;
 }
 
-bool xyHasSocketMessage(int wsid) {
+bool xyQueuedTCP(int wsid) {
 	//Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return false;
@@ -265,7 +265,7 @@ bool xyHasSocketMessage(int wsid) {
 	return sock && !sock->messageQueue.empty();
 }
 
-std::string xyGetNextSocketMessageImpl(int wsid) {
+std::string xyGetTCPImpl(int wsid) {
 	//Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return "";
@@ -273,13 +273,13 @@ std::string xyGetNextSocketMessageImpl(int wsid) {
 	if (!sock)
 		return "";
 
-	if (!xyHasSocketMessage(wsid)) return "";
+	if (!xyQueuedTCP(wsid)) return "";
 	std::string message = sock->messageQueue.front();
 	sock->messageQueue.pop();
 	return message;
 }
 
-void xyClearSocketMessages(int wsid) {
+void xyClearTCP(int wsid) {
 	//Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return;
@@ -291,20 +291,25 @@ void xyClearSocketMessages(int wsid) {
 }
 
 void xyRegisterNetworkAPI(ssq::VM& vm) {
-	vm.addFunc("newSocket", xyNewSocket);
-	vm.addFunc("initSocket", xyInitSocket);
-	vm.addFunc("closeSocket", xyCloseSocket);
-	vm.addFunc("connectSocket", [](int wsid, const std::string& host, int port) {
-		return xyConnectSocketImpl(wsid, host, port);
+	//TCP functions
+	vm.addFunc("tcpNewSocket", xyNewTCP);
+	vm.addFunc("tcpInit", xyInitTCP);
+	vm.addFunc("tcpClose", xyCloseTCP);
+	vm.addFunc("tcpConnect", [](int wsid, const std::string& host, int port) {
+		return xyConnectTCPImpl(wsid, host, port);
 	});
-	vm.addFunc("sendSocketMessage", [](int wsid, const std::string& message) {
-		return xySendSocketMessageImpl(wsid, message);
+	vm.addFunc("tcpSend", [](int wsid, const std::string& message) {
+		return xySendTCPImpl(wsid, message);
 	});
-	vm.addFunc("receiveSocketMessage", xyReceiveSocketMessages);
-	vm.addFunc("socketHasMessage", xyHasSocketMessage);
-	vm.addFunc("getSocketMessage", [](int wsid) {
-		return xyGetNextSocketMessageImpl(wsid);
+	vm.addFunc("tcpReceive", xyReceiveTCP);
+	vm.addFunc("tcpQueued", xyQueuedTCP);
+	vm.addFunc("tcpGet", [](int wsid) {
+		return xyGetTCPImpl(wsid);
 	});
-	vm.addFunc("clearSocket", xyClearSocketMessages);
-	vm.addFunc("flushSockets", xyFlushSockets);
+	vm.addFunc("tcpClear", xyClearTCP);
+
+	//UDP functions
+
+	//Misc functions
+	vm.addFunc("netFlush", xyFlushSockets);
 };
