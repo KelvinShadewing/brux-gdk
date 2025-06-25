@@ -291,7 +291,7 @@ while (!getQuit()) {
 
 	update()
 
-	if (keyPress(k_enter) || joyAxisPress(0, js_up, js_max / 4)) {
+	if (keyPress(k_enter)) {
 		break;
 	}
 } 

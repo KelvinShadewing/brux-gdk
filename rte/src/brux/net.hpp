@@ -32,27 +32,33 @@ namespace ssq {
 // Socket connection handle
 typedef struct NetSocket {
 	int id;
-	TCPsocket socket;
+	TCPsocket tcp;
+	UDPsocket udp;
+	std::string t;
 	bool connected;
 	std::queue<std::string> messageQueue;
 	SDLNet_SocketSet set;
 	static const size_t MAX_QUEUE_SIZE = 100;
+	std::string host;
+	int port;
+	IPaddress ip;
 } NetSocket;
 
 extern std::vector<NetSocket*> vcSockets;
 
 // Basic socket functions
-bool xyInitTCP(int wsid);
-void xyCloseTCP(int wsid);
-bool xyConnectTCP(int wsid, const std::string& host, int port);
-bool xyDisconnectTCP(int wsid);
-void xyDeleteTCP(int wsid);
-int xyNewTCP();
-bool xySendTCP(int wsid, const std::string& message);
-bool xyReceiveTCP(int wsid);
-bool xyQueuedTCP(int wsid);
-const char* xyGetTCP(int wsid);
-void xyClearTCP(int wsid);
+bool xyInitSocket(int wsid, std::string socketMode);
+void xyCloseSocket(int wsid);
+bool xyConnectSocket(int wsid, const std::string& host, int port);
+bool xyDisconnectSocket(int wsid);
+void xyDeleteSocket(int wsid);
+int xyNewSocket(std::string socketMode);
+bool xySendSocket(int wsid, const std::string& message);
+bool xyReceiveSocket(int wsid);
+bool xyQueuedSocket(int wsid);
+std::string xyGetSocket(int wsid);
+void xyClearSocket(int wsid);
+void xyFlushSockets();
 void xyRegisterNetworkAPI(ssq::VM& vm);
 
 #endif // BRUX_NET_HPP

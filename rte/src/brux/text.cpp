@@ -114,7 +114,7 @@ xyFont::xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, 
 
 			//Find the maximum X coordinate with non-transparent pixels
 			Uint32 maxx = 0;
-			for(Uint32 j = source->getw(); j > 0; j--) {
+			for(Uint32 j = source->getw() - 1; j > 0; j--) {
 				for(Uint32 k = 0; k < source->geth(); k++) {
 					Uint8 a = xyGetAlpha(xyGetSurfacePixel(ts, j + ((i % source->getcol()) * source->getw()), k + (i / source->getcol() * source->geth())));
 					if(a > threshold && j > maxx) {
@@ -251,13 +251,13 @@ void xyFont::draw(int x, int y, std::string text, Uint32 color) {
 			else {
 				c = (int)text[i] - start; //Get current character and apply font offset
 				source->draw(c, dx, dy, 0, SDL_FLIP_NONE, 1, 1, alpha, curcol);
-				dx += (cw[std::min(c, (int)cw.size() - 1)] + kern) - (cx[std::min(c, (int)cx.size() - 1)] * (text[i] != ' '));
+				dx += cw[c] + kern;
 			}
 		}
 		else {
 			c = (int)text[i] - start; //Get current character and apply font offset
 			source->draw(c, dx, dy, 0, SDL_FLIP_NONE, 1, 1, alpha, curcol);
-			dx += (cw[std::min(c, (int)cw.size() - 1)] + kern) - (cx[std::min(c, (int)cx.size() - 1)] * (text[i] != ' '));
+			dx += cw[c] + kern;
 		}
 	}
 };
