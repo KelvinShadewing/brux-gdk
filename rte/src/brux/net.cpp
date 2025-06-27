@@ -49,7 +49,7 @@ bool xyInitSocket(int wsid, std::string socketMode) {
 int xyNewSocket(std::string socketMode = "") {
 	std::transform(socketMode.begin(), socketMode.end(), socketMode.begin(),
 	[](unsigned char c){ return std::tolower(c); });
-	if(socketMode.c_str() != "tcp" && socketMode.c_str() != "udp") {
+	if(socketMode != "tcp" && socketMode != "udp") {
 		xyPrint("Invalid socket mode: %s", socketMode.c_str());
 		return -1;
 	}
