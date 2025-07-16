@@ -28,7 +28,7 @@
 std::vector<NetSocket*> vcSockets;
 
 bool xyInitSocket(int wsid, std::string socketMode) {
-	//Guarding clauses
+	// Guarding clauses
 	if(wsid < 0 || vcSockets.size() <= wsid)
 	return false;
 	NetSocket* sock = vcSockets[wsid];
@@ -63,7 +63,7 @@ int xyNewSocket(std::string socketMode = "") {
 		return -1;
 	}
 
-	//Fill blank list
+	// Fill blank list
 	if(vcSockets.size() == 0) {
 		vcSockets.push_back(nsock);
 		nsock->id = 0;
@@ -71,7 +71,7 @@ int xyNewSocket(std::string socketMode = "") {
 		return 0;
 	}
 
-	//Search for empty slot
+	// Search for empty slot
 	for(int i = 0; i < vcSockets.size(); i++) {
 		if(vcSockets[i] == 0) {
 			vcSockets[i] = nsock;
@@ -88,7 +88,7 @@ int xyNewSocket(std::string socketMode = "") {
 }
 
 void xyCloseSocket(int wsid) {
-	//Guarding clauses
+	// Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return;
 	NetSocket* sock = vcSockets[wsid];
@@ -112,7 +112,7 @@ void xyCloseSocket(int wsid) {
 }
 
 void xyDeleteSocket(int wsid) {
-	//Guarding clauses
+	// Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return;
 	NetSocket* sock = vcSockets[wsid];
@@ -140,7 +140,7 @@ void xyFlushSockets() {
 }
 
 bool xyConnectSocket(int wsid, const std::string& host, int port) {
-	//Guarding clauses
+	// Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return false;
 	NetSocket* sock = vcSockets[wsid];
@@ -163,7 +163,7 @@ bool xyConnectSocket(int wsid, const std::string& host, int port) {
 			return false;
 		}
 
-		//Set socket to non-blocking mode
+		// Set socket to non-blocking mode
 		if(SDLNet_TCP_AddSocket(sock->set, sock->tcp) == -1) {
 			fprintf(stderr, "SDLNet_TCP_AddSocket: %s\n", SDLNet_GetError());
 			SDLNet_TCP_Close(sock->tcp);
@@ -194,7 +194,7 @@ bool xyConnectSocket(int wsid, const std::string& host, int port) {
 }
 
 bool xySendSocket(int wsid, const std::string& message) {
-	//Guarding clauses
+	// Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return false;
 	NetSocket* sock = vcSockets[wsid];
@@ -239,7 +239,7 @@ bool xySendSocket(int wsid, const std::string& message) {
 }
 
 bool xyReceiveSocket(int wsid) {
-	//Guarding clauses
+	// Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return false;
 	NetSocket* sock = vcSockets[wsid];
@@ -248,15 +248,15 @@ bool xyReceiveSocket(int wsid) {
 	int received = 0;
 
 	if(sock->t == "tcp") {
-		//Check if there's data ready to be read
+		// Check if there's data ready to be read
 		int numReady = SDLNet_CheckSockets(sock->set, 0);  // 0 timeout = don't wait
 		if (numReady <= 0) {
-			return true; //No data available, not an error
+			return true; // No data available, not an error
 		}
 
-		//Only try to receive if this socket is ready
+		// Only try to receive if this socket is ready
 		if (!SDLNet_SocketReady(sock->tcp)) {
-			return true; //This socket isn't ready, not an error
+			return true; // This socket isn't ready, not an error
 		}
 
 		received = SDLNet_TCP_Recv(sock->tcp, buffer, sizeof(buffer) - 1);
@@ -319,7 +319,7 @@ bool xyReceiveSocket(int wsid) {
 }
 
 bool xyQueuedSocket(int wsid) {
-	//Guarding clauses
+	// Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return false;
 	NetSocket* sock = vcSockets[wsid];
@@ -330,7 +330,7 @@ bool xyQueuedSocket(int wsid) {
 }
 
 std::string xyGetSocket(int wsid) {
-	//Guarding clauses
+	// Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return "";
 	NetSocket* sock = vcSockets[wsid];
@@ -344,7 +344,7 @@ std::string xyGetSocket(int wsid) {
 }
 
 void xyClearSocket(int wsid) {
-	//Guarding clauses
+	// Guarding clauses
 	if(vcSockets.size() <= wsid)
 		return;
 	NetSocket* sock = vcSockets[wsid];

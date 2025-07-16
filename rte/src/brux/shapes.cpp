@@ -39,11 +39,11 @@ the heavy math will be done here for
 performance reasons.
 \*/
 
-///////////
+// // // // // /
 // POINT //
-///////////
+// // // // // /
 
-//Constructors
+// Constructors
 xyPnt::xyPnt() {
 	x = 0;
 	y = 0;
@@ -59,7 +59,7 @@ xyPnt::xyPnt(const xyPnt& v) {
 	y = v.y;
 }
 
-//Assignment Operators
+// Assignment Operators
 xyPnt& xyPnt::operator = (const xyPnt& v) {
 	x = v.x;
 	y = v.y;
@@ -95,7 +95,7 @@ xyPnt& xyPnt::operator /= (const float s) {
 	return *this;
 }
 
-//Comparison Operators
+// Comparison Operators
 bool xyPnt::operator == (const xyPnt& v) {
 	return(x == v.x && y == v.y);
 }
@@ -104,7 +104,7 @@ bool xyPnt::operator != (const xyPnt& v) {
 	return(x != v.x || y != v.y);
 }
 
-//Binary operators
+// Binary operators
 const xyPnt xyPnt::operator + (const xyPnt& v) {
 	xyPnt result(*this);
 	result += v;
@@ -129,7 +129,7 @@ const xyPnt xyPnt::operator / ( const float& s ) {
 	return result;
 }
 
-//Access operator
+// Access operator
 const float xyPnt::operator[](const int& i) {
 	switch(i) {
 		case 0: return x;
@@ -138,7 +138,7 @@ const float xyPnt::operator[](const int& i) {
 	}
 }
 
-//Functions
+// Functions
 float xyPnt::getLength() {
 	return(sqrt((x * x) + (y * y)));
 }
@@ -164,14 +164,14 @@ void xyPnt::rotate(float angle) {
 }
 
 void xyPnt::rotate(float angle, float pivx, float pivy) {
-	//Offset the vector
+	// Offset the vector
 	x -= pivx;
 	y -= pivy;
 
-	//Rotate the vector
+	// Rotate the vector
 	rotate(angle);
 
-	//Reset the vector
+	// Reset the vector
 	x += pivx;
 	y += pivy;
 }
@@ -186,9 +186,9 @@ float xyPnt::dot(xyPnt* p) {
 
 
 
-///////////
+// // // // // /
 // SHAPE //
-///////////
+// // // // // /
 
 xyShape::xyShape(float _x, float _y, float _a, int _type) {
 	x = _x;
@@ -222,7 +222,7 @@ bool xyLineLineAPI(float x0, float y0, float x1, float y1, float x2, float y2, f
 }
 
 bool xyPointLine(xyPnt* a, xyPnt* b, xyPnt* c) {
-	return false; //TODO: Fill this in
+	return false; // TODO: Fill this in
 }
 
 bool xyLineCircle(xyPnt* a, xyPnt* b, xyPnt* c, float r) {
@@ -259,11 +259,11 @@ bool xyLinePoint(float lx0, float ly0, float lx1, float ly1, float px, float py)
 	float d1 = xyDistance(lx0, ly0, px, py);
 	float d2 = xyDistance(px, py, lx1, ly1);
 
-	return (d1 + d2 <= ll + 1 && d1 + d2 >= ll - 1); //Literal is floating point buffer
+	return (d1 + d2 <= ll + 1 && d1 + d2 >= ll - 1); // Literal is floating point buffer
 }
 
 bool xyHitTest(xyShape* a, xyShape* b) {
-	//Get type of A
+	// Get type of A
 	switch(a->type) {
 		case _LIN:
 			switch(b->type) {

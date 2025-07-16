@@ -27,7 +27,7 @@
 #include <time.h>
 
 float xyDistance(float x1, float y1, float x2, float y2) {
-	//2D distance formula
+	// 2D distance formula
 	float xd = (float)(x1 - x2);
 	float yd = (float)(y1 - y2);
 
@@ -43,8 +43,8 @@ float xyDistance3(float x1, float y1, float z1, float x2, float y2, float z2) {
 }
 
 bool xyInDistance2(float x1, float y1, float x2, float y2, float distance) {
-	//Faster than xyDistance for checking within range
-	//xyDistance is better for when the actual distance needs to be shown
+	// Faster than xyDistance for checking within range
+	// xyDistance is better for when the actual distance needs to be shown
 	return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) <= distance * distance;
 }
 
@@ -67,7 +67,7 @@ float xyWrap(float x, float a0, float a1) {
 
 	if(x >= 0) return mn + fmodf(x, diff);
 	if(x < 0) return mx + fmod(x, diff);
-	return 0; //Just so GCC is happy
+	return 0; // Just so GCC is happy
 }
 
 int xyFloor(float f) {
@@ -87,7 +87,7 @@ float xyPointAngle(float x1, float y1, float x2, float y2) {
 }
 
 bool xyPointInBox(float x1, float y1, float x2, float y2, float px, float py) {
-	//Get min/max of box in case box is flipped
+	// Get min/max of box in case box is flipped
 	float t, b, l, r;
 	l = std::min(x1, x2);
 	r = std::max(x1, x2);

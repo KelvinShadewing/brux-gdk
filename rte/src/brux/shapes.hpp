@@ -27,16 +27,16 @@ namespace ssq {
 	class VM;
 }
 
-const int _SHP = 0; //Formless shape
-const int _LIN = 1; //Line
-const int _CIR = 2; //Circle
-const int _REC = 3; //Rectangle
-const int _TRI = 4; //Triangle
-const int _DIA = 5; //Diamond
-const int _OVL = 6; //Oval
-const int _PLY = 7; //N-polygon
-const int _PRM = 8; //Primitive
-const int _BDY = 9; //Body (compound shape)
+const int _SHP = 0; // Formless shape
+const int _LIN = 1; // Line
+const int _CIR = 2; // Circle
+const int _REC = 3; // Rectangle
+const int _TRI = 4; // Triangle
+const int _DIA = 5; // Diamond
+const int _OVL = 6; // Oval
+const int _PLY = 7; // N-polygon
+const int _PRM = 8; // Primitive
+const int _BDY = 9; // Body (compound shape)
 
 /**
 All shapes use a similar system during runtime.
@@ -50,35 +50,35 @@ separate position and rotation functions.
 */
 
 class xyPnt
-{//Used to store coordinates of each
+{// Used to store coordinates of each
 public:
 	float x, y;
-	//Constructors
+	// Constructors
 	xyPnt();
 	xyPnt(float _x, float _y);
 	xyPnt(const xyPnt& v);
 
-	//Assignment 0perators
+	// Assignment 0perators
 	xyPnt& operator = (const xyPnt& v);
 	xyPnt& operator += (const xyPnt& v);
 	xyPnt& operator -= (const xyPnt& v);
 	xyPnt& operator *= (const float s);
 	xyPnt& operator /= (const float s);
 
-	//Comparison Operators
+	// Comparison Operators
 	bool operator == (const xyPnt& v);
 	bool operator != (const xyPnt& v);
 
-    //Binary Operators
+    // Binary Operators
 	const xyPnt operator + (const xyPnt& v);
 	const xyPnt operator - (const xyPnt& v);
 	const xyPnt operator * ( const float& s );
 	const xyPnt operator / ( const float& s );
 
-	//Access operator
+	// Access operator
 	const float operator[](const int& i);
 
-	//Functions
+	// Functions
 	float getLength();
 	void setLength(float l);
 	void rotate(float angle);
@@ -108,8 +108,8 @@ public:
 	at point (0,0). pnt is the current position of the points,
 	used for detecting collisions.
 	*/
-	void setpos(float _x, float _y, float _a); //Set position based on absolute coordinates
-	void modpos(float _X, float _y, float _a); //Set position based on relative coordinates
+	void setpos(float _x, float _y, float _a); // Set position based on absolute coordinates
+	void modpos(float _X, float _y, float _a); // Set position based on relative coordinates
 	void addpnt(float _x, float _y);
 };
 

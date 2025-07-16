@@ -45,9 +45,9 @@
 #include "brux/text.hpp"
 #include "brux/net.hpp"
 
-/////////////////
-//MAIN FUNCTION//
-/////////////////
+// // // // // // // // /
+// MAIN FUNCTION// 
+// // // // // // // // /
 
 #ifdef __EMSCRIPTEN__
 EMSCRIPTEN_KEEPALIVE
@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) {
 					
 					size_t found = xygapp.find_last_of("/\\");
 					
-					//If local file provided without ./ before it, use local directory
+					// If local file provided without ./ before it, use local directory
 					if (found != -1) {
 						gvWorkDir = xygapp.substr(0, found);
 
@@ -180,9 +180,9 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 
-///////////////////
-//OTHER FUNCTIONS//
-///////////////////
+// // // // // // // // // /
+// OTHER FUNCTIONS// 
+// // // // // // // // // /
 
 // Handles initialization of SDL2 and Squirrel
 int xyInit() {

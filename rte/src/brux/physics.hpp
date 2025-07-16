@@ -30,4 +30,4 @@ private:
 
 #endif
 
-#endif //BRUX_GDK_PHYISICS_H
+#endif // BRUX_GDK_PHYISICS_H

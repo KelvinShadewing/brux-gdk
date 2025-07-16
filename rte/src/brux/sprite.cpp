@@ -41,20 +41,20 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 	source(filename),
 	didLoad(true)
 {
-	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
+	// SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); // // DO NOT USE! // // 
 
-	//Extract short file name
+	// Extract short file name
 	std::string::size_type slashnum = name.find_last_of("/");
 	if(slashnum != std::string::npos)
 		name = name.substr(slashnum + 1, name.length() - 1);
 
-	//Add sprite to list
+	// Add sprite to list
 
 	if(vcSprites.size() == 0) {
 		vcSprites.push_back(this);
 		numero = 0;
 	} else {
-		//Check for an open space in the list
+		// Check for an open space in the list
 		for(int i = 1; i < static_cast<int>(vcSprites.size()); i++) {
 			if(vcSprites[i] == 0) {
 				vcSprites[i] = this;
@@ -63,14 +63,14 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 			}
 		}
 
-		//If an open space wasn't found
+		// If an open space wasn't found
 		if(numero == 0) {
 			vcSprites.push_back(this);
 			numero = static_cast<int>(vcSprites.size()) - 1;
 		}
 	}
 
-	//Parse the image for rows and colums
+	// Parse the image for rows and colums
 	int origW, origH;
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
@@ -100,21 +100,21 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 	source("texture"),
 	didLoad(false)
 {
-	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
+	// SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); // // DO NOT USE! // // 
 
-	//Load texture
+	// Load texture
 	if(texture >= 0 && texture < vcTextures.size()) {
 		if(vcTextures[texture] != 0) tex = texture;
 		else tex = 0;
 	}
 
-	//Add sprite to list
+	// Add sprite to list
 
 	if(vcSprites.size() == 0) {
 		vcSprites.push_back(this);
 		numero = 0;
 	} else {
-		//Check for an open space in the list
+		// Check for an open space in the list
 		for(int i = 1; i < static_cast<int>(vcSprites.size()); i++) {
 			if(vcSprites[i] == 0) {
 				vcSprites[i] = this;
@@ -123,14 +123,14 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 			}
 		}
 
-		//If an open space wasn't found
+		// If an open space wasn't found
 		if(numero == 0) {
 			vcSprites.push_back(this);
 			numero = static_cast<int>(vcSprites.size()) - 1;
 		}
 	}
 
-	//Parse the image for rows and colums
+	// Parse the image for rows and colums
 	int origW, origH;
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
@@ -147,7 +147,7 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 };
 
 void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY) {
-	//Set variables
+	// Set variables
 	w = width;
 	h = height;
 	mar = margin;
@@ -155,21 +155,21 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 	pvX = pivotX;
 	pvY = pivotY;
 	numero = 0;
-	frames = 0; //Obsolete, will untangle later
+	frames = 0; // Obsolete, will untangle later
 	Uint32 newtex = xyLoadImage(filename);
-	//SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! ////
+	// SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); // // DO NOT USE! // // 
 
-	//Delete old texture
+	// Delete old texture
 	xyDeleteImage(tex);
 	tex = newtex;
 
-	//Extract short file name
+	// Extract short file name
 	name = filename;
 	std::string::size_type slashnum = name.find_last_of("/");
 	if(slashnum != std::string::npos)
 		name = name.substr(slashnum + 1, name.length() - 1);
 
-	//Parse the image for rows and colums
+	// Parse the image for rows and colums
 	int origW, origH;
 	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
 	origW -= mar;
@@ -182,7 +182,7 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 };
 
 xySprite::~xySprite() {
-	//Remove from list
+	// Remove from list
 	if(numero == vcSprites.size() - 1) vcSprites.pop_back(); else vcSprites[numero] = 0;
 	xyDeleteImage(tex);
 };
@@ -191,12 +191,12 @@ void xySprite::draw(int f, int x, int y, int angle, SDL_RendererFlip flip, float
 	if(needsReload)
 		reload();
 
-	//Do nothing if scaling is set to 0 on either dimension
+	// Do nothing if scaling is set to 0 on either dimension
 	if(xscale == 0 || yscale == 0) return;
 
 	int fd = static_cast<int>(xyWrap(static_cast<float>(f), 0, static_cast<float>(frames) - 1));
 
-	//Temporary new pivots to be changed based on fliip
+	// Temporary new pivots to be changed based on fliip
 	float npvX = pvX;
 	float npvY = pvY;
 
@@ -227,7 +227,7 @@ void xySprite::draw(int f, int x, int y, int angle, SDL_RendererFlip flip, float
 	piv->x = static_cast<int>(npvX * xscale);
 	piv->y = static_cast<int>(npvY * yscale);
 
-	//Break color into 8-bit versions
+	// Break color into 8-bit versions
 	Uint8 r, g, b;
 	r = (color >> 24) & 0xFF;
 	g = (color >> 16) & 0xFF;
@@ -247,7 +247,7 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 		if(needsReload)
 		reload();
 
-	//Do nothing if scaling is set to 0 on either dimension
+	// Do nothing if scaling is set to 0 on either dimension
 	if(xscale == 0 || yscale == 0) return;
 
 	int fd = static_cast<int>(xyWrap(static_cast<float>(f), 0, static_cast<float>(frames) - 1));
@@ -255,7 +255,7 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	SDL_Rect rec;
 	SDL_Rect des;
 
-	//Temporary new pivots to be changed based on flip
+	// Temporary new pivots to be changed based on flip
 	float npvX = pvX;
 	float npvY = pvY;
 
@@ -312,7 +312,7 @@ void xySprite::drawmod(int f, int x, int y, Uint32 color) {
 	rec.w = w;
 	rec.h = h;
 
-	//Break color into 8-bit versions
+	// Break color into 8-bit versions
 	Uint8 r, g, b;
 	r = (color >> 24) & 0xFF;
 	g = (color >> 16) & 0xFF;
@@ -327,12 +327,12 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 		if(needsReload)
 		reload();
 
-	//Do nothing if scaling is set to 0 on either dimension
+	// Do nothing if scaling is set to 0 on either dimension
 	if(xscale == 0 || yscale == 0) return;
 
 	int fd = static_cast<int>(xyWrap(static_cast<float>(f), 0, static_cast<float>(frames) - 1));
 
-	//Temporary new pivots to be changed based on fliip
+	// Temporary new pivots to be changed based on fliip
 	float npvX = pvX;
 	float npvY = pvY;
 
@@ -363,7 +363,7 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	piv->x = static_cast<int>(npvX * xscale);
 	piv->y = static_cast<int>(npvY * yscale);
 
-	//Break color into 8-bit versions
+	// Break color into 8-bit versions
 	Uint8 r, g, b;
 	r = (color >> 24) & 0xFF;
 	g = (color >> 16) & 0xFF;
@@ -520,7 +520,7 @@ void xySpriteSetBlendMode(int sprite, int blend) {
 void xyFlushSprites() {
 	for(int i = 0; i < vcSprites.size(); i++) {
 		if (vcSprites[i] != 0 && vcSprites[i]->gettex() != 0 && vcSprites[i]->didLoad && !vcSprites[i]->needsReload) {
-			//Do not flush sprites that were created from textures
+			// Do not flush sprites that were created from textures
 			vcSprites[i]->deload();
 		}
 	}
@@ -530,9 +530,9 @@ void xyFlushSprites() {
 void xyRegisterSpriteAPI(ssq::VM& vm) {
 	vm.addFunc("spriteName", xySpriteName); // Doc'd
 	vm.addFunc("findSprite", xyFindSprite); // Doc'd
-	//Binding functions that use optional parameters under a hidden name
-	//then defining the user-facing name in Squirrel, since SimpleSquirrel
-	//does not seem to support optional parameters.
+	// Binding functions that use optional parameters under a hidden name
+	// then defining the user-facing name in Squirrel, since SimpleSquirrel
+	// does not seem to support optional parameters.
 	vm.addFunc("__newSprite__OP__", xyNewSprite); // Doc'd
 	vm.addFunc("__newSpriteFT__OP__", xyNewSpriteFT);
 	vm.addFunc("drawSprite", xyDrawSprite); // Doc'd

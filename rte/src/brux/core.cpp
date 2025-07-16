@@ -1,17 +1,17 @@
 //  Brux - Core
 //  Copyright (C) 2016 KelvinShadewing
 //  Copyright (C) 2023 hexaheximal
-//
+// 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Affero General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
-//
+// 
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Affero General Public License for more details.
-//
+// 
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -405,143 +405,171 @@ void xyLoadCore() {
 	const c_black = 0xff;
 	const pi = 3.14159265358979323846;
 
-	arraySort <- function(arr){	//Skip sorting if it's not an array
-	if(typeof arr != "array") return arr;	//or if there's nothing to sort
-	if(arr.len() <= 1) return arr
-		local needsort = true
+	::arraySort <- function(arr){
+		if(typeof arr != "array")	// Skip sorting if it's not an array
+		return arr;	// or if there's nothing to sort
 
-		while(needsort) {
-			needsort = false
-			for(local i = 0; i < arr.len() - 2; i++) {
-				if(arr[i] > arr[i+1]) {
-					local temp = arr[i]
-					arr[i] = arr[i+1]
-					arr[i+1] = temp
-					needsort = true
+		if(arr.len() <= 1) return arr
+			local needsort = true;
+
+			while(needsort) {
+				needsort = false;
+				for(local i = 0; i < arr.len() - 2; i++) {
+					if(arr[i] > arr[i+1]) {
+						local temp = arr[i];
+						arr[i] = arr[i+1];
+						arr[i+1] = temp;
+						needsort = true;
+					}
 				}
 			}
-		}
 
-		return arr
-	}
+		return arr;
+	};
 
 	::jsonWrite <- function(Table) {
-		if(typeof Table == "null") return "null"
+		if(typeof Table == "null")
+			return "null";
 		if(typeof(Table)!="array" && typeof(Table)!="table")
-			return Table.tostring()
-		local Out = ""
+			return Table.tostring();
+		local Out = "";
 		local AsString = function(Item) {
 			switch(typeof(Item)) {
 				case "table":
 				case "array":
-					return jsonWrite(Item)
+					return jsonWrite(Item);
+					break;
+
 				case "string":
-					local Len = Item.len()
-					local Str = ""
+					local Len = Item.len();
+					local Str = "";
 					for(local i=0;i<Len;i++) {
 						if(Item[i]=='\\' || Item[i]=='\"')
-							Str+="\\"
-						Str+=Item.slice(i, i+1)
+							Str+="\\";
+						Str+=Item.slice(i, i+1);
 					}
-					return "\""+Str+"\""
+					return "\""+Str+"\"";
+					break;
+
 				case "null":
-					return "null"
+					return "null";
+					break;
+
 				default:
-					if("tostring" in Item) return Item.tostring()
-					else return Item
+					if("tostring" in Item)
+						return Item.tostring();
+					else
+						return Item;
 			}
 		}
+
 		if(typeof(Table) == "table") {
-			if(Table.len() == 0) return "{}"
-			Out = "{"
+			if(Table.len() == 0) return "{}";
+			Out = "{";
 			foreach(Key,Val in Table)
-				Out += "\""+Key+"\":"+AsString(Val)+", "
-			return Out.slice(0,-2) + "}"
+				Out += "\""+Key+"\":"+AsString(Val)+", ";
+			return Out.slice(0,-2) + "}";
 		}
+
 		if(typeof(Table) == "array") {
-			if(Table.len() == 0) return "[]"
-			Out = "["
+			if(Table.len() == 0) return "[]";
+			Out = "[";
 			foreach(Val in Table)
-				Out += AsString(Val)+", "
-			return Out.slice(0,-2) + "]"
+				Out += AsString(Val)+", ";
+			return Out.slice(0,-2) + "]";
 		}
-	}
+	};
 
 	::min <- function(a, b) {
-		if(a < b) return a
-		else return b
-	}
+		if(a < b) return a;
+		else return b;
+	};
 
 	::max <- function(a, b) {
-		if(a > b) return a
-		else return b
-	}
+		if(a > b) return a;
+		else return b;
+	};
 
 	::choose <- function(...) {
 		if(vargv.len() == 0)
-			return null
-		return vargv[randInt(vargv.len())]
-	}
+			return null;
+		return vargv[randInt(vargv.len())];
+	};
 
 	::wavg <- function(a, b, w) {
 		return (1 - w) * a + w * b;
-	}
+	};
 
 	::deepClone <- function(obj) {
 	if (typeof obj == "array") {
-		local result = []
+		local result = [];
 		foreach (item in obj) {
-			result.append(deepClone(item))
+			result.append(deepClone(item));
 		}
-		return result
+		return result;
 	} else if (typeof obj == "table") {
-		local result = {}
+		local result = {};
 		foreach (key, value in obj) {
-			result[key] <- deepClone(value)
+			result[key] <- deepClone(value);
 		}
-		return result
+		return result;
 	} else {
-		return obj
+		return obj;
 	}
-}
+};
 
-	::system <- function(var) { print("I can't let you do that, Dave.") }
+	::system <- function(var) { print("I can't let you do that, Dave."); };
 
-	::int <- function(var) { return var.tointeger() }
-	::float <- function(var) { return var.tofloat() }
-	::str <- function(var) { return var.tostring() }
-	::char <- function(var) { return var.tochar() }
-	::bool <- function(var) { return (var && true) }
+	::int <- function(var) { return var.tointeger(); };
+	::float <- function(var) { return var.tofloat(); };
+	::str <- function(var) { return var.tostring(); };
+	::char <- function(var) { return var.tochar(); };
+	::bool <- function(var) { return (var && true); };
 
-	::eval <- function(expression) { return compilestring("return ("+expression+");")() }
+	::eval <- function(expression) { return compilestring("return ("+expression+");")(); };
 
-	::drawSprite <- function(i, f, x, y, a = 0, l = 0, sx = 1.0, sy = 1.0, p = 1.0, c = 0xffffffff) { drawSpriteExMod(i, f, x, y, a, l, float(sx), float(sy), p, c)}
-	::newSprite <- function(i, w = 0, h = 0, px = 0, py = 0, m = 0, p = 0) { return __newSprite__OP__(i, w, h, px, py, m, p) }
-	::newSpriteFT <- function(t, w = 0, h = 0, px = 0, py = 0, m = 0, p = 0) { return __newSpriteFT__OP__(t, w, h, px, py, m, p) }
+	::drawSprite <- function(i, f, x, y, a = 0, l = 0, sx = 1.0, sy = 1.0, p = 1.0, c = 0xffffffff) { drawSpriteExMod(i, f, x, y, a, l, float(sx), float(sy), p, c); };
+	::newSprite <- function(i, w = 0, h = 0, px = 0, py = 0, m = 0, p = 0) { return __newSprite__OP__(i, w, h, px, py, m, p); };
+	::newSpriteFT <- function(t, w = 0, h = 0, px = 0, py = 0, m = 0, p = 0) { return __newSpriteFT__OP__(t, w, h, px, py, m, p); };
 
 	::shuffle <- function(arr) {
 		if(typeof arr == "table") {
-			local na = []
+			local na = [];
 			foreach(i in arr) {
-				na.push(i)
+				na.push(i);
 			}
-			return shuffle(na)
+			return shuffle(na);
 		}
 
 		if(typeof arr != "array")
-			return [arr]
+			return [arr];
 
-		local na = clone(arr)
+		local na = clone(arr);
 
 		for(local i = na.len() - 1; i >= 1; i--) {
-			local j = floor(randInt(na.len()) % (i + 1))
-			local t = na[i]
-			na[i] = na[j]
-			na[j] = t
+			local j = floor(randInt(na.len()) % (i + 1));
+			local t = na[i];
+			na[i] = na[j];
+			na[j] = t;
 		}
 
-		return na
-	}
+		return na;
+	};
+
+	::chunk <- function(str, size) {
+		if(typeof str != "string" || size <= 0)
+			return [];
+
+		local chunks = [];
+		local l = str.len();
+		for(local i = 0; i < l; i += size) {
+			if(i + size < l)
+				chunks.append(str.slice(i, i + size));
+			else
+				chunks.append(str.slice(i));
+		}
+		return chunks;
+	};
 
 	print("Imported core lib.");)rew";
 
