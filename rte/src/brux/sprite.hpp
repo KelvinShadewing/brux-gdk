@@ -62,6 +62,10 @@ std::string xySpriteName(int sprite);
 int xyFindSprite(const std::string& name);
 int xyNewSprite(const std::string& i, int w, int h, float px, float py, int m, int p);
 int xyNewSpriteFT(int t, int w, int h, float px, float py, int m, int p);
+// I have attempted to merge these into a single function, but doing so broke
+// rendering. If anyone would like to take a look at this, please do so.
+// xyDrawSprite should do everything xyDrawSpriteExMod does, but with arguments
+// after y being optional.
 void xyDrawSprite(int i, int f, int x, int y);
 void xyDrawSpriteEx(int i, int f, int x, int y, int a, int l, float sx, float sy, float p, int c);
 void xyDrawSpriteMod(int i, int f, int x, int y, int c);

@@ -21,6 +21,7 @@
 #ifndef _BRUX_FLOP_HPP_
 #define _BRUX_FLOP_HPP_
 
-
+void xyFlopDraw(int src, int x, int y, int w, int h, int cx, int cy, int ca, int near, int far, int fov, int scale);
+void xyRegisterFlopAPI(ssq::VM& vm);
 
 #endif

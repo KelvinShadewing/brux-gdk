@@ -44,6 +44,7 @@
 #include "brux/sprite.hpp"
 #include "brux/text.hpp"
 #include "brux/net.hpp"
+#include "brux/flop.hpp"
 
 // // // // // // // // /
 // MAIN FUNCTION// 
@@ -277,6 +278,8 @@ int xyInit() {
 	xyRegisterSpriteAPI(gvSquirrel);
 	xyRegisterTextAPI(gvSquirrel);
 	xyRegisterNetworkAPI(gvSquirrel);
+	xyRegisterFlopAPI(gvSquirrel);
+	
 
 	// The error handler does not seem to print compile-time errors.
 	// I haven't been able to figure out why, as the same code works in my other apps,
