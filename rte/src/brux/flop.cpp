@@ -72,14 +72,14 @@ void xyFlopDraw(
 
 	// Temporary sprite to render individual pixels
 	if(gvSprPixels == 0) {
-		gvSprPixels = xyNewSpriteFT(src, w, h, 0.0f, 0.0f, 0, 0);
+		gvSprPixels = xyNewSpriteFT(src, 1, 1, 0, 0, 0, 0);
 		if(gvSprPixels == 0) {
 			xyPrint("Failed to create temporary sprite for xyFlopDraw.");
 			return;
 		}
 	}
 	int tspr = gvSprPixels;
-	xyReplaceSpriteTexture(tspr, src, w, h, 0, 0, 0, 0);
+	xyReplaceSpriteTexture(tspr, src, 1, 1, 0, 0, 0, 0);
 
 	// Get points along near and far planes
 	float rad = static_cast<float>(ca) * 3.14159265f / 180.0f; // Convert angle to radians
@@ -114,7 +114,6 @@ void xyFlopDraw(
 
 			// Draw the pixel at the transformed position
 			xyDrawSpriteExMod(tspr, frame, x + (i * scale), y + (j * scale), 0, SDL_FLIP_NONE, 1.0f, scale, scale, 0xFFFFFFFF);
-			xyDrawSpriteExMod(tspr, frame, 0, 0, 0, SDL_FLIP_NONE, 1.0f, scale, scale, 0xFFFFFFFF);
 		}
 	}
 
