@@ -26,6 +26,8 @@
 #include "brux/main.hpp"
 #include "brux/global.hpp"
 
+int gvSprPixels = 0; //Sprite to hold sample texture
+
 // Draw a texture with an affine transformation for pseudo-3D
 void xyFlopDraw(
 	int src, // Source texture ID
@@ -47,11 +49,37 @@ void xyFlopDraw(
 	|| near <= 0
 	|| far <= 0
 	|| far <= near
-	|| fov <= 0)
-		return; // Invalid texture IDs or parameters
+	|| fov <= 0) {
+		xyPrint("xyFlopDraw: Invalid parameters or texture ID.");
+		xyPrint("Source: %i, X: %i, Y: %i, Width: %i, Height: %i",
+			src, x, y, w, h);
+		if(far <= near) {
+			xyPrint("Near plane (%i) must be less than far plane (%i).", near, far);
+		}
+		if(fov <= 0) {
+			xyPrint("Field of view (%i) must be greater than 0.", fov);
+		}
+		if(src >= static_cast<int>(vcTextures.size())) {
+			xyPrint("Texture ID %i is out of bounds (max %zu).", src, vcTextures.size() - 1);
+		}
+		if(vcTextures[src] == nullptr) {
+			xyPrint("Texture ID %i is null.", src);
+		}
+		return;
+	}
+
+	xyPrint("Passed guard clauses for xyFlopDraw");
 
 	// Temporary sprite to render individual pixels
-	int tspr = xyNewSpriteFT(src, 1, 1, 0, 0, 0, 0);
+	if(gvSprPixels == 0) {
+		gvSprPixels = xyNewSpriteFT(src, w, h, 0.0f, 0.0f, 0, 0);
+		if(gvSprPixels == 0) {
+			xyPrint("Failed to create temporary sprite for xyFlopDraw.");
+			return;
+		}
+	}
+	int tspr = gvSprPixels;
+	xyReplaceSpriteTexture(tspr, src, w, h, 0, 0, 0, 0);
 
 	// Get points along near and far planes
 	float rad = static_cast<float>(ca) * 3.14159265f / 180.0f; // Convert angle to radians
@@ -67,6 +95,8 @@ void xyFlopDraw(
 	float cnx = (nx0 + nx1 + fx0 + fx1) / 4.0f; // Center X coordinate
 	float cny = (ny0 + ny1 + fy0 + fy1) / 4.0f; // Center Y coordinate
 
+	xyPrint("Center X: %i, Center Y: %i", static_cast<int>(cnx), static_cast<int>(cny));
+
 	for(int i = 0; i < w; i++) {
 		for(int j = 0; j < h; j++) {
 			// Calculate the pixel position in the destination texture
@@ -77,13 +107,17 @@ void xyFlopDraw(
 			float tx = cnx + (px * (fx0 - nx0) / w) + (py * (fx1 - nx1) / h);
 			float ty = cny + (px * (fy0 - ny0) / w) + (py * (fy1 - ny1) / h);
 
+			int src_w = xySpriteCol(tspr); // sprite width in pixels
+			int src_h = xySpriteRow(tspr); // sprite height in pixels
+
+			int frame = tx + ty * src_w;
+
 			// Draw the pixel at the transformed position
-			xyDrawSpriteExMod(tspr, i + (j * xySpriteW(tspr)), x + static_cast<int>(tx * scale), y + static_cast<int>(ty * scale), 0, SDL_FLIP_NONE, 1.0f, scale, scale, 0xFFFFFFFF);
+			xyDrawSpriteExMod(tspr, frame, x + (i * scale), y + (j * scale), 0, SDL_FLIP_NONE, 1.0f, scale, scale, 0xFFFFFFFF);
+			xyDrawSpriteExMod(tspr, frame, 0, 0, 0, SDL_FLIP_NONE, 1.0f, scale, scale, 0xFFFFFFFF);
 		}
 	}
 
-	// Delete temporary sprite
-	xyDeleteSprite(tspr);
 }
 
 void xyRegisterFlopAPI(ssq::VM& vm) {

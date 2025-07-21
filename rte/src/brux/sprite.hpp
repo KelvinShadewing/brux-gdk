@@ -39,6 +39,7 @@ public:
 	xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
 	~xySprite();
 	void replaceSprite(const std::string& filename, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
+	void replaceTexture(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, Uint32 padding, float pivotX, float pivotY);
 	void draw(int f, int x, int y, int angle = 0, SDL_RendererFlip flip = SDL_FLIP_NONE, float xscale = 1.0, float yscale = 1.0, float alpha = 1.0, Uint32 color = 0xFFFFFFFF);
 	void drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, float xscale, float yscale, float alpha);
 	void drawmod(int f, int x, int y, Uint32 color);
@@ -73,7 +74,10 @@ void xyDrawSpriteExMod(int i, int f, int x, int y, int a, int l, float sx, float
 void xyDeleteSprite(int i);
 int xySpriteW(int i);
 int xySpriteH(int i);
+int xySpriteCol(int i);
+int xySpriteRow(int i);
 void xyReplaceSprite(int s, const std::string& f, int w, int h, int m, int p, float x, float y);
+void xyReplaceSpriteTexture(int s, Uint32 t, int w, int h, int m, int p, float x, float y);
 void xySpriteSetBlendMode(int sprite, int blend);
 void xyFlushSprites();
 

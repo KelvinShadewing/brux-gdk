@@ -181,6 +181,32 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 	frames = col * row;
 };
 
+void xySprite::replaceTexture(Uint32 texture, Uint32 width = -1, Uint32 height = -1, Uint32 margin = -1, Uint32 padding = -1, float pivotX = -1, float pivotY = -1) {
+	// Set variables
+	if(width > 0) w = width;
+	if(height > 0) h = height;
+	if(margin > -1) mar = margin;
+	if(padding > -1) pad = padding;
+	if(pivotX > -1) pvX = pivotX;
+	if(pivotY > -1) pvY = pivotY;
+	numero = 0;
+	frames = 0; // Obsolete, will untangle later
+
+	// Delete old texture
+	tex = texture;
+
+	// Parse the image for rows and colums
+	int origW, origH;
+	SDL_QueryTexture(vcTextures[tex], 0, 0, &origW, &origH);
+	origW -= mar;
+	origH -= mar;
+	col = static_cast<int>(std::floor(origW / (w + pad)));
+	row = static_cast<int>(std::floor(origH / (h + pad)));
+	if(col < 1) col = 1;
+	if(row < 1) row = 1;
+	frames = col * row;
+};
+
 xySprite::~xySprite() {
 	// Remove from list
 	if(numero == vcSprites.size() - 1) vcSprites.pop_back(); else vcSprites[numero] = 0;
@@ -468,10 +494,6 @@ int xySpriteH(int i) {
 	return vcSprites[i]->geth();
 }
 
-#undef SPRITE_CHECK_VALID
-#undef SPRITE_CHECK_VALID_VOID
-#undef SPRITE_CHECK_VALID_INT
-
 void xyReplaceSprite(int s, const std::string& f, int w, int h, int m, int p, float x, float y) {
 	if (s <= 0 || s >= static_cast<int>(vcSprites.size())) {
 		return;
@@ -483,6 +505,19 @@ void xyReplaceSprite(int s, const std::string& f, int w, int h, int m, int p, fl
 	}
 
 	vcSprites[s] = new xySprite(f, w, h, m, p, x, y);
+}
+
+void xyReplaceSpriteTexture(int s, Uint32 t, int w = -1, int h = -1, int m = -1, int p = -1, float x = -1, float y = -1) {
+	if (s <= 0 || s >= static_cast<int>(vcSprites.size())) {
+		return;
+	}
+
+	if (vcSprites[s] != 0) {
+		vcSprites[s]->replaceTexture(t, w, h, m, p, x, y);
+		return;
+	}
+
+	vcSprites[s] = new xySprite(t, w, h, m, p, x, y);
 }
 
 void xySpriteSetBlendMode(int sprite, int blend) {
@@ -526,6 +561,16 @@ void xyFlushSprites() {
 	}
 }
 
+int xySpriteCol(int i) {
+	SPRITE_CHECK_VALID_INT;
+	return vcSprites[i]->getcol();
+}
+
+int xySpriteRow(int i) {
+	SPRITE_CHECK_VALID_INT;
+	return vcSprites[i]->getrow();
+}
+
 
 void xyRegisterSpriteAPI(ssq::VM& vm) {
 	vm.addFunc("spriteName", xySpriteName); // Doc'd
@@ -542,7 +587,14 @@ void xyRegisterSpriteAPI(ssq::VM& vm) {
 	vm.addFunc("deleteSprite", xyDeleteSprite); // Doc'd
 	vm.addFunc("spriteW", xySpriteW); // Doc'd
 	vm.addFunc("spriteH", xySpriteH); // Doc'd
+	vm.addFunc("spriteCol", xySpriteCol); // Doc'd
+	vm.addFunc("spriteRow", xySpriteRow); // Doc'd
 	vm.addFunc("replaceSprite", xyReplaceSprite);
+	vm.addFunc("replaceSpriteTexture", xyReplaceSpriteTexture);
 	vm.addFunc("spriteSetBlendMode", xySpriteSetBlendMode); // Doc'd
 	vm.addFunc("flushSprites", xyFlushSprites);
 }
+
+#undef SPRITE_CHECK_VALID
+#undef SPRITE_CHECK_VALID_VOID
+#undef SPRITE_CHECK_VALID_INT

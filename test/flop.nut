@@ -4,18 +4,18 @@
 ::sprFont <- newSprite("res/font.png", 6, 8);
 ::font <- newFont(sprFont, 0, 0, true, 0);
 
-local x = 0;
-local y = 0;
+local x = 64;
+local y = 64;
 local a = 0;
-local n = 1;
-local f = 1000;
-local v = 90;
+local n = 10;
+local f = 100;
+local v = 45;
 
 while(!getQuit()) {
 	
 	// Draw the terrain with FLOP rendering
 	flopDraw(imgTerrain, 0, 0, screenW(), screenH(), x, y, a, n, f, v, 1.0);
-	drawText(font, 0, 0, "X: " + x + "\nY: " + y + "\nAngle: " + a + "\nNear: " + n + "\nFar: " + f + "\nFOV: " + v + "\nFPS: " + getFPS());
+	drawText(font, 0, 0, "X: " + round(x) + "\nY: " + round(y) + "\nAngle: " + a + "\nNear: " + n + "\nFar: " + f + "\nFOV: " + v + "\nFPS: " + getFPS());
 	
 	// Move camera
 	if(keyDown(k_left))
