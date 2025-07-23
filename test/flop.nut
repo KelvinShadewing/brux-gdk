@@ -14,7 +14,7 @@ local v = 1;
 while(!getQuit()) {
 	
 	// Draw the terrain with FLOP rendering
-	flopDraw(imgTerrain, 0, 0, screenW(), screenH(), x, y, a, n, f, v, 1.0);
+	flopDraw(imgTerrain, 0, screenH() / 2, screenW(), screenH(), x, y, a, n, f, v, 1.0);
 	drawText(font, 0, 0, "X: " + round(x) + "\nY: " + round(y) + "\nAngle: " + a + "\nNear: " + n + "\nFar: " + f + "\nFOV: " + v + "\nFPS: " + getFPS());
 	
 	// Move camera

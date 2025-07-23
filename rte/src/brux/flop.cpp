@@ -68,8 +68,6 @@ void xyFlopDraw(
 		return;
 	}
 
-	xyPrint("Passed guard clauses for xyFlopDraw");
-
 	// Temporary sprite to render individual pixels
 	if(gvSprPixels == 0) {
 		gvSprPixels = xyNewSpriteFT(src, 1, 1, 0, 0, 0, 0);
@@ -94,8 +92,6 @@ void xyFlopDraw(
 	float cnx = (nx0 + nx1 + fx0 + fx1) / 4.0f; // Center X coordinate
 	float cny = (ny0 + ny1 + fy0 + fy1) / 4.0f; // Center Y coordinate
 
-	xyPrint("Center X: %i, Center Y: %i", static_cast<int>(cnx), static_cast<int>(cny));
-
 	int src_w = xySpriteCol(gvSprPixels);
 	int src_h = xySpriteRow(gvSprPixels);
 
@@ -109,25 +105,25 @@ void xyFlopDraw(
 	float fov_rad = static_cast<float>(fov) * 3.14159265f / 180.0f;
 	float fov_scale = tan(fov_rad / 2.0f);
 
-	for (int j = 0; j < h; j++) {
-	    float z = near + (far - near) * ((float)j / (float)h);
+	for (int j = -h / 2; j < h / 2; j++) {
+		float z = near + (far - near) * ((float)j / (float)h);
 
-	    for (int i = 0; i < w; i++) {
-	        float dx = (i - center_x) / (h * fov_scale);
-	        float dy = z;
+		for (int i = 0; i < w; i++) {
+			float dx = (i - center_x) / (h * fov_scale);
+			float dy = z;
 
-	        // World position
-	        float world_x = cx + dx * cos_a - dy * sin_a;
-	        float world_y = cy + dx * sin_a + dy * cos_a;
+			// World position
+			float world_x = cx + dx * cos_a - dy * sin_a;
+			float world_y = cy + dx * sin_a + dy * cos_a;
 
-	        int ix = static_cast<int>(world_x) % src_w;
-	        int iy = static_cast<int>(world_y) % src_h;
-	        if (ix < 0) ix += src_w;
-	        if (iy < 0) iy += src_h;
+			int ix = static_cast<int>(world_x) % src_w;
+			int iy = static_cast<int>(world_y) % src_h;
+			if (ix < 0) ix += src_w;
+			if (iy < 0) iy += src_h;
 
-	        int frame = ix + iy * src_w;
-	        xyDrawSpriteExMod(gvSprPixels, frame, x + (i * scale), y + (j * scale), 0, SDL_FLIP_NONE, scale, scale, 1.0, 0xFFFFFFFF);
-	    }
+			int frame = ix + iy * src_w;
+			xyDrawSpriteExMod(gvSprPixels, frame, x + (i * scale), y + (j * scale), 0, SDL_FLIP_NONE, scale, scale, 1.0, 0xFFFFFFFF);
+		}
 	}
 
 }
