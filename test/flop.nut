@@ -7,9 +7,9 @@
 local x = 64;
 local y = 64;
 local a = 0;
-local n = 10;
-local f = 100;
-local v = 45;
+local n = 1;
+local f = 500;
+local v = 1;
 
 while(!getQuit()) {
 	
@@ -23,12 +23,12 @@ while(!getQuit()) {
 	if(keyDown(k_right))
 		a++;
 	if(keyDown(k_up)) {
-		x += lendirX(1, a);
-		y += lendirY(1, a);
+		x += lendirX(1, a - 90);
+		y += lendirY(1, a - 90);
 	}
 	if(keyDown(k_down)) {
-		x -= lendirX(1, a);
-		y -= lendirY(1, a);
+		x -= lendirX(1, a - 90);
+		y -= lendirY(1, a - 90);
 	}
 
 	//Adjust near and far planes

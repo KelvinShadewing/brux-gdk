@@ -32,9 +32,9 @@ int gvSprPixels = 0; //Sprite to hold sample texture
 void xyFlopDraw(
 	int src, // Source texture ID
 	int x, // Output X position
-	int y, // Output Y position
-	int w, // Output width
-	int h, // Output height
+	int y, // Output Y Position
+	int w, // Output Width
+	int h, // Output Height
 	int cx, // Camera X position
 	int cy, // Camera Y position
 	int ca, // Camera angle
@@ -78,8 +78,7 @@ void xyFlopDraw(
 			return;
 		}
 	}
-	int tspr = gvSprPixels;
-	xyReplaceSpriteTexture(tspr, src, 1, 1, 0, 0, 0, 0);
+	xyReplaceSpriteTexture(gvSprPixels, src, 1, 1, 0, 0, 0, 0);
 
 	// Get points along near and far planes
 	float rad = static_cast<float>(ca) * 3.14159265f / 180.0f; // Convert angle to radians
@@ -97,24 +96,38 @@ void xyFlopDraw(
 
 	xyPrint("Center X: %i, Center Y: %i", static_cast<int>(cnx), static_cast<int>(cny));
 
-	for(int i = 0; i < w; i++) {
-		for(int j = 0; j < h; j++) {
-			// Calculate the pixel position in the destination texture
-			float px = static_cast<float>(i) - static_cast<float>(w) / 2.0f;
-			float py = static_cast<float>(j) - static_cast<float>(h) / 2.0f;
+	int src_w = xySpriteCol(gvSprPixels);
+	int src_h = xySpriteRow(gvSprPixels);
 
-			// Calculate the affine transformation
-			float tx = cnx + (px * (fx0 - nx0) / w) + (py * (fx1 - nx1) / h);
-			float ty = cny + (px * (fy0 - ny0) / w) + (py * (fy1 - ny1) / h);
+	float center_x = w / 2.0f;
+	float horizon = h; // Camera at bottom of screen
 
-			int src_w = xySpriteCol(tspr); // sprite width in pixels
-			int src_h = xySpriteRow(tspr); // sprite height in pixels
+	float angle_rad = static_cast<float>(ca) * 3.14159265f / 180.0f;
+	float cos_a = cos(angle_rad);
+	float sin_a = sin(angle_rad);
 
-			int frame = tx + ty * src_w;
+	float fov_rad = static_cast<float>(fov) * 3.14159265f / 180.0f;
+	float fov_scale = tan(fov_rad / 2.0f);
 
-			// Draw the pixel at the transformed position
-			xyDrawSpriteExMod(tspr, frame, x + (i * scale), y + (j * scale), 0, SDL_FLIP_NONE, 1.0f, scale, scale, 0xFFFFFFFF);
-		}
+	for (int j = 0; j < h; j++) {
+	    float z = near + (far - near) * ((float)j / (float)h);
+
+	    for (int i = 0; i < w; i++) {
+	        float dx = (i - center_x) / (h * fov_scale);
+	        float dy = z;
+
+	        // World position
+	        float world_x = cx + dx * cos_a - dy * sin_a;
+	        float world_y = cy + dx * sin_a + dy * cos_a;
+
+	        int ix = static_cast<int>(world_x) % src_w;
+	        int iy = static_cast<int>(world_y) % src_h;
+	        if (ix < 0) ix += src_w;
+	        if (iy < 0) iy += src_h;
+
+	        int frame = ix + iy * src_w;
+	        xyDrawSpriteExMod(gvSprPixels, frame, x + (i * scale), y + (j * scale), 0, SDL_FLIP_NONE, scale, scale, 1.0, 0xFFFFFFFF);
+	    }
 	}
 
 }
