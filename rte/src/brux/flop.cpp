@@ -79,8 +79,11 @@ void xyFlopDraw(
 	xyReplaceSpriteTexture(gvSprPixels, src, 1, 1, 0, 0, 0, 0);
 
 	// Get points along near and far planes
+	float fov_rad = static_cast<float>(fov) * 3.14159265f / 180.0f;
+	float fov_scale = tan(fov_rad / 2.0f);
+
 	float rad = static_cast<float>(ca) * 3.14159265f / 180.0f; // Convert angle to radians
-	float fovScale = static_cast<float>(fov) / 90.0f; // Normalize FOV (assuming 90 is default)
+	float fovScale = static_cast<float>(fov_rad) / 90.0f; // Normalize FOV (assuming 90 is default)
 	float nx0 = cx + near * cos(rad) * fovScale;
 	float ny0 = cy + near * sin(rad) * fovScale;
 	float nx1 = cx - near * cos(rad) * fovScale;
@@ -101,9 +104,6 @@ void xyFlopDraw(
 	float angle_rad = static_cast<float>(ca) * 3.14159265f / 180.0f;
 	float cos_a = cos(angle_rad);
 	float sin_a = sin(angle_rad);
-
-	float fov_rad = static_cast<float>(fov) * 3.14159265f / 180.0f;
-	float fov_scale = tan(fov_rad / 2.0f);
 
 	for (int j = -h / 2; j < h / 2; j++) {
 		float z = near + (far - near) * ((float)j / (float)h);

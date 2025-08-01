@@ -22,6 +22,7 @@ while(!getQuit()) {
 		a--;
 	if(keyDown(k_right))
 		a++;
+	a %= 360
 	if(keyDown(k_up)) {
 		x += lendirX(1, a - 90);
 		y += lendirY(1, a - 90);

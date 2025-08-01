@@ -14,9 +14,7 @@ Developers using Brux may freely make games without any need for paid license or
 
 Disclosure: The material in this {book/paper/blog/article} has not been reviewed, endorsed, or approved of by the Rust Foundation. For more information on the Rust Foundation Trademark Policy, click here.
 
-### Nightly Build
-
-http://kelvinshadewing.net/dl/brux-nightly.zip
+If you're viewing from a mirror, the main repo is hosted here: https://codeberg.org/KelvinShadewing/brux-gdk
 
 ### Dependencies
 #### Runtime
