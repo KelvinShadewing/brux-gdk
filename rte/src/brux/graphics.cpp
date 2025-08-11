@@ -26,9 +26,9 @@
 #include "brux/global.hpp"
 #include "brux/fileio.hpp"
 
-// // // // // 
+////////// 
 // SYSTEM// 
-// // // // // 
+////////// 
 
 // Clear screen
 
@@ -167,9 +167,9 @@ void xyResetDrawTarget() {
 
 
 
-// // // // // 
+////////// 
 // IMAGES// 
-// // // // // 
+////////// 
 
 // Load image
 
@@ -739,9 +739,9 @@ Uint32 xyGetSurfacePixel(SDL_Surface* surface, int x, int y) {
 	}
 }
 
-// // // // // // // 
+////////////// 
 // GEOMETRY //
-// // // // // // // 
+////////////// 
 
 
 

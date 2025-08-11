@@ -218,32 +218,109 @@ void xyFont::draw(int x, int y, std::string text, Uint32 color) {
 						curcol = 0x505050ff; // Dark Gray
 						break;
 					case '9':
-						curcol = 0x5050f8ff; // Blue
+						curcol = 0x0000f8ff; // Blue
 						break;
 					case 'a':
 					case 'A':
-						curcol = 0x50f850ff; // Green
+						curcol = 0x00f800ff; // Green
 						break;
 					case 'b':
 					case 'B':
-						curcol = 0x58f8f8ff; // Aqua
+						curcol = 0x00f8f8ff; // Aqua
 						break;
 					case 'c':
 					case 'C':
-						curcol = 0xf85058ff; // Red
+						curcol = 0xf80000ff; // Red
 						break;
 					case 'd':
 					case 'D':
-						curcol = 0xf850f8ff; // Light Purple
+						curcol = 0xf800f8ff; // Purple
 						break;
 					case 'e':
 					case 'E':
-						curcol = 0xf8f850ff; // Yellow
+						curcol = 0xf8f800ff; // Yellow
 						break;
 					case 'f':
 					case 'F':
 						curcol = 0x000000ff; // Black
 						break;
+					case 'g':
+					case 'G':
+						curcol = 0xa8a8a8ff; // Light Gray
+						break;
+					case 'h':
+					case 'H':
+						curcol = 0xf88080ff; // Light Red
+						break;
+					case 'i':
+					case 'I':
+						curcol = 0x80f880ff; // Light Green
+						break;
+					case 'j':
+					case 'J':
+						curcol = 0xb0b0f8ff; // Light Blue
+						break;
+					case 'k':
+					case 'K':
+						curcol = 0x00d0d0ff; // Light Teal
+						break;
+					case 'l':
+					case 'L':
+						curcol = 0xf880f8ff; // Light Purple
+						break;
+					case 'm':
+					case 'M':
+						curcol = 0xf8f880ff; // Light Yellow
+						break;
+					case 'n':
+					case 'N':
+						curcol = 0xf8c870ff; // Tan
+						break;
+					case 'o':
+					case 'O':
+						curcol = 0x805010ff; // Brown
+						break;
+					case 'p':
+					case 'P':
+						curcol = 0xf868b0ff; // Pink
+						break;
+					case 'q':
+					case 'Q':
+						curcol = 0xf8b8d0ff; // Light Pink
+						break;
+					case 'r':
+					case 'R':
+						curcol = 0xf84068; // Dark Pink
+						break;
+					case 's':
+					case 'S':
+						curcol = 0x4880b8ff; // Steel Blue
+						break;
+					case 't':
+					case 'T':
+						curcol = 0x00a0a0ff; // Teal
+						break;
+					case 'u':
+					case 'U':
+						curcol = 0x303030ff; // Charcoal
+						break;
+					case 'v':
+					case 'V':
+						curcol = 0xf0f0e0ff; // Eggshell
+					case 'w':
+					case 'W':
+						curcol = 0x8080a0ff; // Slate
+					case 'x':
+					case 'X':
+						curcol = 0x704838ff; // Coffee
+						break;
+					case 'y':
+					case 'Y':
+						curcol = 0x80a080ff; // Olive
+						break;
+					case 'z':
+					case 'Z':
+						curcol = 0xb02050ff; // Rose
 				}
 			}
 			else if(text[i] != '~')

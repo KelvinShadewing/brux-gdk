@@ -75,6 +75,10 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_gfx REQUIRED)
 find_package(SDL2_net REQUIRED)
+find_package(CURL REQUIRED)
+
+find_path(LIBGIT2_INCLUDE_DIR git2.h)
+find_library(LIBGIT2_LIBRARY git2)
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/external/simplesquirrel/")
 
@@ -131,6 +135,8 @@ if(WIN32) # FIXME: Proper way of having the SDL2 libraries copied over to binary
 	target_link_libraries(brux PUBLIC ${SDL2_NET_LIBRARIES})
 	target_link_libraries(brux PUBLIC ${TIFF_LIBRARIES})
 	target_link_libraries(brux PUBLIC ${WEBP_LIBRARIES})
+	target_link_libraries(brux PUBLIC CURL::libcurl)
+	target_link_libraries(brux PUBLIC ${LIBGIT2_LIBRARY})
 
 	if (USE_SDL2_MIXER)
 		target_link_libraries(brux PUBLIC ${SDL2_MIXER_LIBRARIES})
@@ -144,6 +150,8 @@ else()
 	target_link_libraries(brux PUBLIC SDL2::Net)
 	target_link_libraries(brux PUBLIC ${TIFF_LIBRARIES})
 	target_link_libraries(brux PUBLIC ${WEBP_LIBRARIES})
+	target_link_libraries(brux PUBLIC CURL::libcurl)
+	target_link_libraries(brux PUBLIC ${LIBGIT2_LIBRARY})
 
 	if (USE_SDL2_MIXER)
 		target_link_libraries(brux PUBLIC SDL2::Mixer)

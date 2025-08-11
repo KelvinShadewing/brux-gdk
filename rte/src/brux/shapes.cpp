@@ -39,9 +39,9 @@ the heavy math will be done here for
 performance reasons.
 \*/
 
-// // // // // /
+///////////
 // POINT //
-// // // // // /
+///////////
 
 // Constructors
 xyPnt::xyPnt() {
@@ -186,9 +186,9 @@ float xyPnt::dot(xyPnt* p) {
 
 
 
-// // // // // /
+///////////
 // SHAPE //
-// // // // // /
+///////////
 
 xyShape::xyShape(float _x, float _y, float _a, int _type) {
 	x = _x;

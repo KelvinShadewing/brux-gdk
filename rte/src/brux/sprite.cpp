@@ -41,7 +41,7 @@ xySprite::xySprite(const std::string& filename, Uint32 width, Uint32 height, Uin
 	source(filename),
 	didLoad(true)
 {
-	// SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); // // DO NOT USE! // // 
+	// SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! //// 
 
 	// Extract short file name
 	std::string::size_type slashnum = name.find_last_of("/");
@@ -100,7 +100,7 @@ xySprite::xySprite(Uint32 texture, Uint32 width, Uint32 height, Uint32 margin, U
 	source("texture"),
 	didLoad(false)
 {
-	// SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); // // DO NOT USE! // // 
+	// SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! //// 
 
 	// Load texture
 	if(texture >= 0 && texture < vcTextures.size()) {
@@ -157,7 +157,7 @@ void xySprite::replaceSprite(const std::string& filename, Uint32 width, Uint32 h
 	numero = 0;
 	frames = 0; // Obsolete, will untangle later
 	Uint32 newtex = xyLoadImage(filename);
-	// SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); // // DO NOT USE! // // 
+	// SDL_QueryTexture(vcTextures[tex], format, 0, 0, 0); //// DO NOT USE! //// 
 
 	// Delete old texture
 	xyDeleteImage(tex);

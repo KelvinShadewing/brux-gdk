@@ -61,4 +61,13 @@ void xyClearSocket(int wsid);
 void xyFlushSockets();
 void xyRegisterNetworkAPI(ssq::VM& vm);
 
+// Git functions
+
+// Curl functions
+bool xyInitCurl();
+void xyCleanupCurl();
+void xyCurlOpt(int opt, int value);
+void xyCurlOpt(int opt, const std::string& value);
+void xyCurlReset();
+
 #endif // BRUX_NET_HPP

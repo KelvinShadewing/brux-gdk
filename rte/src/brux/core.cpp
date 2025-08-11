@@ -405,6 +405,327 @@ void xyLoadCore() {
 	const c_black = 0xff;
 	const pi = 3.14159265358979323846;
 
+	// Depreicated codes are left undefined
+	const clop_write_data = 1;
+	const clop_url = 2;
+	const clop_port = 3;
+	const clop_proxy = 4;
+	const clop_usrpwd = 5;
+	const clop_proxy_usrpwd = 6;
+	const clop_range = 7;
+	// 8
+	const clop_readdata = 9;
+	const clop_error_buffer = 10;
+	const clop_write_function = 11;
+	const clop_read_function = 12;
+	const clop_timeout = 13;
+	const clop_in_filesize = 14;
+	const clop_post_fields = 15;
+	const clop_referer = 16;
+	const clop_ftp_port = 17;
+	const clop_useragent = 18;
+	const clop_lowspeed_limit = 19;
+	const clop_lowspeed_time = 20;
+	const clop_resume_from = 21;
+	const clop_cookie = 22;
+	const clop_http_header = 23;
+	const clop_http_post = 24;
+	const clop_ssl_cert = 25;
+	const clop_key_passwd = 26;
+	const clop_crlf = 27;
+	const clop_quote = 28;
+	const clop_header_data = 29;
+	// 30
+	const clop_cookie_file = 31;
+	const clop_ssl_version = 32;
+	const clop_time_condition = 33;
+	const clop_time_value = 34;
+	// 35
+	const clop_custom_request = 36;
+	const clop_stderr = 37;
+	const clop_post_quote = 39;
+	// 40
+	const clop_verbose = 41;
+	const clop_header = 42;
+	const clop_noprogress = 43;
+	const clop_nobody = 44;
+	const clop_failon_error = 45;
+	const clop_upload = 46;
+	const clop_post = 47;
+	const clop_dirlist_only = 48;
+	// 49
+	const clop_append = 50;
+	const clop_netrc = 51;
+	const clop_follow_location = 52;
+	const clop_transfer_text = 53;
+	const clop_put = 54;
+	// 55
+	const clop_progress_function = 56;
+	const clop_xferinfo_data = 57;
+	const clop_auto_referer = 58;
+	const clop_proxy_port = 59;
+	const clop_post_fieldsize = 60;
+	const clop_http_proxy_tunnel = 61;
+	const clop_interface = 62;
+	const clop_krblevel = 63;
+	const clop_ssl_verify_peer = 64;
+	const clop_cainfo = 65;
+	const clop_max_redirs = 68;
+	const clop_file_time = 69;
+	const clop_telnet_options = 70;
+	const clop_max_connects = 71;
+	// 72
+	// 73
+	const clop_fresh_connect = 74;
+	const clop_forbid_reuse = 75;
+	const clop_random_file = 76;
+	const clop_egd_socket = 77;
+	const clop_connect_timeout = 78;
+	const clop_header_function = 79;
+	const clop_http_get = 80;
+	const clop_ssl_verifyhost = 81;
+	const clop_cookie_jar = 82;
+	const clop_ssl_ciphers = 83;
+	const clop_http_version = 84;
+	const clop_ftp_use_epsv = 85;
+	const clop_ssl_cert_type = 86;
+	const clop_ssl_key = 87;
+	const clop_ssl_key_type = 88;
+	const clop_ssl_engine = 89;
+	const clop_ssl_engine_default = 90;
+	// 91
+	const clop_dns_cache_timeout = 92;
+	const clop_prequote = 93;
+	const clop_debug_function = 94;
+	const clop_debug_data = 95;
+	const clop_cookie_session = 96;
+	const clop_capath = 97;
+	const clop_buffer_size = 98;
+	const clop_nosignal = 99;
+	const clop_share = 100;
+	const clop_proxy_type = 101;
+	const clop_accept_encoding = 102;
+	const clop_private = 103;
+	const clop_http_200_aliases = 104;
+	const clop_unrestricted_auth = 105;
+	const clop_ftp_use_eprt = 106;
+	const clop_http_auth = 107;
+	const clop_ssl_ctx_function = 108;
+	const clop_ssl_ctx_data = 109;
+	const clop_ftp_create_missing_dirs = 110;
+	const clop_proxy_auth = 111;
+	const clop_server_response_timeout = 112;
+	const clop_ip_resolve = 113;
+	const clop_max_file_size = 114;
+	const clop_infilesize_large = 115;
+	const clop_resume_from_large = 116;
+	const clop_max_filesize_large = 117;
+	const clop_netrc_file = 118;
+	const clop_use_ssl = 119;
+	const clop_post_fieldsize_large = 120;
+	const clop_tcp_nodelay = 121;
+	// 122
+	// 123
+	// 124
+	// 125
+	// 126
+	// 127
+	// 128
+	const clop_ftp_ssl_auth = 129;
+	const clop_ioctl_function = 130;
+	const clop_ioctl_data = 131;
+	// 132
+	// 133
+	const clop_ftp_account = 134;
+	const clop_cookie_list = 135;
+	const clop_ignore_content_length = 136;
+	const clop_ftp_skip_pasv_ip = 137;
+	const clop_ftp_file_method = 138;
+	const clop_local_port = 139;
+	const clop_local_port_range = 140;
+	const clop_connect_only = 141;
+	const clop_conv_from_network_function = 142;
+	const clop_conv_to_network_function = 143;
+	const clop_conv_from_utf8_function = 144;
+	const clop_max_send_speed_large = 145;
+	const clop_max_recv_speed_large = 146;
+	const clop_ftp_alternative_to_user = 147;
+	const clop_sockopt_function = 148;
+	const clop_sockopt_data = 149;
+	const clop_ssl_sessionid_cache = 150;
+	const clop_ssl_auth_types = 151;
+	const clop_ssh_public_keyfile = 152;
+	const clop_ssh_private_keyfile = 153;
+	const clop_ftp_ssl_ccc = 154;
+	const clop_timeout_ms = 155;
+	const clop_connect_timeout_ms = 156;
+	const clop_http_transfer_decoding = 157;
+	const clop_http_content_decoding = 158;
+	const clop_new_file_perms = 159;
+	const clop_new_directory_perms = 160;
+	const clop_post_redir = 161;
+	const clop_ssh_host_public_key_md5 = 162;
+	const clop_open_socket_function = 163;
+	const clop_open_socket_data = 164;
+	const clop_copy_post_fields = 165;
+	const clop_proxy_transfer_mode = 166;
+	const clop_seek_function = 167;
+	const clop_seek_data = 168;
+	const clop_crl_file = 169;
+	const clop_issuer_cert = 170;
+	const clop_address_scope = 171;
+	const clop_cert_info = 172;
+	const clop_username = 173;
+	const clop_password = 174;
+	const clop_proxy_username = 175;
+	const clop_proxy_password = 176;
+	const clop_no_proxy = 177;
+	const clop_tftp_blksize = 178;
+	// 179
+	const clop_socks5_gssapi_nec = 180;
+	const clop_protocols = 181;
+	const clop_redir_protocols = 182;
+	const clop_ssh_knownhosts = 183;
+	const clop_ssh_key_function = 184;
+	const clop_ssh_key_data = 185;
+	const clop_mail_from = 186;
+	const clop_mail_rcpt = 187;
+	const clop_ftp_use_pret = 188;
+	const clop_rtsp_request = 189;
+	const clop_rtsp_session_id = 190;
+	const clop_rtsp_stream_uri = 191;
+	const clop_rtsp_transport = 192;
+	const clop_rtsp_client_cseq = 193;
+	const clop_rtsp_server_cseq = 194;
+	const clop_interleave_data = 195;
+	const clop_interleave_function = 196;
+	const clop_wildcard_match = 197;
+	const clop_chunk_bgn_function = 198;
+	const clop_chunk_end_function = 199;
+	const clop_fnmatch_function = 200;
+	const clop_chunk_data = 201;
+	const clop_fnmatch_data = 202;
+	const clop_resolve = 203;
+	const clop_tlsauth_username = 204;
+	const clop_tlsauth_password = 205;
+	const clop_tlsauth_type = 206;
+	const clop_transfer_encoding = 207;
+	const clop_close_socket_function = 208;
+	const clop_close_socket_data = 209;
+	const clop_gssapi_delegation = 210;
+	const clop_dns_servers = 211;
+	const clop_accept_timeout_ms = 212;
+	const clop_tcp_keepalive = 213;
+	const clop_tcp_keepidle = 214;
+	const clop_tcp_keepintvl = 215;
+	const clop_ssl_options = 216;
+	const clop_mail_auth = 217;
+	const clop_sasl_ir = 218;
+	const clop_xferinfo_function = 219;
+	const clop_xoauth2_bearer = 220;
+	const clop_dns_interface = 221;
+	const clop_dns_local_ip4 = 222;
+	const clop_dns_local_ip6 = 223;
+	const clop_login_options = 224;
+	const clop_ssl_enable_alpn = 225;
+	const clop_ssl_enable_npn = 226;
+	const clop_expect_100_timeout = 227;
+	const clop_proxy_header = 228;
+	const clop_header_opt = 229;
+	const clop_pinned_public_key = 230;
+	const clop_unix_socket_path = 231;
+	const clop_ssl_verify_status = 232;
+	const clop_false_start = 233;
+	const clop_path_as_is = 234;
+	const clop_proxy_service_name = 235;
+	const clop_service_name = 236;
+	const clop_pipe_wait = 237;
+	const clop_default_protocol = 238;
+	const clop_stream_weight = 239;
+	const clop_stream_depends = 240;
+	const clop_stream_depends_e = 241;
+	const clop_tftp_no_options = 242;
+	const clop_connect_to = 243;
+	const clop_tcp_fastopen = 244;
+	const clop_keep_sending_on_error = 245;
+	const clop_proxy_ca_info = 246;
+	const clop_proxy_ca_path = 247;
+	const clop_proxy_ssl_verify_peer = 248;
+	const clop_proxy_ssl_verify_host = 249;
+	const clop_proxy_ssl_version = 250;
+	const clop_proxy_tls_auth_username = 251;
+	const clop_proxy_tls_auth_password = 252;
+	const clop_proxy_tls_auth_type = 253;
+	const clop_proxy_ssl_cert = 254;
+	const clop_proxy_ssl_cert_type = 255;
+	const clop_proxy_ssl_key = 256;
+	const clop_proxy_ssl_key_type = 257;
+	const clop_proxy_key_passwd = 258;
+	const clop_proxy_ssl_cipher_list = 259;
+	const clop_proxy_crl_file = 260;
+	const clop_proxy_ssl_options = 261;
+	const clop_pre_proxy = 262;
+	const clop_proxy_pinned_public_key = 263;
+	const clop_abstract_unix_socket = 264;
+	const clop_suppress_connect_headers = 265;
+	const clop_request_target = 266;
+	const clop_socks5_auth = 267;
+	const clop_ssh_compression = 268;
+	const clop_mime_post = 269;
+	const clop_time_value_large = 270;
+	const clop_happy_eyeballs_timeout_ms = 271;
+	const clop_resolver_start_function = 272;
+	const clop_resolver_start_data = 273;
+	const clop_haproxy_protocol = 274;
+	const clop_dns_shuffle_addresses = 275;
+	const clop_tls13_ciphers = 276;
+	const clop_proxy_tls13_ciphers = 277;
+	const clop_disallow_username_in_url = 278;
+	const clop_doh_url = 279;
+	const clop_upload_buffer_size = 280;
+	const clop_upkeep_interval_ms = 281;
+	const clop_curlu = 282;
+	const clop_trailer_function = 283;
+	const clop_trailer_data = 284;
+	const clop_http09_allowed = 285;
+	const clop_altsvc_ctrl = 286;
+	const clop_altsvc = 287;
+	const clop_maxage_conn = 288;
+	const clop_sasl_authzid = 289;
+	const clop_mail_rcpt_allowfails = 290;
+	const clop_ssl_cert_blob = 291;
+	const clop_ssl_key_blob = 292;
+	const clop_proxy_ssl_cert_blob = 293;
+	const clop_proxy_ssl_key_blob = 294;
+	const clop_issuer_cert_blob = 295;
+	const clop_proxy_issuer_cert = 296;
+	const clop_proxy_issuer_cert_blob = 297;
+	const clop_ssl_ec_curves = 298;
+	const clop_hsts_ctrl = 299;
+	const clop_hsts = 300;
+	const clop_hsts_read_function = 301;
+	const clop_hsts_read_data = 302;
+	const clop_hsts_write_function = 303;
+	const clop_hsts_write_data = 304;
+	const clop_aws_sigv4 = 305;
+	const clop_doh_ssl_verify_peer = 306;
+	const clop_doh_ssl_verify_host = 307;
+	const clop_doh_ssl_verify_status = 308;
+	const clop_ca_info_blob = 309;
+	const clop_proxy_ca_info_blob = 310;
+	const clop_ssh_host_public_key_sha256 = 311;
+	const clop_prereq_function = 312;
+	const clop_prereq_data = 313;
+	const clop_max_lifetime_conn = 314;
+	const clop_mime_optinos = 315;
+	const clop_ssh_host_key_function = 316;
+	const clop_ssh_host_key_data = 317;
+	const clop_protocols_str = 318;
+	const clop_redir_protocols_str = 319;
+	const clop_ws_options = 320;
+	const clop_ca_cache_timeout = 321;
+	const clop_quick_exit = 322;
+
 	::arraySort <- function(arr){
 		if(typeof arr != "array")	// Skip sorting if it's not an array
 		return arr;	// or if there's nothing to sort
@@ -501,22 +822,22 @@ void xyLoadCore() {
 	};
 
 	::deepClone <- function(obj) {
-	if (typeof obj == "array") {
-		local result = [];
-		foreach (item in obj) {
-			result.append(deepClone(item));
+		if (typeof obj == "array") {
+			local result = [];
+			foreach (item in obj) {
+				result.append(deepClone(item));
+			}
+			return result;
+		} else if (typeof obj == "table") {
+			local result = {};
+			foreach (key, value in obj) {
+				result[key] <- deepClone(value);
+			}
+			return result;
+		} else {
+			return obj;
 		}
-		return result;
-	} else if (typeof obj == "table") {
-		local result = {};
-		foreach (key, value in obj) {
-			result[key] <- deepClone(value);
-		}
-		return result;
-	} else {
-		return obj;
-	}
-};
+	};
 
 	::system <- function(var) { print("I can't let you do that, Dave."); };
 

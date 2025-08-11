@@ -46,9 +46,9 @@
 #include "brux/net.hpp"
 #include "brux/flop.hpp"
 
-// // // // // // // // /
-// MAIN FUNCTION// 
-// // // // // // // // /
+///////////////////
+// MAIN FUNCTION //
+///////////////////
 
 #ifdef __EMSCRIPTEN__
 EMSCRIPTEN_KEEPALIVE
@@ -181,9 +181,9 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 
-// // // // // // // // // /
-// OTHER FUNCTIONS// 
-// // // // // // // // // /
+/////////////////////
+// OTHER FUNCTIONS //
+/////////////////////
 
 // Handles initialization of SDL2 and Squirrel
 int xyInit() {
