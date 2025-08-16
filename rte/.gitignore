@@ -1,4 +1,14 @@
+# Directories
+.cache
 .vs
+bin
+build
+physfs_project-prefix
+subprojects/*/
+!subprojects/physfs
+!subprojects/simplesquirrel
+
+# Files
 CMakeSettings.json
 CMakeCache.txt
 CMakeFiles
@@ -9,6 +19,4 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
-bin
-build
 test/ignore.nut

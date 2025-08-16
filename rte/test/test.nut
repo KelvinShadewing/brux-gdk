@@ -259,7 +259,7 @@ setWindowTitle("Brux GDK Test Suite")
 
 ::musTest <- loadMusic("res/bossa-nova.mp3")
 
-//playMusic(musTest, -1)
+playMusic(musTest, -1)
 
 setFPS(60)
 

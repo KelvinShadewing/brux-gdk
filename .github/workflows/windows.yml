@@ -1,11 +1,11 @@
 name: Windows
 on:
   push:
-    branches: [ "master", "unstable" ]
+    branches: [ "main" ]
     paths:
       - rte/src/*
   pull_request:
-    branches: [ "master", "unstable" ]
+    branches: [ "main" ]
     paths:
       - rte/src/*
   workflow_dispatch:
@@ -15,12 +15,12 @@ jobs:
     strategy:
       matrix:
         arch: [x64,x86]
-        build_type: [Release]
+        build_type: [release]
         include:
-          - build_type: Release
+          - build_type: release
             arch: x64
             release: ON
-          - build_type: Release
+          - build_type: release
             arch: x86
             release: ON
 
@@ -68,19 +68,19 @@ jobs:
           ARCH: ${{ matrix.arch }}
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          cmake --version
+          meson --version
           cd rte
-          mkdir build
-          cd build
-          cmake .. -G "Visual Studio 17 2022" -A $Env:ARCH.replace("x86", "Win32") -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
+          meson setup build -Dbuildtype=$Env:BUILD_TYPE
 
       - name: Build
         working-directory: rte/build
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          cmake --build . --config $Env:BUILD_TYPE
-          cmake --install .
+          meson compile
+          DESTDIR=$Env:BUILD_TYPE meson install
+#          cmake --build . --config $Env:BUILD_TYPE
+#          cmake --install .
 
       - name: Package
         uses: actions/upload-artifact@v4
