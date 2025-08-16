@@ -67,6 +67,6 @@ src = [
 
 executable('brux', src, dependencies: deps, include_directories: include_directories('src'), install: true)
 
-install_data('test/test.nut', install_dir: get_option('datadir'))
+#install_data('test/test.nut', install_dir: get_option('datadir'))
 install_data('test/test.nut', install_dir: 'test')
 install_subdir('test/res', install_dir: 'test')

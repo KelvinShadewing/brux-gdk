@@ -3,6 +3,7 @@
 .vs
 bin
 build
+physfs_project-prefix
 subprojects/*/
 !subprojects/physfs
 !subprojects/simplesquirrel
