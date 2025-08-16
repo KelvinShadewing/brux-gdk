@@ -1,3 +1,4 @@
+.cache
 .vs
 CMakeSettings.json
 CMakeCache.txt
@@ -12,3 +13,8 @@ CTestTestfile.cmake
 bin
 build
 test/ignore.nut
+
+
+subprojects/*/
+!subprojects/physfs
+!subprojects/simplesquirrel

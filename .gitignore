@@ -7,9 +7,6 @@ ide/.cache/*
 rte/bin/xyg
 rte/bin/release/*
 rte/obj/*
-subprojects/*/
-!subprojects/physfs
-!subprojects/simplesquirrel
 
 # Files
 *.o
