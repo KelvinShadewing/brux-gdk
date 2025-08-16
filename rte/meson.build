@@ -4,7 +4,10 @@ project('brux-gdk', 'cpp', 'c', default_options: ['cpp_std=c++17', 'buildtype=re
 cmake = import('cmake')
 
 # Configure file
+audio_backend = get_option('AUDIO_BACKEND')
+
 config_dat = configuration_data()
+config_dat.set('AUDIO_BACKEND', audio_backend)
 config_dat.set('USE_FASTFILL', get_option('USE_FASTFILL'))
 
 configure_file(input: 'src/config.hpp.in', output: 'config.hpp', configuration: config_dat)
@@ -18,7 +21,6 @@ sdl_net = dependency('SDL2_net', fallback: ['sdl2_net'])
 sdl_gfx = dependency('SDL2_gfx', fallback: ['sdl2_gfx'])
 
 ## Audio dependency/backend handling
-audio_backend = get_option('AUDIO_BACKEND')
 audio_lib = []
 
 if (audio_backend == 'sdl2')

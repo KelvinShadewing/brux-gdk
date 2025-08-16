@@ -1,8 +1,8 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-// Handle CMake optional features
-#mesondefine USE_SDL2_MIXER
+// Handle Meson optional features
+#mesondefine AUDIO_BACKEND
 #mesondefine USE_FASTFILL
 
 #endif
