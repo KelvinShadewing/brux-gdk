@@ -63,7 +63,7 @@ deps = [sdl, sdl_image, sdl_net, sdl_gfx, audio_lib, curl, git2, physfs, simples
 
 # TODO: allow swapping of audio backend in a more clean manner
 src = [
-	'src/audio/audio.cpp', 'src/audio/audio_@0@.cpp'.format(get_option('AUDIO_BACKEND')),
+	'src/audio/audio.cpp', 'src/audio/audio_@0@.cpp'.format(audio_backend),
 	'src/brux/actors.cpp', 'src/brux/core.cpp', 'src/brux/fileio.cpp',
 	'src/brux/flop.cpp', 'src/brux/global.cpp', 'src/brux/graphics.cpp',
 	'src/brux/input.cpp', 'src/brux/main.cpp', 'src/brux/maths.cpp',
