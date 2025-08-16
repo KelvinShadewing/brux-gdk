@@ -1,4 +1,5 @@
 # Directories
+.cache/
 .vscode/
 ide/.kdev4/*
 ide/build/*
@@ -6,6 +7,10 @@ ide/.cache/*
 rte/bin/xyg
 rte/bin/release/*
 rte/obj/*
+subprojects/*/
+!subprojects/physfs
+!subprojects/simplesquirrel
+
 # Files
 *.o
 *.dll
