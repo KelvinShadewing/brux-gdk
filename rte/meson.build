@@ -12,11 +12,12 @@ configure_file(input: 'src/config.hpp.in', output: 'config.hpp', configuration: 
 # Dependencies
 sdl = dependency('SDL2', fallback: ['sdl2'])
 sdl_image = dependency('SDL2_image', fallback: ['sdl2_image'])
-#sdl_mixer = get_option('USE_SDL2_MIXER') ? dependency('SDL2_mixer', fallback: ['sdl2_mixer'], required: false) : []
 sdl_net = dependency('SDL2_net', fallback: ['sdl2_net'])
-# Perhaps this should be removed or remade internally to reduce on an external dependency?
+
+## TODO: Perhaps this should be removed or remade internally to reduce on an external dependency?
 sdl_gfx = dependency('SDL2_gfx', fallback: ['sdl2_gfx'])
 
+## Audio dependency/backend handling
 audio_backend = get_option('AUDIO_BACKEND')
 audio_lib = []
 
@@ -24,6 +25,7 @@ if (audio_backend == 'sdl2')
 	audio_lib = dependency('SDL2_mixer', fallback: ['sdl2_mixer'], required: false)
 endif
 
+## Other dependencies
 curl = dependency('curl', required: false)
 
 if (not curl.found())
