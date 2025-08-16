@@ -16,12 +16,12 @@ jobs:
       matrix:
 #        arch: [32, 64]
         arch: [64]
-        build_type: [Release]
+        build_type: [release]
         include:
-#          - build_type: Release
+#          - build_type: release
 #            arch: 32
 #            release: OFF
-          - build_type: Release
+          - build_type: release
             arch: 64
             release: ON
 
