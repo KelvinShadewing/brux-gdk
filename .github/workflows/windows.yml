@@ -1,11 +1,11 @@
 name: Windows
 on:
   push:
-    branches: [ "master", "unstable" ]
+    branches: [ "main" ]
     paths:
       - rte/src/*
   pull_request:
-    branches: [ "master", "unstable" ]
+    branches: [ "main" ]
     paths:
       - rte/src/*
   workflow_dispatch:
