@@ -48,8 +48,10 @@ if (not simplesquirrel.found())
 	simplesquirrel_proj = cmake.subproject('simplesquirrel', options: opts)
 
 	simplesquirrel_lib = simplesquirrel_proj.get_variable('simplesquirrel_static')
+	squirrel_lib = simplesquirrel_proj.get_variable('squirrel_static')
+	sqstdlib = simplesquirrel_proj.get_variable('sqstdlib_static')
 
-	simplesquirrel = declare_dependency(link_with: simplesquirrel_lib, include_directories: simplesquirrel_proj.include_directories('simplesquirrel_static'))
+	simplesquirrel = declare_dependency(link_with: [simplesquirrel_lib, squirrel_lib, sqstdlib], include_directories: simplesquirrel_proj.include_directories('simplesquirrel_static'))
 endif
 
 deps = [sdl, sdl_image, sdl_mixer, sdl_net, sdl_gfx, curl, git2, physfs, simplesquirrel]
