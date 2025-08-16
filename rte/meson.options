@@ -1,2 +1,0 @@
-option('USE_SDL2_MIXER', type: 'boolean', value: true, description: 'Use SDL2 to provide audio support')
-option('USE_FASTFILL', type: 'boolean', value: true, description: 'Use an O(1) algorithm for replacing unloaded sounds with new sounds instead of the original O(n) algorithm. Requires USE_SDL2_MIXER to be enabled.')

@@ -1,4 +1,4 @@
-project('brux-gdk', 'cpp', 'c', default_options: ['cpp_std=c++17', 'buildtype=release', 'default_library=static', 'prefix=/', 'bindir=', 'datadir='], meson_version: '>=1.1.0')
+project('brux-gdk', 'cpp', 'c', default_options: ['cpp_std=c++17', 'buildtype=release', 'default_library=static', 'prefix=/', 'bindir=', 'datadir='], meson_version: '>=1.0.1')
 
 # CMake module. Needed for physfs and simplesquirrel modules.
 cmake = import('cmake')
