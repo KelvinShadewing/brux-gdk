@@ -3,6 +3,16 @@ project('brux-gdk', 'cpp', 'c', default_options: ['cpp_std=c++17', 'buildtype=re
 # CMake module. Needed for physfs and simplesquirrel modules.
 cmake = import('cmake')
 
+# Configure file
+config_dat = configuration_data()
+config_dat.set('USE_SDL2_MIXER', get_option('USE_SDL2_MIXER'))
+
+if (get_option('USE_SDL2_MIXER'))
+	config_dat.set('USE_FASTFILL', get_option('USE_FASTFILL'))
+endif
+
+configure_file(input: 'src/config.hpp.in', output: 'config.hpp', configuration: config_dat)
+
 # Dependencies
 sdl = dependency('SDL2', fallback: ['sdl2'])
 sdl_image = dependency('SDL2_image', fallback: ['sdl2_image'])
@@ -44,7 +54,7 @@ endif
 
 deps = [sdl, sdl_image, sdl_mixer, sdl_net, sdl_gfx, curl, git2, physfs, simplesquirrel]
 
-# TODO: allow swapping of audio backend
+# TODO: allow swapping of audio backend in a more clean manner
 src = [
 	'src/audio/audio.cpp', 'src/audio/audio_none.cpp', 'src/audio/audio_sdl2.cpp',
 	'src/brux/actors.cpp', 'src/brux/core.cpp', 'src/brux/fileio.cpp',

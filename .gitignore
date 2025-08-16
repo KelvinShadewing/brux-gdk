@@ -1,6 +1,7 @@
 # Directories
 .cache/
 .vscode/
+build/
 ide/.kdev4/*
 ide/build/*
 ide/.cache/*
