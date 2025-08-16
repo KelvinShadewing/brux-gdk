@@ -38,7 +38,6 @@ if (not physfs.found())
 endif
 
 simplesquirrel = dependency('simplesquirrel', required: false)
-simplesquirrel_static = false
 
 if (not simplesquirrel.found())
 	opts = cmake.subproject_options()
