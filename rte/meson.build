@@ -5,21 +5,24 @@ cmake = import('cmake')
 
 # Configure file
 config_dat = configuration_data()
-config_dat.set('USE_SDL2_MIXER', get_option('USE_SDL2_MIXER'))
-
-if (get_option('USE_SDL2_MIXER'))
-	config_dat.set('USE_FASTFILL', get_option('USE_FASTFILL'))
-endif
+config_dat.set('USE_FASTFILL', get_option('USE_FASTFILL'))
 
 configure_file(input: 'src/config.hpp.in', output: 'config.hpp', configuration: config_dat)
 
 # Dependencies
 sdl = dependency('SDL2', fallback: ['sdl2'])
 sdl_image = dependency('SDL2_image', fallback: ['sdl2_image'])
-sdl_mixer = get_option('USE_SDL2_MIXER') ? dependency('SDL2_mixer', fallback: ['sdl2_mixer'], required: false) : []
+#sdl_mixer = get_option('USE_SDL2_MIXER') ? dependency('SDL2_mixer', fallback: ['sdl2_mixer'], required: false) : []
 sdl_net = dependency('SDL2_net', fallback: ['sdl2_net'])
 # Perhaps this should be removed or remade internally to reduce on an external dependency?
 sdl_gfx = dependency('SDL2_gfx', fallback: ['sdl2_gfx'])
+
+audio_backend = get_option('AUDIO_BACKEND')
+audio_lib = []
+
+if (audio_backend == 'sdl2')
+	audio_lib = dependency('SDL2_mixer', fallback: ['sdl2_mixer'], required: false)
+endif
 
 curl = dependency('curl', required: false)
 
@@ -54,11 +57,11 @@ if (not simplesquirrel.found())
 	simplesquirrel = declare_dependency(link_with: [simplesquirrel_lib, squirrel_lib, sqstdlib], include_directories: simplesquirrel_proj.include_directories('simplesquirrel_static'))
 endif
 
-deps = [sdl, sdl_image, sdl_mixer, sdl_net, sdl_gfx, curl, git2, physfs, simplesquirrel]
+deps = [sdl, sdl_image, sdl_net, sdl_gfx, audio_lib, curl, git2, physfs, simplesquirrel]
 
 # TODO: allow swapping of audio backend in a more clean manner
 src = [
-	'src/audio/audio.cpp', 'src/audio/audio_none.cpp', 'src/audio/audio_sdl2.cpp',
+	'src/audio/audio.cpp', 'src/audio/audio_@0@.cpp'.format(get_option('AUDIO_BACKEND')),
 	'src/brux/actors.cpp', 'src/brux/core.cpp', 'src/brux/fileio.cpp',
 	'src/brux/flop.cpp', 'src/brux/global.cpp', 'src/brux/graphics.cpp',
 	'src/brux/input.cpp', 'src/brux/main.cpp', 'src/brux/maths.cpp',

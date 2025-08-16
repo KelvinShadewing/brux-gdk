@@ -17,8 +17,6 @@
 
 #include "audio/audio.hpp"
 
-#ifdef USE_SDL2_MIXER
-
 #include <SDL2/SDL_mixer.h>
 
 std::vector<Mix_Chunk*> vcSounds;
@@ -428,5 +426,3 @@ void xySetMusicVolume(int volume) {
 	gvVolumeMusic = volume;
 	Mix_VolumeMusic(volume);
 }
-
-#endif
