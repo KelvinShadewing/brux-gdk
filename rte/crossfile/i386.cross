@@ -1,7 +1,7 @@
 [binaries]
 c = ['gcc', '-m32']
 cpp = ['g++', '-m32']
-pkgconfig = 'linux-gnu-pkg-config'
+pkgconfig = 'i386-linux-gnu-pkg-config'
 strip = 'strip'
 
 [built-in options]
