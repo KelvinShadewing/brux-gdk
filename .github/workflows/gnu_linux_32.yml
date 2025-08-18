@@ -72,6 +72,7 @@ jobs:
           meson --version
           $CXX --version
           cd rte
+          git submodule update --init --recursive
           PKG_CONFIG_PATH="/usr/lib/i386-linux-gnu/pkgconfig:/usr/local/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig" meson setup build
 
       - name: Build
