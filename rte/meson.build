@@ -13,18 +13,18 @@ config_dat.set('USE_FASTFILL', get_option('USE_FASTFILL'))
 configure_file(input: 'src/config.hpp.in', output: 'config.hpp', configuration: config_dat)
 
 # Dependencies
-sdl = dependency('SDL2', fallback: ['sdl2'])
-sdl_image = dependency('SDL2_image', fallback: ['sdl2_image'])
-sdl_net = dependency('SDL2_net', fallback: ['sdl2_net'])
+sdl = dependency('SDL2', fallback: ['sdl2', 'sdl2_dep'])
+sdl_image = dependency('SDL2_image', fallback: ['sdl2_image', 'sdl2_image_dep'])
+sdl_net = dependency('SDL2_net', fallback: ['sdl2_net', 'sdl2_net_dep'])
 
 ## TODO: Perhaps this should be removed or remade internally to reduce on an external dependency?
-sdl_gfx = dependency('SDL2_gfx', fallback: ['sdl2_gfx'])
+sdl_gfx = dependency('SDL2_gfx')
 
 ## Audio dependency/backend handling
 audio_lib = []
 
 if (audio_backend == 'sdl2')
-	audio_lib = dependency('SDL2_mixer', fallback: ['sdl2_mixer'], required: false)
+	audio_lib = dependency('SDL2_mixer', fallback: ['sdl2_mixer', 'sdl2_mixer_dep'], required: false)
 endif
 
 ## Other dependencies
