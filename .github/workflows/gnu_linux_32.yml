@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
-          submodules: true
+          submodules: recursive
 
       - name: Install 32-bit dependencies
         if: ${{ matrix.arch == 32 }}
@@ -40,6 +40,7 @@ jobs:
             build-essential \
             gcc-multilib \
             g++-multilib \
+            pkgconf:i386 \
             libsdl2-dev:i386 \
             libsdl2-image-dev:i386 \
             libsdl2-gfx-dev:i386 \
@@ -56,6 +57,7 @@ jobs:
             libvorbis-dev:i386 \
             libopusfile-dev:i386 \
             libzstd-dev:i386 \
+            libgit2-dev:i386 \
             meson
 
       - name: Set compiler (gcc)
@@ -71,7 +73,7 @@ jobs:
           meson --version
           $CXX --version
           cd rte
-          meson setup build
+          PKG_CONFIG_PATH="/usr/lib/i386-linux-gnu/pkgconfig:/usr/local/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig" meson setup build --cross-file crossfile/i386.cross
 
       - name: Build
         working-directory: rte/build
@@ -80,7 +82,7 @@ jobs:
           DESTDIR=bin meson install
 
       - name: Package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "Brux-GNULinux-${{ matrix.arch }}-${{ matrix.build_type }}-binary"
           path: "rte/build/bin"
