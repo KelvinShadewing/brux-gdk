@@ -63,7 +63,7 @@ jobs:
           vcpkg install mpg123:$Env:ARCH-windows
           vcpkg install opusfile:$Env:ARCH-windows
           vcpkg install libgit2:$Env:ARCH-windows
-          vcpkg install libsharpyuv:$Env:ARCH-windows
+          # vcpkg install libsharpyuv:$Env:ARCH-windows
 
       - name: Install Meson
         run: |
