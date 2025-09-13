@@ -1,9 +1,3 @@
-[submodule "rte/external/physfs"]
-	path = rte/external/physfs
-	url = https://github.com/icculus/physfs
-[submodule "rte/external/simplesquirrel"]
-	path = rte/external/simplesquirrel
-	url = https://github.com/SuperTux/simplesquirrel
 [submodule "rte/subprojects/physfs"]
 	path = rte/subprojects/physfs
 	url = https://github.com/icculus/physfs
