@@ -54,7 +54,7 @@ jobs:
             libpng-dev \
             libtiff-dev \
             libfluidsynth-dev \
-            libwebp-dev \
+            # libwebp-dev \
             libmodplug-dev \
             libmpg123-dev \
             libvorbis-dev \

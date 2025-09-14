@@ -55,7 +55,7 @@ jobs:
           vcpkg install zstd:$Env:ARCH-windows
           vcpkg install jbigkit:$Env:ARCH-windows
           vcpkg install libdeflate:$Env:ARCH-windows
-          vcpkg install libwebp:$Env:ARCH-windows
+          # vcpkg install libwebp:$Env:ARCH-windows
           vcpkg install libflac:$Env:ARCH-windows
           vcpkg install libjpeg-turbo:$Env:ARCH-windows
           vcpkg install libpng:$Env:ARCH-windows
