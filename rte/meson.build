@@ -20,7 +20,7 @@ sdl_net = dependency('SDL2_net', fallback: ['sdl2_net', 'sdl2_net_dep'])
 ## TODO: Perhaps this should be removed or remade internally to reduce on an external dependency?
 sdl_gfx = dependency('SDL2_gfx', required: false)
 if not sdl_gfx.found()
-	sdl_gfx = dependency('sdl2_gfx', required: true, method: 'cmake')
+	sdl_gfx = dependency('SDL2_gfx', required: true, method: 'cmake')
 endif
 
 if (not sdl_gfx.found())
