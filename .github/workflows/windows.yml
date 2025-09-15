@@ -77,7 +77,7 @@ jobs:
         run: |
           meson --version
           cd rte
-          meson setup build -Dbuildtype=$Env:BUILD_TYPE
+          meson setup build -Dbuildtype=debug
 
       - name: Build
         working-directory: rte/build
@@ -85,8 +85,8 @@ jobs:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
           meson compile
-          DESTDIR=$Env:BUILD_TYPE meson install
-#          cmake --build . --config $Env:BUILD_TYPE
+          DESTDIR=debug meson install
+#          cmake --build . --config debug
 #          cmake --install .
 
       - name: Package
