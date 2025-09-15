@@ -14,14 +14,11 @@ jobs:
   windows:
     strategy:
       matrix:
-        arch: [x64,x86]
+        arch: [x64]
         build_type: [release]
         include:
           - build_type: release
             arch: x64
-            release: ON
-          - build_type: release
-            arch: x86
             release: ON
 
     runs-on: windows-latest
@@ -70,7 +67,10 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install meson ninja
           
-      - name: Configure bulid
+      - name: Set up CMAKE_PREFIX_PATH
+        run: echo "CMAKE_PREFIX_PATH=C:/vcpkg/installed/${{ matrix.arch }}-windows/share" >> $GITHUB_ENV
+
+      - name: Configure build
         env:
           ARCH: ${{ matrix.arch }}
           BUILD_TYPE: ${{ matrix.build_type }}
