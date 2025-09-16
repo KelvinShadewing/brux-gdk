@@ -25,7 +25,7 @@ if (not sdl_gfx.found())
 	sdl_gfx = dependency('SDL2_gfx', method: 'cmake', required: false)
 endif
 
-## LAST RESORT
+## NOTE: LAST RESORT, check if its available without capitalisation.
 if (not sdl_gfx.found())
 	sdl_gfx = dependency('sdl2_gfx', required: true)
 endif
