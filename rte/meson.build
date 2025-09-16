@@ -18,7 +18,7 @@ sdl_image = dependency('SDL2_image', fallback: ['sdl2_image', 'sdl2_image_dep'])
 sdl_net = dependency('SDL2_net', fallback: ['sdl2_net', 'sdl2_net_dep'])
 
 ## TODO: Perhaps this should be removed or remade internally to reduce on an external dependency?
-sdl_gfx = dependency('SDL2_gfx', method: 'auto', required: false)
+sdl_gfx = dependency('SDL2_gfx', required: false)
 
 ## NOTE: Windows moment, enforce cmake method.
 if (not sdl_gfx.found())
