@@ -14,14 +14,11 @@ jobs:
   windows:
     strategy:
       matrix:
-        arch: [x64,x86]
+        arch: [x64]
         build_type: [Release]
         include:
           - build_type: Release
             arch: x64
-            release: ON
-          - build_type: Release
-            arch: x86
             release: ON
 
     runs-on: windows-latest
@@ -71,7 +68,7 @@ jobs:
           cd rte
           mkdir build
           cd build
-          cmake .. -G "Visual Studio 17 2022" -A $Env:ARCH.replace("x86", "Win32") -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
+          cmake .. -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
 
       - name: Build
         working-directory: rte/build
