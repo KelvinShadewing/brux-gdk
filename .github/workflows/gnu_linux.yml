@@ -1,11 +1,11 @@
 name: GNU/Linux
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master", "unstable" ]
     paths:
       - rte/src/*
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master", "unstable" ]
     paths:
       - rte/src/*
   workflow_dispatch:
@@ -16,12 +16,12 @@ jobs:
       matrix:
 #        arch: [32, 64]
         arch: [64]
-        build_type: [release]
+        build_type: [Release]
         include:
-#          - build_type: release
+#          - build_type: Release
 #            arch: 32
 #            release: OFF
-          - build_type: release
+          - build_type: Release
             arch: 64
             release: ON
 
@@ -54,17 +54,13 @@ jobs:
             libpng-dev \
             libtiff-dev \
             libfluidsynth-dev \
-            # libwebp-dev \
             libmodplug-dev \
             libmpg123-dev \
             libvorbis-dev \
             libopusfile-dev \
             libzstd-dev \
             libjbig-dev \
-            liblerc-dev \
-            libsharpyuv-dev \
-            libgit2-dev \
-            meson
+            liblerc-dev
             
 #      - name: Install 32-bit dependencies
 #        if: ${{ matrix.arch == 32 }}
@@ -105,16 +101,19 @@ jobs:
           ARCH: ${{ matrix.arch == 32 && '-DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32' || '' }}
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          meson --version
+          cmake --version
           $CXX --version
           cd rte
-          meson setup build
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE $ARCH   \
+                   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=bin   \
+                   -DBUILD_STATIC_LIBS=ON
 
       - name: Build
         working-directory: rte/build
         run: |
-          meson compile
-          DESTDIR=bin meson install
+          make
 
       - name: Package
         uses: actions/upload-artifact@v4

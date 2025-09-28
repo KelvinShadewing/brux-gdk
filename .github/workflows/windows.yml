@@ -1,11 +1,11 @@
 name: Windows
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master", "unstable" ]
     paths:
       - rte/src/*
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master", "unstable" ]
     paths:
       - rte/src/*
   workflow_dispatch:
@@ -14,11 +14,14 @@ jobs:
   windows:
     strategy:
       matrix:
-        arch: [x64]
-        build_type: [release]
+        arch: [x64,x86]
+        build_type: [Release]
         include:
-          - build_type: release
+          - build_type: Release
             arch: x64
+            release: ON
+          - build_type: Release
+            arch: x86
             release: ON
 
     runs-on: windows-latest
@@ -52,42 +55,31 @@ jobs:
           vcpkg install zstd:$Env:ARCH-windows
           vcpkg install jbigkit:$Env:ARCH-windows
           vcpkg install libdeflate:$Env:ARCH-windows
-          # vcpkg install libwebp:$Env:ARCH-windows
           vcpkg install libflac:$Env:ARCH-windows
           vcpkg install libjpeg-turbo:$Env:ARCH-windows
           vcpkg install libpng:$Env:ARCH-windows
           vcpkg install libmodplug:$Env:ARCH-windows
           vcpkg install mpg123:$Env:ARCH-windows
           vcpkg install opusfile:$Env:ARCH-windows
-          vcpkg install libgit2:$Env:ARCH-windows
-          # vcpkg install libsharpyuv:$Env:ARCH-windows
-
-      - name: Install Meson
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install meson ninja
           
-      - name: Set up CMAKE_PREFIX_PATH
-        run: echo "CMAKE_PREFIX_PATH=C:/vcpkg/installed/${{ matrix.arch }}-windows/share" >> $GITHUB_ENV
-
-      - name: Configure build
+      - name: Configure bulid
         env:
           ARCH: ${{ matrix.arch }}
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          meson --version
+          cmake --version
           cd rte
-          meson setup build -Dbuildtype=debug
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 17 2022" -A $Env:ARCH.replace("x86", "Win32") -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
 
       - name: Build
         working-directory: rte/build
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          meson compile
-          DESTDIR=debug meson install
-#          cmake --build . --config debug
-#          cmake --install .
+          cmake --build . --config $Env:BUILD_TYPE
+          cmake --install .
 
       - name: Package
         uses: actions/upload-artifact@v4

@@ -249,9 +249,9 @@ void xySprite::draw(int f, int x, int y, int angle, SDL_RendererFlip flip, float
 	rec.w = w;
 	rec.h = h;
 
-	SDL_Point *piv = new SDL_Point;
-	piv->x = static_cast<int>(npvX * xscale);
-	piv->y = static_cast<int>(npvY * yscale);
+	SDL_Point piv;
+	piv.x = static_cast<int>(npvX * xscale);
+	piv.y = static_cast<int>(npvY * yscale);
 
 	// Break color into 8-bit versions
 	Uint8 r, g, b;
@@ -261,11 +261,9 @@ void xySprite::draw(int f, int x, int y, int angle, SDL_RendererFlip flip, float
 
 	SDL_SetTextureColorMod(vcTextures[tex], r, g, b);
 	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<Uint8>(alpha * 255));
-	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
+	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, &piv, flip);
 	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
 	SDL_SetTextureColorMod(vcTextures[tex], 255, 255, 255);
-
-	delete piv;
 };
 
 
@@ -305,15 +303,13 @@ void xySprite::drawex(int f, int x, int y, int angle, SDL_RendererFlip flip, flo
 	rec.w = w;
 	rec.h = h;
 
-	SDL_Point *piv = new SDL_Point;
-	piv->x = static_cast<int>(npvX * xscale);
-	piv->y = static_cast<int>(npvY * yscale);
+	SDL_Point piv;
+	piv.x = static_cast<int>(npvX * xscale);
+	piv.y = static_cast<int>(npvY * yscale);
 
 	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<Uint8>(alpha * 255));
-	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
+	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, &piv, flip);
 	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
-
-	delete piv;
 };
 
 void xySprite::drawmod(int f, int x, int y, Uint32 color) {
@@ -385,9 +381,9 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 	rec.w = w;
 	rec.h = h;
 
-	SDL_Point *piv = new SDL_Point;
-	piv->x = static_cast<int>(npvX * xscale);
-	piv->y = static_cast<int>(npvY * yscale);
+	SDL_Point piv;
+	piv.x = static_cast<int>(npvX * xscale);
+	piv.y = static_cast<int>(npvY * yscale);
 
 	// Break color into 8-bit versions
 	Uint8 r, g, b;
@@ -397,11 +393,9 @@ void xySprite::drawexmod(int f, int x, int y, int angle, SDL_RendererFlip flip, 
 
 	SDL_SetTextureColorMod(vcTextures[tex], r, g, b);
 	SDL_SetTextureAlphaMod(vcTextures[tex], static_cast<Uint8>(alpha * 255));
-	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, piv, flip);
+	SDL_RenderCopyEx(gvRender, vcTextures[tex], &rec, &des, (double)angle, &piv, flip);
 	SDL_SetTextureAlphaMod(vcTextures[tex], 255);
 	SDL_SetTextureColorMod(vcTextures[tex], 255, 255, 255);
-
-	delete piv;
 };
 
 void xySprite::reload() {
