@@ -58,6 +58,7 @@ jobs:
           vcpkg install libmodplug:$Env:ARCH-windows
           vcpkg install mpg123:$Env:ARCH-windows
           vcpkg install opusfile:$Env:ARCH-windows
+          vcpkg install curl:$Env:ARCH-windows
           
       - name: Configure bulid
         env:

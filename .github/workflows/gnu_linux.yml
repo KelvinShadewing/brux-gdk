@@ -60,7 +60,8 @@ jobs:
             libopusfile-dev \
             libzstd-dev \
             libjbig-dev \
-            liblerc-dev
+            liblerc-dev \
+            libcurl4-openssl-dev
             
 #      - name: Install 32-bit dependencies
 #        if: ${{ matrix.arch == 32 }}
