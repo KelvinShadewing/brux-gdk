@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
-
-set -e
-
-./_build.sh
-
-./build/brux test/test.nut
+git submodule update --init --recursive
+mkdir build
+cd build
+cmake ..
+if make; then
+	./brux
+fi
