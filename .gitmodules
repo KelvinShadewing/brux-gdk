@@ -4,3 +4,6 @@
 [submodule "rte/external/simplesquirrel"]
 	path = rte/external/simplesquirrel
 	url = https://github.com/SuperTux/simplesquirrel
+[submodule "rte/external/SDL2_image"]
+	path = rte/external/SDL2_image
+	url = https://github.com/libsdl-org/SDL_image.git
