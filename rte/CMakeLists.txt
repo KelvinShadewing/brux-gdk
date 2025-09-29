@@ -160,3 +160,7 @@ endif()
 target_link_libraries(brux PUBLIC LibPhysfs)
 
 set(WEBP OFF CACHE BOOL "Disable WebP support in SDL2_image")
+
+install(TARGETS brux
+	RUNTIME DESTINATION .
+)

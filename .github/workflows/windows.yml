@@ -80,8 +80,12 @@ jobs:
           cmake --build . --config $Env:BUILD_TYPE
           cmake --install .
 
+      - name: Copy DLLs
+        run: |
+          cp C:/vcpkg/installed/${{ matrix.arch }}-windows/bin/*.dll rte/build/${{ matrix.build_type }}/
+
       - name: Package
         uses: actions/upload-artifact@v4
         with:
           name: "Brux-Windows-${{ matrix.arch }}-${{ matrix.build_type }}-binary"
-          path: "rte/build/${{ matrix.build_type }}"
+          path: "rte/build/${{ matrix.build_type }}/*"
