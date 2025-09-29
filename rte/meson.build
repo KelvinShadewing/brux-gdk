@@ -20,12 +20,20 @@ sdl_net = dependency('SDL2_net', fallback: ['sdl2_net', 'sdl2_net_dep'])
 ## TODO: Perhaps this should be removed or remade internally to reduce on an external dependency?
 sdl_gfx = dependency('SDL2_gfx', required: false)
 
-## NOTE: Windows moment, enforce cmake method.
-if (not sdl_gfx.found())
-	sdl_gfx = dependency('SDL2_gfx', method: 'cmake', required: false)
+# On Windows CI (and other environments without pkg-config) prefer the
+# CMake-based lookup first to avoid Meson attempting pkg-config for the
+# host machine which may not be installed. Fall back to other names if
+# needed.
+host_os = host_machine.system()
+if host_os == 'windows'
+	# Try CMake method first on Windows where vcpkg/cmake packages are used
+	if not sdl_gfx.found()
+		sdl_gfx = dependency('SDL2_gfx', method: 'cmake', required: true)
+	endif
 endif
 
-## NOTE: LAST RESORT, check if its available without capitalisation.
+# If still not found, try lowercase name (last resort) and let Meson search
+# using available methods (pkgconfig/cmake/system) and fail if absent.
 if (not sdl_gfx.found())
 	sdl_gfx = dependency('sdl2_gfx', required: true)
 endif
