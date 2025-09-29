@@ -77,12 +77,15 @@ jobs:
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          cmake --build . --config Release
+          cmake --build . --config Release --target brux
           cmake --install . --config Release
 
       - name: Copy DLLs
         run: |
           cp C:/vcpkg/installed/${{ matrix.arch }}-windows/bin/*.dll rte/build/${{ matrix.build_type }}/
+
+      - name: List build output
+        run: dir rte/build/Release
 
       - name: Package
         uses: actions/upload-artifact@v4
