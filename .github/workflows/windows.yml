@@ -68,7 +68,9 @@ jobs:
           python -m pip install meson ninja
           
       - name: Set up CMAKE_PREFIX_PATH
-        run: echo "CMAKE_PREFIX_PATH=C:/vcpkg/installed/${{ matrix.arch }}-windows/share" >> $GITHUB_ENV
+        # Point at the vcpkg installed root (not just the share dir) so CMake
+        # and Meson's cmake dependency method can find packages installed by vcpkg.
+        run: echo "CMAKE_PREFIX_PATH=C:/vcpkg/installed/${{ matrix.arch }}-windows" >> $GITHUB_ENV
 
       - name: Configure build
         env:
