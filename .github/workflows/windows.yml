@@ -77,8 +77,8 @@ jobs:
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          cmake --build . --config $Env:BUILD_TYPE
-          cmake --install .
+          cmake --build . --config Release
+          cmake --install . --config Release
 
       - name: Copy DLLs
         run: |
