@@ -119,3 +119,68 @@ jobs:
         with:
           name: "Brux-GNULinux-${{ matrix.arch }}-${{ matrix.build_type }}-binary"
           path: "rte/build/bin"
+
+  # Legacy build: produce a build inside an older distro container so the
+  # resulting binaries are linked against an older glibc and are more
+  # backwards-compatible on older systems.
+  gnu-linux-legacy:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:18.04
+      options: --user root
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install legacy dependencies
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            meson \
+            build-essential \
+            g++ \
+            gcc \
+            libsdl2-dev \
+            libsdl2-image-dev \
+            libsdl2-gfx-dev \
+            libsdl2-mixer-dev \
+            libsdl2-net-dev \
+            libflac-dev \
+            libjpeg-dev \
+            libpng-dev \
+            libtiff-dev \
+            libfluidsynth-dev \
+            libmodplug-dev \
+            libmpg123-dev \
+            libvorbis-dev \
+            libopusfile-dev \
+            libzstd-dev \
+            libjbig-dev \
+            libgit2-dev
+
+      - name: Configure build (legacy)
+        env:
+          BUILD_TYPE: release
+        run: |
+          cd rte
+          meson --version
+          g++ --version
+          # ensure a fresh build dir
+          meson setup build --wipe
+
+      - name: Build (legacy)
+        working-directory: rte/build
+        run: |
+          meson compile
+          DESTDIR=bin meson install
+
+      - name: Package legacy archive
+        run: |
+          mkdir -p /tmp/artifacts
+          tar -C rte/build/bin -czf /tmp/Brux-GNULinux-legacy-64-release-binary.tar.gz .
+
+      - name: Upload legacy artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Brux-GNULinux-legacy-64-release"
+          path: "/tmp/Brux-GNULinux-legacy-64-release-binary.tar.gz"
