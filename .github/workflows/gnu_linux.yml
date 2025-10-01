@@ -54,7 +54,6 @@ jobs:
             libpng-dev \
             libtiff-dev \
             libfluidsynth-dev \
-            # libwebp-dev \
             libmodplug-dev \
             libmpg123-dev \
             libvorbis-dev \
@@ -62,7 +61,6 @@ jobs:
             libzstd-dev \
             libjbig-dev \
             liblerc-dev \
-            libsharpyuv-dev \
             libgit2-dev \
             meson
             
