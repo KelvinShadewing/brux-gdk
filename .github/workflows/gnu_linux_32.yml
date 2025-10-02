@@ -43,7 +43,6 @@ jobs:
             pkgconf:i386 \
             libsdl2-dev:i386 \
             libsdl2-image-dev:i386 \
-            libsdl2-gfx-dev:i386 \
             libsdl2-mixer-dev:i386 \
             libsdl2-net-dev:i386 \
             libflac-dev:i386 \
@@ -51,7 +50,6 @@ jobs:
             libpng-dev:i386 \
             libtiff-dev:i386 \
             libfluidsynth-dev:i386 \
-            # libwebp-dev:i386 \
             libmodplug-dev:i386 \
             libmpg123-dev:i386 \
             libvorbis-dev:i386 \
@@ -59,6 +57,31 @@ jobs:
             libzstd-dev:i386 \
             libgit2-dev:i386 \
             meson
+
+      - name: Build and install SDL2_gfx from submodule (32-bit)
+        if: ${{ matrix.arch == 32 }}
+        run: |
+          cd rte/SDL2_gfx
+          sudo mkdir -p /usr/local/include/SDL2_gfx
+          # compile sources into a static lib for i386
+          gcc -m32 -O2 -fPIC -I/usr/include/SDL2 -c SDL2_gfxPrimitives.c SDL2_rotozoom.c SDL2_framerate.c SDL2_imageFilter.c -I.
+          ar rcs libSDL2_gfx.a *.o
+          sudo cp libSDL2_gfx.a /usr/local/lib/
+          sudo cp *.h /usr/local/include/
+          # create a simple pkg-config file so Meson can find it via pkg-config
+          cat <<'EOF' | sudo tee /usr/local/lib/pkgconfig/sdl2_gfx.pc
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: SDL2_gfx
+Description: SDL2 graphics primitives
+Version: 1.0
+Libs: -L${libdir} -lSDL2_gfx
+Cflags: -I${includedir}
+EOF
+          echo "PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
 
       - name: Set compiler (gcc)
         run: |
@@ -73,7 +96,7 @@ jobs:
           meson --version
           $CXX --version
           cd rte
-          PKG_CONFIG_PATH="/usr/lib/i386-linux-gnu/pkgconfig:/usr/local/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig" meson setup build --cross-file crossfile/i386.cross
+          PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig:/usr/local/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig" meson setup build --cross-file crossfile/i386.cross
 
       - name: Build
         working-directory: rte/build

@@ -46,7 +46,6 @@ jobs:
             libc++-dev \
             libsdl2-dev \
             libsdl2-image-dev \
-            libsdl2-gfx-dev \
             libsdl2-mixer-dev \
             libsdl2-net-dev \
             libflac-dev \
@@ -63,6 +62,31 @@ jobs:
             liblerc-dev \
             libgit2-dev \
             meson
+
+      - name: Build and install SDL2_gfx from submodule (64-bit)
+        if: ${{ matrix.arch == 64 }}
+        run: |
+          cd rte/SDL2_gfx
+          sudo mkdir -p /usr/local/include/SDL2_gfx
+          # compile sources into a static lib
+          gcc -O2 -fPIC -I/usr/include/SDL2 -c SDL2_gfxPrimitives.c SDL2_rotozoom.c SDL2_framerate.c SDL2_imageFilter.c -I.
+          ar rcs libSDL2_gfx.a *.o
+          sudo cp libSDL2_gfx.a /usr/local/lib/
+          sudo cp *.h /usr/local/include/
+          # create a simple pkg-config file so Meson can find it via pkg-config
+          cat <<'EOF' | sudo tee /usr/local/lib/pkgconfig/sdl2_gfx.pc
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: SDL2_gfx
+Description: SDL2 graphics primitives
+Version: 1.0
+Libs: -L${libdir} -lSDL2_gfx
+Cflags: -I${includedir}
+EOF
+          echo "PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
             
 #      - name: Install 32-bit dependencies
 #        if: ${{ matrix.arch == 32 }}
@@ -119,68 +143,3 @@ jobs:
         with:
           name: "Brux-GNULinux-${{ matrix.arch }}-${{ matrix.build_type }}-binary"
           path: "rte/build/bin"
-
-  # Legacy build: produce a build inside an older distro container so the
-  # resulting binaries are linked against an older glibc and are more
-  # backwards-compatible on older systems.
-  gnu-linux-legacy:
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:18.04
-      options: --user root
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install legacy dependencies
-        run: |
-          apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y \
-            meson \
-            build-essential \
-            g++ \
-            gcc \
-            libsdl2-dev \
-            libsdl2-image-dev \
-            libsdl2-gfx-dev \
-            libsdl2-mixer-dev \
-            libsdl2-net-dev \
-            libflac-dev \
-            libjpeg-dev \
-            libpng-dev \
-            libtiff-dev \
-            libfluidsynth-dev \
-            libmodplug-dev \
-            libmpg123-dev \
-            libvorbis-dev \
-            libopusfile-dev \
-            libzstd-dev \
-            libjbig-dev \
-            libgit2-dev
-
-      - name: Configure build (legacy)
-        env:
-          BUILD_TYPE: release
-        run: |
-          cd rte
-          meson --version
-          g++ --version
-          # ensure a fresh build dir
-          meson setup build --wipe
-
-      - name: Build (legacy)
-        working-directory: rte/build
-        run: |
-          meson compile
-          DESTDIR=bin meson install
-
-      - name: Package legacy archive
-        run: |
-          mkdir -p /tmp/artifacts
-          tar -C rte/build/bin -czf /tmp/Brux-GNULinux-legacy-64-release-binary.tar.gz .
-
-      - name: Upload legacy artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: "Brux-GNULinux-legacy-64-release"
-          path: "/tmp/Brux-GNULinux-legacy-64-release-binary.tar.gz"
