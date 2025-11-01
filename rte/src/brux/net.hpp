@@ -61,8 +61,6 @@ void xyClearSocket(int wsid);
 void xyFlushSockets();
 void xyRegisterNetworkAPI(ssq::VM& vm);
 
-// Git functions
-
 // Curl functions
 bool xyInitCurl();
 void xyCleanupCurl();

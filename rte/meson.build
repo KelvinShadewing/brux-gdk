@@ -31,8 +31,6 @@ if (not curl.found())
 	curl = dependency('libcurl', required: true)
 endif
 
-git2 = dependency('libgit2')
-
 physfs = dependency('physfs', required: false)
 
 if (not physfs.found())

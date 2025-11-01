@@ -28,8 +28,6 @@
 #define CURL_STATICLIB
 #include <curl/curl.h>
 
-#include <git2.h>
-
 /////////////////
 // WEB SOCKETS //
 /////////////////
@@ -411,10 +409,6 @@ int xyAcceptSocket(int wsid) {
 	SDLNet_TCP_AddSocket(clientSock->set, clientSock->tcp);
 	return clientId;
 }
-
-/////////
-// GIT //
-/////////
 
 //////////
 // CURL //

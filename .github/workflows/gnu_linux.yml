@@ -62,7 +62,6 @@ jobs:
             libjbig-dev \
             liblerc-dev \
             libsharpyuv-dev \
-            libgit2-dev \
             meson
             
 #      - name: Install 32-bit dependencies
