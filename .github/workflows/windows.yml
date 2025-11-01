@@ -44,9 +44,6 @@ jobs:
           vcpkg integrate install
           vcpkg install sdl2:$Env:ARCH-windows
           vcpkg install sdl2-image[libjpeg-turbo]:$Env:ARCH-windows
-          # Use SDL2_gfx from the repository submodule instead of installing via vcpkg
-          # (we still install other deps via vcpkg)
-          # vcpkg install sdl2-gfx:$Env:ARCH-windows
           vcpkg install sdl2-mixer:$Env:ARCH-windows
           vcpkg install sdl2-net:$Env:ARCH-windows
           vcpkg install physfs:$Env:ARCH-windows
@@ -73,31 +70,6 @@ jobs:
         # Point at the vcpkg installed root (not just the share dir) so CMake
         # and Meson's cmake dependency method can find packages installed by vcpkg.
         run: echo "CMAKE_PREFIX_PATH=C:/vcpkg/installed/${{ matrix.arch }}-windows" >> $GITHUB_ENV
-
-      - name: Build and install SDL2_gfx submodule (Windows)
-        if: ${{ matrix.arch == 'x64' }}
-        shell: pwsh
-        run: |
-          Write-Host "Building SDL2_gfx from rte/SDL2_gfx"
-          # Build the Visual Studio solution provided by the submodule
-          msbuild ".\rte\SDL2_gfx\SDL2_gfx.sln" /p:Configuration=Release /p:Platform=x64
-          $install = 'C:\SDL2_gfx_install'
-          # Install headers
-          New-Item -ItemType Directory -Force -Path "$install\include" | Out-Null
-          Copy-Item -Path ".\rte\SDL2_gfx\*.h" -Destination "$install\include" -Force -ErrorAction SilentlyContinue
-          # Find built lib/dll and copy to install
-          $lib = Get-ChildItem -Path ".\rte\SDL2_gfx" -Recurse -Filter '*.lib' | Where-Object { $_.Name -match 'SDL2_gfx' } | Select-Object -First 1
-          if ($lib) {
-            New-Item -ItemType Directory -Force -Path "$install\lib" | Out-Null
-            Copy-Item -Path $lib.FullName -Destination "$install\lib" -Force
-          } else {
-            $dll = Get-ChildItem -Path ".\rte\SDL2_gfx" -Recurse -Filter '*.dll' | Where-Object { $_.Name -match 'SDL2_gfx' } | Select-Object -First 1
-            if ($dll) {
-              New-Item -ItemType Directory -Force -Path "$install\bin" | Out-Null
-              Copy-Item -Path $dll.FullName -Destination "$install\bin" -Force
-            }
-          }
-          Add-Content -Path $env:GITHUB_ENV -Value "CMAKE_PREFIX_PATH=$install;C:/vcpkg/installed/${{ matrix.arch }}-windows"
 
       - name: Configure build
         env:
