@@ -56,16 +56,17 @@ if (not simplesquirrel.found())
 	simplesquirrel = declare_dependency(link_with: [simplesquirrel_lib, squirrel_lib, sqstdlib], include_directories: simplesquirrel_proj.include_directories('simplesquirrel_static'))
 endif
 
-sdl_gfx = dependency('sdl2_gfx', required: false)
+sdl2_gfx = dependency(
+	'SDL2_gfx',
+	fallback : ['SDL2_gfx', 'SDL2_gfx_dep']
+)
 
-if(not sdl_gfx.found())
-	sdl_gfx_proj = cmake.subproject('sdl_gfx')
+git2 = dependency(
+	'libgit2',
+	fallback : ['libgit2', 'libgit2_dep']
+)
 
-	sdl_gfx_lib = sdl_gfx_proj.get_variable('sdl_gfx')
-	sdl_gfx = declare_dependency(link_with: sdl_gfx_lib, include_directories: sdl_gfx_proj.include_directories('sdl_gfx'))
-endif
-
-deps = [sdl, sdl_image, sdl_net, sdl_gfx, audio_lib, curl, git2, physfs, simplesquirrel]
+deps = [sdl, sdl_image, sdl_net, sdl2_gfx, audio_lib, curl, git2, physfs, simplesquirrel]
 
 # TODO: allow swapping of audio backend in a more clean manner
 src = [

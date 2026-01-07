@@ -21,6 +21,7 @@
 
 std::vector<Mix_Chunk*> vcSounds;
 std::vector<Mix_Music*> vcMusic;
+// std::vector<xySound*> vcSounds;
 
 #ifdef USE_FASTFILL
 std::vector<Uint32> unloadedSounds;

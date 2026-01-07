@@ -839,7 +839,7 @@ void xyLoadCore() {
 		}
 	};
 
-	::system <- function(var) { print("I can't let you do that, Dave."); };
+	::system <- function(var) { print("Hiff!"); };
 
 	::int <- function(var) { return var.tointeger(); };
 	::float <- function(var) { return var.tofloat(); };

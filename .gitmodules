@@ -4,6 +4,3 @@
 [submodule "rte/subprojects/simplesquirrel"]
 	path = rte/subprojects/simplesquirrel
 	url = https://github.com/SuperTux/simplesquirrel
-[submodule "rte/subprojects/SDL2_gfx"]
-	path = rte/subprojects/SDL2_gfx
-	url = https://github.com/ferzkopp/SDL2_gfx
