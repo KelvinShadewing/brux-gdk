@@ -67,5 +67,8 @@ void xyCleanupCurl();
 void xyCurlOpt(int opt, int value);
 void xyCurlOpt(int opt, const std::string& value);
 void xyCurlReset();
+static size_t xyCurlWriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
+std::string xyCurlGet(const std::string& url);
+std::string xyCurlPost(const std::string& url, const std::string& data);
 
 #endif // BRUX_NET_HPP

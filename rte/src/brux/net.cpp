@@ -19,11 +19,12 @@
 \*============*/
 
 #include "brux/net.hpp"
-#include "brux/global.hpp"
 
-#include <cstring>
 #include <cstdio>
+#include <cstring>
 #include <queue>
+
+#include "brux/global.hpp"
 
 #define CURL_STATICLIB
 #include <curl/curl.h>
@@ -32,21 +33,18 @@
 // WEB SOCKETS //
 /////////////////
 
-std::vector<NetSocket *> vcSockets;
+std::vector<NetSocket*> vcSockets;
 
 bool xyInitSocket(int wsid, std::string socketMode) {
 	// Guarding clauses
-	if (wsid < 0 || vcSockets.size() <= wsid)
-		return false;
-	NetSocket *sock = vcSockets[wsid];
-	if (!sock)
-		return false;
+	if (wsid < 0 || vcSockets.size() <= wsid) return false;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock) return false;
 
 	sock->tcp = nullptr;
 	sock->udp = nullptr;
 	sock->connected = false;
-	while (!sock->messageQueue.empty())
-	{
+	while (!sock->messageQueue.empty()) {
 		sock->messageQueue.pop();
 	}
 
@@ -56,14 +54,13 @@ bool xyInitSocket(int wsid, std::string socketMode) {
 
 int xyNewSocket(std::string socketMode = "") {
 	std::transform(socketMode.begin(), socketMode.end(), socketMode.begin(),
-				   [](unsigned char c)
-				   { return std::tolower(c); });
+				   [](unsigned char c) { return std::tolower(c); });
 	if (socketMode != "tcp" && socketMode != "udp") {
 		xyPrint("Invalid socket mode: %s", socketMode.c_str());
 		return -1;
 	}
 
-	NetSocket *nsock = new NetSocket;
+	NetSocket* nsock = new NetSocket;
 
 	nsock->set = SDLNet_AllocSocketSet(1);
 	if (!nsock->set) {
@@ -82,8 +79,7 @@ int xyNewSocket(std::string socketMode = "") {
 
 	// Search for empty slot
 	for (int i = 0; i < vcSockets.size(); i++) {
-		if (vcSockets[i] == 0)
-		{
+		if (vcSockets[i] == 0) {
 			vcSockets[i] = nsock;
 			nsock->id = i;
 			xyInitSocket(nsock->id, socketMode);
@@ -99,11 +95,9 @@ int xyNewSocket(std::string socketMode = "") {
 
 void xyCloseSocket(int wsid) {
 	// Guarding clauses
-	if (vcSockets.size() <= wsid)
-		return;
-	NetSocket *sock = vcSockets[wsid];
-	if (!sock)
-		return;
+	if (vcSockets.size() <= wsid) return;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock) return;
 
 	if (sock->tcp) {
 		SDLNet_TCP_Close(sock->tcp);
@@ -123,11 +117,9 @@ void xyCloseSocket(int wsid) {
 
 void xyDeleteSocket(int wsid) {
 	// Guarding clauses
-	if (vcSockets.size() <= wsid)
-		return;
-	NetSocket *sock = vcSockets[wsid];
-	if (!sock)
-		return;
+	if (vcSockets.size() <= wsid) return;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock) return;
 
 	xyCloseSocket(wsid);
 	if (sock->set) {
@@ -139,8 +131,7 @@ void xyDeleteSocket(int wsid) {
 }
 
 void xyFlushSockets() {
-	if (vcSockets.size() == 0)
-		return;
+	if (vcSockets.size() == 0) return;
 
 	for (int i = 0; i < vcSockets.size(); i++) {
 		xyDeleteSocket(i);
@@ -150,13 +141,11 @@ void xyFlushSockets() {
 	vcSockets.shrink_to_fit();
 }
 
-bool xyConnectSocket(int wsid, const std::string &host, int port) {
+bool xyConnectSocket(int wsid, const std::string& host, int port) {
 	// Guarding clauses
-	if (vcSockets.size() <= wsid)
-		return false;
-	NetSocket *sock = vcSockets[wsid];
-	if (!sock)
-		return false;
+	if (vcSockets.size() <= wsid) return false;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock) return false;
 
 	sock->host = host;
 	sock->port = port;
@@ -197,20 +186,18 @@ bool xyConnectSocket(int wsid, const std::string &host, int port) {
 			return false;
 		}
 
-		sock->ip = ip; // Store the resolved IP address
+		sock->ip = ip;	// Store the resolved IP address
 	}
 
 	sock->connected = true;
 	return true;
 }
 
-bool xySendSocket(int wsid, const std::string &message) {
+bool xySendSocket(int wsid, const std::string& message) {
 	// Guarding clauses
-	if (vcSockets.size() <= wsid)
-		return false;
-	NetSocket *sock = vcSockets[wsid];
-	if (!sock || !sock->connected || !sock->tcp)
-		return false;
+	if (vcSockets.size() <= wsid) return false;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock || !sock->connected || !sock->tcp) return false;
 
 	int len = message.length();
 	int sent = 0;
@@ -221,18 +208,18 @@ bool xySendSocket(int wsid, const std::string &message) {
 
 	if (sock->t == "udp") {
 		// Prepare the UDP packet
-		UDPpacket *packet = SDLNet_AllocPacket(len);
+		UDPpacket* packet = SDLNet_AllocPacket(len);
 		if (!packet) {
 			fprintf(stderr, "SDLNet_AllocPacket: %s\n", SDLNet_GetError());
 			return false;
 		}
 
-		packet->address = sock->ip; // Use the stored IP address
+		packet->address = sock->ip;	 // Use the stored IP address
 		packet->len = len;
 		std::memcpy(packet->data, message.c_str(), len);
 
 		sent = SDLNet_UDP_Send(sock->udp, -1, packet);
-		SDLNet_FreePacket(packet); // Free the packet after sending
+		SDLNet_FreePacket(packet);	// Free the packet after sending
 
 		if (sent == 0) {
 			fprintf(stderr, "SDLNet_UDP_Send: %s\n", SDLNet_GetError());
@@ -252,24 +239,23 @@ bool xySendSocket(int wsid, const std::string &message) {
 
 bool xyReceiveSocket(int wsid) {
 	// Guarding clauses
-	if (vcSockets.size() <= wsid)
-		return false;
-	NetSocket *sock = vcSockets[wsid];
-	if (!sock || !sock->connected || !sock->tcp)
-		return false;
+	if (vcSockets.size() <= wsid) return false;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock || !sock->connected || !sock->tcp) return false;
 	char buffer[1024];
 	int received = 0;
 
 	if (sock->t == "tcp") {
 		// Check if there's data ready to be read
-		int numReady = SDLNet_CheckSockets(sock->set, 0); // 0 timeout = don't wait
+		int numReady =
+			SDLNet_CheckSockets(sock->set, 0);	// 0 timeout = don't wait
 		if (numReady <= 0) {
-			return true; // No data available, not an error
+			return true;  // No data available, not an error
 		}
 
 		// Only try to receive if this socket is ready
 		if (!SDLNet_SocketReady(sock->tcp)) {
-			return true; // This socket isn't ready, not an error
+			return true;  // This socket isn't ready, not an error
 		}
 
 		received = SDLNet_TCP_Recv(sock->tcp, buffer, sizeof(buffer) - 1);
@@ -284,7 +270,7 @@ bool xyReceiveSocket(int wsid) {
 
 	if (sock->t == "udp") {
 		// Prepare to receive a UDP packet
-		UDPpacket *packet = SDLNet_AllocPacket(1024);
+		UDPpacket* packet = SDLNet_AllocPacket(1024);
 		if (!packet) {
 			fprintf(stderr, "SDLNet_AllocPacket: %s\n", SDLNet_GetError());
 			return false;
@@ -293,16 +279,15 @@ bool xyReceiveSocket(int wsid) {
 		received = SDLNet_UDP_Recv(sock->udp, packet);
 		if (received == 0) {
 			SDLNet_FreePacket(packet);
-			return true; // No data available, not an error
-		}
-		else if (received < 0) {
+			return true;  // No data available, not an error
+		} else if (received < 0) {
 			fprintf(stderr, "SDLNet_UDP_Recv: %s\n", SDLNet_GetError());
 			SDLNet_FreePacket(packet);
 			return false;
 		}
 
 		std::memcpy(buffer, packet->data, packet->len);
-		buffer[packet->len] = '\0'; // Null-terminate the string
+		buffer[packet->len] = '\0';	 // Null-terminate the string
 		SDLNet_FreePacket(packet);
 	}
 
@@ -311,11 +296,12 @@ bool xyReceiveSocket(int wsid) {
 	// Check for non-empty, non-whitespace message
 	std::string msg(buffer);
 	// Trim from start (in place)
-	msg.erase(msg.begin(), std::find_if(msg.begin(), msg.end(), [](unsigned char ch)
-										{ return !std::isspace(ch); }));
+	msg.erase(msg.begin(),
+			  std::find_if(msg.begin(), msg.end(),
+						   [](unsigned char ch) { return !std::isspace(ch); }));
 	// Trim from end (in place)
-	msg.erase(std::find_if(msg.rbegin(), msg.rend(), [](unsigned char ch)
-						   { return !std::isspace(ch); })
+	msg.erase(std::find_if(msg.rbegin(), msg.rend(),
+						   [](unsigned char ch) { return !std::isspace(ch); })
 				  .base(),
 			  msg.end());
 
@@ -334,25 +320,20 @@ bool xyReceiveSocket(int wsid) {
 
 bool xyQueuedSocket(int wsid) {
 	// Guarding clauses
-	if (vcSockets.size() <= wsid)
-		return false;
-	NetSocket *sock = vcSockets[wsid];
-	if (!sock)
-		return false;
+	if (vcSockets.size() <= wsid) return false;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock) return false;
 
 	return sock && !sock->messageQueue.empty();
 }
 
 std::string xyGetSocket(int wsid) {
 	// Guarding clauses
-	if (vcSockets.size() <= wsid)
-		return "";
-	NetSocket *sock = vcSockets[wsid];
-	if (!sock)
-		return "";
+	if (vcSockets.size() <= wsid) return "";
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock) return "";
 
-	if (!xyQueuedSocket(wsid))
-		return "";
+	if (!xyQueuedSocket(wsid)) return "";
 	std::string message = sock->messageQueue.front();
 	sock->messageQueue.pop();
 	return message;
@@ -360,11 +341,9 @@ std::string xyGetSocket(int wsid) {
 
 void xyClearSocket(int wsid) {
 	// Guarding clauses
-	if (vcSockets.size() <= wsid)
-		return;
-	NetSocket *sock = vcSockets[wsid];
-	if (!sock)
-		return;
+	if (vcSockets.size() <= wsid) return;
+	NetSocket* sock = vcSockets[wsid];
+	if (!sock) return;
 	while (!sock->messageQueue.empty()) {
 		sock->messageQueue.pop();
 	}
@@ -372,7 +351,7 @@ void xyClearSocket(int wsid) {
 
 bool xyListenSocket(int wsid, int port) {
 	if (vcSockets.size() <= wsid) return false;
-	NetSocket *sock = vcSockets[wsid];
+	NetSocket* sock = vcSockets[wsid];
 	if (!sock) return false;
 
 	IPaddress ip;
@@ -395,15 +374,15 @@ bool xyListenSocket(int wsid, int port) {
 
 int xyAcceptSocket(int wsid) {
 	if (vcSockets.size() <= wsid) return -1;
-	NetSocket *listenSock = vcSockets[wsid];
+	NetSocket* listenSock = vcSockets[wsid];
 	if (!listenSock || !listenSock->tcp) return -1;
 
 	TCPsocket client = SDLNet_TCP_Accept(listenSock->tcp);
-	if (!client) return -1; // No pending connection
+	if (!client) return -1;	 // No pending connection
 
 	int clientId = xyNewSocket("tcp");
 	if (clientId < 0) return -1;
-	NetSocket *clientSock = vcSockets[clientId];
+	NetSocket* clientSock = vcSockets[clientId];
 	clientSock->tcp = client;
 	clientSock->connected = true;
 	SDLNet_TCP_AddSocket(clientSock->set, clientSock->tcp);
@@ -414,7 +393,7 @@ int xyAcceptSocket(int wsid) {
 // CURL //
 //////////
 
-CURL *curlHandle = nullptr;
+CURL* curlHandle = nullptr;
 
 bool xyInitCurl() {
 	curlHandle = curl_easy_init();
@@ -441,7 +420,7 @@ void xyCurlOpt(int opt, int value) {
 	curl_easy_setopt(curlHandle, (CURLoption)opt, value);
 }
 
-void xyCurlOpt(int opt, const std::string &value) {
+void xyCurlOpt(int opt, const std::string& value) {
 	if (!curlHandle) {
 		fprintf(stderr, "cURL handle is not initialized\n");
 		return;
@@ -459,17 +438,86 @@ void xyCurlReset() {
 	curl_easy_reset(curlHandle);
 }
 
-void xyRegisterNetworkAPI(ssq::VM &vm) {
-	vm.addFunc("newNetSocket", xyNewSocket);   // Doc'd
-	vm.addFunc("netClose", xyCloseSocket);     // Doc'd
-	vm.addFunc("netOpen", xyConnectSocket);    // Doc'd
-	vm.addFunc("netDelete", xyDeleteSocket);   // Doc'd
-	vm.addFunc("netSend", xySendSocket);       // Doc'd
-	vm.addFunc("netReceive", xyReceiveSocket); // Doc'd
-	vm.addFunc("netQueued", xyQueuedSocket);   // Doc'd
-	vm.addFunc("netGet", xyGetSocket);         // Doc'd
-	vm.addFunc("netClear", xyClearSocket);     // Doc'd
-	vm.addFunc("netFlush", xyFlushSockets);    // Doc'd
+static size_t xyCurlWriteCallback(void* contents, size_t size, size_t nmemb,
+								  void* userp) {
+	size_t totalSize = size * nmemb;
+	std::string* str = static_cast<std::string*>(userp);
+	str->append(static_cast<char*>(contents), totalSize);
+	return totalSize;
+}
+
+std::string xyCurlGet(const std::string& url) {
+	if (!curlHandle) {
+		fprintf(stderr, "cURL handle is not initialized\n");
+		return "";
+	}
+
+	std::string response;
+
+	curl_easy_reset(curlHandle);
+
+	curl_easy_setopt(curlHandle, CURLOPT_URL, url.c_str());
+	curl_easy_setopt(curlHandle, CURLOPT_FOLLOWLOCATION, 1L);
+	curl_easy_setopt(curlHandle, CURLOPT_TIMEOUT, 10L);
+	curl_easy_setopt(curlHandle, CURLOPT_USERAGENT, "Brux/1.0");
+
+	// Set write callback
+	curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, xyCurlWriteCallback);
+	curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, &response);
+
+	CURLcode res = curl_easy_perform(curlHandle);
+
+	if (res != CURLE_OK) {
+		fprintf(stderr, "cURL GET failed: %s\n", curl_easy_strerror(res));
+		return "";
+	}
+
+	return response;
+}
+
+std::string xyCurlPost(const std::string& url, const std::string& data) {
+	if (!curlHandle) {
+		fprintf(stderr, "cURL handle is not initialized\n");
+		return "";
+	}
+
+	std::string response;
+
+	curl_easy_reset(curlHandle);
+
+	curl_easy_setopt(curlHandle, CURLOPT_URL, url.c_str());
+	curl_easy_setopt(curlHandle, CURLOPT_POST, 1L);
+	curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, data.c_str());
+	curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDSIZE, data.size());
+
+	curl_easy_setopt(curlHandle, CURLOPT_FOLLOWLOCATION, 1L);
+	curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, xyCurlWriteCallback);
+	curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, &response);
+
+	CURLcode res = curl_easy_perform(curlHandle);
+
+	if (res != CURLE_OK) {
+		fprintf(stderr, "cURL POST failed: %s\n", curl_easy_strerror(res));
+		return "";
+	}
+
+	return response;
+}
+
+void xyRegisterNetworkAPI(ssq::VM& vm) {
+	vm.addFunc("newNetSocket", xyNewSocket);	// Doc'd
+	vm.addFunc("netClose", xyCloseSocket);		// Doc'd
+	vm.addFunc("netOpen", xyConnectSocket);		// Doc'd
+	vm.addFunc("netDelete", xyDeleteSocket);	// Doc'd
+	vm.addFunc("netSend", xySendSocket);		// Doc'd
+	vm.addFunc("netReceive", xyReceiveSocket);	// Doc'd
+	vm.addFunc("netQueued", xyQueuedSocket);	// Doc'd
+	vm.addFunc("netGet", xyGetSocket);			// Doc'd
+	vm.addFunc("netClear", xyClearSocket);		// Doc'd
+	vm.addFunc("netFlush", xyFlushSockets);		// Doc'd
 	vm.addFunc("netListen", xyListenSocket);
 	vm.addFunc("netAccept", xyAcceptSocket);
+	vm.addFunc("curlInit", xyInitCurl);
+	vm.addFunc("curlGet", xyCurlGet);
+	vm.addFunc("curlPost", xyCurlPost);
 };
