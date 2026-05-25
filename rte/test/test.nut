@@ -14,12 +14,12 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-::currentTest <- 1
-::passedTests <- []
-::failedTests <- []
+::currentTest <- 1;
+::passedTests <- [];
+::failedTests <- [];
 
-::existantAPIs <- []
-::nonexistantAPIs <- []
+::existantAPIs <- [];
+::nonexistantAPIs <- [];
 
 ::apiList <- [
 	// Actors
@@ -141,7 +141,7 @@
 
 	"update",
 	"getOS",
-	"wait"
+	"wait",
 	"donut",
 	"getFrames",
 	"getTicks",
@@ -201,18 +201,18 @@
 	"drawText",
 	"newFont",
 	"chint"
-]
+];
 
-::score <- 0
-::total <- 1
+::score <- 0;
+::total <- 1;
 
-print("Checking if audio playback is available...")
+print("Checking if audio playback is available...");
 
 if (getAudioDriver() != "None" && isAudioAvailable()) {
 	score += 1;
 }
 
-::batchAPITest <- function(names) {
+::batchAPITest <- function (names) {
 	local found = 0;
 	local rootTable = getroottable();
 
@@ -228,84 +228,85 @@ if (getAudioDriver() != "None" && isAudioAvailable()) {
 
 	total += names.len();
 	score += found;
-}
+};
 
-::doTest <- function(name, handler) {
-	print("Test " + str(currentTest) + ": " + name)
-	
+::doTest <- function (name, handler) {
+	print("Test " + str(currentTest) + ": " + name);
+
 	try {
-		handler()
-		print("PASS")
+		handler();
+		print("PASS");
 	} catch (e) {
-		print("FAIL")
+		print("FAIL");
 	}
 
 	currentTest++;
-}
+};
 
-print("Attempting to figure out which Brux APIs exist...")
+print("Attempting to figure out which Brux APIs exist...");
 
-batchAPITest(apiList)
+batchAPITest(apiList);
 
-print("Now entering graphical test...")
+print("Now entering graphical test...");
 
-setResolution(426, 240)
-setWindowTitle("Brux GDK Test Suite")
+setResolution(426, 240);
+setWindowTitle("Brux GDK Test Suite");
 
-::sprFont <- newSprite("res/font.png", 6, 8)
-::sprMidi <- newSprite("res/midi.png", 32, 32, 16, 19)
-::sprOcean <- newSprite("res/ocean.png", 480, 240)
-::font <- newFont(sprFont, 0, 0, false, 0)
+::sprFont <- newSprite("res/font.png", 6, 8);
+::sprMidi <- newSprite("res/midi.png", 32, 32, 16, 19);
+::spriteSetBlendMode(sprMidi, bm_white);
+::sprOcean <- newSprite("res/ocean.png", 480, 240);
+::font <- newFont(sprFont, 0, 0, false, 0);
 
-::musTest <- loadMusic("res/bossa-nova.mp3")
+::musTest <- loadMusic("res/bossa-nova.mp3");
 
-playMusic(musTest, -1)
+//playMusic(musTest, -1);
 
-setFPS(60)
+setFPS(60);
 
-::text <- "Hello, ~1W~2o~3r~4l~5d~6!"
-::text2 <- "Press ~4Enter~0 (or up on the first joystick) to exit."
-::x <- 0.0
-::y <- 0.0
-::x2 <- 0.0
-::y2 <- 0.0
-::midiX <- 0.0
-::midiY <- 0.0
+::text <- "Hello, ~1W~2o~3r~4l~5d~6!";
+::text2 <- "Press ~4Enter~0 (or up on the first joystick) to exit.";
+::x <- 0.0;
+::y <- 0.0;
+::x2 <- 0.0;
+::y2 <- 0.0;
+::midiX <- 0.0;
+::midiY <- 0.0;
 
 while (!getQuit()) {
-	x = (400 / 2) - ((6 * text.len()) / 2)
-	y = 8 * 2
+	x = 400 / 2 - (6 * text.len()) / 2;
+	y = 8 * 2;
 
-	x2 = (400 / 2) - ((6 * text2.len()) / 2)
-	y2 = 240 - (8 * 2)
+	x2 = 400 / 2 - (6 * text2.len()) / 2;
+	y2 = 240 - 8 * 2;
 
-	midiX = (400 / 2)
-	midiY = (240 / 2)
+	midiX = 400 / 2;
+	midiY = 240 / 2;
 
 	x += sin(getFrames() / 10.0) * 16.0;
 
-	drawSprite(sprOcean, 0, 0, 0)
-	drawSprite(sprMidi, 48 + ((getFrames() / 4) % 7), midiX, midiY)
-	drawText(font, x, y, text)
-	drawText(font, x2, y2, text2)
+	drawSprite(sprOcean, 0, 0, 0);
+	drawSprite(sprMidi, 48 + ((getFrames() / 4) % 7), midiX, midiY);
+	drawText(font, x, y, text);
+	drawText(font, x2, y2, text2);
 
-	update()
+	update();
 
 	if (keyPress(k_enter)) {
 		break;
 	}
-} 
-
-if (score == total) {
-	print("All tests passed!")
 }
 
-print("Score: " + str(score) + " / " + str(total))
+if (score == total) {
+	print("All tests passed!");
+}
+
+print("Score: " + str(score) + " / " + str(total));
 
 if (nonexistantAPIs.len() != 0) {
-	print("Failed to find the following Brux APIs:")
+	print("Failed to find the following Brux APIs:");
 
 	foreach (name in nonexistantAPIs) {
-		print(name)
+		print(name);
 	}
 }
