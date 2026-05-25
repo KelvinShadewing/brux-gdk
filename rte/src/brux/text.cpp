@@ -327,14 +327,22 @@ void xyFont::draw(int x, int y, std::string text, Uint32 color) {
 				i--;
 			else {
 				c = (int)text[i] - start; // Get current character and apply font offset
-				source->draw(c, dx, dy, 0, SDL_FLIP_NONE, 1, 1, alpha, curcol);
-				dx += cw[c] + kern;
+				if (c >= 0 && static_cast<size_t>(c) < cw.size()) {
+					source->draw(c, dx, dy, 0, SDL_FLIP_NONE, 1, 1, alpha, curcol);
+					dx += cw[c] + kern;
+				} else {
+					dx += source->getw() + kern;
+				}
 			}
 		}
 		else {
 			c = (int)text[i] - start; // Get current character and apply font offset
-			source->draw(c, dx, dy, 0, SDL_FLIP_NONE, 1, 1, alpha, curcol);
-			dx += cw[c] + kern;
+			if (c >= 0 && static_cast<size_t>(c) < cw.size()) {
+				source->draw(c, dx, dy, 0, SDL_FLIP_NONE, 1, 1, alpha, curcol);
+				dx += cw[c] + kern;
+			} else {
+				dx += source->getw() + kern;
+			}
 		}
 	}
 };
