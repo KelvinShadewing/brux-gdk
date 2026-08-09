@@ -13,7 +13,7 @@ setResolution(1280, 720)
 
 ::getLimitedNoise <- function(y, limit) { return min(limit, max(-limit, (y + randInt(limit / 2) - randInt(limit)) / 2)) }
 
-::createLine <- function(w, h, s) {
+::createNoiseLine <- function(w, h, s) {
 	local newArr = []
 	local y = 0
 	for(local i = 0; i <= screenW(); i++) {
@@ -36,6 +36,7 @@ setResolution(1280, 720)
 }
 
 ::updateSurface <- function() {
+	srand(getFrames())
 	setDrawTarget(surface)
 	setDrawColor(0xff)
 	drawRec(0, 0, screenW(), screenH(), true)
