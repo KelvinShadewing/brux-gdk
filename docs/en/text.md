@@ -5,9 +5,21 @@
 
 &nbsp;
 
-* <a name="drawtext"></a>**`drawText( font, x, y, text )`**
+* <a name="drawtext"></a>**`drawText( font, x, y, text, color, width )`**
 
-  Draws a string to the current render target using the selected `font`.
+  Draws a string to the current render target using the selected `font`. `color` changes the default color for text. `width` is how wide the line can get before it wraps, measured in pixels, default 0, which is unwrapped.
+
+* <a name="textLineCount"></a>**`textLineCount( font, text, width )`**
+
+Counts how many lines long `text` will be. This counts newline characters in the string, too.
+
+* <a name="textWrap"></a>**`textWrap( font, text, width )`**
+
+Returns a string wrapped to `width` in pixels. Useful if you want to do some further pre-processing before drawing, such as breaking a string into pages, or caching a string in its wrapped form, which may improve performance when rendering very long strings.
+
+* <a name="textWidth"></a>**`textWidth( font, string )`**
+
+  Returns the width of `string` in pixels.
 
 * <a name="newFont"></a>**`newFont( sprite, firstchar, threshold, monospace, kerning )`**
 

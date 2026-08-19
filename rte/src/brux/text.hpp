@@ -33,16 +33,21 @@ private:
 	Uint32 numero;
 	bool mono;
 	int kern; // Kerning can be negative since some fonts need to overlap a bit
+	int characterWidth(char character) const;
 
 public:
-	xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, int _kern);
+	xyFont(Uint32 index, Uint32 firstchar, Uint8 threshold, bool monospace, int _kern, int emptyWidth = 0);
 	Uint32 getnum();
-	void draw(int x, int y, std::string text, Uint32 color = 0xffffffff);
+	void draw(int x, int y, std::string text, Uint32 color = 0xffffffff, int wrapWidth = 0);
+	int lineCount(const std::string& text, int wrapWidth = 0) const;
+	int textWidth(const std::string& text) const;
+	std::string wrapText(const std::string& text, int wrapWidth) const;
 };
 
 /** API */
-int xyNewFont(int i, int c, int t, bool m, int k);
-void xyDrawText(int f, float x, float y, const std::string& s, Uint32 c = 0xffffffff);
+int xyNewFont(int i, int c, int t, bool m, int k, int emptyWidth = 0);
+void xyDrawText(int f, float x, float y, const std::string& s, Uint32 c = 0xffffffff, int wrapWidth = 0);
+int xyTextLineCount(int f, const std::string& s, int wrapWidth = 0);
 std::string xyChint(int i);
 
 void xyRegisterTextAPI(ssq::VM& vm);

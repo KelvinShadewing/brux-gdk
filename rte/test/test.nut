@@ -249,12 +249,10 @@ batchAPITest(apiList);
 
 print("Now entering graphical test...");
 
-setResolution(426, 240);
 setWindowTitle("Brux GDK Test Suite");
 
 ::sprFont <- newSprite("res/font.png", 6, 8);
 ::sprMidi <- newSprite("res/midi.png", 32, 32, 16, 19);
-::spriteSetBlendMode(sprMidi, bm_white);
 ::sprOcean <- newSprite("res/ocean.png", 480, 240);
 ::font <- newFont(sprFont, 0, 0, false, 0);
 
@@ -265,7 +263,7 @@ setWindowTitle("Brux GDK Test Suite");
 setFPS(60);
 
 ::text <- "Hello, ~1W~2o~3r~4l~5d~6!";
-::text2 <- "Press ~4Enter~0 (or up on the first joystick) to exit.";
+::text2 <- "This is a really long line of text that should wrap to the next line if it is too long to fit on the screen. Let me know what you think about it. There should be a nice big line count for this. Here's what happens if you print a really long word, too: Supercalifragilisticexpialidocious. That should be long enough to wrap to the next line, I think. If not, then I don't know what will. You can also use ~1c~2o~3l~4o~5r ~6co~7d~8e~9s ~ai~bn ~ct~dh~ee ~fm~gi~hd~id~jl~ke ~lo~mf ~nt~oh~pe~qs~re ~0and it won't affect the width count.";
 ::x <- 0.0;
 ::y <- 0.0;
 ::x2 <- 0.0;
@@ -273,22 +271,24 @@ setFPS(60);
 ::midiX <- 0.0;
 ::midiY <- 0.0;
 
+print(textLineCount(font, text2, screenW() - 16));
+
 while (!getQuit()) {
 	x = 400 / 2 - (6 * text.len()) / 2;
 	y = 8 * 2;
 
-	x2 = 400 / 2 - (6 * text2.len()) / 2;
-	y2 = 240 - 8 * 2;
+	x2 = 8;
+	y2 = 240 - 8 * textLineCount(font, text2, screenW() - 16) - 8;
 
-	midiX = 400 / 2;
-	midiY = 240 / 2;
+	midiX = screenW() / 2;
+	midiY = screenH() / 2;
 
 	x += sin(getFrames() / 10.0) * 16.0;
 
 	drawSprite(sprOcean, 0, 0, 0);
 	drawSprite(sprMidi, 48 + ((getFrames() / 4) % 7), midiX, midiY);
 	drawText(font, x, y, text);
-	drawText(font, x2, y2, text2);
+	drawText(font, x2, y2, text2, c_white, screenW() - 16);
 
 	update();
 
