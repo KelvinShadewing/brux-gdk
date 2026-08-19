@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   windows:
-    runs-on: windows-latest
+    runs-on: windows-2025
 
     steps:
       - name: Checkout
@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         shell: pwsh
         run: |
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $true
+
           $packages = @(
             'pkgconf:x64-windows'
             'sdl2:x64-windows'
@@ -39,19 +42,31 @@ jobs:
             'sdl2-gfx:x64-windows'
             'physfs:x64-windows'
             'curl:x64-windows'
+            'libgit2:x64-windows'
           )
 
           vcpkg install $packages
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Install Meson
         shell: pwsh
         run: |
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $true
+
           python -m pip install --upgrade pip
-          python -m pip install "meson>=1.0.1,<2" ninja
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+          # Pin Meson so a newly released version cannot silently change CI behavior.
+          python -m pip install "meson==1.12.0" ninja
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Configure, build, and stage
         shell: pwsh
         run: |
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $true
+
           $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
           $vsPath = & $vswhere `
             -latest `
@@ -59,6 +74,7 @@ jobs:
             -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
             -property installationPath
 
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           if (-not $vsPath) {
             throw 'Visual Studio C++ tools were not found'
           }
@@ -79,9 +95,13 @@ jobs:
             --buildtype=release `
             "-Dcmake_prefix_path=$prefix" `
             "-Dpkg_config_path=$prefix/lib/pkgconfig;$prefix/share/pkgconfig"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
           meson compile -C rte/build
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
           meson install -C rte/build --destdir "$env:GITHUB_WORKSPACE/dist"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
           $brux = Get-ChildItem "$env:GITHUB_WORKSPACE/dist" `
             -Recurse -Filter brux.exe |
