@@ -1,96 +1,101 @@
 name: Windows
+
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
     paths:
-      - rte/src/*
+      - "rte/**"
+      - ".github/workflows/windows.yml"
   pull_request:
-    branches: [ "main" ]
+    branches: [main]
     paths:
-      - rte/src/*
+      - "rte/**"
+      - ".github/workflows/windows.yml"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   windows:
-    strategy:
-      matrix:
-        arch: [x64]
-        build_type: [release]
-        include:
-          - build_type: release
-            arch: x64
-            release: ON
-
     runs-on: windows-latest
+
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
           submodules: recursive
 
-      - name: Use cached dependencies
-        id: cache-dependencies
-        uses: actions/cache@v3
-        with:
-          path: C:/vcpkg/installed
-          key: ${{ runner.os }}-${{ matrix.arch }}-dependencies-${{ hashFiles('.github/workflows/windows.yml') }}
-
       - name: Install dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        env:
-          ARCH: ${{ matrix.arch }}
+        shell: pwsh
         run: |
-          vcpkg integrate install
-          vcpkg install sdl2:$Env:ARCH-windows
-          vcpkg install sdl2-image[libjpeg-turbo]:$Env:ARCH-windows
-          vcpkg install sdl2-mixer:$Env:ARCH-windows
-          vcpkg install sdl2-net:$Env:ARCH-windows
-          vcpkg install physfs:$Env:ARCH-windows
-          vcpkg install tiff:$Env:ARCH-windows
-          vcpkg install zstd:$Env:ARCH-windows
-          vcpkg install jbigkit:$Env:ARCH-windows
-          vcpkg install libdeflate:$Env:ARCH-windows
-          # vcpkg install libwebp:$Env:ARCH-windows
-          vcpkg install libflac:$Env:ARCH-windows
-          vcpkg install libjpeg-turbo:$Env:ARCH-windows
-          vcpkg install libpng:$Env:ARCH-windows
-          vcpkg install libmodplug:$Env:ARCH-windows
-          vcpkg install mpg123:$Env:ARCH-windows
-          vcpkg install opusfile:$Env:ARCH-windows
-          # vcpkg install libsharpyuv:$Env:ARCH-windows
+          $packages = @(
+            'pkgconf:x64-windows'
+            'sdl2:x64-windows'
+            'sdl2-image[libjpeg-turbo]:x64-windows'
+            'sdl2-mixer[libflac,libmodplug,mpg123,opusfile]:x64-windows'
+            'sdl2-net:x64-windows'
+            'sdl2-gfx:x64-windows'
+            'physfs:x64-windows'
+            'curl:x64-windows'
+          )
+
+          vcpkg install $packages
 
       - name: Install Meson
+        shell: pwsh
         run: |
           python -m pip install --upgrade pip
-          python -m pip install meson ninja
-          
-      - name: Set up CMAKE_PREFIX_PATH
-        # Point at the vcpkg installed root (not just the share dir) so CMake
-        # and Meson's cmake dependency method can find packages installed by vcpkg.
-        run: echo "CMAKE_PREFIX_PATH=C:/vcpkg/installed/${{ matrix.arch }}-windows" >> $GITHUB_ENV
+          python -m pip install "meson>=1.0.1,<2" ninja
 
-      - name: Configure build
-        env:
-          ARCH: ${{ matrix.arch }}
-          BUILD_TYPE: ${{ matrix.build_type }}
+      - name: Configure, build, and stage
+        shell: pwsh
         run: |
-          meson --version
-          cd rte
-          meson setup build -Dbuildtype=debug
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vsPath = & $vswhere `
+            -latest `
+            -products '*' `
+            -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
+            -property installationPath
 
-      - name: Build
-        working-directory: rte/build
-        env:
-          BUILD_TYPE: ${{ matrix.build_type }}
-        run: |
-          meson compile
-          DESTDIR=debug meson install
-#          cmake --build . --config debug
-#          cmake --install .
+          if (-not $vsPath) {
+            throw 'Visual Studio C++ tools were not found'
+          }
 
-      - name: Package
-        uses: actions/upload-artifact@v4
+          $devShell = Join-Path $vsPath 'Common7\Tools\Launch-VsDevShell.ps1'
+          & $devShell -Arch amd64 -HostArch amd64 -SkipAutomaticLocation
+
+          if (-not (Get-Command cl.exe -ErrorAction SilentlyContinue)) {
+            throw 'MSVC environment was not initialized'
+          }
+
+          $prefix = 'C:/vcpkg/installed/x64-windows'
+          $env:CC = 'cl'
+          $env:CXX = 'cl'
+          $env:PKG_CONFIG = "$prefix/tools/pkgconf/pkgconf.exe"
+
+          meson setup rte/build rte `
+            --buildtype=release `
+            "-Dcmake_prefix_path=$prefix" `
+            "-Dpkg_config_path=$prefix/lib/pkgconfig;$prefix/share/pkgconfig"
+
+          meson compile -C rte/build
+          meson install -C rte/build --destdir "$env:GITHUB_WORKSPACE/dist"
+
+          $brux = Get-ChildItem "$env:GITHUB_WORKSPACE/dist" `
+            -Recurse -Filter brux.exe |
+            Select-Object -First 1
+
+          if (-not $brux) {
+            throw 'Meson did not install brux.exe'
+          }
+
+          Copy-Item "$prefix/bin/*.dll" $brux.Directory.FullName -Force
+
+      - name: Upload Windows build
+        uses: actions/upload-artifact@v7
         with:
-          name: "Brux-Windows-${{ matrix.arch }}-${{ matrix.build_type }}-binary"
-          path: "rte/build/${{ matrix.build_type }}"
+          name: Brux-Windows-x64-release
+          path: dist
+          if-no-files-found: error

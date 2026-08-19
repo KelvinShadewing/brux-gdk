@@ -1,4 +1,0 @@
-[wrap-git]
-directory = SDL2_gfx
-url = https://github.com/ferzkopp/SDL2_gfx.git
-revision = 1.0.4

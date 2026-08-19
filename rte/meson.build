@@ -20,8 +20,11 @@ sdl_net = dependency('SDL2_net', fallback: ['sdl2_net', 'sdl2_net_dep'])
 ## Audio dependency/backend handling
 audio_lib = []
 
-if (audio_backend == 'sdl2')
-	audio_lib = dependency('SDL2_mixer', fallback: ['sdl2_mixer', 'sdl2_mixer_dep'], required: false)
+if audio_backend == 'sdl2'
+	audio_lib = dependency(
+		'SDL2_mixer',
+		fallback: ['sdl2_mixer', 'sdl2_mixer_dep']
+	)
 endif
 
 ## Other dependencies
@@ -56,10 +59,26 @@ if (not simplesquirrel.found())
 	simplesquirrel = declare_dependency(link_with: [simplesquirrel_lib, squirrel_lib, sqstdlib], include_directories: simplesquirrel_proj.include_directories('simplesquirrel_static'))
 endif
 
-sdl2_gfx = dependency(
-	'SDL2_gfx',
-	fallback : ['SDL2_gfx', 'SDL2_gfx_dep']
-)
+sdl2_gfx = dependency('SDL2_gfx', required: false)
+
+if not sdl2_gfx.found()
+	sdl2_gfx = dependency(
+		'sdl2-gfx',
+		method: 'cmake',
+		modules: ['SDL2::SDL2_gfx']
+	)
+endif
+
+deps = [
+	sdl,
+	sdl_image,
+	sdl_net,
+	sdl2_gfx,
+	audio_lib,
+	curl,
+	physfs,
+	simplesquirrel
+]
 
 git2 = dependency(
 	'libgit2',
